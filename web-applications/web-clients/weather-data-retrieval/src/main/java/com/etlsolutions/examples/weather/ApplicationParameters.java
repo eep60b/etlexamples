@@ -3,6 +3,8 @@ package com.etlsolutions.examples.weather;
 import java.util.Date;
 
 /**
+ * The ApplicationParameters class contains all parameters to run the
+ * application.
  *
  * @author zc
  */
@@ -14,9 +16,9 @@ public final class ApplicationParameters {
     private final Date startDate;
     private final Date stopDate;
     private final boolean runMultiple;
-    
+
     public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startDate, Date stopDate, boolean runMultiple) {
-        
+
         this.dataDirectoryPath = dataDirectoryPath;
         this.url = url;
         this.forecastMethod = forecastMethod;
@@ -42,10 +44,10 @@ public final class ApplicationParameters {
     }
 
     public Date getStopDate() {
-        return new Date (stopDate.getTime());
+        return new Date(stopDate.getTime());
     }
 
     public boolean isRunMultiple() {
         return runMultiple;
-    }    
+    }
 }
