@@ -18,7 +18,6 @@ package com.etlsolutions.examples.data.general.wrapper;
 
 import com.etlsolutions.examples.data.general.SimpleWrapper;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * The BytesColum class defines an object which represents a table column in

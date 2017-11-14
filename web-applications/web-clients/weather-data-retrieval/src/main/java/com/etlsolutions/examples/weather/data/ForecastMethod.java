@@ -6,22 +6,22 @@ package com.etlsolutions.examples.weather.data;
  */
 public enum ForecastMethod {
     
-    HOURLY_3(3);
+    HOURLY("hourly"), HOURLY_3("3hourly");
     
-    private final int value;
+    private final String value;
     
-    private ForecastMethod(int value) {
+    private ForecastMethod(String value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
     
     public static ForecastMethod getForecastMethod(String value) {
         
         for(ForecastMethod method : values()) {
-            if(method.value == Integer.parseInt(value)) {
+            if(method.value.equals(value)) {
                 return method;
             }
         }

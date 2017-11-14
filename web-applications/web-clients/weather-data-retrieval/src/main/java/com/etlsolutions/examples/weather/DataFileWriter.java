@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import org.apache.commons.io.FileUtils;
 
 /**
  * The DataFileWriter class write data to local hard drive.
@@ -21,9 +22,7 @@ public final class DataFileWriter {
         
         String content = new String(builder).substring(0, builder.length() - 2);
         
-        try(BufferedWriter br = new BufferedWriter(new FileWriter(file))){
-            br.write(content);
-        }
+        FileUtils.writeStringToFile(file, content, "ASCII", false);
     }
     
 }

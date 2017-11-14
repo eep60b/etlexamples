@@ -1,16 +1,26 @@
 package com.etlsolutions.examples.weather;
 
-import org.w3c.dom.Document;
-
 /**
  *
  * @author zc
  */
-public class MetWeatherCommandLineRunner {
+public final class MetWeatherCommandLineRunner {
 
     public static void main(String[] args) throws Throwable {
-        Document doc = new DocumentGenerator().createDocument();
-        int a = 1;
-
+        
+        try{
+            ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
+            ApplicationParameters parameters = factory.loadApplicationParameters(args);
+            if(parameters.isRunMultiple()) {
+                new MultipleProcessor().process(parameters);
+            } else {
+                new SingleProcessor().process(parameters);
+            }
+            
+            factory.saveParameters(parameters);
+            
+        } catch (Throwable th) {
+            throw th;
+        }
     }
 }

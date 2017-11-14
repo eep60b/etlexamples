@@ -40,8 +40,8 @@ public final class ForecastData {
     
     
     public String getOutputString() {
-        return dateTime + "," + forecastMethod.getValue() + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue()
-                + realTemprature.getValue() + "," + realVisibility.getCode() + "," + uvIndex.getCode() + "," + weatherType.getCode() + ","
+        return dateTime.getDateTime() + "," + forecastMethod.getValue() + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
+                + realTemprature.getValue() + "," + realVisibility.getValue()+ "," + relativeHumidity.getValue() + "," + uvIndex.getValue() + "," + weatherType.getValue() + ","
                         + windDirection.getValue() + "," + windGust.getSpeed() + "," + windSpeed.getSpeed();
     }
 }

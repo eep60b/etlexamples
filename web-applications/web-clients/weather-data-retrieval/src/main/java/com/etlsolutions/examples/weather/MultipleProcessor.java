@@ -10,13 +10,15 @@ import java.util.Properties;
  *
  * @author zc
  */
-public class MultipleProcessor {
+public final class MultipleProcessor {
 
     private final Properties runningProperties = new Properties();
     private final SingleProcessor singleProcessor = new SingleProcessor();
 
-    public synchronized void process(ApplicationParameters parameters, Date stopDate) throws Exception {
+    public synchronized void process(ApplicationParameters parameters) throws Exception {
 
+        Date stopDate = parameters.getStopDate();
+        
         while (stopDate != null && stopDate.compareTo(new Date()) >= 0) {
             runningProperties.load(new FileInputStream(RUNNING_CONFIG_FILE_PATH));
             String stopProcess = runningProperties.getProperty(STOP_PROCESS_KEY);
@@ -31,9 +33,7 @@ public class MultipleProcessor {
             }
             else {
                singleProcessor.process(parameters);
-            }
-                
+            }                
         }
     }
-
 }

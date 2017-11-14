@@ -13,14 +13,16 @@ public final class ApplicationParameters {
     private final String forecastMethod;
     private final Date startDate;
     private final Date stopDate;
+    private final boolean runMultiple;
     
-    public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startDate, Date stopDate) {
+    public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startDate, Date stopDate, boolean runMultiple) {
         
         this.dataDirectoryPath = dataDirectoryPath;
         this.url = url;
         this.forecastMethod = forecastMethod;
         this.startDate = new Date(startDate.getTime());
         this.stopDate = new Date(startDate.getTime());
+        this.runMultiple = runMultiple;
     }
 
     public String getDataDirectoryPath() {
@@ -42,4 +44,8 @@ public final class ApplicationParameters {
     public Date getStopDate() {
         return new Date (stopDate.getTime());
     }
+
+    public boolean isRunMultiple() {
+        return runMultiple;
+    }    
 }

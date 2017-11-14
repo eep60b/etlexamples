@@ -15,35 +15,41 @@ import java.util.TimeZone;
  */
 public final class DateTime implements Comparable<DateTime>{
 
-    private final String dataTime;
+    private final String dateTime;
     private final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DEFAULT_TIMEZONE), Locale.ENGLISH);
     private final DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
     
+    public DateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+    
     public DateTime(String date, String time) {
+               
+        String[] dateParts = date.replaceAll("Z", "").split("-");
         
-        calendar.set(Calendar.YEAR, Integer.parseInt(date.substring(0, 3)));
-        calendar.set(Calendar.MONTH, Integer.parseInt(date.substring(5, 6)));
-        calendar.set(Calendar.DATE, Integer.parseInt(date.substring(8, 9)));
-        calendar.set(Calendar.HOUR, Integer.parseInt(time)/60);
+        calendar.set(Calendar.YEAR, Integer.parseInt(dateParts[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
+        calendar.set(Calendar.DATE, Integer.parseInt(dateParts[2]));
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time)/60);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         
-        dataTime = dateFormat.format(calendar.getTime());
+        dateTime = dateFormat.format(calendar.getTime());
     }
     
     public String getDateTime(){
-        return dataTime;
+        return dateTime;
     }
     
     public String getYear() {
-        return dataTime.substring(14);
+        return dateTime.substring(14);
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.dataTime);
+        hash = 37 * hash + Objects.hashCode(this.dateTime);
         return hash;
     }
 
@@ -60,14 +66,14 @@ public final class DateTime implements Comparable<DateTime>{
         
         final DateTime other = (DateTime) obj;
         
-        return Objects.equals(this.dataTime, other.dataTime);
+        return Objects.equals(this.dateTime, other.dateTime);
     }
 
     
     
     @Override
     public int compareTo(DateTime other) {
-        return this.dataTime.compareTo(other.dataTime);
+        return this.dateTime.compareTo(other.dateTime);
     }
     
 }

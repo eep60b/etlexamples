@@ -13,14 +13,25 @@ public enum WindDirection {
         this.value = value;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
     
-    public static WindDirection getWindDirection(String value) {
+    public static WindDirection getWindDirection(int value) {
         
         for(WindDirection windDirection : values()) {
-            if(windDirection.value == Integer.parseInt(value)) {
+            if(windDirection.value == value) {
+                return windDirection;
+            }
+        }
+        
+        throw new IllegalArgumentException("Unknow wind direction value.");
+    }    
+    
+    public static WindDirection getWindDirection(String code) {
+        
+        for(WindDirection windDirection : values()) {
+            if(windDirection.name().equals(code)) {
                 return windDirection;
             }
         }
