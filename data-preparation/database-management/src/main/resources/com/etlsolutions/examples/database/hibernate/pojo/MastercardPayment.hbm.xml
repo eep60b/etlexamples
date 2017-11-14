@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.MastercardPaymentPojo" optimistic-lock="version" schema="BOOKSHOP" table="MASTERCARD_PAYMENT">
+        <id name="id" type="int">
+            <column name="PAYMENT_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personAddressLink" class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" fetch="select">
+            <column name="PERSON_ADDRESS_LINK_ID" />
+        </many-to-one>
+        <many-to-one name="paymentDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo" fetch="select">
+            <column name="PAYMENT_DETAIL_ID" unique="true" />
+            <column name="PAYMENT_TYPE" length="11" />
+        </many-to-one>
+        <property name="cardNumber" type="string">
+            <column name="CARD_NUMBER" length="16" not-null="true" />
+        </property>
+        <property name="securityCode" type="string">
+            <column name="SECURITY_CODE" length="3" not-null="true" />
+        </property>
+        <property name="startDate" type="date">
+            <column name="START_DATE" length="7" not-null="true" />
+        </property>
+        <property name="expireDate" type="date">
+            <column name="EXPIRE_DATE" length="7" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_MASTERCARD_PAYMENT" read-only="true">
+        DELETE FROM MastercardPaymentPojo
+    </query>
+    <query name="FIND_MASTERCARD_PAYMENT_BY_ID" read-only="true">
+        FROM MastercardPaymentPojo WHERE id = :id
+    </query>      
+    <query name="FIND_MASTERCARD_PAYMENT_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM MastercardPaymentPojo WHERE paymentDetail = :paymentDetail
+    </query>     
+    <query name="FIND_ALL_MASTERCARD_PAYMENTS" read-only="true">
+        FROM MastercardPaymentPojo
+    </query>     
+    <query name="FIND_ALL_MASTERCARD_PAYMENT_IDS" read-only="true">
+        SELECT id FROM MastercardPaymentPojo
+    </query>        
+    <sql-query name="INSERT_INTO_MASTERCARD_PAYMENT">
+        INSERT INTO MASTERCARD_PAYMENT(PAYMENT_ID, PAYMENT_DETAIL_ID, PERSON_ADDRESS_LINK_ID, PAYMENT_TYPE, CARD_NUMBER, SECURITY_CODE, START_DATE, EXPIRE_DATE)
+        VALUES                        (:id,        :paymentDetailId,   :personAddressLinkId,   :paymentType, :cardNumber, :securityCode, :startDate, :expireDate)
+    </sql-query>
+</hibernate-mapping>

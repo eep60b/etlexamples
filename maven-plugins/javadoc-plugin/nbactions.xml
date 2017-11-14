@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-clean install generate-javadoc</actionName>
+            <displayName>clean install generate-javadoc</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>generate-javadoc</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>

@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+ * Created on : 16-Nov-2015, 10:49:30
+ * Author     : Zhipeng Chang
+ * Version    : 1.0.0
+ */
+
+.new-book-chart { 
+    min-height: 300px;
+    height: auto;
+    min-width: 400px;
+    width: auto;
+}
+
+.used-book-chart {
+    min-height: 400px;
+    height: auto;
+    min-width: 400px;
+    width: auto;
+}
+
+.column1-width {
+    width: auto;
+}
+
+.column2-width {
+    width: auto;
+}
+
+/**
+ * The control of panel grid.
+ */
+.ui-panelgrid {
+    width: 90%;        //The setting of width to auto/available etc. does not work. It always choose the minimum width. This is an issue for <h:panelGrid>.
+}
+
+/**
+ * This CSS class can also be used to control the columns. It is not used currently.
+ */
+.ui-panelgrid td {
+    width: auto;  
+}
+
+/**
+ * The control of individual cell. Currently this code remove the border of each cell.
+ */
+.ui-panelgrid>*>tr,
+.ui-panelgrid .ui-panelgrid-cell {
+  border: none;
+}

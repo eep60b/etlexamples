@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- This property has been changed from OracleDialect to Oracle10gDialect after generation -->
+    <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.250.141:1521:XE</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.connection.username">BOOKSHOP</property>
+    <property name="hibernate.connection.password">BOOKSHOP</property>
+    <!-- configuration pool via c3p0-->
+    <property name="c3p0.acquire_increment">1</property>
+    <property name="c3p0.idle_test_period">100</property>
+    <!-- seconds -->
+    <property name="c3p0.max_size">100</property>
+    <property name="c3p0.max_statements">0</property>
+    <property name="c3p0.min_size">10</property>
+    <property name="c3p0.timeout">100</property>
+    <!-- seconds -->
+    <!-- DEPRECATED very expensive property name="c3p0.validate>-->
+    <!-- The following property fixes HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException -->
+    <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+    <!-- The following porperty set the JDBC isolation level (HHH10001007) to SERIALIZABLE. 
+
+        The isolation level values are
+        
+        TRANSACTION_NONE:             0
+        TRANSACTION_READ_UNCOMMITTED: 1
+        TRANSACTION_READ_COMMITTED:   2
+        TRANSACTION_REPEATABLE_READ:  4
+        TRANSACTION_SERIALIZABLE:     8
+        
+        The value 8 comes from for java.sql.Connection.TRANSACTION_SERIALIZABLE -->
+    <property name="hibernate.connection.isolation">2</property>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/PersonAddressLink.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Publisher.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Wishlist.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Invoice.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Customer.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Book.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Address.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/AmexcardPayment.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/ItemCommonDetail.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/PersonalDetail.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/PaypalPayment.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Telephone.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/PaymentDetail.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/VisacardPayment.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Administrator.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/SoldItem.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Voucher.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Author.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/DebitcardPayment.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Reviewer.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/MastercardPayment.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Email.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Review.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/ShoppingCartItem.hbm.xml"/>
+    <mapping resource="com/etlsolutions/examples/database/hibernate/pojo/Category.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

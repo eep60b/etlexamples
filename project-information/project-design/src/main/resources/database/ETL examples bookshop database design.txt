@@ -1,0 +1,107 @@
+1. Overview
+
+2. Database Systems
+    The database systems to be used are Oracle and Postgres.
+    2.1 Oracle
+        The Oracle version to be used is 12C.
+    
+    2.2 Postgres
+        The Postgres version to be used is 9.4.4.
+
+3. Database Creation/Reset
+    The database will be created using SQL Maven plugin. The plugin runs the script to drop the database if it exists and create it from scratch.
+    The plugin then runs another script to create tables, views, triggers, sequences and constraints.
+
+4. Table population
+    The tables can be populated automatically using Java code with the JPA framework.
+
+5. Tables
+
+    5.01 Address
+        The address table will be kept independent and no foreign key will declared.
+        The update operation should not be operated on this table because columns in other tables can refer to the same address in this table. Only add and remove operations are allowed.
+
+    5.05 Administrator
+
+    5.07 Amexcard_payment
+
+    5.08 Author
+
+    5.09 Author_book_link
+
+    5.10 Book
+
+    5.10.1 book_invoice_link
+        5.6.1 This table is used to manage the many-to-many relationship between the book table and the invoice table.
+        5.6.2 It contains the following columns:
+            ID          int,
+            BOOK_ID     int,
+            INVOICE_ID  int
+
+    5.20 Category
+        
+    5.30 Customer
+        id;
+        
+
+    5.40 customer_order
+
+    5.45 Debitcard_payment
+
+    5.46 Email
+
+    5.47 Error?
+
+    5.48 Invoice
+        The invoice table contains all the information about invoices. 
+
+    5.49 ItemCommonDetal_category_link
+
+    5.50 Item_common_detail
+        The purpose of this table is for the common information for all products.
+
+    5.52 Item_sold_price
+        The Item_sold_price contains information about each item's price when it is sold. Since the item price can change from time to time,
+        The table is used to record the specific price for each invoice. Therefore it is dependent on invoices. 
+
+    5.54 Mastercard_payment
+
+    5.55 Payment_detail
+
+    5.56 Paypal_payment
+
+    5.60 Personal_detail
+
+    5.61 PersonalDetail_address_link
+
+    5.63 PersonalDetail_telephone_link
+
+    5.65 Publisher
+
+    5.70 Review
+    
+    5.72 Reviewer
+
+    5.75 Shopping_cart
+
+    5.77 Telephone
+
+    5.78 Visacard_payment
+
+    5.80 Voucher
+        The voucher table contains necessary information about vouchers. The vouchers are owned by customer.
+
+    5.85 Voucher_payment 
+
+    5.95 Wishlist
+
+    5.96 Wishlist_ItemCommonDetail_link
+
+6. Functions
+
+    6.10 The address table should be able to cleansed against the personal_detail and publisher tables. 
+        The addresses are used in either the personal_detail table or the publisher table.
+         The entries without usable should be removed periodically. (every month)
+
+    6.20 The telephone table  should be able to cleansed against the personal_detail table. 
+        The telephone number without person information should be removed periodically. (every month)

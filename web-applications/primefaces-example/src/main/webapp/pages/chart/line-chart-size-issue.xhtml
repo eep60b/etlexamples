@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Line chart - The size issue</title>
+    </h:head>
+    <h:body>
+        <f:view>
+            <f:facet name="csspage">      
+                <h:outputStylesheet name="css/chart/line-chart-size-issue.css"/>      
+            </f:facet>
+            <p:layout>
+                <p:layoutUnit position="north" style="border: none;">
+                    <p:outputLabel>Chart Example</p:outputLabel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">   <!--There is a border for this layout. Set to none in style will remove it.-->  
+                    <p:panelGrid columns="2" >                                                 
+                        <p:chart type="line" model="#{lineChartSizeView.newBookLineChartModel}"  id="newBookLineChart" class="new-book-chart" />                                                                        
+                        <p:chart type="line" model="#{lineChartSizeView.usedBookLineChartModel}" id="usedBookLineChart" class="used-book-chart"/>
+                    </p:panelGrid>
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>
+    </h:body>
+</html>
+

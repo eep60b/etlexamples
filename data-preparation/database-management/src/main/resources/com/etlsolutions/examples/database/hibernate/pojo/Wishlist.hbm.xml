@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.WishlistPojo" optimistic-lock="version" schema="BOOKSHOP" table="WISHLIST">
+        <id name="id" type="int">
+            <column name="WISHLIST_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="customer" class="com.etlsolutions.examples.database.hibernate.pojo.CustomerPojo" fetch="select">
+            <column name="CUSTOMER_ID" unique-key="UNIQUE_NAME_CUSTOMER_ID" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="WISHLIST_NAME" length="100" not-null="true" unique-key="UNIQUE_NAME_CUSTOMER_ID" />
+        </property>
+        <set name="itemCommonDetails" table="WISHLIST_ITEM_LINK" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="WISHLIST_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo">
+                <column name="ITEM_COMMON_DETAIL_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_WISHLIST" read-only="true">
+        DELETE FROM WishlistPojo
+    </query>
+    <query name="FIND_WISHLIST_BY_ID" read-only="true">
+        FROM WishlistPojo WHERE id = :id
+    </query>      
+    <query name="FIND_WISHLIST_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM WishlistPojo WHERE name = :name and customer = :customer
+    </query>     
+    <query name="FIND_ALL_WISHLISTS" read-only="true">
+        FROM WishlistPojo
+    </query>     
+    <query name="FIND_ALL_WISHLIST_IDS" read-only="true">
+        SELECT id FROM WishlistPojo
+    </query>      
+    
+    <sql-query name="INSERT_INTO_WISHLIST">
+        INSERT INTO WISHLIST(WISHLIST_ID, WISHLIST_NAME, CUSTOMER_ID) VALUES  (:id, :name, :customerId)
+    </sql-query>
+    <sql-query name="INSERT_INTO_WISHLIST_ITEM_LINK">
+        INSERT INTO WISHLIST_ITEM_LINK(WISHLIST_ID, ITEM_COMMON_DETAIL_ID) VALUES  (:wishlistId, :itemCommonDetailId)
+    </sql-query>
+    <sql-query name="SELECT_FROM_WISHLIST_ITEM_LINK">
+        SELECT * FROM WISHLIST_ITEM_LINK WHERE WISHLIST_ID = :wishlistId AND ITEM_COMMON_DETAIL_ID = :itemCommonDetailId
+    </sql-query>    
+</hibernate-mapping>

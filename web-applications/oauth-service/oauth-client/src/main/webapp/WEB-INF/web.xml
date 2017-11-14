@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	 version="3.1">
+    
+    <display-name>OAuth 2.0 Client</display-name>
+  
+    <welcome-file-list>
+        <welcome-file>protected/viewdata.xhtml</welcome-file>
+    </welcome-file-list>
+    
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/faces-config.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+  
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.faces</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+     
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+  
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>ldap-users</realm-name>  <!-- This has to match the realm name that is defined in the pom as part of the glassfish server configuration -->
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+  
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error.xhtml</location>
+    </error-page>  
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/login.xhtml</location>
+    </error-page>  
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.xhtml</location>
+    </error-page>
+
+    <!-- Security for users of the app -->
+    <security-constraint>
+        <display-name>Security constraint for portal-users</display-name>
+        <web-resource-collection>
+            <web-resource-name>Secured resources</web-resource-name>
+            <url-pattern>/protected/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>portal-users</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+  
+    <!-- Security for users of the app -->
+    <security-constraint>
+        <display-name>Security constraint for portal-admin</display-name>
+        <web-resource-collection>
+            <web-resource-name>Secured resources</web-resource-name>
+            <url-pattern>/log.html</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>portal-admin</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+  
+    <security-role>
+        <role-name>portal-users</role-name>
+    </security-role>
+
+    <security-role>
+        <role-name>portal-admin</role-name>
+    </security-role>
+</web-app>

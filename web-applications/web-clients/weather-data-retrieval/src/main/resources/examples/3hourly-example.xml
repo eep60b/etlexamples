@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SiteRep>
+    <Wx>
+        <Param name="F" units="C">Feels Like Temperature</Param>
+        <Param name="G" units="mph">Wind Gust</Param>
+        <Param name="H" units="%">Screen Relative Humidity</Param>
+        <Param name="T" units="C">Temperature</Param>
+        <Param name="V" units="">Visibility</Param>
+        <Param name="D" units="compass">Wind Direction</Param>
+        <Param name="S" units="mph">Wind Speed</Param>
+        <Param name="U" units="">Max UV Index</Param>
+        <Param name="W" units="">Weather Type</Param>
+        <Param name="Pp" units="%">Precipitation Probability</Param>
+    </Wx>
+    <DV dataDate="2017-11-10T10:00:00Z" type="Forecast">
+        <Location i="3840" lat="50.86" lon="-3.239" name="DUNKESWELL AERODROME" country="ENGLAND" continent="EUROPE" elevation="252.0">
+            <Period type="Day" value="2017-11-10Z">
+                <Rep D="WNW" F="9" G="27" H="100" Pp="22" S="11" T="11" V="MO" W="8" U="0">360</Rep>
+                <Rep D="NW" F="7" G="29" H="82" Pp="6" S="13" T="10" V="VG" W="1" U="1">540</Rep>
+                <Rep D="NW" F="6" G="29" H="70" Pp="7" S="18" T="10" V="VG" W="7" U="1">720</Rep>
+                <Rep D="NW" F="5" G="22" H="66" Pp="7" S="11" T="9" V="EX" W="7" U="1">900</Rep>
+                <Rep D="WNW" F="4" G="20" H="74" Pp="4" S="9" T="7" V="VG" W="7" U="0">1080</Rep>
+                <Rep D="WSW" F="4" G="16" H="89" Pp="60" S="9" T="7" V="GO" W="12" U="0">1260</Rep>
+            </Period>
+            <Period type="Day" value="2017-11-11Z">
+                <Rep D="SSW" F="5" G="18" H="100" Pp="97" S="11" T="8" V="VP" W="15" U="0">0</Rep>
+                <Rep D="W" F="7" G="29" H="97" Pp="84" S="16" T="10" V="MO" W="15" U="0">180</Rep>
+                <Rep D="W" F="7" G="31" H="100" Pp="84" S="16" T="11" V="MO" W="15" U="0">360</Rep>
+                <Rep D="WNW" F="8" G="31" H="97" Pp="61" S="16" T="12" V="GO" W="12" U="1">540</Rep>
+                <Rep D="WNW" F="9" G="27" H="95" Pp="67" S="13" T="12" V="GO" W="12" U="1">720</Rep>
+                <Rep D="WNW" F="9" G="25" H="97" Pp="64" S="13" T="12" V="GO" W="12" U="1">900</Rep>
+                <Rep D="WNW" F="8" G="20" H="98" Pp="93" S="11" T="11" V="PO" W="15" U="0">1080</Rep>
+                <Rep D="NW" F="7" G="20" H="100" Pp="93" S="11" T="10" V="MO" W="15" U="0">1260</Rep>
+            </Period>
+            <Period type="Day" value="2017-11-12Z">
+                <Rep D="N" F="6" G="16" H="100" Pp="87" S="9" T="8" V="PO" W="15" U="0">0</Rep>
+                <Rep D="N" F="3" G="16" H="100" Pp="52" S="9" T="6" V="MO" W="12" U="0">180</Rep>
+                <Rep D="NNW" F="2" G="25" H="87" Pp="46" S="11" T="6" V="VG" W="9" U="0">360</Rep>
+                <Rep D="NNW" F="1" G="29" H="81" Pp="45" S="13" T="6" V="VG" W="3" U="1">540</Rep>
+                <Rep D="NW" F="2" G="31" H="76" Pp="39" S="16" T="7" V="VG" W="10" U="1">720</Rep>
+                <Rep D="NNW" F="2" G="27" H="74" Pp="13" S="13" T="7" V="VG" W="3" U="1">900</Rep>
+                <Rep D="NNW" F="0" G="25" H="76" Pp="3" S="13" T="5" V="EX" W="0" U="0">1080</Rep>
+                <Rep D="NNW" F="0" G="22" H="71" Pp="2" S="11" T="5" V="EX" W="0" U="0">1260</Rep>
+            </Period>
+            <Period type="Day" value="2017-11-13Z">
+                <Rep D="NNW" F="0" G="16" H="73" Pp="2" S="9" T="4" V="EX" W="0" U="0">0</Rep>
+                <Rep D="NNW" F="0" G="16" H="76" Pp="0" S="9" T="4" V="EX" W="0" U="0">180</Rep>
+                <Rep D="NNW" F="-1" G="11" H="81" Pp="0" S="7" T="2" V="VG" W="0" U="0">360</Rep>
+                <Rep D="NNW" F="1" G="11" H="80" Pp="0" S="7" T="4" V="VG" W="1" U="1">540</Rep>
+                <Rep D="NNW" F="4" G="16" H="59" Pp="0" S="7" T="7" V="VG" W="1" U="1">720</Rep>
+                <Rep D="NW" F="4" G="11" H="67" Pp="1" S="7" T="7" V="VG" W="3" U="1">900</Rep>
+                <Rep D="WNW" F="3" G="7" H="85" Pp="5" S="4" T="5" V="VG" W="7" U="0">1080</Rep>
+                <Rep D="WSW" F="3" G="9" H="82" Pp="4" S="7" T="5" V="VG" W="7" U="0">1260</Rep>
+            </Period>
+            <Period type="Day" value="2017-11-14Z">
+                <Rep D="SW" F="3" G="11" H="80" Pp="4" S="7" T="6" V="VG" W="7" U="0">0</Rep>
+                <Rep D="WSW" F="3" G="16" H="84" Pp="7" S="9" T="6" V="VG" W="7" U="0">180</Rep>
+                <Rep D="WSW" F="3" G="16" H="93" Pp="9" S="9" T="7" V="GO" W="7" U="0">360</Rep>
+                <Rep D="WSW" F="5" G="16" H="95" Pp="16" S="9" T="8" V="MO" W="7" U="1">540</Rep>
+                <Rep D="WSW" F="7" G="20" H="93" Pp="13" S="11" T="10" V="VG" W="8" U="1">720</Rep>
+                <Rep D="WSW" F="8" G="16" H="95" Pp="19" S="9" T="10" V="GO" W="8" U="1">900</Rep>
+                <Rep D="W" F="7" G="13" H="97" Pp="16" S="7" T="9" V="GO" W="8" U="0">1080</Rep>
+                <Rep D="W" F="6" G="11" H="98" Pp="19" S="7" T="8" V="MO" W="8" U="0">1260</Rep>
+            </Period>
+        </Location>
+    </DV>
+</SiteRep>

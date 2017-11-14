@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo" table="PERSONAL_DETAIL" schema="BOOKSHOP" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="PERSONAL_DETAIL_ID" />
+            <generator class="native" />
+        </id>
+        <property name="title" type="string">
+            <column name="TITLE" length="40" not-null="true" />
+        </property>
+        <property name="givenName" type="string">
+            <column name="GIVEN_NAME" length="200" not-null="true" />
+        </property>
+        <property name="familyName" type="string">
+            <column name="FAMILY_NAME" length="200" not-null="true" />
+        </property>
+        <property name="dateOfBirth" type="date">
+            <column name="DATE_OF_BIRTH" length="7" not-null="true" />
+        </property>
+        <property name="profile" type="binary">
+            <column name="PROFILE" not-null="true" />
+        </property>
+        <set name="telephones" table="PERSON_TELEPHONE_LINK" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.TelephonePojo">
+                <column name="TELEPHONE_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="reviewers" table="REVIEWER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.ReviewerPojo" />
+        </set>
+        <set name="authors" table="AUTHOR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" unique="true" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.AuthorPojo" />
+        </set>
+        <set name="emails" table="EMAIL" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.EmailPojo" />
+        </set>
+        <set name="personAddressLinks" table="PERSON_ADDRESS_LINK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" />
+        </set>
+        <set name="administrators" table="ADMINISTRATOR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSONAL_DETAIL_ID" unique="true" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.AdministratorPojo" />
+        </set>
+    </class>
+    <query name="DELETE_FROM_PERSONAL_DETAIL" read-only="true">
+        DELETE FROM PersonalDetailPojo
+    </query>
+    <query name="FIND_PERSONAL_DETAILBY_ID" read-only="true">
+        FROM PersonalDetailPojo WHERE id = :id
+    </query>      
+    <query name="FIND_PERSONAL_DETAIL_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM PersonalDetailPojo WHERE profile = :profile
+    </query>     
+    <query name="FIND_ALL_PERSONAL_DETAILS" read-only="true">
+        FROM PersonalDetailPojo
+    </query>     
+    <query name="FIND_ALL_PERSONAL_DETAILL_IDS" read-only="true">
+        SELECT id FROM PersonalDetailPojo
+    </query>      
+    <sql-query name="INSERT_INTO_PERSONAL_DETAIL" read-only="true">
+        INSERT INTO PERSONAL_DETAIL(PERSONAL_DETAIL_ID, TITLE,  GIVEN_NAME, FAMILY_NAME, DATE_OF_BIRTH, PROFILE) 
+        VALUES                     (:id,                :title, :givenName, :familyName, :dateOfBirth,  :profile)
+    </sql-query>
+    <sql-query name="INSERT_INTO_PERSON_TELEPHONE_LINK" read-only="true">
+        INSERT INTO PERSON_TELEPHONE_LINK(PERSONAL_DETAIL_ID, TELEPHONE_ID) VALUES (:personalDetailId, :telephoneId)
+    </sql-query>    
+    <sql-query name="SELECT_FROM_PERSON_TELEPHONE_LINK" read-only="true">
+        SELECT * FROM PERSON_TELEPHONE_LINK WHERE PERSONAL_DETAIL_ID = :personalDetailId and TELEPHONE_ID = :telephoneId        
+    </sql-query>    
+</hibernate-mapping>

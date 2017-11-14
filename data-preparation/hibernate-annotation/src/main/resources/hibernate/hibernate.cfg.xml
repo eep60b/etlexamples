@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <!--The database server name is copied from setting.xml via maven-resources-plugin.-->
+        <property name="hibernate.connection.url">jdbc:postgresql://${etlexamples.database.postgres.server.name}:5432/bookshop</property>
+        <property name="hibernate.connection.username">bookshop</property>
+        <property name="hibernate.connection.password">BOOKSHOP</property>
+        <property name="hibernate.current_session_context_class">thread</property>  
+    
+        <!-- configuration pool via c3p0-->   
+        <property name="c3p0.acquire_increment">1</property>   
+        <property name="c3p0.idle_test_period">100</property> <!-- seconds -->   
+        <property name="c3p0.max_size">100</property>   
+        <property name="c3p0.max_statements">0</property>   
+        <property name="c3p0.min_size">10</property>   
+        <property name="c3p0.timeout">100</property> <!-- seconds -->   
+        <!-- DEPRECATED very expensive property name="c3p0.validate>-->      
+    
+        <!-- The following property fixes HHH000424: Disabling contextual LOB creation as createClob() method threw error : java.lang.reflect.InvocationTargetException -->
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>        
+                
+        <!-- Mapping to the tables-->  
+        <mapping class="com.etlsolutions.examples.ha.pojo.AddressPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.AdministratorPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.AmexcardPaymentPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.AuthorPojo"/> 
+        <mapping class="com.etlsolutions.examples.ha.pojo.BookPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.CategoryPojo"/> 
+        <mapping class="com.etlsolutions.examples.ha.pojo.CustomerPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.DebitcardPaymentPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.EmailPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.InvoicePojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.ItemCommonDetailPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.MastercardPaymentPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.PaymentDetailIdPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.PaymentDetailPojo"/>                                                   
+        <mapping class="com.etlsolutions.examples.ha.pojo.PaypalPaymentPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.PersonAddressLinkPojo"/>    
+        <mapping class="com.etlsolutions.examples.ha.pojo.PersonalDetailPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.PublisherPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.ReviewPojo"/> 
+        <mapping class="com.etlsolutions.examples.ha.pojo.ReviewerPojo"/> 
+        <mapping class="com.etlsolutions.examples.ha.pojo.ShoppingCartItemPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.SoldItemPojo"/>   
+        <mapping class="com.etlsolutions.examples.ha.pojo.TelephonePojo"/>                           
+        <mapping class="com.etlsolutions.examples.ha.pojo.VisacardPaymentPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.VoucherPojo"/>
+        <mapping class="com.etlsolutions.examples.ha.pojo.WishlistPojo"/>
+       
+        <!--Mapping to the view-->       
+        <mapping class="com.etlsolutions.examples.ha.pojo.ViewInvoicePojo"/>    
+    </session-factory>
+</hibernate-configuration>

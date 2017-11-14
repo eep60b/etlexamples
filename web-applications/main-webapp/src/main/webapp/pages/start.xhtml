@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <h:outputStylesheet name="./css/start.css"/>
+    </h:head>    
+    
+    <ui:composition template="/WEB-INF/templates/basic-template.xhtml">
+        <ui:define name="title">The start page</ui:define>
+        <ui:define name="content">
+            <p:layoutUnit position="west" size="300" styleClass="">
+                <h:outputLabel value="Display catalog here"/>
+            </p:layoutUnit>
+            <p:layoutUnit position="east">
+                <h:outputLabel value="Display books here"/>
+            </p:layoutUnit>            
+        </ui:define> 
+    </ui:composition>
+</html>
+

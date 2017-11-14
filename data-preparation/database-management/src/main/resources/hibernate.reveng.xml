@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-schema="BOOKSHOP"/>
+  <table-filter match-name="ADDRESS"/>
+  <table-filter match-name="ADMINISTRATOR"/>
+  <table-filter match-name="CATEGORY"/>
+  <table-filter match-name="INVOICE"/>
+  <table-filter match-name="TELEPHONE"/>
+  <table-filter match-name="AUTHOR_BOOK_LINK"/>
+  <table-filter match-name="ITEM_SOLD_PRICE"/>
+  <table-filter match-name="PERSON_TELEPHONE_LINK"/>
+  <table-filter match-name="BOOK"/>
+  <table-filter match-name="AUTHOR"/>
+  <table-filter match-name="AMEXCARD_PAYMENT"/>
+  <table-filter match-name="SHOPPING_CART"/>
+  <table-filter match-name="REVIEW"/>
+  <table-filter match-name="EMAIL"/>
+  <table-filter match-name="PUBLISHER"/>
+  <table-filter match-name="ITEM_CATEGORY_LINK"/>
+  <table-filter match-name="PAYPAL_PAYMENT"/>
+  <table-filter match-name="WISHLIST_ITEM_LINK"/>
+  <table-filter match-name="DEBITCARD_PAYMENT"/>
+  <table-filter match-name="MASTERCARD_PAYMENT"/>
+  <table-filter match-name="CUSTOMER"/>
+  <table-filter match-name="ITEM_COMMON_DETAIL"/>
+  <table-filter match-name="VISACARD_PAYMENT"/>
+  <table-filter match-name="REVIEWER"/>
+  <table-filter match-name="VOUCHER_PAYMENT"/>
+  <table-filter match-name="VOUCHER"/>
+  <table-filter match-name="PERSON_DETAIL"/>
+  <table-filter match-name="WISHLIST"/>
+  <table-filter match-name="PAYMENT_DETAIL"/>
+  <table-filter match-name="PERSON_ADDRESS_LINK"/>
+</hibernate-reverse-engineering>

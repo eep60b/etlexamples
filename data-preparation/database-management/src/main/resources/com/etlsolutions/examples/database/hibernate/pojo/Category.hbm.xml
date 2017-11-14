@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.CategoryPojo" optimistic-lock="version" schema="BOOKSHOP" table="CATEGORY">
+        <id name="id" type="int">
+            <column name="CATEGORY_ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="CATEGORY_NAME" length="100" not-null="true" unique="true" />
+        </property>
+        <set name="itemCommonDetails" table="ITEM_CATEGORY_LINK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CATEGORY_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo">
+                <column name="ITEM_COMMON_DETAIL_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_CATEGORY" read-only="true">
+        DELETE FROM CategoryPojo
+    </query>
+    <query name="FIND_CATEGORY_BY_ID" read-only="true">
+        FROM CategoryPojo WHERE id = :id
+    </query>      
+    <query name="FIND_CATEGORY_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM CategoryPojo WHERE name = :name
+    </query>     
+    <query name="FIND_ALL_CATEGORYS" read-only="true">
+        FROM CategoryPojo
+    </query>     
+    <query name="FIND_ALL_CATEGORY_IDS" read-only="true">
+        SELECT id FROM CategoryPojo
+    </query>       
+    <sql-query name="INSERT_INTO_CATEGORY" read-only="true">
+        INSERT INTO CATEGORY(CATEGORY_ID, CATEGORY_NAME) VALUES(:id, :name)
+    </sql-query>
+</hibernate-mapping>

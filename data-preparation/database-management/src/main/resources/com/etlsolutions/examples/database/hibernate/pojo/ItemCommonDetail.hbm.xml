@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-Dec-2015 14:16:59 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo" optimistic-lock="version" schema="BOOKSHOP" table="ITEM_COMMON_DETAIL">
+        <id name="id" type="int">
+            <column name="ITEM_COMMON_DETAIL_ID" />
+            <generator class="native" />
+        </id>
+        <property name="name" type="string">
+            <column name="ITEM_NAME" length="600" not-null="true" />
+        </property>
+        <property name="image" type="binary">
+            <column name="IMAGE" />
+        </property>
+        <property name="listPrice" type="big_decimal">
+            <column name="LIST_PRICE" precision="10" not-null="true" />
+        </property>
+        <property name="salePrice" type="big_decimal">
+            <column name="SALE_PRICE" precision="10" not-null="true" />
+        </property>
+        <property name="currencyCode">
+            <column name="CURRENCY_CODE" not-null="true">              
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.CurrencyCode</param>
+                <param name="useNamed">true</param>
+            </type> 
+        </property>
+        <property name="ranking" type="int">
+            <column name="RANKING" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="4000" />
+        </property>
+        <property name="availability">
+            <column name="AVAILABILITY" not-null="true">              
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.AvailabilityType</param>
+                <param name="useNamed">true</param>
+            </type>              
+        </property>
+        <property name="availabilityNumber" type="int">
+            <column name="AVAILABILITY_NUMBER" />
+        </property>
+        <property name="barcode" type="string">
+            <column name="BARCODE" length="100" not-null="true" unique="true" />
+        </property>
+        <set name="reviews" table="REVIEW" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.ReviewPojo" />
+        </set>
+        <set name="wishlists" table="WISHLIST_ITEM_LINK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.WishlistPojo">
+                <column name="WISHLIST_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="shoppingCart" table="SHOPPING_CART_ITEM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.ShoppingCartItemPojo" />
+        </set>
+        <set name="books" table="BOOK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" unique="true" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.BookPojo" />
+        </set>
+        <set name="categories" table="ITEM_CATEGORY_LINK" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.CategoryPojo">
+                <column name="CATEGORY_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="soldItems" table="SOLD_ITEM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ITEM_COMMON_DETAIL_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.SoldItemPojo" />
+        </set>
+    </class>
+    <query name="DELETE_FROM_ITEM_COMMON_DETAIL" read-only="true">
+        DELETE FROM ItemCommonDetailPojo
+    </query>
+    <query name="FIND_ITEM_COMMON_DETAIL_BY_ID" read-only="true">
+        FROM ItemCommonDetailPojo WHERE id = :id
+    </query>      
+    <query name="FIND_ITEM_COMMON_DETAIL_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM ItemCommonDetailPojo WHERE barcode = :barcode
+    </query>     
+    <query name="FIND_ALL_ITEM_COMMON_DETAIL" read-only="true">
+        FROM ItemCommonDetailPojo
+    </query>     
+    <query name="FIND_ALL_ITEM_COMMON_DETAIL_IDS" read-only="true">
+        SELECT id FROM ItemCommonDetailPojo
+    </query>       
+    <sql-query name="INSERT_INTO_ITEM_COMMON_DETAIL">
+        INSERT INTO ITEM_COMMON_DETAIL(ITEM_COMMON_DETAIL_ID, ITEM_NAME, IMAGE, LIST_PRICE, SALE_PRICE, CURRENCY_CODE, RANKING,  DESCRIPTION,  AVAILABILITY,  AVAILABILITY_NUMBER, BARCODE)
+        VALUES                        (:id,                   :name,     :image,:listPrice, :salePrice, :currencyCode, :ranking, :description, :availability, :availabilityNumber, :barcode)
+    </sql-query>
+    <sql-query name="INSERT_INTO_ITEM_CATEGORY_LINK">
+        INSERT INTO ITEM_CATEGORY_LINK(ITEM_COMMON_DETAIL_ID, CATEGORY_ID) VALUES(:itemCommonDetailId, :categoryId)        
+    </sql-query>
+    <sql-query name="SELECT_FEOM_ITEM_CATEGORY_LINK">
+        SELECT * FROM ITEM_CATEGORY_LINK WHERE ITEM_COMMON_DETAIL_ID = :itemCommonDetailId AND CATEGORY_ID = :categoryId        
+    </sql-query>    
+</hibernate-mapping>

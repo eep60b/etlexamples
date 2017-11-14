@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.AddressPojo" optimistic-lock="version" schema="BOOKSHOP" table="ADDRESS">
+        <id name="id" type="int">
+            <column name="ADDRESS_ID"/>
+            <generator class="native" />
+        </id>
+        <property name="house" type="string">
+            <column name="HOUSE" length="100" not-null="true" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="street" type="string">
+            <column name="STREET" length="400" not-null="true" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="additional" type="string">
+            <column name="ADDITIONAL" length="400" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="city" type="string">
+            <column name="CITY" length="100" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="area" type="string">
+            <column name="AREA" length="100" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="postcode" type="string">
+            <column name="POSTCODE" length="100" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <property name="country" type="string">
+            <column name="COUNTRY" length="200" not-null="true" unique-key="UNIQUE_ADDRESS" />
+        </property>
+        <set name="publishers" table="PUBLISHER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ADDRESS_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.PublisherPojo" />
+        </set>
+        <set name="personAddressLinks" table="PERSON_ADDRESS_LINK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ADDRESS_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" />
+        </set>
+        <set name="invoices" table="INVOICE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="DELIVERY_ADDRESS_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.InvoicePojo" />
+        </set>   
+        
+    </class>
+    <query name="DELETE_FROM_ADDRESS" read-only="true">
+        DELETE FROM AddressPojo
+    </query>
+    <query name="FIND_ADDRESS_BY_ID" read-only="true">
+        FROM AddressPojo WHERE id = :id
+    </query>      
+    <query name="FIND_ADDRESS_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM AddressPojo WHERE house = :house and street = :street and additional = :additional and city = :city and area = :area and postcode = :postcode and country = :country
+    </query>     
+    <query name="FIND_ALL_ADDRESSES" read-only="true">
+        FROM AddressPojo
+    </query>     
+    <query name="FIND_ALL_ADDRESS_IDS" read-only="true">
+        SELECT id FROM AddressPojo
+    </query>       
+    <sql-query name="INSERT_INTO_ADDRESS">
+        INSERT INTO BOOKSHOP.ADDRESS(ADDRESS_ID, HOUSE,  STREET,    ADDITIONAL,  CITY,  AREA,  POSTCODE,  COUNTRY) 
+        VALUES                      (:id,        :house, :street,   :additional, :city, :area, :postcode, :country)
+    </sql-query>
+</hibernate-mapping>

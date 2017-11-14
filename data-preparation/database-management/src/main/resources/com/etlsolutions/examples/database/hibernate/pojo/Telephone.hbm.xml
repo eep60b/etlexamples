@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.TelephonePojo" optimistic-lock="version" schema="BOOKSHOP" table="TELEPHONE">
+        <id name="id" type="int">
+            <column name="TELEPHONE_ID" />
+            <generator class="native" />
+        </id>
+        <property name="countryCode" type="string">
+            <column name="COUNTRY_CODE" length="5" not-null="true" unique-key="UNIQUE_TELEPHONE" />
+        </property>
+        <property name="areaCode" type="string">
+            <column name="AREA_CODE" length="10" unique-key="UNIQUE_TELEPHONE" />
+        </property>
+        <property name="telephoneType">
+            <column name="TELEPHONE_TYPE" not-null="true" unique-key="UNIQUE_TELEPHONE">             
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.TelephoneType</param>
+                <param name="useNamed">true</param>
+            </type>  
+        </property>
+        <property name="telephoneNumber" type="string">
+            <column name="TELEPHONE_NUMBER" length="15" not-null="true" unique-key="UNIQUE_TELEPHONE" />
+        </property>
+        <set name="personalDetails" table="PERSON_TELEPHONE_LINK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TELEPHONE_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo">
+                <column name="PERSONAL_DETAIL_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_TELEPHONE" read-only="true">
+        DELETE FROM TelephonePojo
+    </query>
+    <query name="FIND_TELEPHONE_BY_ID" read-only="true">
+        FROM TelephonePojo WHERE id = :id
+    </query>      
+    <query name="FIND_TELEPHONE_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM TelephonePojo WHERE countryCode = :countryCode and areaCode = :areaCode and telephoneType = :telephoneType  and telephoneNumber = :telephoneNumber
+    </query>     
+    <query name="FIND_ALL_TELEPHONES" read-only="true">
+        FROM TelephonePojo
+    </query>     
+    <query name="FIND_ALL_TELEPHONE_IDS" read-only="true">
+        SELECT id FROM TelephonePojo
+    </query>  
+    <sql-query name="INSERT_INTO_TELEPNONE" read-only="true">
+        INSERT INTO TELEPHONE(TELEPHONE_ID, COUNTRY_CODE, AREA_CODE,  TELEPHONE_TYPE, TELEPHONE_NUMBER)
+        VALUES               (:id,          :countryCode, :areaCode,  :telephoneType, :telephoneNumber)
+    </sql-query>
+</hibernate-mapping>

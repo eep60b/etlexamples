@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <!--This page demonstrate format for data table columns.-->
+    <h:head>
+        <title>Data Table Format</title>                
+        <h:outputStylesheet name="css/datatable-format.css"/>          
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:dataTable class="ui-datatable-hor-scroll" var="book" value="#{publishedBookView.books}" id="viewDataTable" paginator="true" rows="20"
+                         paginatorTemplate="{Calendar} {RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {Exporters}"
+                         rowsPerPageTemplate="10,20,50,100" resizableColumns="true" liveResize="true" paginatorPosition="top">
+                <f:facet name="{Calendar}">
+                    <p:outputLabel class="header-calendar">From Date</p:outputLabel> 
+                    <p:calendar class="header-calendar" id="fromDate" value="#{publishedBookView.fromDate}" pattern="dd MMM yyyy"  readonlyInput="true">
+                      <p:ajax event="dateSelect" update="viewDataTable" />
+                    </p:calendar>
+                    <p:outputLabel class="header-calendar">To Date</p:outputLabel>
+                    <p:calendar class="header-calendar" id="toDate" value="#{publishedBookView.toDate}" pattern="dd MMM yyyy" readonlyInput="true" >
+                      <p:ajax event="dateSelect" update="viewDataTable"/>
+                    </p:calendar>  
+                </f:facet>
+                <f:facet name="{Exporters}">
+                  <h:commandLink>
+                    <p:graphicImage name="/img/excel.png" class="exporter-button"/>
+                    <p:dataExporter type="xls" target="viewDataTable" fileName="records" />
+                  </h:commandLink>
+                  <h:commandLink>
+                    <p:graphicImage name="/img/csv.png" class="exporter-button"/>
+                    <p:dataExporter type="csv" target="viewDataTable" fileName="records" />
+                  </h:commandLink>
+                </f:facet>
+                <p:column headerText="ID" class="book-id-format" sortBy="#{book.bookId}" filterBy="#{book.bookId}" filterMatchMode="contains">
+                    <h:outputText value="#{book.bookId}"/>
+                </p:column>
+                <p:column headerText="BOOK Name" class="book-name-format">
+                    <h:outputText value="#{book.bookName}" />
+                </p:column>
+                <p:column headerText="Published Date 01" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 02" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 03" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 04" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 05" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 06" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 07" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 08" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>
+                <p:column headerText="Published Date 09" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 10" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                             
+                <p:column headerText="Published Date 11" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 12" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 13" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 14" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 15" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 16" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>   
+                <p:column headerText="Published Date 17" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 18" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 19" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 20" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 21" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 22" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 23" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 24" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>
+                <p:column headerText="Published Date 25" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 26" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 27" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 28" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 29" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 30" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>  
+                <p:column headerText="Published Date 31" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                
+                <p:column headerText="Published Date 32" class="published-date-format">
+                    <h:outputText value="#{book.publishedDate}" />
+                </p:column>                                
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

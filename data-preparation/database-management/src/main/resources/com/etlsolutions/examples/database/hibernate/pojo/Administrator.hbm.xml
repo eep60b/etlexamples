@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-Dec-2015 14:16:59 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.AdministratorPojo" optimistic-lock="version" schema="BOOKSHOP" table="ADMINISTRATOR">
+        <id name="id" type="int">
+            <column name="ADMINISTRATOR_ID"/>
+            <generator class="native"/>
+        </id>
+        <many-to-one class="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo" fetch="select" name="personalDetail">
+            <column name="PERSONAL_DETAIL_ID" unique="true"/>
+        </many-to-one>
+        <property name="role">
+            <column name="ADMINISTRATOR_ROLE" not-null="true"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.AdministratorRole</param>
+                <param name="useNamed">true</param>
+            </type> 
+        </property>
+        <property name="username" type="string">
+            <column length="200" name="USERNAME" not-null="true" unique="true"/>
+        </property>
+        <property name="password" type="string">
+            <column length="200" name="PASSWORD" not-null="true"/>
+        </property>
+    </class>
+    <query name="DELETE_FROM_ADMINISTRATOR" read-only="true">
+        DELETE FROM AdministratorPojo
+    </query>
+    <query name="FIND_ADMINISTRATOR_BY_ID" read-only="true">
+        FROM AdministratorPojo WHERE id = :id
+    </query>      
+    <query name="FIND_ADMINISTRATOR_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM AdministratorPojo WHERE username = :username
+    </query>     
+    <query name="FIND_ADMINISTRATOR" read-only="true">
+        FROM AdministratorPojo
+    </query>     
+    <query name="FIND_ALL_ADMINISTRATOR_IDS" read-only="true">
+        SELECT id FROM AdministratorPojo
+    </query>     
+    <sql-query name="INSERT_INTO_ADMINISTRATOR">
+        INSERT INTO ADMINISTRATOR(ADMINISTRATOR_ID, PERSONAL_DETAIL_ID, ADMINISTRATOR_ROLE,  USERNAME,  PASSWORD)
+        VALUES                   (:id,              :personalDetailId,  :role,               :username, :password)
+    </sql-query>
+</hibernate-mapping>

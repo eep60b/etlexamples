@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateItemTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemId}" for="itemId" />
+                    <h:inputText id="itemId" value="#{itemController.selected.itemId}" title="#{bundle.CreateItemTitle_itemId}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_itemId}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemName}" for="itemName" />
+                    <h:inputText id="itemName" value="#{itemController.selected.itemName}" title="#{bundle.CreateItemTitle_itemName}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_itemName}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemImage}" for="itemImage" />
+                    <h:inputTextarea rows="4" cols="30" id="itemImage" value="#{itemController.selected.itemImage}" title="#{bundle.CreateItemTitle_itemImage}" />
+                    <h:outputLabel value="#{bundle.CreateItemLabel_listPrice}" for="listPrice" />
+                    <h:inputText id="listPrice" value="#{itemController.selected.listPrice}" title="#{bundle.CreateItemTitle_listPrice}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_listPrice}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_salePrice}" for="salePrice" />
+                    <h:inputText id="salePrice" value="#{itemController.selected.salePrice}" title="#{bundle.CreateItemTitle_salePrice}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_salePrice}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_currencyCode}" for="currencyCode" />
+                    <h:inputText id="currencyCode" value="#{itemController.selected.currencyCode}" title="#{bundle.CreateItemTitle_currencyCode}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_currencyCode}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemRanking}" for="itemRanking" />
+                    <h:inputText id="itemRanking" value="#{itemController.selected.itemRanking}" title="#{bundle.CreateItemTitle_itemRanking}" />
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemDescription}" for="itemDescription" />
+                    <h:inputText id="itemDescription" value="#{itemController.selected.itemDescription}" title="#{bundle.CreateItemTitle_itemDescription}" />
+                    <h:outputLabel value="#{bundle.CreateItemLabel_itemAvailability}" for="itemAvailability" />
+                    <h:inputText id="itemAvailability" value="#{itemController.selected.itemAvailability}" title="#{bundle.CreateItemTitle_itemAvailability}" required="true" requiredMessage="#{bundle.CreateItemRequiredMessage_itemAvailability}"/>
+                    <h:outputLabel value="#{bundle.CreateItemLabel_availabilityNumber}" for="availabilityNumber" />
+                    <h:inputText id="availabilityNumber" value="#{itemController.selected.availabilityNumber}" title="#{bundle.CreateItemTitle_availabilityNumber}" />
+                    <h:outputLabel value="#{bundle.CreateItemLabel_book}" for="book" />
+                    <h:selectOneMenu id="book" value="#{itemController.selected.book}" title="#{bundle.CreateItemTitle_book}" >
+                        <f:selectItems value="#{bookController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{itemController.create}" value="#{bundle.CreateItemSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{itemController.prepareList}" value="#{bundle.CreateItemShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateItemIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

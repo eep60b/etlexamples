@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAddressTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressId}" for="addressId" />
+                    <h:inputText id="addressId" value="#{addressController.selected.addressId}" title="#{bundle.CreateAddressTitle_addressId}" required="true" requiredMessage="#{bundle.CreateAddressRequiredMessage_addressId}"/>
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressMain}" for="addressMain" />
+                    <h:inputText id="addressMain" value="#{addressController.selected.addressMain}" title="#{bundle.CreateAddressTitle_addressMain}" required="true" requiredMessage="#{bundle.CreateAddressRequiredMessage_addressMain}"/>
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressAdditional}" for="addressAdditional" />
+                    <h:inputText id="addressAdditional" value="#{addressController.selected.addressAdditional}" title="#{bundle.CreateAddressTitle_addressAdditional}" />
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressCity}" for="addressCity" />
+                    <h:inputText id="addressCity" value="#{addressController.selected.addressCity}" title="#{bundle.CreateAddressTitle_addressCity}" />
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressArea}" for="addressArea" />
+                    <h:inputText id="addressArea" value="#{addressController.selected.addressArea}" title="#{bundle.CreateAddressTitle_addressArea}" />
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressPostcode}" for="addressPostcode" />
+                    <h:inputText id="addressPostcode" value="#{addressController.selected.addressPostcode}" title="#{bundle.CreateAddressTitle_addressPostcode}" />
+                    <h:outputLabel value="#{bundle.CreateAddressLabel_addressCountry}" for="addressCountry" />
+                    <h:inputText id="addressCountry" value="#{addressController.selected.addressCountry}" title="#{bundle.CreateAddressTitle_addressCountry}" required="true" requiredMessage="#{bundle.CreateAddressRequiredMessage_addressCountry}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{addressController.create}" value="#{bundle.CreateAddressSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{addressController.prepareList}" value="#{bundle.CreateAddressShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateAddressIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

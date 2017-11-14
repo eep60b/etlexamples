@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.EmailPojo" optimistic-lock="version" schema="BOOKSHOP" table="EMAIL">
+        <id name="id" type="int">
+            <column name="EMAIL_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personalDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo" fetch="select">
+            <column name="PERSONAL_DETAIL_ID" />
+        </many-to-one>
+        <property name="emailAddress" type="string">
+            <column name="EMAIL_ADDRESS" length="200" not-null="true" unique="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_EMAIL" read-only="true">
+        DELETE FROM EmailPojo
+    </query>
+    <query name="FIND_EMAIL_BY_ID" read-only="true">
+        FROM EmailPojo WHERE id = :id
+    </query>      
+    <query name="FIND_EMAIL_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM EmailPojo WHERE emailAddress = :emailAddress
+    </query>     
+    <query name="FIND_ALL_EMAILS" read-only="true">
+        FROM EmailPojo
+    </query>     
+    <query name="FIND_ALL_EMAIL_IDS" read-only="true">
+        SELECT id FROM EmailPojo
+    </query>      
+    <sql-query name="INSERT_INTO_EMAIL" read-only="true">
+        INSERT INTO EMAIL(EMAIL_ID, PERSONAL_DETAIL_ID, EMAIL_ADDRESS) VALUES(:id,   :personalDetailId, :emailAddress)
+    </sql-query>
+</hibernate-mapping>

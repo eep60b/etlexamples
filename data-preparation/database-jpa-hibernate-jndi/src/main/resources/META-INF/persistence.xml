@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.etlsolutions.examples_database-jpa-hibernate-jndi_jar" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <jta-data-source>jdbc/public_PostgreSQL</jta-data-source>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.DateExclusions</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ElementMapping</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ViewAdapterProperties</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Vehicle</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.PartsDealerSched</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Dms</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.UniqueDealer</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Customer</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Frontpage</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.UploadUri</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.AutolineHacking</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Schedule</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ViewDealerProperties</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ParameterHistoryPair</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Logview</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.UploadUriGroup</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Reportview</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Dealer</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.SystemType</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.AdapterProperties</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.DealerSystemType</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Property</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.DbConnection</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.SystemProperties</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.GeneralPropertyView</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.LogEntry</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ViewSystemPropertiesShort</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.TransformGroup</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Transform</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.DateInclusions</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.TransformType</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.System</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Log</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ViewSystemProperties</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Unittestview</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Channel</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.AutolineTableNameMap</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Logdetail</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.ElementMappingGroup</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.PropertyType</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Errors</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.Version</class>
+    <class>com.etlsolutions.examples.database.jpa.hibernate.jndi.EntryPoint</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.transaction.factory_class" value="org.hibernate.transaction.JTATransactionFactory"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.connection.autocommit" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

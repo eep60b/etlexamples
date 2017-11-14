@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<deployment-plan xmlns="http://xmlns.oracle.com/weblogic/deployment-plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.oracle.com/weblogic/deployment-plan http://xmlns.oracle.com/weblogic/deployment-plan/1.0/deployment-plan.xsd">
+  <application-name>integration-ear-1</application-name>
+  <variable-definition>
+    
+    <variable>
+      <name>string_type</name>
+      <value>java.lang.String</value>
+    </variable>    
+    <variable>
+      <name>MapName_value</name>
+      <value>testuser</value>
+    </variable>   
+    <variable>
+      <name>MapKey_value</name>
+      <value>testuser0</value>
+    </variable>                          
+    <variable>
+      <name>universalTopicCF_value</name>
+      <value>jms/sourceData/universalTopicCF</value>
+    </variable>
+    <variable>
+      <name>exportTaskTopic_value</name>
+      <value>jms/dataExport/exportTaskTopic</value>
+    </variable>
+    <variable>
+      <name>universalTopicTopic_value</name>
+      <value>jms/sourceData/universalTopic</value>
+    </variable>
+    
+    <variable>
+      <name>session_type</name>
+      <value>Session</value>
+    </variable>    
+    <variable>
+      <name>FilterEntitledCurveEJBBean_type</name>
+      <value>com.welllink.enterprise.security.filterServices.ejb.FilterEntitledCurveEJB</value>
+    </variable> 
+    <variable>
+      <name>FilterEntitledCurveEJBBean_ejb_link</name>
+      <value>FilterEntitledCurveEJB</value>
+    </variable> 
+        
+    <variable>
+      <name>EntitlementServiceBean_type</name>
+      <value>com.welllink.enterprise.security.entitlement.ejb.EntitlementService</value>
+    </variable>                         
+    <variable>
+      <name>EntitlementServiceBean_ejb_link</name>
+      <value>EntitlementService</value>
+    </variable>
+    
+    <variable>
+      <name>ExporterMDB_class</name>
+      <value>com.etlsolutions.bakerhughes.ejb.ExporterMDB</value>
+    </variable>       
+    
+  </variable-definition>
+
+  <module-override>
+    <module-name>integration-web-1.0-rc-13-SNAPSHOT.war</module-name>
+    <module-type>war</module-type>
+    <module-descriptor external="false">
+      <root-element>web-app</root-element>
+      <uri>WEB-INF/web.xml</uri>
+      
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/web-app/env-entry/[env-entry-name="MapName"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>>MapName_value</name>
+        <xpath>/web-app/env-entry/[env-entry-name=">MapName"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>
+              
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/web-app/env-entry/[env-entry-name="MapKey"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>MapKey_value</name>
+        <xpath>/web-app/env-entry/[env-entry-name="MapKey"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment> 
+            
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/web-app/env-entry/[env-entry-name="universalTopicConnectionFactory"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>universalTopicCF_value</name>
+        <xpath>/web-app/env-entry/[env-entry-name="universalTopicConnectionFactory"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>       
+               
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/web-app/env-entry/[env-entry-name="exportTaskTopic"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>exportTaskTopic_value</name>
+        <xpath>/web-app/env-entry/[env-entry-name="exportTaskTopic"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>                             
+      
+      <variable-assignment>
+        <name>session_type</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/ejb-ref-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>FilterEntitledCurveEJBBean_type</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/local</xpath>
+        <operation>add</operation>
+      </variable-assignment>                                                    
+      <variable-assignment>
+        <name>FilterEntitledCurveEJBBean_ejb_link</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/ejb-link</xpath>
+        <operation>add</operation>
+      </variable-assignment>
+            
+      <variable-assignment>
+        <name>session_type</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/ejb-ref-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>EntitlementServiceBean_type</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/local</xpath>
+        <operation>add</operation>
+      </variable-assignment>                                                    
+      <variable-assignment>
+        <name>EntitlementServiceBean_ejb_link</name>
+        <xpath>/web-app/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/ejb-link</xpath>
+        <operation>add</operation>
+      </variable-assignment>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+    </module-descriptor>
+  </module-override>
+  <module-override>
+    <module-name>integration-ejb-1.0-rc-13-SNAPSHOT.jar</module-name>
+    <module-type>ejb</module-type>
+    <module-descriptor external="false">
+      <root-element>ejb-jar</root-element>
+      <uri>META-INF/ejb-jar.xml</uri>
+      
+      <variable-assignment>
+        <name>ExporterMDB_class</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-class</xpath>
+        <operation>add</operation>
+      </variable-assignment> 
+           
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="MapName"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>>MapName_value</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name=">MapName"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>
+              
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="MapKey"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>MapKey_value</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="MapKey"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment> 
+            
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="universalTopicConnectionFactory"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>universalTopicCF_value</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="universalTopicConnectionFactory"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>        
+      
+      <variable-assignment>
+        <name>string_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="universalTopicTopic"]/env-entry-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>universalTopicTopic_value</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/env-entry/[env-entry-name="universalTopicTopic"]/env-entry-value</xpath>
+        <operation>add</operation>
+      </variable-assignment>      
+      
+       
+      <variable-assignment>
+        <name>session_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/ejb-ref-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>FilterEntitledCurveEJBBean_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/local</xpath>
+        <operation>add</operation>
+      </variable-assignment>                                                    
+      <variable-assignment>
+        <name>FilterEntitledCurveEJBBean_ejb_link</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="FilterEntitledCurveEJBBean"]/ejb-link</xpath>
+        <operation>add</operation>
+      </variable-assignment>
+            
+      <variable-assignment>
+        <name>session_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/ejb-ref-type</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+      <variable-assignment>
+        <name>EntitlementServiceBean_type</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/local</xpath>
+        <operation>add</operation>
+      </variable-assignment>                                                    
+      <variable-assignment>
+        <name>EntitlementServiceBean_ejb_link</name>
+        <xpath>/ejb-jar/enterprise-beans/message-driven/[ejb-name="exporterMDB"]/ejb-local-ref/[ejb-ref-name="EntitlementServiceBean"]/ejb-link</xpath>
+        <operation>add</operation>
+      </variable-assignment>  
+                    
+    </module-descriptor>
+  </module-override>
+</deployment-plan>

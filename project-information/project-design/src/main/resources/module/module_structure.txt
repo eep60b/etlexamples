@@ -1,0 +1,29 @@
+The module will contain a maximum four levels.
+The first two levels are POM modules.
+The third level can be any type depends on the usage.
+The forth level cannot be POM or EAR modules.
+
+Level 1         Level 2                         Level 3                 Level 4                 Note
+
+etl-examples
+
+                data-preparation
+                                                data-generation
+                                                data-retrieval                                  This module is currently called spring-jdbc
+                                                database-management                             This module is currently called databasecreation
+                                                
+                desktop-application
+
+                desktop-application-installer
+
+                project-information
+
+                system-base
+                                                system-configuration
+                                                system-utilities
+                web-applications
+                                                
+                                                web-data-viewer                                 This module is currently called data-retrieval
+                                                
+                web-deployment                                                                   This module needs to be relocated.
+

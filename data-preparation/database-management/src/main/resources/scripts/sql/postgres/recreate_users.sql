@@ -1,0 +1,2 @@
+DO $body$ BEGIN IF NOT EXISTS (SELECT * FROM pg_catalog.pg_user WHERE  usename = 'bookshop') THEN CREATE ROLE BOOKSHOP LOGIN PASSWORD 'BOOKSHOP'; END IF; END $body$;
+ALTER USER bookshop WITH SUPERUSER;

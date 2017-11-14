@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.etlsolutions.examples</groupId>
+        <artifactId>examples-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>  
+    <artifactId>web-applications</artifactId>
+    <packaging>pom</packaging>
+    <name>ETL examples - web applications</name>
+  <modules>
+    <module>data-retrieval</module>
+    <module>webapp-deployer</module>
+    <module>data-retrieval-service</module>
+    <module>main-webapp</module>
+    <module>primefaces-example</module>
+    <module>jetty-embedded</module>
+    <module>servlet-examples</module>
+    <module>spring-mvc</module>
+    <module>jersey-restful</module>
+    <module>jsf-primeface-cdi-jpa</module>
+    <module>spring-webservices</module>
+    <module>webservice-client</module>
+    <module>oauth-service</module>
+    <module>web-clients</module>
+  </modules>
+</project>

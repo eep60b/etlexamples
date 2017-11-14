@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.ReviewPojo" optimistic-lock="version" schema="BOOKSHOP" table="REVIEW">
+        <id name="id" type="int">
+            <column name="REVIEW_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="reviewer" class="com.etlsolutions.examples.database.hibernate.pojo.ReviewerPojo" fetch="select">
+            <column name="REVIEWER_ID" unique-key="UNIQUE_REVIEW" />
+        </many-to-one>
+        <many-to-one name="itemCommonDetail" class="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo" fetch="select">
+            <column name="ITEM_COMMON_DETAIL_ID" unique-key="UNIQUE_REVIEW" />
+        </many-to-one>
+        <property name="reviewRanking" type="int">
+            <column name="REVIEW_RANKING" />
+        </property>
+        <property name="reviewText" type="string">
+            <column name="REVIEW_TEXT" length="4000" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_REVIEW" read-only="true">
+        DELETE FROM ReviewPojo
+    </query>
+    <query name="FIND_REVIEW_BY_ID" read-only="true">
+        FROM ReviewPojo WHERE id = :id
+    </query>      
+    <query name="FIND_REVIEW_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM ReviewPojo WHERE reviewer = :reviewer and itemCommonDetail = :itemCommonDetail
+    </query>     
+    <query name="FIND_ALL_REVIEWS" read-only="true">
+        FROM ReviewPojo
+    </query>     
+    <query name="FIND_ALL_REVIEW_IDS" read-only="true">
+        SELECT id FROM ReviewPojo
+    </query>      
+    <sql-query name="INSERT_INTO_REVIEW">
+        INSERT INTO REVIEW(REVIEW_ID, REVIEWER_ID, ITEM_COMMON_DETAIL_ID, REVIEW_RANKING, REVIEW_TEXT) 
+        VALUES            (:id,       :reviewerId, :itemCommonDetailId,   :ranking,       :text)
+    </sql-query>
+</hibernate-mapping>

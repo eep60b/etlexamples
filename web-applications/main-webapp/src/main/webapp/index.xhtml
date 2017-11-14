@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ETL JLR Portal Test</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <f:view> 
+            <f:loadBundle basename="com.etlsolutions.examples.mainapplication.Index" var="indexBundle"/>              
+            <f:facet name="last">      
+                <h:outputStylesheet name="css/index.css"/>
+            </f:facet>
+            <p:layout fullPage="true">
+                <p:layoutUnit styleClass="north-layout" position="north">
+                    <h:outputLink value="#{indexBundle.HOMEPAGE}" target="_blank"><p:graphicImage name="img/logo.jpeg" alt="#{indexBundle.LOGO_ALT}" class="logo" /></h:outputLink>
+                    <h:outputLink value="#{indexBundle.EXTRA_HOMEPAGE}" target="_blank"><p:graphicImage name="img/extra-logo.jpeg" alt="#{indexBundle.EXTRA_LOGO_ALT}" class="extra-logo" /></h:outputLink>
+                    <h:panelGrid columns="1"  styleClass="logout-form">
+                        <h:form>
+                            <p:commandButton value="#{indexBundle.LOGOUT}" ajax="false" actionListener="#{indexController.logout}"/>
+                        </h:form> 
+                    </h:panelGrid>
+                </p:layoutUnit>
+
+                <div id="header-divider" class="support-contact">#{indexBundle.CONTACT_SUPPORT} #{indexBundle.SUPPORT_EMAIL}</div>
+
+                <p:layoutUnit position="center" styleClass="center-layout">
+                    <p:growl id="growl" globalOnly="true" autoUpdate="true" showDetail="true" sticky="true" />
+                    <div class="top-gap" />
+                    <br />
+                    <h:link outcome="pages/login" value="The login page" />
+                    <br />
+                    <h:link outcome="pages/address/List" value="Show All Address Items"/>
+                    <br />
+                    <h:link outcome="/pages/book/List" value="Show All Book Items"/>
+                    <br />
+                    <h:link outcome="/pages/publisher/List" value="Show All Publisher Items"/>
+                    <br />                    
+                    <h:link outcome="/pages/category/List" value="Show All Category Items"/>
+                    <br />
+                    <h:link outcome="/pages/item/List" value="Show All Item Items"/>                    
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>        
+    </h:body>
+</html>

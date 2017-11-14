@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.DebitcardPaymentPojo" optimistic-lock="version" schema="BOOKSHOP" table="DEBITCARD_PAYMENT">
+        <id name="id" type="int">
+            <column name="PAYMENT_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personAddressLink" class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" fetch="select">
+            <column name="PERSON_ADDRESS_LINK_ID" />
+        </many-to-one>
+        <many-to-one name="paymentDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo" fetch="select">
+            <column name="PAYMENT_DETAIL_ID" unique="true" />
+            <column name="PAYMENT_TYPE" length="11" />
+        </many-to-one>
+        <property name="cardNumber" type="string">
+            <column name="CARD_NUMBER" length="16" not-null="true" />
+        </property>
+        <property name="securityCode" type="string">
+            <column name="SECURITY_CODE" length="3" not-null="true" />
+        </property>
+        <property name="issueNumber" type="int">
+            <column name="ISSUE_NUMBER" />
+        </property>
+        <property name="startDate" type="date">
+            <column name="START_DATE" length="7" not-null="true" />
+        </property>
+        <property name="expireDate" type="date">
+            <column name="EXPIRE_DATE" length="7" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_DEBITCARD_PAYMENT" read-only="true">
+        DELETE FROM DebitcardPaymentPojo
+    </query>
+    <query name="FIND_DEBITCARD_PAYMENT_BY_ID" read-only="true">
+        FROM DebitcardPaymentPojo WHERE id = :id
+    </query>      
+    <query name="FIND_DEBITCARD_PAYMENT_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM DebitcardPaymentPojo WHERE paymentDetail = :paymentDetail
+    </query>     
+    <query name="FIND_ALL_DEBITCARD_PAYMENTS" read-only="true">
+        FROM DebitcardPaymentPojo
+    </query>     
+    <query name="FIND_ALL_DEBITCARD_PAYMENT_IDS" read-only="true">
+        SELECT id FROM DebitcardPaymentPojo
+    </query>         
+    <sql-query name="INSERT_INTO_DEBITCARD_PAYMENT">
+        INSERT INTO DEBITCARD_PAYMENT(PAYMENT_ID, PAYMENT_DETAIL_ID, PERSON_ADDRESS_LINK_ID, PAYMENT_TYPE, CARD_NUMBER, SECURITY_CODE, ISSUE_NUMBER, START_DATE, EXPIRE_DATE)
+        VALUES                       (:id,        :paymentDetailId,  :personAddressLinkId,   :paymentType, :cardNumber, :securityCode, :issueNumber,  :startDate, :expireDate)
+    </sql-query>
+</hibernate-mapping>

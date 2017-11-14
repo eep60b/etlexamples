@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.PaypalPaymentPojo" optimistic-lock="version" schema="BOOKSHOP" table="PAYPAL_PAYMENT">
+        <id name="id" type="int">
+            <column name="PAYMENT_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="paymentDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo" fetch="select">
+            <column name="PAYMENT_DETAIL_ID" unique="true" />
+            <column name="PAYMENT_TYPE" length="11" />
+        </many-to-one>
+        <property name="paypalAccountId" type="string">
+            <column name="PAYPAL_ACCOUNT_ID" length="100" not-null="true" />
+        </property>
+        <property name="paypalIdentityToken" type="string">
+            <column name="PAYPAL_IDENTITY_TOKEN" length="100" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_PAYPAL_PAYMENT" read-only="true">
+        DELETE FROM PaypalPaymentPojo
+    </query>
+    <query name="FIND_PAYPAL_PAYMENT_BY_ID" read-only="true">
+        FROM PaypalPaymentPojo WHERE id = :id
+    </query>      
+    <query name="FIND_PAYPAL_PAYMENTL_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM PaypalPaymentPojo WHERE paymentDetail = :paymentDetail
+    </query>     
+    <query name="FIND_ALL_PAYPAL_PAYMENTS" read-only="true">
+        FROM PaypalPaymentPojo
+    </query>     
+    <query name="FIND_ALL_PAYPAL_PAYMENT_IDS" read-only="true">
+        SELECT id FROM PaypalPaymentPojo
+    </query>       
+    <sql-query name="INSERT_INTO_PAYPAL_PAYMENT">
+        INSERT INTO PAYPAL_PAYMENT(PAYMENT_ID, PAYMENT_DETAIL_ID, PAYPAL_ACCOUNT_ID, PAYMENT_TYPE, PAYPAL_IDENTITY_TOKEN)
+        VALUES                    (:id,        :paymentDetailId,  :accoutId,         :paymentType, :identifyToken)
+    </sql-query>
+</hibernate-mapping>

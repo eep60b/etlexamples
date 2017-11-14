@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo" optimistic-lock="version" schema="BOOKSHOP" table="PAYMENT_DETAIL">
+        <composite-id name="idObject" class="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailIdPojo">
+            <key-property name="id" type="int">
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+            </key-property>
+            <key-property name="paymentType">
+                <column name="PAYMENT_TYPE" unique-key="UNIQUE_PAYMENT_DETAIL"/>                     
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">com.etlsolutions.examples.data.api.PaymentType</param>
+                    <param name="useNamed">true</param>
+                </type>                 
+            </key-property>
+        </composite-id>
+        <many-to-one name="invoice" class="com.etlsolutions.examples.database.hibernate.pojo.InvoicePojo" fetch="select">
+            <column name="INVOICE_ID" unique-key="UNIQUE_PAYMENT_DETAIL" />
+        </many-to-one>
+        <property name="subtotal" type="big_decimal">
+            <column name="SUBTOTAL" precision="10" not-null="true" />
+        </property>
+        <property name="currencyCode">
+            <column name="CURRENCY_CODE" not-null="true">                 
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.CurrencyCode</param>
+                <param name="useNamed">true</param>
+            </type>  
+        </property>
+        <set name="debitcardPayments" table="DEBITCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.DebitcardPaymentPojo" />
+        </set>
+        <set name="amexcardPayments" table="AMEXCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.AmexcardPaymentPojo" />
+        </set>
+        <set name="vouchers" table="VOUCHER_PAYMENT" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" not-null="true" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.VoucherPojo">
+                <column name="VOUCHER_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="paypalPayments" table="PAYPAL_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.PaypalPaymentPojo" />
+        </set>
+        <set name="mastercardPayments" table="MASTERCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.MastercardPaymentPojo" />
+        </set>
+        <set name="visacardPayments" table="VISACARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PAYMENT_DETAIL_ID" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.VisacardPaymentPojo" />
+        </set>
+    </class>
+    <query name="DELETE_FROM_PAYMENT_DETAIL" read-only="true">
+        DELETE FROM PaymentDetailPojo
+    </query>
+    <query name="FIND_PAYMENT_DETAIL_BY_ID" read-only="true">
+        FROM PaymentDetailPojo WHERE id = :id
+    </query>      
+    <query name="FIND_PAYMENT_DETAIL_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM PaymentDetailPojo WHERE invoice = :invoice and idObject.paymentType = :paymentType
+    </query>     
+    <query name="FIND_ALL_PAYMENT_DETAILS" read-only="true">
+        FROM PaymentDetailPojo
+    </query>     
+    <query name="FIND_ALL_PAYMENT_DETAIL_IDS" read-only="true">
+        SELECT id FROM PaymentDetailPojo
+    </query>      
+    <sql-query name="INSERT_INTO_PAYMENT_DETAIL">
+        INSERT INTO PAYMENT_DETAIL(PAYMENT_DETAIL_ID, INVOICE_ID, PAYMENT_TYPE, SUBTOTAL,  CURRENCY_CODE)
+        VALUES                    (:id,               :invoiceId, :paymentType, :subtotal, :currencyCode)
+    </sql-query>
+</hibernate-mapping>

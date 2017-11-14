@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" optimistic-lock="version" schema="BOOKSHOP" table="PERSON_ADDRESS_LINK">
+        <id name="id" type="int">
+            <column name="LINK_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="address" class="com.etlsolutions.examples.database.hibernate.pojo.AddressPojo" fetch="select">
+            <column name="ADDRESS_ID" unique-key="UNIQUE_PERSON_ADDRESS_LINK" />
+        </many-to-one>
+        <many-to-one name="personalDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo" fetch="select">
+            <column name="PERSONAL_DETAIL_ID" unique-key="UNIQUE_PERSON_ADDRESS_LINK" />
+        </many-to-one>
+        <property name="addressType" column="ADDRESS_TYPE" not-null="true" unique-key="UNIQUE_PERSON_ADDRESS_LINK">           
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.AddressType</param>
+                <param name="useNamed">true</param>
+            </type>  
+        </property>
+        <set name="customers" table="CUSTOMER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSON_ADDRESS_LINK_ID" unique="true" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.CustomerPojo" />
+        </set>
+        <set name="visacardPayments" table="VISACARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSON_ADDRESS_LINK_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.VisacardPaymentPojo" />
+        </set>
+        <set name="mastercardPayments" table="MASTERCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSON_ADDRESS_LINK_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.MastercardPaymentPojo" />
+        </set>
+        <set name="debitcardPayments" table="DEBITCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSON_ADDRESS_LINK_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.DebitcardPaymentPojo" />
+        </set>
+        <set name="amexcardPayments" table="AMEXCARD_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PERSON_ADDRESS_LINK_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.AmexcardPaymentPojo" />
+        </set>      
+    </class>
+    <query name="DELETE_FROM_PERSON_ADDRESS_LINK" read-only="true">
+        DELETE FROM PersonAddressLinkPojo
+    </query>    
+    <query name="FIND_PERSON_ADDRESS_LINK_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM PersonAddressLinkPojo WHERE address = :address and personalDetail = :personalDetail and addressType = :type
+    </query>     
+    <query name="FIND_PERSON_ADDRESS_LINKS" read-only="true">
+        FROM PersonAddressLinkPojo
+    </query>     
+    <query name="FIND_PERSON_ADDRESS_LINK_IDS" read-only="true">
+        SELECT id FROM PersonAddressLinkPojo
+    </query>      
+    <query name="FIND_PERSON_ADDRESS_LINK_BY_PARAMETERS" read-only="true">
+        FROM PersonAddressLinkPojo WHERE address = :address and personalDetail = :personalDetail and addressType = :type
+    </query>    
+    <sql-query name="INSERT_INTO_PERSON_ADDRESS_LINK" read-only="true">
+        INSERT INTO PERSON_ADDRESS_LINK(LINK_ID, PERSONAL_DETAIL_ID, ADDRESS_ID, ADDRESS_TYPE) VALUES (:id, :personalDetailId, :addressId, :type)
+    </sql-query>
+</hibernate-mapping>

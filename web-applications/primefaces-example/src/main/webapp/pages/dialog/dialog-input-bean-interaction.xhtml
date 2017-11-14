@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />    
+        <title>Input event example</title>
+    </h:head>
+    <h:body>
+        <f:view>        
+            <p:layout fullPage="true">
+                <p:layoutUnit position="center">
+                    <p:accordionPanel id="mainAccordionPanel" multiple="true">
+                        <p:tab title="Dealers">   
+                            <p:layout style="min-width:400px;min-height:400px;resize:vertical">  
+                                <p:layoutUnit position="west" resizable="true">
+                                </p:layoutUnit>
+                                <p:layoutUnit position="center" resizable="true">
+                                    <h:form id="user">
+                                        <h:panelGrid columns="3" cellpadding="5">
+                                            <h:outputText value="KeyUp: " />
+                                            <p:inputText id="firstname" value="#{userView.firstname}">
+                                                <p:ajax event="keyup" update="out1" />
+                                            </p:inputText>
+                                            <h:outputText id="out1" value="#{userView.firstname}" />
+
+                                            <h:outputText value="Blur: " />
+                                            <p:inputText id="surname" value="#{userView.lastname}">
+                                                <p:ajax event="blur" update="out2" />
+                                            </p:inputText>
+                                            <h:outputText id="out2" value="#{userView.lastname}" />
+                                        </h:panelGrid>
+                                    </h:form>
+                                    <h:form id="addDealerInputForm">
+                                        <h:outputText value="Add dealer B: " />
+                                        <p:inputText id="addDealerInput"  value="#{dialogInputView.dealer}" immediate="true">
+                                            <p:ajax event="keyup" update=":mainAccordionPanel:addDealerInputForm:dealerShow" />
+                                        </p:inputText>
+                                        <h:outputText id="dealerShow" value="#{dialogInputView.dealer}" />
+                                    </h:form>
+                                    <h:form id="addDealerButtonForm">
+                                        <p:commandButton id="addDealerButton" value="Add" oncomplete="PF('addDealerDialog').show()" />
+                                    </h:form>
+                                </p:layoutUnit>
+                            </p:layout>
+                            
+                                <!-- The important thing here is appendTo="@(body)" which enables the modal dialog -->
+                                <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="addDealerDialog" header="Add Dealer" width="400" height="400" id="addDealerDialogId" closable="true" appendTo="@(body)">
+                                    <h:form id="addDealerdialogForm">
+                                    <h:outputText value="Add dealer A: " />
+                                    <p:inputText id="addDealerInputA"  value="#{dialogInputView.dealer}">
+                                        <p:ajax event="keyup" update=":mainAccordionPanel:addDealerdialogForm:dealerShowB" />
+                                    </p:inputText>
+                                    <h:outputText id="dealerShowB" value="#{dialogInputView.dealer}" />
+                                    </h:form>
+                                </p:dialog>   
+                            
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>
+    </h:body>
+</html>

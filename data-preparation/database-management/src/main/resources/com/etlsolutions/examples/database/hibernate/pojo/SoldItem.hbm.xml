@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-Dec-2015 14:16:59 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.SoldItemPojo" optimistic-lock="version" schema="BOOKSHOP" table="SOLD_ITEM">
+        <id name="id" type="int">
+            <column name="SOLD_ITEM_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="itemCommonDetail" class="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo" fetch="select">
+            <column name="ITEM_COMMON_DETAIL_ID" unique-key="UNIQUE_SOLD_ITEM" />
+        </many-to-one>
+        <many-to-one name="invoice" class="com.etlsolutions.examples.database.hibernate.pojo.InvoicePojo" fetch="select">
+            <column name="INVOICE_ID" unique-key="UNIQUE_SOLD_ITEM" />
+        </many-to-one>
+        <property name="quantity" type="int">
+            <column name="QUANTITY" not-null="true" />
+        </property>
+        <property name="unitPrice" type="big_decimal">
+            <column name="UNIT_PRICE" precision="10" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_SOLD_ITEM" read-only="true">
+        DELETE FROM SoldItemPojo
+    </query>
+    <query name="FIND_SOLD_ITEM_BY_ID" read-only="true">
+        FROM SoldItemPojo WHERE id = :id
+    </query>      
+    <query name="FIND_SOLD_ITEM_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM SoldItemPojo WHERE invoice = :invoice and itemCommonDetail = :itemCommonDetail
+    </query>     
+    <query name="FIND_ALL_SOLD_ITEMS" read-only="true">
+        FROM SoldItemPojo
+    </query>     
+    <query name="FIND_ALL_SOLD_ITEM_IDS" read-only="true">
+        SELECT id FROM SoldItemPojo
+    </query>  
+    <sql-query name="INSERT_INTO_SOLD_ITEM">
+        INSERT INTO SOLD_ITEM(SOLD_ITEM_ID, INVOICE_ID, ITEM_COMMON_DETAIL_ID, QUANTITY,  UNIT_PRICE)
+        VALUES               (:id,          :invoiceId, :itemCommonDetailId,   :quantity, :unitPrice)
+    </sql-query>
+</hibernate-mapping>

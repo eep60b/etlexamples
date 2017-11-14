@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.AuthorPojo" optimistic-lock="version" schema="BOOKSHOP" table="AUTHOR">
+        <id name="id" type="int">
+            <column name="AUTHOR_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personalDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PersonalDetailPojo" fetch="select">
+            <column name="PERSONAL_DETAIL_ID" unique="true" />
+        </many-to-one>
+        <property name="image" type="binary">
+            <column name="IMAGE" />
+        </property>
+        <property name="biography" type="binary">
+            <column name="BIOGRAPHY" />
+        </property>
+        <property name="webpageUrl" type="string">
+            <column name="WEBPAGE_URL" length="200" />
+        </property>
+        <set name="books" table="AUTHOR_BOOK_LINK" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="AUTHOR_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.BookPojo">
+                <column name="BOOK_ID" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_AUTHOR" read-only="true">
+        DELETE FROM AuthorPojo
+    </query>
+    <query name="FIND_AUTHOR_BY_ID" read-only="true">
+        FROM AuthorPojo WHERE id = :id
+    </query>      
+    <query name="FIND_AUTHOR_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM AuthorPojo WHERE personalDetail = :personalDetail
+    </query>     
+    <query name="FIND_ALL_AUTHORS" read-only="true">
+        FROM AuthorPojo
+    </query>     
+    <query name="FIND_ALL_AAUTHOR_IDS" read-only="true">
+        SELECT id FROM AuthorPojo
+    </query>       
+    <sql-query name="INSERT_INTO_AUTHOR">
+        INSERT INTO AUTHOR(AUTHOR_ID, PERSONAL_DETAIL_ID, IMAGE,  BIOGRAPHY,  WEBPAGE_URL)
+        VALUES            (:id,       :personalDetailId,  :image, :biography, :webpageUrl)
+    </sql-query>
+    <sql-query name="INSERT_INTO_AUTHOR_BOOK_LINK">
+        INSERT INTO AUTHOR_BOOK_LINK(AUTHOR_ID, BOOK_ID)
+        VALUES            (:authorId,       :bookId)
+    </sql-query>
+    <sql-query name="SELECT_FROM_AUTHOR_BOOK_LINK">
+        SELECT * FROM AUTHOR_BOOK_LINK WHERE AUTHOR_ID = :authorId AND BOOK_ID = :bookId
+    </sql-query>    
+</hibernate-mapping>

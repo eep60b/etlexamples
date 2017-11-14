@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <p:layoutUnit styleClass="north-layout" position="north">
+                    <h:outputLink value="#{Etl_template.HOMEPAGE}" target="_blank"><p:graphicImage name="img/logo.jpeg" alt="#{bundle.LOGO_ALT}" class="logo" /></h:outputLink>
+                    <h:outputLink value="#{bundle.EXTRA_HOMEPAGE}" target="_blank"><p:graphicImage name="img/extra-logo.jpeg" alt="#{bundle.EXTRA_LOGO_ALT}" class="extra-logo" /></h:outputLink>
+                    <h:panelGrid columns="1"  styleClass="logout-form">
+                        <h:form>
+                            <p:commandButton value="#{bundle.LOGOUT}" ajax="false" actionListener="#{indexController.logout}"/>
+                        </h:form> 
+                    </h:panelGrid>
+                </p:layoutUnit>
+
+                <div id="header-divider" class="support-contact">#{bundle.CONTACT_SUPPORT} #{bundle.SUPPORT_EMAIL}</div>
+
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">
+                <ui:insert name="left">Left</ui:insert>
+            </div>
+            <div>
+                <div id="right">
+                    <ui:insert name="right">Right</ui:insert>
+                </div>
+                <div id="content" class="right_content">
+                    <ui:insert name="content">Content</ui:insert>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

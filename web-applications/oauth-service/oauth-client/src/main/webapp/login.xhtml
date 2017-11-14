@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Oauth 2.0 Client Login</title>
+    </h:head>
+
+    <h:body>
+        <f:view>
+            <p:layout fullPage="true">
+                <p:layoutUnit style=" height: auto !important;width: 100%;float: left;margin-top: 20px !important;" position="center">
+                    <h:form id="login" onsubmit="action = 'j_security_check';" prependId="false" style="width: 500px;margin-left:auto;margin-right:auto;margin-top:60px;">
+                        <h:panelGrid columns="2" style="vertical-align:baseline;">
+                            <p:outputLabel />
+                            <p class="login-title">Login</p>
+                            <p:outputLabel for="j_username" value="Username:" style="width:auto!important; font-size:20px!important;" />
+                            <p:inputText id="j_username" />            
+                            <p:outputLabel for="j_password" value="Password:" style="width:auto!important; font-size:20px!important;"/>
+                            <p:password id="j_password" />
+                            <p:outputLabel />
+                            <p:commandButton id="submit" value="Login" ajax="false" style="margin-left:15px; margin-top:15px; height:34px; width:119px;"/>
+                        </h:panelGrid>
+                        <h:panelGroup rendered="#{requestScope['javax.servlet.forward.servlet_path'] == '/j_security_check'}">
+                            <h:outputText value="Login errors" style="color:red;" />
+                        </h:panelGroup>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit styleClass="north-layout" position="south">
+                    <h:outputLink> http://localhost:9548/oauth-authorization-server/AuthServlet</h:outputLink>    
+
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>
+    </h:body>
+</html>
+
+

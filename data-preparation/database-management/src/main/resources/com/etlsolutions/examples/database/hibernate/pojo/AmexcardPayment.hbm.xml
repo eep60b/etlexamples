@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.AmexcardPaymentPojo" optimistic-lock="version" schema="BOOKSHOP" table="AMEXCARD_PAYMENT">
+        <id name="id" type="int">
+            <column name="PAYMENT_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personAddressLink" class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" fetch="select">
+            <column name="PERSON_ADDRESS_LINK_ID" />
+        </many-to-one>
+        <many-to-one name="paymentDetail" class="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo" fetch="select">
+            <column name="PAYMENT_DETAIL_ID" unique="true" />
+            <column name="PAYMENT_TYPE" length="11" />
+        </many-to-one>
+        <property name="cardNumber" type="string">
+            <column name="CARD_NUMBER" length="15" not-null="true" />
+        </property>
+        <property name="securityCode" type="string">
+            <column name="SECURITY_CODE" length="4" not-null="true" />
+        </property>
+        <property name="expireDate" type="date">
+            <column name="EXPIRE_DATE" length="7" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_AMEXCARD_PAYMENT" read-only="true">
+        DELETE FROM AmexcardPaymentPojo
+    </query>
+    <query name="FIND_AMEXCARD_PAYMENT_BY_ID" read-only="true">
+        FROM AmexcardPaymentPojo WHERE id = :id
+    </query>      
+    <query name="FIND_AMEXCARD_PAYMENT_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM AmexcardPaymentPojo WHERE paymentDetail = :paymentDetail
+    </query>     
+    <query name="FIND_ALL_AMEXCARD_PAYMENTS" read-only="true">
+        FROM AmexcardPaymentPojo
+    </query>     
+    <query name="FIND_ALL_AMEXCARD_PAYMENT_IDS" read-only="true">
+        SELECT id FROM AmexcardPaymentPojo
+    </query>      
+    <sql-query name="INSERT_INTO_AMEXCARD_PAYMENT" read-only="true">
+        INSERT INTO AMEXCARD_PAYMENT(PAYMENT_ID, PAYMENT_DETAIL_ID, PERSON_ADDRESS_LINK_ID, PAYMENT_TYPE, CARD_NUMBER, SECURITY_CODE, EXPIRE_DATE)
+        VALUES                      (:id,        :paymentDetailId,  :personAddressLinkId,   :paymentType, :cardNumber, :securityCode, :expireDate)
+    </sql-query>
+</hibernate-mapping>

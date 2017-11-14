@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/basicTemplate.css"/>
+        <title>
+            <ui:insert name="title">The Basic Template</ui:insert>
+        </title>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="50">
+                <ui:insert name="top">
+                    <h:form>
+                        <h:outputLink value="http://www.etlsolutions.com/" styleClass="logo">
+                            <h:graphicImage library="img" alt="ETL Home" name="logo_small.jpg"/>
+                        </h:outputLink> 
+                        <h:commandButton value="Special Offer"/>
+                        <h:commandButton value="Help"/>
+                        <h:inputText id="bookSearch" value="#{bookSearchController.searchString}"></h:inputText>
+                        <h:commandButton value="Search by title" action="#{bookSearchController.searchByTitle(bookSearchController.searchString)}" >
+                            <f:ajax execute="bookSearch" listener="#{bookSearchController.showResult}"></f:ajax>
+                        </h:commandButton>
+                        <h:outputLabel id="userNameId" value="username" styleClass="username"/>
+                        <h:selectOneListbox value="help" label="help"/>
+                        <h:button value="Logout"/>
+                    </h:form>
+                </ui:insert>
+            </p:layoutUnit>  
+            <p:layoutUnit position="center">
+                <ui:insert name="content">Content</ui:insert>
+            </p:layoutUnit> 
+            <p:layoutUnit position="south" size="40">
+                <ui:insert name="bottom">Copyright © 2015 ETL solutions Ltd. This page is for the test purpose only.</ui:insert>
+            </p:layoutUnit>
+        </p:layout> 
+    </h:body>
+
+</html>

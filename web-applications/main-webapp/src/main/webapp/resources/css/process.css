@@ -1,0 +1,1122 @@
+/* ------- LANGUAGE SPECIFI STYLES START ------- */
+
+.language-select-form{
+  margin-top: 35px;
+  margin-right: 20px;
+  float: right;
+}
+
+.language-select-combo-box {
+  border: none !important;
+  height: 38px !important;  
+  width: 200px !important;
+  margin-left: 8px;
+  background: none !important;
+  background-color: #cad2d4 !important;
+  border-radius: 0px;
+ }
+ 
+.language-select-combo-box .ui-selectonemenu-trigger{
+  width: 30px !important;
+  background: #cad2d4 !important;
+  border-left: 3px solid #fff !important;
+}
+  
+.language-select-combo-box .ui-selectonemenu-trigger .ui-icon{
+  height: 32px;
+  width: 30px;
+  background: url(../../resources/img/dropDownArrowWhite.jpeg) !important;
+}
+  
+.language-select-combo-box .ui-inputfield{
+  background: none !important;
+  border: none !important;
+}
+
+.language-select-combo-box .ui-selectonemenu-label{
+  margin-top: 3px;
+  font-size: 17px;
+  color: #fff;
+}
+
+.language-select-label{
+  display: block;
+  float: left;
+  margin-top: 8px; 
+}
+
+/* ------- UPLOAD SPECIFIC BODY STYLES START ------- */
+
+.upload-title{
+  margin-bottom: 2px;
+  margin-left: 15px;
+  font-size: 32px;
+  color: #47a7c3;
+ }
+ 
+.upload-output-label{
+  width: auto !important;
+  font-size: 20px !important;
+}
+
+.upload-top-gap{
+  margin-top: 60px;
+}
+
+.upload-forms{
+  width: 750px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.upload-forms-panelGrid{
+  width: 700px;
+  margin-left:auto;
+  margin-right:auto;
+  border-spacing: 15px;
+  border-collapse: separate;
+}
+
+.upload-forms-panelGrid tbody tr td:first-child{
+  width: 150px;
+}
+
+.upload-forms-panelGrid tbody tr td:nth-child(odd){
+  text-align: right;
+}
+
+.upload-forms-panelGrid tbody tr td{
+  vertical-align: top; 
+  margin-top: 15px;
+}
+
+.table-margin{
+  margin-top: 15px;
+}
+
+.upload-output-label{
+  width: 100px;
+  vertical-align: text-top;
+}
+
+.upload-forms-results-panel, .upload-forms-error-panel, .upload-progress-panel{
+  text-align: center !important;
+  border: none !important;
+}
+
+.browse-forms-panelGrid tbody tr td:nth-child(odd){
+  text-align: left !important;
+}
+
+ .upload-dealer-combo-box, .browse-forms-panelGrid{
+  margin-left: 8px;
+}
+
+.upload-dealer-combo-box {
+  border: none !important;
+  height: 35px !important; 
+  width: 300px !important;
+  background-color: #fff !important;
+}
+
+.upload-dealer-combo-box .ui-selectonemenu-trigger{
+  width: 40px !important;
+  background: #fff !important;
+  border-left: 3px solid #cfcfcf !important;
+}
+
+.upload-dealer-combo-box .ui-selectonemenu-trigger .ui-icon{
+  height: 32px;
+  width: 40px;
+  background: url(../../resources/img/dropDownArrowGrey.jpeg) !important;
+}
+
+.upload-progress-bar{
+  margin-top: 10px; 
+}
+
+.ui-progressbar .ui-widget-header{
+  background: none !important;
+  background-color: #47a7c3 !important;
+}
+
+.upload-forms-results-panel table{
+  width: 750px;
+}
+
+.upload-forms-results-panel{
+  padding-bottom: 45px;
+}
+
+.upload-forms-results-panel .ui-state-default{
+  background: none;
+  background-color: #47a7c3;
+  border: none !important;
+  color: #fff;
+}
+
+.upload-forms-error-panel{
+  margin-top: 45px;
+}
+
+.upload-forms-error-panel a{
+  text-decoration: none;
+  color: #47a7c3;
+}
+
+.upload-forms-error-panel a:hover{
+  text-decoration: underline;
+}
+
+.upload-forms-error-panel a:active{
+  color: #fff;
+}
+
+.ui-datatable-data  td{
+  background: #fff;
+}
+
+.upload-row-column, .upload-column-column{
+  width: 10%;
+}
+
+.upload-issues-column{
+  width: 80%;
+}
+
+.upload-row-number{
+  float: left;
+}
+
+.upload-column-text {
+  float: left;  
+}
+
+.upload-description-column{
+  float: left;
+}
+
+/* ------- PRIMEFACES FILE UPLOADER STYLES ------- */
+
+.ui-fileupload .ui-fileupload-buttonbar, .ui-fileupload .ui-fileupload-content{
+  border: none !important;
+  background: none !important;
+  float: left;
+  padding: 0px;
+}
+
+.ui-fileupload .ui-fileupload-buttonbar{
+  margin-right: 80px;
+}
+
+.ui-fileupload-files{
+  background-color: white;
+  height: 38px !important;
+  width: 301px !important;
+}
+
+.upload-file-path-label{
+  background-color: white;
+  padding: 7px;
+  display: block;
+  width: 162px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upload-file-path{
+  width: 94.5%;
+  height: 10px;
+}
+
+.upload-file-button{
+  margin-top: 15px; 
+}
+
+.ui-fileupload-buttonbar .ui-button {
+  border: 1px solid #cad2d4 !important;
+  background-color: #cad2d4 !important;
+  color: #4A4A4A !important;
+}
+
+ .ui-fileupload-buttonbar .ui-button:hover{
+  border: 1px solid #fff !important;
+}
+
+.ui-fileupload-files, .ui-fileupload-preview, .ui-fileupload-upload, .ui-fileupload-cancel, .ui-fileupload-start, .ui-fileupload .ui-progressbar{
+  display: none !important;
+}
+
+.ui-fileupload-files .ui-fileupload-cancel{
+  display: inline !important;
+}
+
+
+.logout-form {
+  margin-top: 35px;
+  margin-right: 20px;
+  float: right;
+}
+
+.viewdata-top-gap {
+  margin-top: 60px;
+}
+
+/* ------- The From and To Calendars ------- */
+
+.ui-datepicker {  
+  background: white;
+}
+
+/* ------- The data table ------- */
+
+.ui-datatable-hor-scroll .ui-datatable-tablewrapper,.scrolling-div .ui-datatable-tablewrapper{
+     overflow: auto;
+     width: 80%;
+}
+
+.ui-datatable {
+  width: 1500px;
+}
+
+.ui-datatable.ui-widget {
+  font-size: 50%;
+}
+
+.ui-paginator {
+ font-size: x-small;
+ width: 80%;
+ }
+
+.exporter-button {
+  float: right;
+  width: 24px;
+  margin-right: 5px;
+  background: white;
+}
+
+/* ------- The data table columns ------- */
+
+.manufacturer-column {
+  min-width: 90px;  
+}
+
+.dealercode-column {
+  min-width: 80px;    
+}
+
+.eventtype-column {
+  min-width: 72px;
+    
+}
+
+.eventdate-column {
+  min-width: 72px;    
+}
+
+.company-column {
+  min-width: 98px;    
+}
+
+.title-column {
+  min-width: 37px;    
+}
+
+.firstname-column {
+  min-width: 72px;    
+}
+
+.secondname-column {
+  min-width: 85px;      
+}
+
+.address1-column  {
+  min-width: 66px;      
+}
+
+.address2-column {
+  min-width: 66px;      
+}
+
+.address3-column {
+  min-width: 66px;      
+}
+
+.address4-column  {
+  min-width: 66px;      
+}
+
+.town-column  {
+  min-width: 42px;      
+}
+
+.county-column  {
+  min-width: 53px;      
+}
+
+.country-column  {
+  min-width: 58px;
+}
+
+.zip-column  {
+  min-width: 32px;      
+}
+
+.vin-column  {
+  min-width: 33px;      
+}
+
+.phonehome-column  {
+  min-width: 104px;      
+}
+
+.phonebusiness-column  {
+  min-width: 119px;      
+}
+
+.phonemobile-column  {
+  min-width: 111px;      
+}
+
+.email1-column  {
+  min-width: 52px;      
+}
+
+.email2-column  {
+  min-width: 52px;      
+}
+
+.suppress-column  {
+  min-width: 63px;      
+}
+
+.suppressemail-column  {
+  min-width: 96px;      
+}
+
+.suppressphone-column  {
+  min-width: 100px;      
+}
+
+.suppressmail-column  {
+  min-width: 91px;      
+}
+
+/* ------- The data table columns ------- */
+
+.manufacturer-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 76px !important;
+}
+
+.dealercode-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 66px !important;
+}
+
+.eventtype-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.eventdate-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.company-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 84px !important;
+}
+
+.title-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 23px !important;
+}
+
+.firstname-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.secondname-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 71px !important;
+}
+
+.address1-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address2-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address3-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address4-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.town-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 28px !important;
+}
+
+.county-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 39px !important;
+}
+
+.country-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 44px !important;
+}
+
+.zip-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 18px !important;
+}
+
+.vin-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 19px !important;
+}
+
+.phonehome-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 90px !important;
+}
+
+.phonebusiness-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 105px !important;
+}
+
+.phonemobile-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 97px !important;
+}
+
+.email1-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 38px !important;
+}
+
+.email2-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 38px !important;
+}
+
+.suppress-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 49px !important;
+}
+
+.suppressemail-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 82px !important;
+}
+
+.suppressphone-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 86px !important;
+}
+
+.suppressmail-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 77px !important;
+}
+/* ------- LANGUAGE SPECIFI STYLES START ------- */
+
+.language-select-form{
+  margin-top: 35px;
+  margin-right: 20px;
+  float: right;
+}
+
+.language-select-combo-box {
+  border: none !important;
+  height: 38px !important;  
+  width: 200px !important;
+  margin-left: 8px;
+  background: none !important;
+  background-color: #cad2d4 !important;
+  border-radius: 0px;
+ }
+ 
+.language-select-combo-box .ui-selectonemenu-trigger{
+  width: 30px !important;
+  background: #cad2d4 !important;
+  border-left: 3px solid #fff !important;
+}
+  
+.language-select-combo-box .ui-selectonemenu-trigger .ui-icon{
+  height: 32px;
+  width: 30px;
+  background: url(../../resources/img/dropDownArrowWhite.jpeg) !important;
+}
+  
+.language-select-combo-box .ui-inputfield{
+  background: none !important;
+  border: none !important;
+}
+
+.language-select-combo-box .ui-selectonemenu-label{
+  margin-top: 3px;
+  font-size: 17px;
+  color: #fff;
+}
+
+.language-select-label{
+  display: block;
+  float: left;
+  margin-top: 8px; 
+}
+
+/* ------- UPLOAD SPECIFIC BODY STYLES START ------- */
+
+.upload-title{
+  margin-bottom: 2px;
+  margin-left: 15px;
+  font-size: 32px;
+  color: #47a7c3;
+ }
+ 
+.upload-output-label{
+  width: auto !important;
+  font-size: 20px !important;
+}
+
+.upload-top-gap{
+  margin-top: 60px;
+}
+
+.upload-forms{
+  width: 750px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.upload-forms-panelGrid{
+  width: 700px;
+  margin-left:auto;
+  margin-right:auto;
+  border-spacing: 15px;
+  border-collapse: separate;
+}
+
+.upload-forms-panelGrid tbody tr td:first-child{
+  width: 150px;
+}
+
+.upload-forms-panelGrid tbody tr td:nth-child(odd){
+  text-align: right;
+}
+
+.upload-forms-panelGrid tbody tr td{
+  vertical-align: top; 
+  margin-top: 15px;
+}
+
+.table-margin{
+  margin-top: 15px;
+}
+
+.upload-output-label{
+  width: 100px;
+  vertical-align: text-top;
+}
+
+.upload-forms-results-panel, .upload-forms-error-panel, .upload-progress-panel{
+  text-align: center !important;
+  border: none !important;
+}
+
+.browse-forms-panelGrid tbody tr td:nth-child(odd){
+  text-align: left !important;
+}
+
+ .upload-dealer-combo-box, .browse-forms-panelGrid{
+  margin-left: 8px;
+}
+
+.upload-dealer-combo-box {
+  border: none !important;
+  height: 35px !important; 
+  width: 300px !important;
+  background-color: #fff !important;
+}
+
+.upload-dealer-combo-box .ui-selectonemenu-trigger{
+  width: 40px !important;
+  background: #fff !important;
+  border-left: 3px solid #cfcfcf !important;
+}
+
+.upload-dealer-combo-box .ui-selectonemenu-trigger .ui-icon{
+  height: 32px;
+  width: 40px;
+  background: url(../../resources/img/dropDownArrowGrey.jpeg) !important;
+}
+
+.upload-progress-bar{
+  margin-top: 10px; 
+}
+
+.ui-progressbar .ui-widget-header{
+  background: none !important;
+  background-color: #47a7c3 !important;
+}
+
+.upload-forms-results-panel table{
+  width: 750px;
+}
+
+.upload-forms-results-panel{
+  padding-bottom: 45px;
+}
+
+.upload-forms-results-panel .ui-state-default{
+  background: none;
+  background-color: #47a7c3;
+  border: none !important;
+  color: #fff;
+}
+
+.upload-forms-error-panel{
+  margin-top: 45px;
+}
+
+.upload-forms-error-panel a{
+  text-decoration: none;
+  color: #47a7c3;
+}
+
+.upload-forms-error-panel a:hover{
+  text-decoration: underline;
+}
+
+.upload-forms-error-panel a:active{
+  color: #fff;
+}
+
+.ui-datatable-data  td{
+  background: #fff;
+}
+
+.upload-row-column, .upload-column-column{
+  width: 10%;
+}
+
+.upload-issues-column{
+  width: 80%;
+}
+
+.upload-row-number{
+  float: left;
+}
+
+.upload-column-text {
+  float: left;  
+}
+
+.upload-description-column{
+  float: left;
+}
+
+/* ------- PRIMEFACES FILE UPLOADER STYLES ------- */
+
+.ui-fileupload .ui-fileupload-buttonbar, .ui-fileupload .ui-fileupload-content{
+  border: none !important;
+  background: none !important;
+  float: left;
+  padding: 0px;
+}
+
+.ui-fileupload .ui-fileupload-buttonbar{
+  margin-right: 80px;
+}
+
+.ui-fileupload-files{
+  background-color: white;
+  height: 38px !important;
+  width: 301px !important;
+}
+
+.upload-file-path-label{
+  background-color: white;
+  padding: 7px;
+  display: block;
+  width: 162px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upload-file-path{
+  width: 94.5%;
+  height: 10px;
+}
+
+.upload-file-button{
+  margin-top: 15px; 
+}
+
+.ui-fileupload-buttonbar .ui-button {
+  border: 1px solid #cad2d4 !important;
+  background-color: #cad2d4 !important;
+  color: #4A4A4A !important;
+}
+
+ .ui-fileupload-buttonbar .ui-button:hover{
+  border: 1px solid #fff !important;
+}
+
+.ui-fileupload-files, .ui-fileupload-preview, .ui-fileupload-upload, .ui-fileupload-cancel, .ui-fileupload-start, .ui-fileupload .ui-progressbar{
+  display: none !important;
+}
+
+.ui-fileupload-files .ui-fileupload-cancel{
+  display: inline !important;
+}
+
+
+.logout-form {
+  margin-top: 35px;
+  margin-right: 20px;
+  float: right;
+}
+
+.viewdata-top-gap {
+  margin-top: 60px;
+}
+
+/* ------- The From and To Calendars ------- */
+
+.ui-datepicker {  
+  background: white;
+}
+
+/* ------- The data table ------- */
+
+.ui-datatable-hor-scroll .ui-datatable-tablewrapper,.scrolling-div .ui-datatable-tablewrapper{
+     overflow: auto;
+     width: 80%;
+}
+
+.ui-datatable {
+  width: 1500px;
+}
+
+.ui-datatable.ui-widget {
+  font-size: 50%;
+}
+
+.ui-paginator {
+ font-size: x-small;
+ width: 80%;
+ }
+
+.exporter-button {
+  float: right;
+  width: 24px;
+  margin-right: 5px;
+  background: white;
+}
+
+/* ------- The data table columns ------- */
+
+.manufacturer-column {
+  min-width: 90px;  
+}
+
+.dealercode-column {
+  min-width: 80px;    
+}
+
+.eventtype-column {
+  min-width: 72px;
+    
+}
+
+.eventdate-column {
+  min-width: 72px;    
+}
+
+.company-column {
+  min-width: 98px;    
+}
+
+.title-column {
+  min-width: 37px;    
+}
+
+.firstname-column {
+  min-width: 72px;    
+}
+
+.secondname-column {
+  min-width: 85px;      
+}
+
+.address1-column  {
+  min-width: 66px;      
+}
+
+.address2-column {
+  min-width: 66px;      
+}
+
+.address3-column {
+  min-width: 66px;      
+}
+
+.address4-column  {
+  min-width: 66px;      
+}
+
+.town-column  {
+  min-width: 42px;      
+}
+
+.county-column  {
+  min-width: 53px;      
+}
+
+.country-column  {
+  min-width: 58px;
+}
+
+.zip-column  {
+  min-width: 32px;      
+}
+
+.vin-column  {
+  min-width: 33px;      
+}
+
+.phonehome-column  {
+  min-width: 104px;      
+}
+
+.phonebusiness-column  {
+  min-width: 119px;      
+}
+
+.phonemobile-column  {
+  min-width: 111px;      
+}
+
+.email1-column  {
+  min-width: 52px;      
+}
+
+.email2-column  {
+  min-width: 52px;      
+}
+
+.suppress-column  {
+  min-width: 63px;      
+}
+
+.suppressemail-column  {
+  min-width: 96px;      
+}
+
+.suppressphone-column  {
+  min-width: 100px;      
+}
+
+.suppressmail-column  {
+  min-width: 91px;      
+}
+
+/* ------- The data table columns ------- */
+
+.manufacturer-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 76px !important;
+}
+
+.dealercode-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 66px !important;
+}
+
+.eventtype-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.eventdate-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.company-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 84px !important;
+}
+
+.title-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 23px !important;
+}
+
+.firstname-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 58px !important;
+}
+
+.secondname-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 71px !important;
+}
+
+.address1-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address2-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address3-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.address4-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 52px !important;
+}
+
+.town-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 28px !important;
+}
+
+.county-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 39px !important;
+}
+
+.country-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 44px !important;
+}
+
+.zip-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 18px !important;
+}
+
+.vin-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 19px !important;
+}
+
+.phonehome-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 90px !important;
+}
+
+.phonebusiness-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 105px !important;
+}
+
+.phonemobile-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 97px !important;
+}
+
+.email1-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 38px !important;
+}
+
+.email2-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 38px !important;
+}
+
+.suppress-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 49px !important;
+}
+
+.suppressemail-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 82px !important;
+}
+
+.suppressphone-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 86px !important;
+}
+
+.suppressmail-column-filter {
+  height: 8px !important;
+  margin-top: 3px !important;
+  min-width: 77px !important;
+}

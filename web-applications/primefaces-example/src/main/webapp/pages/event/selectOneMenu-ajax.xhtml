@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />    
+        <title>Input event example</title>
+    </h:head>
+    <h:body>
+        <h:form id="themeForm">
+            <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="advanced" value="Advanced:"  />
+                <p:selectOneMenu id="advanced" value="#{selectOneMenuView.theme}" converter="themeConverter" panelStyle="width:180px"
+                                 effect="fade" style="width:160px" filter="true" filterMatchMode="startsWith">
+
+                    <p:ajax process="@form" event="change" update=":themeForm:themeId"/>  
+                    <f:selectItem itemLabel="Not Specified" itemValue="#{null}" />
+                    <f:selectItems value="#{selectOneMenuView.themes}" var="theme" itemLabel="#{selectOneMenuView.getThemeDisplayName(theme)}" itemValue="#{theme}" />
+                </p:selectOneMenu>
+                <h:outputText id="themeId" value="#{selectOneMenuView.theme.id}" style="color: red;"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,5 @@
+The purpose of this project is to provide examples for demonstration. It is for local use only.
+
+The project contains the following applications:
+
+1. The online book shop web application.

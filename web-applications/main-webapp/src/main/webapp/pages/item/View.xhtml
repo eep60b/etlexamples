@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewItemTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewItemLabel_itemId}"/>
+                    <h:outputText value="#{itemController.selected.itemId}" title="#{bundle.ViewItemTitle_itemId}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_itemName}"/>
+                    <h:outputText value="#{itemController.selected.itemName}" title="#{bundle.ViewItemTitle_itemName}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_itemImage}"/>
+                    <h:outputText value="#{itemController.selected.itemImage}" title="#{bundle.ViewItemTitle_itemImage}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_listPrice}"/>
+                    <h:outputText value="#{itemController.selected.listPrice}" title="#{bundle.ViewItemTitle_listPrice}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_salePrice}"/>
+                    <h:outputText value="#{itemController.selected.salePrice}" title="#{bundle.ViewItemTitle_salePrice}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_currencyCode}"/>
+                    <h:outputText value="#{itemController.selected.currencyCode}" title="#{bundle.ViewItemTitle_currencyCode}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_itemRanking}"/>
+                    <h:outputText value="#{itemController.selected.itemRanking}" title="#{bundle.ViewItemTitle_itemRanking}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_itemDescription}"/>
+                    <h:outputText value="#{itemController.selected.itemDescription}" title="#{bundle.ViewItemTitle_itemDescription}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_itemAvailability}"/>
+                    <h:outputText value="#{itemController.selected.itemAvailability}" title="#{bundle.ViewItemTitle_itemAvailability}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_availabilityNumber}"/>
+                    <h:outputText value="#{itemController.selected.availabilityNumber}" title="#{bundle.ViewItemTitle_availabilityNumber}"/>
+                    <h:outputText value="#{bundle.ViewItemLabel_book}"/>
+                    <h:outputText value="#{itemController.selected.book}" title="#{bundle.ViewItemTitle_book}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{itemController.destroyAndView}" value="#{bundle.ViewItemDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewItemEditLink}"/>
+                <br />
+                <h:commandLink action="#{itemController.prepareCreate}" value="#{bundle.ViewItemCreateLink}" />
+                <br />
+                <h:commandLink action="#{itemController.prepareList}" value="#{bundle.ViewItemShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewItemIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

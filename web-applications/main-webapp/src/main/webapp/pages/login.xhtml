@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>#{localMsg.TITLE}</title>
+    </h:head>
+
+    <h:body>
+        <f:view> 
+            <f:loadBundle basename="com.etlsolutions.examples.mainapplication.pages.Login" var="loginBundle"/>      
+            <f:facet name="cssFacet">
+                <h:outputStylesheet name="css/login.css"/>
+            </f:facet>            
+            <p:layout fullPage="true">
+                <p:layoutUnit styleClass="login-north-layout" position="north">
+                    <h:outputLink value="#{loginBundle.HOMEPAGE}" target="_blank"><p:graphicImage name="img/logo.jpeg" alt="#{loginBundle.LOGO_ALT}" class="login-logo" /></h:outputLink>
+                    <h:outputLink value="#{loginBundle.EXTRA_HOMEPAGE}" target="_blank"><p:graphicImage name="img/extra-logo.jpeg" alt="#{loginBundle.EXTRA_LOGO_ALT}" class="login-extra-logo" /></h:outputLink>
+                </p:layoutUnit>
+
+                <div id="login-header-divider">#{loginBundle.CONTACT_SUPPORT} #{loginBundle.SUPPORT_EMAIL}</div>                
+                <p:layoutUnit styleClass="login-center-layout" position="center">
+                    <p:growl id="growl" globalOnly="true" autoUpdate="true" showDetail="true" sticky="true" />
+
+                    <h:form id="login" prependId="false"  styleClass="login-form">
+                        <h:panelGrid columns="2" styleClass="login-forms-panelGrid">
+                            <p:outputLabel />
+                            <p class="login-title">#{loginBundle.LOGIN}</p>
+                            <p:outputLabel for="usernameInput" value="#{loginBundle.USERNAME}" styleClass="login-output-label" />
+                            <p:inputText id="usernameInput" value="#{loginController.username}">
+                                <p:ajax/>
+                            </p:inputText>            
+                            <p:outputLabel for="passwordInput" value="#{loginBundle.PASSWORD}" styleClass="login-output-label"/>
+                            <p:password id="passwordInput" value="#{loginController.password}">
+                                <p:ajax/>
+                            </p:password>
+                            
+                            <p:commandButton id="submit" value="#{loginBundle.LOGIN}" ajax="false" styleClass="login-button" action="#{loginController.login()}"/>  
+                        </h:panelGrid>
+                    </h:form> 
+                </p:layoutUnit>
+
+            </p:layout>
+        </f:view>
+    </h:body>
+</html>
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.ShoppingCartItemPojo" optimistic-lock="version" schema="BOOKSHOP" table="SHOPPING_CART_ITEM">
+        <id name="id" type="int">
+            <column name="SHOPPING_CART_ITEM_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="itemCommonDetail" class="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo" fetch="select">
+            <column name="ITEM_COMMON_DETAIL_ID" unique-key="UNIQUE_SHOPPING_CART" />
+        </many-to-one>
+        <many-to-one name="customer" class="com.etlsolutions.examples.database.hibernate.pojo.CustomerPojo" fetch="select">
+            <column name="CUSTOMER_ID" unique-key="UNIQUE_SHOPPING_CART" />
+        </many-to-one>
+        <property name="unitNumber" type="int">
+            <column name="UNIT_NUMBER" not-null="true" />
+        </property>
+    </class>
+    <query name="DELETE_FROM_SHOPPING_CART_ITEM" read-only="true">
+        DELETE FROM ShoppingCartItemPojo
+    </query>
+    <query name="FIND_SHOPPING_CART_ITEM_BY_ID" read-only="true">
+        FROM ShoppingCartItemPojo WHERE id = :id
+    </query>      
+    <query name="FIND_SHOPPING_CART_ITEM_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM ShoppingCartItemPojo WHERE customer = :customer and itemCommonDetail = :itemCommonDetail
+    </query>     
+    <query name="FIND_ALL_SHOPPING_CART_ITEMS" read-only="true">
+        FROM ShoppingCartItemPojo
+    </query>     
+    <query name="FIND_ALL_SHOPPING_CART_ITEM_IDS" read-only="true">
+        SELECT id FROM ShoppingCartItemPojo
+    </query>  
+    
+    <sql-query name="INSERT_INTO_SHOPPING_CART_ITEM">
+        INSERT INTO SHOPPING_CART_ITEM(SHOPPING_CART_ITEM_ID, CUSTOMER_ID, ITEM_COMMON_DETAIL_ID, UNIT_NUMBER)
+        VALUES                        (:id,                   :customerId, :itemCommonDetailId,   :unitNumber)
+    </sql-query>
+</hibernate-mapping>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputScript library="js" name="double-clicks-prevention.js" />
+        <title>Modal dialog example</title>
+    </h:head>
+    <h:body>
+        <f:view>        
+            <p:layout fullPage="true">
+                <p:layoutUnit position="center">
+                    <p:growl id="growl" globalOnly="true" autoUpdate="true" showDetail="true" sticky="true" />
+                    <p:accordionPanel multiple="true" widgetVar="mainTabPanelWidgetVar" multiple="true" dynamic="true">
+                        <p:tab title="Dealers">    
+                            <p:layout style="min-width:400px;min-height:400px;resize:vertical">                               
+                                <p:layoutUnit position="west" resizable="true">
+                                </p:layoutUnit>
+                                <p:layoutUnit position="center" resizable="true">
+                                    <p:panelGrid id="dealerPanelGrid" columns="2">
+                                        <h:outputText value="Dealer Code:" />
+                                        <h:outputText value="sgs4354" />         
+                                    </p:panelGrid>
+                                    <h:form id="addDealerButtonForm">
+                                        <p:commandButton id="addDealerButton" value="Add" oncomplete="PF('addDealerDialog').show()" />
+                                    </h:form>
+                                </p:layoutUnit>
+                            </p:layout>
+
+                            <!-- The important thing here is appendTo="@(body)" which enables the modal dialog -->
+                            <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="addDealerDialog" header="Add Dealer" width="400" height="400" id="addDealerDialogId" closable="true" appendTo="@(body)">
+                                <h:form id="okCancelForm">
+                                    <p:commandButton id="addDealerOKButton" widgetVar="addDealerOKButtonWidgetVar" value="OK" process="@form" immediate="true" actionListener="#{addDealerView.addDealer}" oncomplete="PF('addDealerDialog').hide()" onclick="PF('addDealerOKButtonWidgetVar').disable()" onsuccess="setTimeout(PF('mainTabPanelWidgetVar').unselect(0), 500)" />
+                                    <p:commandButton id="addDealerCancelButton" value="Cancel" oncomplete="PF('addDealerDialog').hide()" />
+                                </h:form>
+                            </p:dialog>   
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:layoutUnit>
+            </p:layout>
+        </f:view>
+    </h:body>
+</html>

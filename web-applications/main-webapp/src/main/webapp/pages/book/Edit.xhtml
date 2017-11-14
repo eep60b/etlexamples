@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditBookTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookId}" for="bookId" />
+                    <h:inputText id="bookId" value="#{bookController.selected.bookId}" title="#{bundle.EditBookTitle_bookId}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_bookId}"/>
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookIsbn}" for="bookIsbn" />
+                    <h:inputText id="bookIsbn" value="#{bookController.selected.bookIsbn}" title="#{bundle.EditBookTitle_bookIsbn}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_bookIsbn}"/>
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookPdfContent}" for="bookPdfContent" />
+                    <h:inputTextarea rows="4" cols="30" id="bookPdfContent" value="#{bookController.selected.bookPdfContent}" title="#{bundle.EditBookTitle_bookPdfContent}" />
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookEdition}" for="bookEdition" />
+                    <h:inputText id="bookEdition" value="#{bookController.selected.bookEdition}" title="#{bundle.EditBookTitle_bookEdition}" />
+                    <h:outputLabel value="#{bundle.EditBookLabel_publishDate}" for="publishDate" />
+                    <h:inputText id="publishDate" value="#{bookController.selected.publishDate}" title="#{bundle.EditBookTitle_publishDate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookWidth}" for="bookWidth" />
+                    <h:inputText id="bookWidth" value="#{bookController.selected.bookWidth}" title="#{bundle.EditBookTitle_bookWidth}" />
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookLength}" for="bookLength" />
+                    <h:inputText id="bookLength" value="#{bookController.selected.bookLength}" title="#{bundle.EditBookTitle_bookLength}" />
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookThickness}" for="bookThickness" />
+                    <h:inputText id="bookThickness" value="#{bookController.selected.bookThickness}" title="#{bundle.EditBookTitle_bookThickness}" />
+                    <h:outputLabel value="#{bundle.EditBookLabel_dimensionUnit}" for="dimensionUnit" />
+                    <h:inputText id="dimensionUnit" value="#{bookController.selected.dimensionUnit}" title="#{bundle.EditBookTitle_dimensionUnit}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_dimensionUnit}"/>
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookFormat}" for="bookFormat" />
+                    <h:inputText id="bookFormat" value="#{bookController.selected.bookFormat}" title="#{bundle.EditBookTitle_bookFormat}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_bookFormat}"/>
+                    <h:outputLabel value="#{bundle.EditBookLabel_bookLanguage}" for="bookLanguage" />
+                    <h:inputText id="bookLanguage" value="#{bookController.selected.bookLanguage}" title="#{bundle.EditBookTitle_bookLanguage}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_bookLanguage}"/>
+                    <h:outputLabel value="#{bundle.EditBookLabel_item}" for="item" />
+                    <h:selectOneMenu id="item" value="#{bookController.selected.item}" title="#{bundle.EditBookTitle_item}" required="true" requiredMessage="#{bundle.EditBookRequiredMessage_item}">
+                        <f:selectItems value="#{itemController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditBookLabel_publisherId}" for="publisherId" />
+                    <h:selectOneMenu id="publisherId" value="#{bookController.selected.publisherId}" title="#{bundle.EditBookTitle_publisherId}" >
+                        <f:selectItems value="#{publisherController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{bookController.update}" value="#{bundle.EditBookSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditBookViewLink}"/>
+                <br />
+                <h:commandLink action="#{bookController.prepareList}" value="#{bundle.EditBookShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditBookIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

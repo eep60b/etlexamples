@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.CustomerPojo" optimistic-lock="version" schema="BOOKSHOP" table="CUSTOMER">
+        <id name="id" type="int">
+            <column name="CUSTOMER_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="personAddressLink" class="com.etlsolutions.examples.database.hibernate.pojo.PersonAddressLinkPojo" fetch="select">
+            <column name="PERSON_ADDRESS_LINK_ID" unique="true" />
+        </many-to-one>
+        <property name="username" type="string">
+            <column name="USERNAME" length="200" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="PASSWORD" length="200" not-null="true" />
+        </property>
+        <property name="image" type="binary">
+            <column name="IMAGE" />
+        </property>
+        <set name="shoppingCart" table="SHOPPING_CART_ITEM" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CUSTOMER_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.ShoppingCartItemPojo" />
+        </set>
+        <set name="invoices" table="INVOICE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CUSTOMER_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.InvoicePojo" />
+        </set>
+        <set name="wishlists" table="WISHLIST" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CUSTOMER_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.WishlistPojo" />
+        </set>
+        <set name="vouchers" table="VOUCHER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CUSTOMER_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.VoucherPojo" />
+        </set>
+    </class>
+    <query name="DELETE_FROM_CUSTOMER" read-only="true">
+        DELETE FROM CustomerPojo
+    </query>
+    <query name="FIND_CUSTOMER_BY_ID" read-only="true">
+        FROM CustomerPojo WHERE id = :id
+    </query>     
+    <query name="FIND_CUSTOMER_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM CustomerPojo WHERE username = :username
+    </query>
+     <query name="FIND_CUSTOMERS" read-only="true">
+        FROM CustomerPojo
+    </query>     
+    <query name="FIND_ALL_CUSTOMERS_IDS" read-only="true">
+        SELECT id FROM CustomerPojo
+    </query>     
+    <sql-query name="INSERT_INTO_CUSTOMER">
+        INSERT INTO CUSTOMER(CUSTOMER_ID, PERSON_ADDRESS_LINK_ID, USERNAME,  PASSWORD,  IMAGE)
+        VALUES              (:id,         :personAddressLinkId,   :username, :password, :image)
+    </sql-query>
+</hibernate-mapping>

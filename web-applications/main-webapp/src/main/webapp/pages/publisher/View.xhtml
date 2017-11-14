@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPublisherTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPublisherLabel_publisherId}"/>
+                    <h:outputText value="#{publisherController.selected.publisherId}" title="#{bundle.ViewPublisherTitle_publisherId}"/>
+                    <h:outputText value="#{bundle.ViewPublisherLabel_publisherName}"/>
+                    <h:outputText value="#{publisherController.selected.publisherName}" title="#{bundle.ViewPublisherTitle_publisherName}"/>
+                    <h:outputText value="#{bundle.ViewPublisherLabel_addressId}"/>
+                    <h:outputText value="#{publisherController.selected.addressId}" title="#{bundle.ViewPublisherTitle_addressId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{publisherController.destroyAndView}" value="#{bundle.ViewPublisherDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPublisherEditLink}"/>
+                <br />
+                <h:commandLink action="#{publisherController.prepareCreate}" value="#{bundle.ViewPublisherCreateLink}" />
+                <br />
+                <h:commandLink action="#{publisherController.prepareList}" value="#{bundle.ViewPublisherShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPublisherIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

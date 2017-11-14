@@ -1,0 +1,176 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-Aug-2015, 15:53:18
+    Author     : ZHipeng Chang
+*/
+
+/* ------- FONT DECLARATIONS ------- */
+
+@font-face {
+    font-family: 'latoReg';
+    src: url(../../resources/fonts/0000301963-Lato-Reg.ttf);
+}
+
+/* ------- COMMON STYLES START ------- */
+root{
+    display: block;
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    color: #4A4A4A;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
+#login-header-divider{
+    margin-top: 111px;
+    height: 25px;
+    width: 100%;
+    color: #fff;
+    background-color: #47a7c3;
+    padding-left: 51px;
+    line-height: 25px;
+    font-size: 14px;
+    float:left;
+}
+
+.ui-button { /* Button - default*/
+    border: none !important;
+    background: #47a7c3 !important;
+    color: #fff !important;
+    border: 1px solid #47a7c3 !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
+.ui-button:hover{
+    border: 1px solid #fff !important;
+}
+
+.ui-corner-right {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.ui-inputfield{
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    border: 1px solid #fff !important;
+    height: 33px;
+    width: 343px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.ui-inputfield:focus{
+    border: 1px solid #9a9a9a !important;
+}
+
+.ui-layout-container{
+    height: 100%;
+    width: 100%;
+}
+
+.ui-layout-unit{
+    border: none;
+    background: none;
+    float: left;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-items-wrapper{
+    background-color: #fff !important;
+}
+
+.ui-widget {
+    font-family: 'latoReg' !important;
+}
+
+.ui-widget-content{
+    background: none;
+}
+
+/* ------- LOGIN SPECIFIC BODY STYLES START ------- */
+.login-button{
+    margin-left: 15px;
+    margin-top: 15px;
+    height: 34px;
+    width: 119px;
+}
+
+.login-center-layout{
+    height: auto;
+    width: 100%;
+    float: left;
+    margin-top: 20px !important;
+    float:left;
+
+    background: -moz-linear-gradient(white, #cfcfcf); 
+    background: linear-gradient(white, #cfcfcf);
+}
+
+.login-error-message {
+    color:red;
+}
+
+.login-extra-logo {
+    height:75px;
+    width: 220px;
+    padding-top: 15px;
+    margin-left: 5px;
+    float: left;
+}
+
+.login-form{
+    width: 500px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:60px;
+}
+
+.login-forms-panelGrid tbody{
+    vertical-align:baseline;
+}
+
+.login-forms-panelGrid tbody tr td:first-child{
+    width: 150px;
+}
+
+.login-forms-panelGrid tbody tr td:nth-child(odd){
+    text-align: right;
+}
+
+.login-logo {
+    height: 65px;
+    padding-top: 19px;
+    width: 98px;
+    float: left;    
+}
+
+.login-north-layout{
+    height: 104px !important;
+    width: 100%;
+    background: white;
+    float:left;
+}
+
+.login-output-label{
+    width: auto !important;
+    font-size: 20px !important;
+}
+
+.login-title{
+    margin-bottom: 2px;
+    margin-left: 15px;
+    font-size: 32px;
+    color: #47a7c3;
+}

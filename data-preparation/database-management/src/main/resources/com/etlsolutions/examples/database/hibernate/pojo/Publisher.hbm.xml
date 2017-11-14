@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.PublisherPojo" optimistic-lock="version" schema="BOOKSHOP" table="PUBLISHER">
+        <id name="id" type="int">
+            <column name="PUBLISHER_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one class="com.etlsolutions.examples.database.hibernate.pojo.AddressPojo" fetch="select" name="address">
+            <column name="ADDRESS_ID" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column length="100" name="PUBLISHER_NAME" not-null="true" unique="true" />
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="books" table="BOOK">
+            <key>
+                <column name="PUBLISHER_ID" />
+            </key>
+            <one-to-many class="com.etlsolutions.examples.database.hibernate.pojo.BookPojo" />
+        </set>
+    </class>
+    <query name="DELETE_FROM_PUBLISHER" read-only="true">
+        DELETE FROM PublisherPojo
+    </query>
+    <query name="FIND_PUBLISHER_BY_ID" read-only="true">
+        FROM PublisherPojo WHERE id = :id
+    </query>      
+    <query name="FIND_PUBLISHER_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM PublisherPojo WHERE name = :name
+    </query>     
+    <query name="FIND_ALL_PUBLISHERS" read-only="true">
+        FROM PublisherPojo
+    </query>     
+    <query name="FIND_ALL_PUBLISHER_IDS" read-only="true">
+        SELECT id FROM PublisherPojo
+    </query>      
+    <sql-query name="INSERT_INTO_PUBLISHER">
+        INSERT INTO PUBLISHER(PUBLISHER_ID, ADDRESS_ID, PUBLISHER_NAME) VALUES(:id, :addressId, :name)
+    </sql-query>
+</hibernate-mapping>

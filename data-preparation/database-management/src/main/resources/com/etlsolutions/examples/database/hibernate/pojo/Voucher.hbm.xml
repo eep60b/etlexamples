@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.VoucherPojo" optimistic-lock="version" schema="BOOKSHOP" table="VOUCHER">
+        <id name="id" type="int">
+            <column name="VOUCHER_ID" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="customer" class="com.etlsolutions.examples.database.hibernate.pojo.CustomerPojo" fetch="select">
+            <column name="CUSTOMER_ID" />
+        </many-to-one>
+        <property name="voucherToken" type="string">
+            <column name="VOUCHER_TOKEN" length="19" not-null="true" unique="true" />
+        </property>
+        <property name="total" type="big_decimal">
+            <column name="TOTAL" precision="10" not-null="true" />
+        </property>
+        <property name="expireDate" type="date">
+            <column name="EXPIRE_DATE" length="7" not-null="true" />
+        </property>        
+        <set name="paymentDetails" table="VOUCHER_PAYMENT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="VOUCHER_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.PaymentDetailPojo">
+                <column name="PAYMENT_DETAIL_ID" not-null="true" unique="true" />
+                <column name="PAYMENT_TYPE" length="11" />                   
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_VOUCHER" read-only="true">
+        DELETE FROM VoucherPojo
+    </query>
+    <query name="FIND_VOUCHER_BY_ID" read-only="true">
+        FROM VoucherPojo WHERE id = :id
+    </query>      
+    <query name="FIND_VOUCHER_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM VoucherPojo WHERE voucherToken = :voucherToken
+    </query>     
+    <query name="FIND_ALL_VOUCHERS" read-only="true">
+        FROM VoucherPojo
+    </query>     
+    <query name="FIND_ALL_VOUCHER_IDS" read-only="true">
+        SELECT id FROM VoucherPojo
+    </query>      
+    <sql-query name="INSERT_INTO_VOUCHER" read-only="true">
+        INSERT INTO VOUCHER(VOUCHER_ID, CUSTOMER_ID, VOUCHER_TOKEN, TOTAL, EXPIRE_DATE)
+        VALUES            (:id,         :customerId, :voucherToken, :total, :expireDate)
+    </sql-query>
+    <sql-query name="INSERT_INTO_VOUCHER_PAYMENT" read-only="true">
+        INSERT INTO VOUCHER_PAYMENT(PAYMENT_DETAIL_ID, VOUCHER_ID, PAYMENT_TYPE)
+        VALUES                     (:paymentDetailId,  :voucherId, :paymentType)
+    </sql-query>         
+    <sql-query name="SELECT_FROM_VOUCHER_PAYMENT" read-only="true">
+        SELECT * FROM VOUCHER_PAYMENT WHERE PAYMENT_DETAIL_ID = :paymentDetailId AND VOUCHER_ID = :voucherId
+    </sql-query>     
+</hibernate-mapping>

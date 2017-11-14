@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.etlsolutions.examples_database-initialisation-jpa_jar_1.0.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>com.etlsolutions.examples.database.entity.DebitcardPayment</class>
+    <class>com.etlsolutions.examples.database.entity.Email</class>
+    <class>com.etlsolutions.examples.database.entity.ItemCommonDetail</class>
+    <class>com.etlsolutions.examples.database.entity.Telephone</class>
+    <class>com.etlsolutions.examples.database.entity.Author</class>
+    <class>com.etlsolutions.examples.database.entity.PersonalDetail</class>
+    <class>com.etlsolutions.examples.database.entity.VisacardPayment</class>
+    <class>com.etlsolutions.examples.database.entity.ShoppingCartItem</class>
+    <class>com.etlsolutions.examples.database.entity.AmexcardPayment</class>
+    <class>com.etlsolutions.examples.database.entity.MastercardPayment</class>
+    <class>com.etlsolutions.examples.database.entity.PaypalPayment</class>
+    <class>com.etlsolutions.examples.database.entity.Voucher</class>
+    <class>com.etlsolutions.examples.database.entity.Invoice</class>
+    <class>com.etlsolutions.examples.database.entity.Address</class>
+    <class>com.etlsolutions.examples.database.entity.Publisher</class>
+    <class>com.etlsolutions.examples.database.entity.Review</class>
+    <class>com.etlsolutions.examples.database.entity.Reviewer</class>
+    <class>com.etlsolutions.examples.database.entity.Customer</class>
+    <class>com.etlsolutions.examples.database.entity.PersonAddressLink</class>
+    <class>com.etlsolutions.examples.database.entity.Book</class>
+    <class>com.etlsolutions.examples.database.entity.Administrator</class>
+    <class>com.etlsolutions.examples.database.entity.PaymentDetail</class>
+    <class>com.etlsolutions.examples.database.entity.SoldItem</class>
+    <class>com.etlsolutions.examples.database.entity.Category</class>
+    <class>com.etlsolutions.examples.database.entity.Wishlist</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.250.141:5432/bookshop"/>
+      <property name="javax.persistence.jdbc.user" value="bookshop"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="BOOKSHOP"/>
+    </properties>
+  </persistence-unit>
+</persistence>

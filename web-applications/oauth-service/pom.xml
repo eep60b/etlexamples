@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.etlsolutions.examples</groupId>
+        <artifactId>web-applications</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>oauth-service</artifactId>
+    <packaging>pom</packaging>
+    <name>ETL examples - OAuth service</name>
+  <modules>
+    <module>oauth-resource-server</module>
+    <module>oauth-authorization-server</module>
+    <module>oauth-client</module>
+  </modules>
+</project>

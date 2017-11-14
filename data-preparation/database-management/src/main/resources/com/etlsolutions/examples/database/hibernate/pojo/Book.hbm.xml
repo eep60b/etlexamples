@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 19-Nov-2015 11:29:32 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.etlsolutions.examples.database.hibernate.pojo.BookPojo" optimistic-lock="version" schema="BOOKSHOP" table="BOOK">
+        <id name="id" type="int">
+            <column name="BOOK_ID"/>
+            <generator class="native"/>
+        </id>
+        <many-to-one class="com.etlsolutions.examples.database.hibernate.pojo.PublisherPojo" fetch="select" name="publisher">
+            <column name="PUBLISHER_ID"/>
+        </many-to-one>
+        <many-to-one class="com.etlsolutions.examples.database.hibernate.pojo.ItemCommonDetailPojo" fetch="select" name="itemCommonDetail">
+            <column name="ITEM_COMMON_DETAIL_ID" unique="true"/>
+        </many-to-one>
+        <property name="isbn" type="string">
+            <column length="13" name="BOOK_ISBN" not-null="true" unique="true"/>
+        </property>
+        <property name="pdf" type="binary">
+            <column name="BOOK_PDF_CONTENT"/>
+        </property>
+        <property name="edition" type="int">
+            <column name="BOOK_EDITION" not-null="true"/>
+        </property>
+        <property name="publishDate" type="date">
+            <column length="7" name="PUBLISH_DATE"/>
+        </property>
+        <property name="width" type="big_decimal">
+            <column name="BOOK_WIDTH" precision="4" scale="1"/>
+        </property>
+        <property name="length" type="big_decimal">
+            <column name="BOOK_LENGTH" precision="4" scale="1"/>
+        </property>
+        <property name="thickness" type="big_decimal">
+            <column name="BOOK_THICKNESS" precision="4" scale="1"/>
+        </property>
+        <property name="uom">
+            <column name="DIMENSION_UNIT" not-null="true">
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.UOM</param>
+                <param name="useNamed">true</param>
+            </type> 
+        </property>
+        <property name="format">
+            <column name="BOOK_FORMAT" not-null="true">               
+            </column>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.etlsolutions.examples.data.api.BookFormat</param>
+                <param name="useNamed">true</param>
+            </type>              
+        </property>
+        <property name="language">
+            <column name="BOOK_LANGUAGE" not-null="true">                
+            </column>
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">com.etlsolutions.examples.data.api.LanguageCode</param>
+                    <param name="useNamed">true</param>
+                </type>             
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="authors" table="AUTHOR_BOOK_LINK">
+            <key>
+                <column name="BOOK_ID" not-null="true"/>
+            </key>
+            <many-to-many entity-name="com.etlsolutions.examples.database.hibernate.pojo.AuthorPojo">
+                <column name="AUTHOR_ID" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+    <query name="DELETE_FROM_BOOK" read-only="true">
+        DELETE FROM BookPojo
+    </query>
+    <query name="FIND_BOOK_BY_ID" read-only="true">
+        FROM BookPojo WHERE id = :id
+    </query>      
+    <query name="FIND_BOOK_BY_UNIQUE_CONSTRAINT" read-only="true">
+        FROM BookPojo WHERE isbn = :isbn
+    </query>     
+    <query name="FIND_ALL_BOOKS" read-only="true">
+        FROM BookPojo
+    </query>     
+    <query name="FIND_ALL_BOOK_IDS" read-only="true">
+        SELECT id FROM BookPojo
+    </query> 
+    <sql-query name="INSERT_INTO_BOOK">
+        INSERT INTO BOOK(BOOK_ID, ITEM_COMMON_DETAIL_ID, PUBLISHER_ID, BOOK_ISBN, BOOK_PDF_CONTENT, BOOK_EDITION, PUBLISH_DATE,   BOOK_WIDTH, BOOK_LENGTH, BOOK_THICKNESS, UOM,  BOOK_FORMAT, BOOK_LANGUAGE)
+        VALUES          (:id,     :itemCommonDetailId,   :publisherId, :isbn,     :pdf,             :edition,     :publishedDate, :width,     :length,     :thickness,     :uom, :format,     :language)
+    </sql-query>
+</hibernate-mapping>
