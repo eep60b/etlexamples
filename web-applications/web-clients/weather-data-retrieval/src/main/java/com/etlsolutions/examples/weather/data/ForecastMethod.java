@@ -28,4 +28,9 @@ public enum ForecastMethod {
         
         throw new IllegalArgumentException("Unknow forecast method code.");
     }
+
+    @Override
+    public String toString() {
+        return "Forecast mehtod: " + value;
+    }
 }

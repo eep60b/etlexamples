@@ -21,11 +21,24 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
+ * The ForecastDataBuilder class builds the ForcastData objects.
  *
  * @author zc
  */
 public final class ForecastDataBuilder {
 
+    
+    
+    
+    
+    /**
+     * Build a ForecastData object from the given string which is usually a line
+     * in a text file.
+     *
+     * @param inputLine - The string.
+     * @return the ForecastData object. This object will be valid in anycase.
+     * Otherwise an exception will be thrown.
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static final ForecastData build(String inputLine) {
 
@@ -93,12 +106,11 @@ public final class ForecastDataBuilder {
                                         String timeString = repNode.getTextContent();
 
                                         DateTime dateTime = new DateTime(date, timeString);
-                                        int index = -1;
-                                        for (int n = newList.size() - 1; n > 0; n--) {
+
+                                        for (int n = newList.size() - 1; n >= 0; n--) {
                                             ForecastData data = newList.get(n);
                                             if (data.getDateTime().equals(dateTime)) {
                                                 newList.remove(n);
-                                                index = n;
                                             }
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
@@ -114,12 +126,9 @@ public final class ForecastDataBuilder {
                                         WindGust windGust = new WindGust(repAttributes.getNamedItem("G").getTextContent());
                                         WindSpeed windSpeed = new WindSpeed(repAttributes.getNamedItem("S").getTextContent());
                                         ForecastData f = new ForecastData(dateTime, forecastMethod, feelTemperature, precipitationProbability, realTemprature, realVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed);
-                                        if (index >= 0) {
-                                            newList.add(index, f);
-                                        } else {
 
-                                            newList.add(f);
-                                        }
+                                        newList.add(f);
+
                                     }
                                 }
                             }

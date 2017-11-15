@@ -16,4 +16,9 @@ public final class FeelTemperature {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return "Feel Temperature: " + value;
+    }
 }
