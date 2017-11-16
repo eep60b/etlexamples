@@ -84,7 +84,7 @@ public final class SettingConstants {
     
     public static final String RUNNING_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "running.properties";    
     
-
+    public static final String RUNNING_LOCK_FILE_PATH = APPLICATION_HOME + File.separator + "lock/.wf.lock";  
 
     private SettingConstants() {
     }

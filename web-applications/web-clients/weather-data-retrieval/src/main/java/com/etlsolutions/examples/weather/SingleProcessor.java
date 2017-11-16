@@ -54,8 +54,5 @@ public final class SingleProcessor {
         List<ForecastData> newList = ForecastDataBuilder.build(doc, list, parameters.getForecastMethod());
         
         DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters.getDataEncoding());
-        
-        doc.getChildNodes().item(0);
-        
     }
 }

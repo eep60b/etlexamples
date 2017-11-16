@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.util.Date;
 import org.apache.log4j.Logger;
 
 
@@ -14,7 +15,7 @@ public final class MetWeatherCommandLineRunner {
         System.setProperty("metweather.home", APPLICATION_HOME);
     }    
     
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) {
         
         Logger logger = Logger.getLogger(MetWeatherCommandLineRunner.class);
         
@@ -23,8 +24,10 @@ public final class MetWeatherCommandLineRunner {
             ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
             ApplicationParameters parameters = factory.loadApplicationParameters(args);
             
-            logger.info("Start to retrieve data...\nConfigurations:");
-            logger.info(parameters);
+            logger.info("\n\n\nStart to retrieve data...");
+            logger.info(new Date().toString());
+            logger.info("\nConfigurations:");
+            logger.info(parameters.toString() + "\n");
             
             if(parameters.isRunMultiple()) {
                 new MultipleProcessor().process(parameters);
@@ -37,8 +40,8 @@ public final class MetWeatherCommandLineRunner {
             logger.info("Run success.");
             
         } catch (Throwable th) {
-            logger.error("Failed.", th);
-            throw th;
+            logger.error("Run failed.", th);
+            System.exit(-1);
         }
     }
 }

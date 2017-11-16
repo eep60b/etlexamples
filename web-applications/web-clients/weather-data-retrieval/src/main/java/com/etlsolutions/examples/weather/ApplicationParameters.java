@@ -1,6 +1,5 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.DATA_DATEFORMAT;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -17,8 +16,8 @@ public final class ApplicationParameters {
     private final String dataDirectoryPath;
     private final String url;
     private final String forecastMethod;
-    private final Date startDate;
-    private final Date stopDate;
+    private final Date startTime;
+    private final Date stopTime;
     private final boolean runMultiple;
     private final String[] addtionalDataPaths;
     private final String dataEncoding;
@@ -26,14 +25,14 @@ public final class ApplicationParameters {
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
 
-    public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startDate, Date stopDate, boolean runMultiple, String[] addtionalDataPaths,
+    public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
             String dataEncoding, String dataFilePrefix, String dataFileExtension, String intervalInMinutes) {
 
         this.dataDirectoryPath = dataDirectoryPath;
         this.url = url;
         this.forecastMethod = forecastMethod;
-        this.startDate = new Date(startDate.getTime());
-        this.stopDate = stopDate == null ? null : stopDate;
+        this.startTime = new Date(startTime.getTime());
+        this.stopTime = stopTime == null ? null : new Date(stopTime.getTime());
         this.runMultiple = runMultiple;
         this.addtionalDataPaths = addtionalDataPaths;
         this.dataEncoding = dataEncoding;
@@ -54,12 +53,12 @@ public final class ApplicationParameters {
         return forecastMethod;
     }
 
-    public Date getStartDate() {
-        return new Date(startDate.getTime());
+    public Date getStartTime() {
+        return new Date(startTime.getTime());
     }
 
-    public Date getStopDate() {
-        return stopDate == null ? null : new Date(stopDate.getTime());
+    public Date getStopTime() {
+        return stopTime == null ? null : new Date(stopTime.getTime());
     }
 
     public boolean isRunMultiple() {
@@ -91,8 +90,8 @@ public final class ApplicationParameters {
         return    "dataDirectoryPath = " + dataDirectoryPath + "\n"
                 + "URL = " + url + "\n"
                 + "forecastMethod = " + forecastMethod + "\n"
-                + "startDate = " + startDate + "\n"
-                + "stopDate  = " + stopDate + "\n"
+                + "startTime = " + startTime + "\n"
+                + "stopTime  = " + stopTime + "\n"
                 + "runMultiple  = " + runMultiple + "\n"
                 + "addtionalDataPaths  = " + Arrays.toString(addtionalDataPaths) + "\n"
                 + "dataEncoding  = " + dataEncoding + "\n"
