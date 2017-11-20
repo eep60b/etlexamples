@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather;
 
+import com.etlsolutions.examples.weather.data.RequestSource;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -14,30 +15,26 @@ import java.util.List;
 public final class ApplicationParameters {
 
     private final String dataDirectoryPath;
-    private final String url;
-    private final String forecastMethod;
+    private final List<RequestSource> requestSources; 
     private final Date startTime;
     private final Date stopTime;
     private final boolean runMultiple;
     private final String[] addtionalDataPaths;
     private final String dataEncoding;
-    private final String dataFilePrefix;
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
 
-    public ApplicationParameters(String dataDirectoryPath, String url, String forecastMethod, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
-            String dataEncoding, String dataFilePrefix, String dataFileExtension, String intervalInMinutes) {
+    public ApplicationParameters(String dataDirectoryPath, List<RequestSource> requestSources, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
+            String dataEncoding, String dataFileExtension, String intervalInMinutes) {
 
         this.dataDirectoryPath = dataDirectoryPath;
-        this.url = url;
-        this.forecastMethod = forecastMethod;
+        this.requestSources = Collections.unmodifiableList(requestSources);
         this.startTime = new Date(startTime.getTime());
         this.stopTime = stopTime == null ? null : new Date(stopTime.getTime());
         this.runMultiple = runMultiple;
         this.addtionalDataPaths = addtionalDataPaths;
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
-        this.dataFilePrefix = dataFilePrefix;
         this.intervalMiliSeconds = 60 * 1000 * Long.parseLong(intervalInMinutes);
     }
 
@@ -45,12 +42,8 @@ public final class ApplicationParameters {
         return dataDirectoryPath;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public String getForecastMethod() {
-        return forecastMethod;
+    public List<RequestSource> getRequestSources() {
+        return requestSources;
     }
 
     public Date getStartTime() {
@@ -73,10 +66,6 @@ public final class ApplicationParameters {
         return dataEncoding;
     }
 
-    public String getDataFilePrefix() {
-        return dataFilePrefix;
-    }
-
     public String getDataFileExtension() {
         return dataFileExtension;
     }
@@ -88,16 +77,14 @@ public final class ApplicationParameters {
     @Override
     public String toString() {
         return    "dataDirectoryPath = " + dataDirectoryPath + "\n"
-                + "URL = " + url + "\n"
-                + "forecastMethod = " + forecastMethod + "\n"
+                + "Request sources = " + requestSources + "\n"
                 + "startTime = " + startTime + "\n"
                 + "stopTime  = " + stopTime + "\n"
                 + "runMultiple  = " + runMultiple + "\n"
                 + "addtionalDataPaths  = " + Arrays.toString(addtionalDataPaths) + "\n"
                 + "dataEncoding  = " + dataEncoding + "\n"
                 + "dataFileExtension  = " + dataFileExtension + "\n"
-                + "dataFilePrefix  = " + dataFilePrefix + "\n"
-                + "intervalMiliSeconds  = " + intervalMiliSeconds / 60 / 1000;
+                + "interval in minutes  = " + intervalMiliSeconds / 60 / 1000;
     }
 
 }

@@ -13,6 +13,12 @@ public final class WindGust {
         this.speed = Integer.parseInt(speed);
     } 
 
+    public WindGust(WindSpeed windSpeed) {
+        this.speed = windSpeed.getSpeed();
+    }
+
+    
+    
     public int getSpeed() {
         return speed;
     }   

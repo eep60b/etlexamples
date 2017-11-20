@@ -6,18 +6,18 @@ package com.etlsolutions.examples.weather.data;
  */
 public class RelativeHumidity {
 
-    private final int value;
+    private final double value;
 
     public RelativeHumidity(String value) {
 
-        this.value = Integer.parseInt(value);
+        this.value = Double.parseDouble(value);
 
         if (this.value < 0 || this.value > 100) {
             throw new IllegalArgumentException("Invalid relative humidity value.");
         }
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 }

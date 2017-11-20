@@ -6,14 +6,14 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class RealTemperature {
     
-       private final int value;
+       private final double value;
     
     public RealTemperature(String value) {
         
-        this.value = Integer.parseInt(value);
+        this.value = Double.parseDouble(value);
     } 
 
-    public int getValue() {
+    public double getValue() {
         return value;
     } 
 }

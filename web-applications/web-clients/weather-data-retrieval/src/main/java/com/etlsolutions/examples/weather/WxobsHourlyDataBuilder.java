@@ -1,18 +1,19 @@
 package com.etlsolutions.examples.weather;
 
+import com.etlsolutions.examples.weather.data.AbsolutePressure;
 import com.etlsolutions.examples.weather.data.DateTime;
-import com.etlsolutions.examples.weather.data.FeelTemperature;
-import com.etlsolutions.examples.weather.data.ForecastData;
-import com.etlsolutions.examples.weather.data.ForecastMethod;
-import com.etlsolutions.examples.weather.data.PrecipitationProbability;
+import com.etlsolutions.examples.weather.data.DewPoint;
+import com.etlsolutions.examples.weather.data.PressureTendency;
 import com.etlsolutions.examples.weather.data.RealTemperature;
 import com.etlsolutions.examples.weather.data.RealVisibility;
 import com.etlsolutions.examples.weather.data.RelativeHumidity;
-import com.etlsolutions.examples.weather.data.UvIndex;
+import com.etlsolutions.examples.weather.data.RequestMethod;
+import com.etlsolutions.examples.weather.data.ResponseData;
 import com.etlsolutions.examples.weather.data.WeatherType;
 import com.etlsolutions.examples.weather.data.WindDirection;
 import com.etlsolutions.examples.weather.data.WindGust;
 import com.etlsolutions.examples.weather.data.WindSpeed;
+import com.etlsolutions.examples.weather.data.WxobsHourlyData;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Document;
@@ -21,26 +22,22 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The ForecastDataBuilder class builds the ForcastData objects.
  *
  * @author zc
  */
-public final class ForecastDataBuilder {
+public final class WxobsHourlyDataBuilder implements DataBuilder {
 
-    
-    
-    
-    
     /**
-     * Build a ForecastData object from the given string which is usually a line
-     * in a text file.
+     * Build a Wxfcs3hourlyData object from the given string which is usually a
+     * line in a text file.
      *
      * @param inputLine - The string.
-     * @return the ForecastData object. This object will be valid in anycase.
-     * Otherwise an exception will be thrown.
+     * @return the Wxfcs3hourlyData object. This object will be valid in
+     * anycase. Otherwise an exception will be thrown.
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static final ForecastData build(String inputLine) {
+    @Override
+    public final WxobsHourlyData build(String inputLine) {
 
         String line = inputLine;
 
@@ -51,24 +48,24 @@ public final class ForecastDataBuilder {
         String[] cells = line.split(",");
 
         DateTime dateTime = new DateTime(cells[0]);
-        ForecastMethod forecastMethod = ForecastMethod.getForecastMethod(cells[1]);
-        FeelTemperature feelTemperature = new FeelTemperature(cells[2]);
-        PrecipitationProbability precipitationProbability = new PrecipitationProbability(cells[3]);
-        RealTemperature realTemprature = new RealTemperature(cells[4]);
-        RealVisibility realVisibility = RealVisibility.getRealVisibility(Integer.parseInt(cells[5]));
-        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[6]);
-        UvIndex uvIndex = new UvIndex(cells[7]);
-        WeatherType weatherType = WeatherType.getWeatherType(cells[8]);
-        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[9]));
-        WindGust windGust = new WindGust(cells[10]);
-        WindSpeed windSpeed = new WindSpeed(cells[11]);
+        AbsolutePressure absolutePressure = new AbsolutePressure(cells[3]);
+        PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[4]);
+        RealTemperature realTemprature = new RealTemperature(cells[5]);
+        RealVisibility realVisibility = new RealVisibility(cells[6]);
+        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[7]);
+        DewPoint dewPoint = new DewPoint(cells[8]);
+        WeatherType weatherType = WeatherType.getWeatherType(cells[9]);
+        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[10]));
+        WindGust windGust = new WindGust(cells[11]);
+        WindSpeed windSpeed = new WindSpeed(cells[12]);
 
-        return new ForecastData(dateTime, forecastMethod, feelTemperature, precipitationProbability, realTemprature, realVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed);
+        return new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);
     }
 
-    public static final List<ForecastData> build(Document document, List<ForecastData> list, String forecastMethodString) {
+    @Override
+    public final List<ResponseData> build(Document document, List<ResponseData> savedData, RequestMethod requestMethod) {
 
-        List<ForecastData> newList = new ArrayList<>(list);
+        List<ResponseData> oldList = new ArrayList<>(savedData);
         NodeList documentChildren = document.getChildNodes();
 
         for (int i = 0; i < documentChildren.getLength(); i++) {
@@ -107,27 +104,27 @@ public final class ForecastDataBuilder {
 
                                         DateTime dateTime = new DateTime(date, timeString);
 
-                                        for (int n = newList.size() - 1; n >= 0; n--) {
-                                            ForecastData data = newList.get(n);
+                                        for (int n = oldList.size() - 1; n >= 0; n--) {
+                                            ResponseData data = oldList.get(n);
                                             if (data.getDateTime().equals(dateTime)) {
-                                                newList.remove(n);
+                                                oldList.remove(n);
                                             }
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
-                                        ForecastMethod forecastMethod = ForecastMethod.getForecastMethod(forecastMethodString);
-                                        FeelTemperature feelTemperature = new FeelTemperature(repAttributes.getNamedItem("F").getTextContent());
-                                        PrecipitationProbability precipitationProbability = new PrecipitationProbability(repAttributes.getNamedItem("Pp").getTextContent());
+                                        AbsolutePressure absolutePressure = new AbsolutePressure(repAttributes.getNamedItem("P").getTextContent());
+                                        PressureTendency pressureTendency = PressureTendency.getPressureTendency(repAttributes.getNamedItem("Pt").getTextContent());
                                         RealTemperature realTemprature = new RealTemperature(repAttributes.getNamedItem("T").getTextContent());
-                                        RealVisibility realVisibility = RealVisibility.getRealVisibility(repAttributes.getNamedItem("V").getTextContent());
+                                        RealVisibility realVisibility = new RealVisibility(repAttributes.getNamedItem("V").getTextContent());
                                         RelativeHumidity relativeHumidity = new RelativeHumidity(repAttributes.getNamedItem("H").getTextContent());
-                                        UvIndex uvIndex = new UvIndex(repAttributes.getNamedItem("U").getTextContent());
+                                        DewPoint dewPoint = new DewPoint(repAttributes.getNamedItem("Dp").getTextContent());
                                         WeatherType weatherType = WeatherType.getWeatherType(repAttributes.getNamedItem("W").getTextContent());
                                         WindDirection windDirection = WindDirection.getWindDirection(repAttributes.getNamedItem("D").getTextContent());
-                                        WindGust windGust = new WindGust(repAttributes.getNamedItem("G").getTextContent());
                                         WindSpeed windSpeed = new WindSpeed(repAttributes.getNamedItem("S").getTextContent());
-                                        ForecastData f = new ForecastData(dateTime, forecastMethod, feelTemperature, precipitationProbability, realTemprature, realVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed);
+                                        Node windGustAttribute = repAttributes.getNamedItem("G");
+                                        WindGust windGust = windGustAttribute == null ? new WindGust(windSpeed) : new WindGust(windGustAttribute.getTextContent());
+                                        WxobsHourlyData data = new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);
 
-                                        newList.add(f);
+                                        oldList.add(data);
 
                                     }
                                 }
@@ -138,6 +135,6 @@ public final class ForecastDataBuilder {
             }
         }
 
-        return newList;
+        return oldList;
     }
 }

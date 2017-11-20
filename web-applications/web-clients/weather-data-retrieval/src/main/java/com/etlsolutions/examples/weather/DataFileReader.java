@@ -1,6 +1,6 @@
 package com.etlsolutions.examples.weather;
 
-import com.etlsolutions.examples.weather.data.ForecastData;
+import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,16 +10,25 @@ import java.util.List;
 
 /**
  * The DataFileReader class create the data file if it exists into a list of
- * ForecastData.
+ * ResponseData.
  *
  * @author zc
  */
 public final class DataFileReader {
 
-    @SuppressWarnings("NestedAssignment")
-    public static final List<ForecastData> readData(File file) throws IOException {
+    private static final DataFileReader INSTANCE = new DataFileReader();
 
-        List<ForecastData> list = new ArrayList<>();
+    public DataFileReader() {
+    }
+    
+    public static final DataFileReader getInstance() {
+        return INSTANCE;
+    }
+    
+    @SuppressWarnings("NestedAssignment")
+    public final List<ResponseData> readData(DataBuilder dataBuilder, File file) throws IOException {
+
+        List<ResponseData> list = new ArrayList<>();
 
         if (file.isFile()) {
 
@@ -27,9 +36,9 @@ public final class DataFileReader {
                 String line;
                 while ((line = br.readLine()) != null) {
 
-                    ForecastData f = ForecastDataBuilder.build(line);
-                    if (f != null) {
-                        list.add(f);
+                    ResponseData data = dataBuilder.build(line);
+                    if (data != null) {
+                        list.add(data);
                     }
                 }
             }

@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.DATA_LOGGING_DIRECTORY_PATH;
-import com.etlsolutions.examples.weather.data.ForecastData;
+import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -28,7 +28,7 @@ public final class DataFileWriter {
         return INSTANCE;
     }
     
-    public void write(List<ForecastData> list, File file, List<File> additionalFiles, String dataEncoding) throws IOException {
+    public void write(List<ResponseData> list, File file, List<File> additionalFiles, String dataEncoding) throws IOException {
         StringBuilder builder = new StringBuilder();
         list.stream().forEach((data) -> {
             builder.append(data.getOutputString()).append("\n");
