@@ -41,7 +41,7 @@ public enum PredictedVisibility {
         throw new IllegalArgumentException("Unknow visibility code.");
     }    
     
-    public static PredictedVisibility getRealVisibility(String code) {
+    public static PredictedVisibility getPredictedVisibility(String code) {
         
         for(PredictedVisibility visibility : values()) {
             if(visibility.code.equals(code)) {

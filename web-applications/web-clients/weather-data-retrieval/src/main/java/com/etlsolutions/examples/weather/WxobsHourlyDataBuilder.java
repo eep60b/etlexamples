@@ -27,14 +27,6 @@ import org.w3c.dom.NodeList;
  */
 public final class WxobsHourlyDataBuilder implements DataBuilder {
 
-    /**
-     * Build a Wxfcs3hourlyData object from the given string which is usually a
-     * line in a text file.
-     *
-     * @param inputLine - The string.
-     * @return the Wxfcs3hourlyData object. This object will be valid in
-     * anycase. Otherwise an exception will be thrown.
-     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public final WxobsHourlyData build(String inputLine) {
@@ -48,16 +40,16 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
         String[] cells = line.split(",");
 
         DateTime dateTime = new DateTime(cells[0]);
-        AbsolutePressure absolutePressure = new AbsolutePressure(cells[3]);
-        PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[4]);
-        RealTemperature realTemprature = new RealTemperature(cells[5]);
-        RealVisibility realVisibility = new RealVisibility(cells[6]);
-        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[7]);
-        DewPoint dewPoint = new DewPoint(cells[8]);
-        WeatherType weatherType = WeatherType.getWeatherType(cells[9]);
-        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[10]));
-        WindGust windGust = new WindGust(cells[11]);
-        WindSpeed windSpeed = new WindSpeed(cells[12]);
+        AbsolutePressure absolutePressure = new AbsolutePressure(cells[1]);
+        PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[2]);
+        RealTemperature realTemprature = new RealTemperature(cells[3]);
+        RealVisibility realVisibility = new RealVisibility(cells[4]);
+        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[5]);
+        DewPoint dewPoint = new DewPoint(cells[6]);
+        WeatherType weatherType = WeatherType.getWeatherType(cells[7]);
+        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[8]));
+        WindGust windGust = new WindGust(cells[9]);
+        WindSpeed windSpeed = new WindSpeed(cells[10]);
 
         return new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);
     }

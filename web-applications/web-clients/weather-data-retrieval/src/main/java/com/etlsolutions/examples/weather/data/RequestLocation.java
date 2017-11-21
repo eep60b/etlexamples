@@ -40,4 +40,9 @@ public final class RequestLocation {
     public double getElevation() {
         return elevation;
     }
+
+    @Override
+    public String toString() {
+        return "RequestLocation{" + "id=" + id + ", name=" + name + ", latitude=" + latitude + ", longitude=" + longitude + ", elevation=" + elevation + '}';
+    }
 }

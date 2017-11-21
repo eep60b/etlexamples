@@ -41,8 +41,8 @@ public final class WxobsHourlyData implements ResponseData {
     
     @Override
     public String getOutputString() {
-        return dateTime.getDateTime() + "," + forecastMethod.getMethodToken() + "," + forecastMethod.getInterval() + "," + absolutePressure.getValue() + "," + pressureTendency.getValue() + ","
-                + realTemprature.getValue() + "," + realVisibility.getValue()+ "," + relativeHumidity.getValue() + "," + dewPoint.getValue() + "," + weatherType.getValue() + ","
+        return dateTime.getDateTime() + "," + absolutePressure.getValue() + "," + pressureTendency.getValue() + ","
+                + realTemprature.getValue() + "," + realVisibility.getValue()+ "," + relativeHumidity.getValue() + "," + dewPoint.getValue() + "," + weatherType.getCode() + ","
                         + windDirection.getValue() + "," + windGust.getSpeed() + "," + windSpeed.getSpeed();
     }
     

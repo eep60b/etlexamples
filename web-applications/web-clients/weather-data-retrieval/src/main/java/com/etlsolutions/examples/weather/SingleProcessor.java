@@ -33,7 +33,7 @@ public final class SingleProcessor {
             RequestMethod requestMethod = requestSource.getRequesttMethod();
             DataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
             
-            String fileName = requestMethod.getAbbreviation() + calendar.get(Calendar.YEAR) + parameters.getDataFileExtension();
+            String fileName = requestMethod.getAbbreviation() + "-" + requestSource.getRequestLocation().getName() + "-" + calendar.get(Calendar.YEAR) + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
 
             List<File> additionalFiles = new ArrayList<>();

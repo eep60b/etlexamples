@@ -3,6 +3,8 @@ package com.etlsolutions.examples.weather;
 import com.etlsolutions.examples.weather.data.RequestMethod;
 
 /**
+ * The DataBuilderFactory class is a factory class to create DataBuilder
+ * objects.
  *
  * @author zc
  */
@@ -13,10 +15,21 @@ public final class DataBuilderFactory {
     private DataBuilderFactory() {
     }
 
+    /**
+     * Get an instance of DataBuilderFactory.
+     *
+     * @return the DataBuilderFactory object.
+     */
     public static final DataBuilderFactory getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Create a DataBuilder object according to the the given request method.
+     *
+     * @param requestMethod - The specified request method.
+     * @return the newly created DataBuilder object.
+     */
     public DataBuilder createDataBuilder(RequestMethod requestMethod) {
 
         switch (requestMethod) {

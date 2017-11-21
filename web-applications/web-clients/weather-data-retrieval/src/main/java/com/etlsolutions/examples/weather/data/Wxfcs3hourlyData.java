@@ -41,8 +41,8 @@ public final class Wxfcs3hourlyData implements ResponseData {
     
     @Override
     public String getOutputString() {
-        return dateTime.getDateTime() + "," + forecastMethod.getMethodToken() + "," + forecastMethod.getInterval() + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
-                + realTemprature.getValue() + "," + predictedVisibility.getMinValue()+ "," + relativeHumidity.getValue() + "," + uvIndex.getValue() + "," + weatherType.getValue() + ","
+        return dateTime.getDateTime() + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
+                + realTemprature.getValue() + "," + predictedVisibility.getMinValue()+ "," + relativeHumidity.getValue() + "," + uvIndex.getValue() + "," + weatherType.getCode() + ","
                         + windDirection.getValue() + "," + windGust.getSpeed() + "," + windSpeed.getSpeed();
     }
 }

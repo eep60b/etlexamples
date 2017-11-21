@@ -21,16 +21,16 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * The RequestLocationsLoader class load locations from a request-locations.xml
+ * The RequestLocationsLoader class load locations from a station-locations.xml
  * file.
  *
  * @author zc
  */
-public final class RequestLocationsLoader {
+public final class StationLocationsLoader {
 
     private static final RequestLocationsLoader INSTANCE = new RequestLocationsLoader();
 
-    public RequestLocationsLoader() {
+    public StationLocationsLoader() {
     }
 
     public static final RequestLocationsLoader getInstance() {
@@ -50,7 +50,7 @@ public final class RequestLocationsLoader {
             locaitions = loadFile(new FileInputStream(file));
         } else {
             logger.warn("\nThe file, " + path + ", does NOT exist.");
-            logger.info("Try to load request locations from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
+            logger.info("Try to load station locations from " + DEFAULT_STATION_LOCATIONS_FILE_PATH + ".");
 
             File defaultFile = new File(DEFAULT_REQUEST_LOCATIONS_FILE_PATH);
 

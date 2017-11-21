@@ -83,6 +83,8 @@ public final class SettingConstants {
     
     public static final String DEFAULT_REQUEST_LOCATIONS_FILE_PATH = APPLICATION_HOME + File.separator + "data" + File.separator + "locations/request-locations.xml";
 
+    public static final String DEFAULT_STATION_LOCATIONS_FILE_PATH = APPLICATION_HOME + File.separator + "data" + File.separator + "locations" + File.separator + "station-locations.xml";
+        
     public static final String DEFAULT_RESORRCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";    
     
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";

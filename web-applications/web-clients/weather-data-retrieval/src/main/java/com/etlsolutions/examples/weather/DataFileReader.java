@@ -18,7 +18,7 @@ public final class DataFileReader {
 
     private static final DataFileReader INSTANCE = new DataFileReader();
 
-    public DataFileReader() {
+    private DataFileReader() {
     }
     
     public static final DataFileReader getInstance() {

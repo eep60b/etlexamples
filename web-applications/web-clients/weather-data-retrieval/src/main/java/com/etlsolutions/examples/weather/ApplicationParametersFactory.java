@@ -25,7 +25,7 @@ public final class ApplicationParametersFactory {
     private static final ApplicationParametersFactory INSTANCE = new ApplicationParametersFactory();
 
     private final Properties properties = new Properties();
-    private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss DD/MM/YYYY");
+    private final DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
     private File configFile;
 
     private ApplicationParametersFactory() {
@@ -42,7 +42,7 @@ public final class ApplicationParametersFactory {
         options.addOption(DATA_DIRECTORY_PATH_KEY, true, "The data file path");
         options.addOption(START_TIME_KEY, true, "The start time");
         options.addOption(STOP_TIME_KEY, true, "The stop time");
-        options.addOption(RUN_MULTIPLE_KEY, true, "Whether to run multiple");
+        options.addOption(RUN_MULTIPLE_KEY, true, "Whether to run multiply.");
         options.addOption(ADDITIONAL_DATA_PATH_KEY, true, "The additional data paths.");
         options.addOption(DATA_ENCODING_KEY, true, "The data encoding method.");
         options.addOption(DATA_FILE_PREFIX_KEY, true, "The data file prefix.");

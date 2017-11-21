@@ -1,10 +1,11 @@
 package com.etlsolutions.examples.weather.data;
 
 /**
+ * The DewPoint class represents a dew point.
  *
  * @author zc
  */
-public class DewPoint {
+public final class DewPoint {
 
     private final double value;
 
@@ -17,4 +18,8 @@ public class DewPoint {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return "Dew point: " + value;
+    }
 }

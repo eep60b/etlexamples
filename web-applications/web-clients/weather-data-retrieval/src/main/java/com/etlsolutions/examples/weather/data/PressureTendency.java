@@ -43,6 +43,6 @@ public enum PressureTendency {
 
     @Override
     public String toString() {
-        return "PressureTendency{" + description +"}";
+        return "Pressure tendency: " + description;
     }
 }
