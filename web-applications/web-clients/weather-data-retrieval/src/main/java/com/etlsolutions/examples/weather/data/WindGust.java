@@ -6,20 +6,18 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class WindGust {
     
-     private final int speed;
+     private final double value;
     
-    public WindGust(String speed) {
+    public WindGust(String value) {
         
-        this.speed = Integer.parseInt(speed);
+        this.value = Double.parseDouble(value);
     } 
 
     public WindGust(WindSpeed windSpeed) {
-        this.speed = windSpeed.getSpeed();
+        this.value = windSpeed.getValue();
     }
 
-    
-    
-    public int getSpeed() {
-        return speed;
+    public double getValue() {
+        return value;
     }   
 }

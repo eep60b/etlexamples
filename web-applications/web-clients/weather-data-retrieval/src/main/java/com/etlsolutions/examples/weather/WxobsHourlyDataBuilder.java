@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_DATETIME_FORMAT;
 import com.etlsolutions.examples.weather.data.AbsolutePressure;
 import com.etlsolutions.examples.weather.data.DateTime;
 import com.etlsolutions.examples.weather.data.DewPoint;
@@ -14,6 +15,9 @@ import com.etlsolutions.examples.weather.data.WindDirection;
 import com.etlsolutions.examples.weather.data.WindGust;
 import com.etlsolutions.examples.weather.data.WindSpeed;
 import com.etlsolutions.examples.weather.data.WxobsHourlyData;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Document;
@@ -29,7 +33,7 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    public final WxobsHourlyData build(String inputLine) {
+    public final WxobsHourlyData build(String inputLine) throws ParseException {
 
         String line = inputLine;
 
@@ -39,7 +43,8 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
 
         String[] cells = line.split(",");
 
-        DateTime dateTime = new DateTime(cells[0]);
+        DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
+        DateTime dateTime = new DateTime(dateFormat.parse(cells[0]));
         AbsolutePressure absolutePressure = new AbsolutePressure(cells[1]);
         PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[2]);
         RealTemperature realTemprature = new RealTemperature(cells[3]);
@@ -103,15 +108,24 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
                                             }
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
-                                        AbsolutePressure absolutePressure = new AbsolutePressure(repAttributes.getNamedItem("P").getTextContent());
-                                        PressureTendency pressureTendency = PressureTendency.getPressureTendency(repAttributes.getNamedItem("Pt").getTextContent());
-                                        RealTemperature realTemprature = new RealTemperature(repAttributes.getNamedItem("T").getTextContent());
-                                        RealVisibility realVisibility = new RealVisibility(repAttributes.getNamedItem("V").getTextContent());
-                                        RelativeHumidity relativeHumidity = new RelativeHumidity(repAttributes.getNamedItem("H").getTextContent());
-                                        DewPoint dewPoint = new DewPoint(repAttributes.getNamedItem("Dp").getTextContent());
-                                        WeatherType weatherType = WeatherType.getWeatherType(repAttributes.getNamedItem("W").getTextContent());
-                                        WindDirection windDirection = WindDirection.getWindDirection(repAttributes.getNamedItem("D").getTextContent());
-                                        WindSpeed windSpeed = new WindSpeed(repAttributes.getNamedItem("S").getTextContent());
+                                        Node pAttr = repAttributes.getNamedItem("P");
+                                        AbsolutePressure absolutePressure = new AbsolutePressure(pAttr == null ? "-100" : pAttr.getTextContent());
+                                        Node ptAttr = repAttributes.getNamedItem("Pt");
+                                        PressureTendency pressureTendency = ptAttr == null ? PressureTendency.UNKOWN : PressureTendency.getPressureTendency(ptAttr.getTextContent());
+                                        Node tAttr = repAttributes.getNamedItem("T");
+                                        RealTemperature realTemprature = new RealTemperature(tAttr == null ? "-100" : tAttr.getTextContent());
+                                        Node vAttr = repAttributes.getNamedItem("V");
+                                        RealVisibility realVisibility = new RealVisibility(vAttr == null ? "-100" : vAttr.getTextContent());
+                                        Node hAttr = repAttributes.getNamedItem("H");
+                                        RelativeHumidity relativeHumidity = new RelativeHumidity(hAttr == null ? "-100" : hAttr.getTextContent());
+                                        Node dpAttr = repAttributes.getNamedItem("Dp");
+                                        DewPoint dewPoint = new DewPoint(dpAttr == null ? "-100" : dpAttr.getTextContent());
+                                        Node wAttr = repAttributes.getNamedItem("W");
+                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherType(wAttr.getTextContent());
+                                        Node dAttr = repAttributes.getNamedItem("D");
+                                        WindDirection windDirection = dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent());
+                                        Node sAttr = repAttributes.getNamedItem("S");
+                                        WindSpeed windSpeed = new WindSpeed(sAttr == null ? "-100" : sAttr.getTextContent());
                                         Node windGustAttribute = repAttributes.getNamedItem("G");
                                         WindGust windGust = windGustAttribute == null ? new WindGust(windSpeed) : new WindGust(windGustAttribute.getTextContent());
                                         WxobsHourlyData data = new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);

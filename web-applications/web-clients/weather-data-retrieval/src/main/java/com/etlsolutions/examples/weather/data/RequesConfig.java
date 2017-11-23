@@ -7,22 +7,22 @@ import static com.etlsolutions.examples.weather.SettingConstants.*;
  *
  * @author zc
  */
-public final class RequestSource {
+public final class RequesConfig {
     
-    private final RequestMethod requesttMethod;
+    private final RequestMethod requestMethod;
     private final RequestLocation requestLocation;
     private final RequestToken requestToken;
     private final String url;
 
-    public RequestSource(RequestMethod requesttMethod, RequestLocation requestLocation, RequestToken requestToken) {
-        this.requesttMethod = requesttMethod;
+    public RequesConfig(RequestMethod requesttMethod, RequestLocation requestLocation, RequestToken requestToken) {
+        this.requestMethod = requesttMethod;
         this.requestLocation = requestLocation;
         this.requestToken = requestToken;
         this.url = URL_BASE.replace(REQUEST_METHOD_TOKEN, requesttMethod.getMethodToken()).replace(LOCATION_TOKEN, requestLocation.getId()).replace(REQUEST_INTERVAL_TOKEN, requesttMethod.getInterval()).replace(REQUEST_TOEKN, requestToken.getValue());
     }
 
-    public RequestMethod getRequesttMethod() {
-        return requesttMethod;
+    public RequestMethod getRequestMethod() {
+        return requestMethod;
     }
 
     public RequestLocation getRequestLocation() {
@@ -35,5 +35,10 @@ public final class RequestSource {
 
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public String toString() {
+        return "RequesConfig{" + "method=" + requestMethod + ", location=" + requestLocation + ", user token=" + requestToken + ", url=" + url + "}";
     }
 }

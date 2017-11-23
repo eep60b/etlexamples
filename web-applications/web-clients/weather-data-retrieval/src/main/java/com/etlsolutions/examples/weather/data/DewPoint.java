@@ -9,11 +9,23 @@ public final class DewPoint {
 
     private final double value;
 
+    /**
+     * Construct an object using the given value.
+     *
+     * @param value - The given value.
+     * @throws NumberFormatException if the value cannot be parsed to a double
+     * value
+     */
     public DewPoint(String value) {
 
         this.value = Double.parseDouble(value);
     }
 
+    /**
+     * Get the dew point value.
+     *
+     * @return the dew point value
+     */
     public double getValue() {
         return value;
     }

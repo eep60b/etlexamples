@@ -58,12 +58,12 @@ public final class MultipleProcessor {
                 if (stopProcess == null || stopProcess.trim().isEmpty()) {
 
                     runningProperties.setProperty(STOP_PROCESS_KEY, "false");
-                    runningProperties.store(new FileOutputStream(file), "reset");
+                    runningProperties.store(new FileOutputStream(file), "initialised");
 
                 } else if (stopProcess.trim().equalsIgnoreCase("true")) {
 
                     runningProperties.setProperty(STOP_PROCESS_KEY, "false");
-                    runningProperties.store(new FileOutputStream(file), "reset");
+                    runningProperties.store(new FileOutputStream(file), "updated");
                     logger.info("\nProcess interrupted at " + new Date().toString());
                     break;
 

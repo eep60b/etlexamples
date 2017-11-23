@@ -1,8 +1,9 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_TIMEZONE;
+import static com.etlsolutions.examples.weather.SettingConstants.*;
+import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestMethod;
-import com.etlsolutions.examples.weather.data.RequestSource;
+import com.etlsolutions.examples.weather.data.RequesConfig;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.StringReader;
@@ -28,12 +29,13 @@ public final class SingleProcessor {
 
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DEFAULT_TIMEZONE), Locale.ENGLISH);
 
-        for (RequestSource requestSource : parameters.getRequestSources()) {
+        for (RequesConfig requestConfig : parameters.getRequestConfigs()) {
 
-            RequestMethod requestMethod = requestSource.getRequesttMethod();
+            RequestMethod requestMethod = requestConfig.getRequestMethod();
             DataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
-            
-            String fileName = requestMethod.getAbbreviation() + "-" + requestSource.getRequestLocation().getName() + "-" + calendar.get(Calendar.YEAR) + parameters.getDataFileExtension();
+            RequestLocation location = requestConfig.getRequestLocation();
+            int year = calendar.get(Calendar.YEAR);
+            String fileName = requestMethod.getAbbreviation() + "-" + location.getName() + "-" + year + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
 
             List<File> additionalFiles = new ArrayList<>();
@@ -49,7 +51,7 @@ public final class SingleProcessor {
             HttpClient client = new HttpClient();
             client.start();
 
-            ContentResponse response = client.newRequest(requestSource.getUrl()).send();
+            ContentResponse response = client.newRequest(requestConfig.getUrl()).send();
 
             client.stop();
 
@@ -61,7 +63,13 @@ public final class SingleProcessor {
 
             List<ResponseData> newList = dataBuilder.build(doc, list, requestMethod);
 
-            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters.getDataEncoding());
+            String formattedLocationId = location.getId();
+            
+            while (formattedLocationId.length() < MAXIMUM_LOCATION_ID_LENGTH) {
+                formattedLocationId = "0" + formattedLocationId;
+            }
+            
+            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters.getDataEncoding(), "-" + year + "-" + formattedLocationId);
         }
     }
 }

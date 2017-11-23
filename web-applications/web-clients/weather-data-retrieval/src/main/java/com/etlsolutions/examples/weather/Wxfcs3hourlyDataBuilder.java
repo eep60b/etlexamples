@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_DATETIME_FORMAT;
 import com.etlsolutions.examples.weather.data.DateTime;
 import com.etlsolutions.examples.weather.data.FeelTemperature;
 import com.etlsolutions.examples.weather.data.Wxfcs3hourlyData;
@@ -14,6 +15,9 @@ import com.etlsolutions.examples.weather.data.WeatherType;
 import com.etlsolutions.examples.weather.data.WindDirection;
 import com.etlsolutions.examples.weather.data.WindGust;
 import com.etlsolutions.examples.weather.data.WindSpeed;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Document;
@@ -30,7 +34,7 @@ public final class Wxfcs3hourlyDataBuilder implements DataBuilder {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    public final Wxfcs3hourlyData build(String inputLine) {
+    public final Wxfcs3hourlyData build(String inputLine) throws ParseException {
 
         String line = inputLine;
 
@@ -39,12 +43,12 @@ public final class Wxfcs3hourlyDataBuilder implements DataBuilder {
         }
 
         String[] cells = line.split(",");
-
-        DateTime dateTime = new DateTime(cells[0]);
+        DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
+        DateTime dateTime = new DateTime(dateFormat.parse(cells[0]));
         FeelTemperature feelTemperature = new FeelTemperature(cells[1]);
         PrecipitationProbability precipitationProbability = new PrecipitationProbability(cells[2]);
         RealTemperature realTemprature = new RealTemperature(cells[3]);
-        PredictedVisibility realVisibility = PredictedVisibility.getPredictedVisibility(Integer.parseInt(cells[4]));
+        PredictedVisibility realVisibility = PredictedVisibility.getPredictedVisibility(Double.parseDouble(cells[4]));
         RelativeHumidity relativeHumidity = new RelativeHumidity(cells[5]);
         UvIndex uvIndex = new UvIndex(cells[6]);
         WeatherType weatherType = WeatherType.getWeatherType(cells[7]);
@@ -104,16 +108,25 @@ public final class Wxfcs3hourlyDataBuilder implements DataBuilder {
                                             }
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
-                                        FeelTemperature feelTemperature = new FeelTemperature(repAttributes.getNamedItem("F").getTextContent());
-                                        PrecipitationProbability precipitationProbability = new PrecipitationProbability(repAttributes.getNamedItem("Pp").getTextContent());
-                                        RealTemperature realTemprature = new RealTemperature(repAttributes.getNamedItem("T").getTextContent());
-                                        PredictedVisibility realVisibility = PredictedVisibility.getPredictedVisibility(repAttributes.getNamedItem("V").getTextContent());
-                                        RelativeHumidity relativeHumidity = new RelativeHumidity(repAttributes.getNamedItem("H").getTextContent());
+                                        Node fAttr = repAttributes.getNamedItem("F");
+                                        FeelTemperature feelTemperature = new FeelTemperature(fAttr == null ? "-100" : fAttr.getTextContent());
+                                        Node ppAttr = repAttributes.getNamedItem("Pp");
+                                        PrecipitationProbability precipitationProbability = new PrecipitationProbability(ppAttr == null ? "-100" : ppAttr.getTextContent());
+                                        Node tAttr = repAttributes.getNamedItem("T");
+                                        RealTemperature realTemprature = new RealTemperature(tAttr == null ? "-100" : tAttr.getTextContent());
+                                        Node vAttr = repAttributes.getNamedItem("V");
+                                        PredictedVisibility realVisibility = vAttr == null ? PredictedVisibility.UNKOWN: PredictedVisibility.getPredictedVisibility(vAttr.getTextContent());
+                                        Node hAttr = repAttributes.getNamedItem("H");
+                                        RelativeHumidity relativeHumidity = new RelativeHumidity(hAttr == null ? "-100" : hAttr.getTextContent());
                                         UvIndex uvIndex = new UvIndex(repAttributes.getNamedItem("U").getTextContent());
-                                        WeatherType weatherType = WeatherType.getWeatherType(repAttributes.getNamedItem("W").getTextContent());
-                                        WindDirection windDirection = WindDirection.getWindDirection(repAttributes.getNamedItem("D").getTextContent());
-                                        WindGust windGust = new WindGust(repAttributes.getNamedItem("G").getTextContent());
-                                        WindSpeed windSpeed = new WindSpeed(repAttributes.getNamedItem("S").getTextContent());
+                                        Node wAttr = repAttributes.getNamedItem("W");
+                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherType(wAttr.getTextContent());
+                                        Node dAttr = repAttributes.getNamedItem("D");
+                                        WindDirection windDirection = dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent());
+                                        Node sAttr = repAttributes.getNamedItem("S");
+                                        WindSpeed windSpeed = new WindSpeed(sAttr == null ? "-100" : sAttr.getTextContent());
+                                        Node windGustAttribute = repAttributes.getNamedItem("G");
+                                        WindGust windGust = windGustAttribute == null ? new WindGust(windSpeed) : new WindGust(windGustAttribute.getTextContent());
                                         Wxfcs3hourlyData data = new Wxfcs3hourlyData(dateTime, feelTemperature, precipitationProbability, realTemprature, realVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed);
 
                                         oldList.add(data);

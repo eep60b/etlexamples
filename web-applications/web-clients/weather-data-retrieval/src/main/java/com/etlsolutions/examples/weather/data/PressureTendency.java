@@ -5,7 +5,7 @@ package com.etlsolutions.examples.weather.data;
  * @author zc
  */
 public enum PressureTendency {
-     R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), ;
+     R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), UNKOWN(-100, "unkown");
     
         private final int value;
         private final String description;

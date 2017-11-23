@@ -7,18 +7,18 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class PrecipitationProbability {
 
-    private final int value;
+    private final double value;
 
     public PrecipitationProbability(String value) {
 
-        this.value = Integer.parseInt(value);
+        this.value = Double.parseDouble(value);
 
-        if (this.value < 0 || this.value > 100) {
-            throw new IllegalArgumentException("Invalid precipitation probability value.");
+        if ((this.value < 0 || this.value > 100) && this.value != -100) {
+            throw new IllegalArgumentException("Invalid precipitation probability value: " + this.value);
         }
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 

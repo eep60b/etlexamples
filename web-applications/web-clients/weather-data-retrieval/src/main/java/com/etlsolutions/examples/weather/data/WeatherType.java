@@ -36,7 +36,8 @@ public enum WeatherType {
     HEAVY_SNOW(27, 100, "heavy snow"),
     THUNDER_SHOWER_NIGHT(28, 100, "thunder shower night"),
     THUNDER_SHOWER_DAY(29, 100, "thunder shower day"),
-    THUNDER(30, 100, "thunder");
+    THUNDER(30, 100, "thunder"),
+    UNKOWN(-100, -100, "unknown");
 
     private final int code;
     private final int value;

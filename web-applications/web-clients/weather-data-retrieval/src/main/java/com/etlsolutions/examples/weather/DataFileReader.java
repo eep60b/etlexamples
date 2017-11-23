@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public final class DataFileReader {
     }
     
     @SuppressWarnings("NestedAssignment")
-    public final List<ResponseData> readData(DataBuilder dataBuilder, File file) throws IOException {
+    public final List<ResponseData> readData(DataBuilder dataBuilder, File file) throws IOException, ParseException {
 
         List<ResponseData> list = new ArrayList<>();
 
@@ -34,6 +35,7 @@ public final class DataFileReader {
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
+                br.readLine();
                 while ((line = br.readLine()) != null) {
 
                     ResponseData data = dataBuilder.build(line);

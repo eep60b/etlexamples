@@ -1,6 +1,6 @@
 package com.etlsolutions.examples.weather;
 
-import com.etlsolutions.examples.weather.data.RequestSource;
+import com.etlsolutions.examples.weather.data.RequesConfig;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -15,7 +15,7 @@ import java.util.List;
 public final class ApplicationParameters {
 
     private final String dataDirectoryPath;
-    private final List<RequestSource> requestSources; 
+    private final List<RequesConfig> requestConfigs; 
     private final Date startTime;
     private final Date stopTime;
     private final boolean runMultiple;
@@ -24,11 +24,11 @@ public final class ApplicationParameters {
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
 
-    public ApplicationParameters(String dataDirectoryPath, List<RequestSource> requestSources, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
+    public ApplicationParameters(String dataDirectoryPath, List<RequesConfig> requestConfigs, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
             String dataEncoding, String dataFileExtension, String intervalInMinutes) {
 
         this.dataDirectoryPath = dataDirectoryPath;
-        this.requestSources = Collections.unmodifiableList(requestSources);
+        this.requestConfigs = Collections.unmodifiableList(requestConfigs);
         this.startTime = new Date(startTime.getTime());
         this.stopTime = stopTime == null ? null : new Date(stopTime.getTime());
         this.runMultiple = runMultiple;
@@ -42,8 +42,8 @@ public final class ApplicationParameters {
         return dataDirectoryPath;
     }
 
-    public List<RequestSource> getRequestSources() {
-        return requestSources;
+    public List<RequesConfig> getRequestConfigs() {
+        return requestConfigs;
     }
 
     public Date getStartTime() {
@@ -77,7 +77,7 @@ public final class ApplicationParameters {
     @Override
     public String toString() {
         return    "dataDirectoryPath = " + dataDirectoryPath + "\n"
-                + "Request sources = " + requestSources + "\n"
+                + "Request configs = " + requestConfigs + "\n"
                 + "startTime = " + startTime + "\n"
                 + "stopTime  = " + stopTime + "\n"
                 + "runMultiple  = " + runMultiple + "\n"

@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
-import com.etlsolutions.examples.weather.data.RequestSource;
+import com.etlsolutions.examples.weather.data.RequesConfig;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +17,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
 
 /**
+ * The ApplicationParametersFactory class is a factory class which create the
+ * parameter object for the application.
  *
  * @author zc
  */
@@ -45,12 +47,11 @@ public final class ApplicationParametersFactory {
         options.addOption(RUN_MULTIPLE_KEY, true, "Whether to run multiply.");
         options.addOption(ADDITIONAL_DATA_PATH_KEY, true, "The additional data paths.");
         options.addOption(DATA_ENCODING_KEY, true, "The data encoding method.");
-        options.addOption(DATA_FILE_PREFIX_KEY, true, "The data file prefix.");
         options.addOption(DATA_FILE_EXTENSION_KEY, true, "The data file extension.");
         options.addOption(INTERVAL_MINUTES_KEY, true, "The interval in minutes to retrieval data.");
         options.addOption(REQUEST_LOCATIONS_FILE_PATH_KEY, true, "The path where the location file to be loaded.");
         options.addOption(RESOURCE_PROPERTIES_FILE_PATH_KEY, true, "The path where the resource properties files to be loaded.");
-        
+
         CommandLineParser parser = new PosixParser();
         CommandLine commandLine = parser.parse(options, args);
 
@@ -61,12 +62,10 @@ public final class ApplicationParametersFactory {
         String runMultipleString = commandLine.getOptionValue(RUN_MULTIPLE_KEY);
         String additionalDataPathString = commandLine.getOptionValue(ADDITIONAL_DATA_PATH_KEY);
         String dataEncoding = commandLine.getOptionValue(DATA_ENCODING_KEY);
-        String dataFilePrefix = commandLine.getOptionValue(DATA_FILE_PREFIX_KEY);
         String dataFileExtension = commandLine.getOptionValue(DATA_FILE_EXTENSION_KEY);
         String intervalMinutes = commandLine.getOptionValue(INTERVAL_MINUTES_KEY);
         String requestLocationfilePath = commandLine.getOptionValue(REQUEST_LOCATIONS_FILE_PATH_KEY);
         String requestPropertiesFilePath = commandLine.getOptionValue(RESOURCE_PROPERTIES_FILE_PATH_KEY);
-        
 
         configFile = new File(configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath);
         if (configFile.isFile()) {
@@ -77,12 +76,11 @@ public final class ApplicationParametersFactory {
         String savedRunMultiple = properties.getProperty(RUN_MULTIPLE_KEY);
         String savedAdditionalDataPathString = properties.getProperty(ADDITIONAL_DATA_PATH_KEY);
         String savedDataEncoding = properties.getProperty(DATA_ENCODING_KEY);
-        String savedDataFilePrefix = properties.getProperty(DATA_FILE_PREFIX_KEY);
         String savedDataFileExtension = properties.getProperty(DATA_FILE_EXTENSION_KEY);
         String savedIntervalMinutes = properties.getProperty(INTERVAL_MINUTES_KEY);
-        String savedRequestLocationfilePath =  properties.getProperty(REQUEST_LOCATIONS_FILE_PATH_KEY);
-        String savedRequestPropertiesFilePath =  properties.getProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY);
-        
+        String savedRequestLocationfilePath = properties.getProperty(REQUEST_LOCATIONS_FILE_PATH_KEY);
+        String savedRequestPropertiesFilePath = properties.getProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY);
+
         dataDirecotryPath = dataDirecotryPath == null ? (savedDataPath == null ? DEFAULT_DATA_DIRECTORY_PATH : savedDataPath) : dataDirecotryPath;
 
         Date currentDate = new Date();
@@ -92,23 +90,23 @@ public final class ApplicationParametersFactory {
         runMultipleString = runMultipleString == null ? (savedRunMultiple == null ? DEFAULT_RUN_MULTIPLE : savedRunMultiple) : commandLine.getOptionValue(RUN_MULTIPLE_KEY);
         additionalDataPathString = additionalDataPathString == null ? (savedAdditionalDataPathString == null ? DEFAULT_ADDITIONAL_DATA_PATH : savedAdditionalDataPathString) : additionalDataPathString;
         dataEncoding = dataEncoding == null ? (savedDataEncoding == null ? DEFAULT_DATA_ENCODING : savedDataEncoding) : dataEncoding;
-        dataFilePrefix = dataFilePrefix == null ? (savedDataFilePrefix == null ? DEFAULT_DATA_FILE_PREFIX : savedDataFilePrefix) : dataFilePrefix;
         dataFileExtension = dataFileExtension == null ? (savedDataFileExtension == null ? DEFAULT_DATA_FILE_EXTENSION : savedDataFileExtension) : dataFileExtension;
         intervalMinutes = intervalMinutes == null ? (savedIntervalMinutes == null ? DEFAULT_INTERVAL_MINUTES : savedIntervalMinutes) : intervalMinutes;
+        
         requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_ADDITIONAL_DATA_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
         requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
-        List<RequestSource> requestSources = RequestSourceLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
-    
+        List<RequesConfig> requestSources = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
+
+        properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
         properties.setProperty(RUN_MULTIPLE_KEY, runMultipleString);
         properties.setProperty(ADDITIONAL_DATA_PATH_KEY, additionalDataPathString);
         properties.setProperty(DATA_ENCODING_KEY, dataEncoding);
-        properties.setProperty(DATA_FILE_PREFIX_KEY, dataFilePrefix);
         properties.setProperty(DATA_FILE_EXTENSION_KEY, dataFileExtension);
         properties.setProperty(INTERVAL_MINUTES_KEY, intervalMinutes);
         properties.setProperty(REQUEST_LOCATIONS_FILE_PATH_KEY, requestLocationfilePath);
         properties.setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, requestPropertiesFilePath);
-        
+
         return new ApplicationParameters(dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes);
     }
 

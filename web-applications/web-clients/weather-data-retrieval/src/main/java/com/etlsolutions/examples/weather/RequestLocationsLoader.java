@@ -12,6 +12,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -21,8 +22,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * The RequestLocationsLoader class load locations from a request-locations.xml
- * file.
+ * The RequestLocationsLoader class load all the locations from a
+ * request-locations.xml file.
  *
  * @author zc
  */
@@ -47,23 +48,44 @@ public final class RequestLocationsLoader {
         File file = new File(path);
 
         if (file.isFile()) {
+
             locaitions = loadFile(new FileInputStream(file));
+            logger.info("The request locations has been successfully loaded from " + path + ".");
+
         } else {
+
             logger.warn("\nThe file, " + path + ", does NOT exist.");
             logger.info("Try to load request locations from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
-
             File defaultFile = new File(DEFAULT_REQUEST_LOCATIONS_FILE_PATH);
 
             if (defaultFile.isFile()) {
+
                 locaitions = loadFile(new FileInputStream(defaultFile));
+                logger.info("The request locations has been successfully loaded from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
+                try {
+                    
+                    FileUtils.copyFile(defaultFile, file);
+                    logger.info("The request locations file has been copied to " + path + ".");
+                } catch (IOException ioe) {
+                    logger.info("Failed to copy the request locations file to " + path + ".", ioe);
+                }
             } else {
+
                 logger.warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
                 logger.info("Try to load request locations from the embedded location.");
-                locaitions = loadFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH));
+                InputStream in = RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH);
+                locaitions = loadFile(in);
+                logger.info("The request locations has been successfully loaded from the embedded locaiton.");
+                try {
+                    FileUtils.copyInputStreamToFile(in, defaultFile);
+                    logger.info("The request locations file has been copied to " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
+                    FileUtils.copyInputStreamToFile(in, file);
+                    logger.info("The request locations file has been copied to " + path + ".");
+                } catch (IOException ioe) {
+                    logger.info("Failed to copy the request locations file to " + path + " and/or " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".", ioe);
+                }
             }
         }
-
-        logger.info("The request locations has been successfully loaded.");
         return locaitions;
     }
 

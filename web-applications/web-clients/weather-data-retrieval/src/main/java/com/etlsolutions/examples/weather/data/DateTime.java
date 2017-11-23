@@ -1,9 +1,8 @@
 package com.etlsolutions.examples.weather.data;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -15,14 +14,12 @@ import java.util.TimeZone;
  */
 public final class DateTime implements Comparable<DateTime> {
 
-    private final String dateTime;
     private final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DEFAULT_TIMEZONE), Locale.ENGLISH);
-    private final DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
-
-    public DateTime(String dateTime) {
-        this.dateTime = dateTime;
+    
+    public DateTime(Date dateTime) {
+        calendar.setTime(dateTime);
     }
-
+    
     public DateTime(String date, String time) {
 
         String[] dateParts = date.replaceAll("Z", "").split("-");
@@ -34,22 +31,20 @@ public final class DateTime implements Comparable<DateTime> {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-
-        dateTime = dateFormat.format(calendar.getTime());
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public Date getDateTime() {
+        return calendar.getTime();
     }
 
     public String getYear() {
-        return dateTime.substring(14);
+        return String.valueOf(calendar.get(Calendar.YEAR));
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.dateTime);
+        hash = 37 * hash + calendar.hashCode();
         return hash;
     }
 
@@ -66,16 +61,16 @@ public final class DateTime implements Comparable<DateTime> {
 
         final DateTime other = (DateTime) obj;
 
-        return Objects.equals(this.dateTime, other.dateTime);
+        return Objects.equals(this.calendar, other.calendar);
     }
 
     @Override
     public int compareTo(DateTime other) {
-        return this.dateTime.compareTo(other.dateTime);
+        return this.calendar.compareTo(other.calendar);
     }
 
     @Override
     public String toString() {
-        return dateTime;
+        return calendar.toString();
     }
 }

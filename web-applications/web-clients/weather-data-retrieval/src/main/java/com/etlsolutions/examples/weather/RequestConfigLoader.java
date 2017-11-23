@@ -3,7 +3,7 @@ package com.etlsolutions.examples.weather;
 import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestMethod;
-import com.etlsolutions.examples.weather.data.RequestSource;
+import com.etlsolutions.examples.weather.data.RequesConfig;
 import com.etlsolutions.examples.weather.data.RequestToken;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,26 +16,27 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * The
+ * The RequestConfigLoader class loads the request resources from disk.
  *
  * @author zc
  */
-public final class RequestSourceLoader {
+public final class RequestConfigLoader {
 
-    private static final RequestSourceLoader INSTANCE = new RequestSourceLoader();
+    private static final RequestConfigLoader INSTANCE = new RequestConfigLoader();
 
-    private RequestSourceLoader() {
+    private RequestConfigLoader() {
     }
     
-    public static final RequestSourceLoader getInstance() {
+    public static final RequestConfigLoader getInstance() {
         return INSTANCE;
     }
     
-    public List<RequestSource> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
+    public List<RequesConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
 
         List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath);
+        
         List<Properties> propertieses = new ArrayList<>();
-        List<RequestSource> list = new ArrayList<>();
+        List<RequesConfig> list = new ArrayList<>();
 
         File resourcePropertiesFiles = new File(resourcePropertiesFilesPath);
         
@@ -57,12 +58,16 @@ public final class RequestSourceLoader {
             }
         }
 
+        if(propertieses.isEmpty()) {
+            throw new IOException("There is no valid configuration fould in " + resourcePropertiesFilesPath);
+        }
+                
         propertieses.stream().forEach((properties) -> {
             String locationId = properties.getProperty(LOCATION_TOKEN);
             RequestLocation location = getRequestLocation(locationId, locations);
             RequestMethod requesttMethod = RequestMethod.getRequesttMethod(properties.getProperty(REQUEST_METHOD_TOKEN), properties.getProperty(REQUEST_INTERVAL_TOKEN));
             RequestToken requestToken = new RequestToken(properties.getProperty(REQUEST_TOEKN));
-            list.add(new RequestSource(requesttMethod, location, requestToken));
+            list.add(new RequesConfig(requesttMethod, location, requestToken));
         });
         
         return Collections.unmodifiableList(list);

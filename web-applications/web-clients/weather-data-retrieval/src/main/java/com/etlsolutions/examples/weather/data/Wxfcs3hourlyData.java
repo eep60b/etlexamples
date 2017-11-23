@@ -1,13 +1,18 @@
 package com.etlsolutions.examples.weather.data;
 
+import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_DATETIME_FORMAT;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
+ * TheWxfcs3hourlyData class represents a single poind of data for the UK
+ * 3-hourly site-specific forecast.
  *
  * @author zc
  */
 public final class Wxfcs3hourlyData implements ResponseData {
     
-    private final DateTime dateTime;
-    private final RequestMethod forecastMethod = RequestMethod.FCS_3HOURLY;    
+    private final DateTime dateTime;   
     private final FeelTemperature feelTemperature;
     private final PrecipitationProbability precipitationProbability;
     private final RealTemperature realTemprature;
@@ -41,8 +46,14 @@ public final class Wxfcs3hourlyData implements ResponseData {
     
     @Override
     public String getOutputString() {
-        return dateTime.getDateTime() + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
+        DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
+        return dateFormat.format(dateTime.getDateTime()) + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
                 + realTemprature.getValue() + "," + predictedVisibility.getMinValue()+ "," + relativeHumidity.getValue() + "," + uvIndex.getValue() + "," + weatherType.getCode() + ","
-                        + windDirection.getValue() + "," + windGust.getSpeed() + "," + windSpeed.getSpeed();
+                        + windDirection.getValue() + "," + windGust.getValue() + "," + windSpeed.getValue();
+    }
+
+    @Override
+    public String getTitle(String additional) {
+        return "DTime,FTemp,PProb,Tempt,Visbl,Humid,UvInx,WType,WdDct,WdGst,WdSpd".replace(",", additional + ",") + additional;
     }
 }
