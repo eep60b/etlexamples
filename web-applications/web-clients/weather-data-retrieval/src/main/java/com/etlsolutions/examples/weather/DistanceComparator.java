@@ -4,7 +4,7 @@ import com.etlsolutions.examples.weather.data.RequestLocation;
 import java.util.Comparator;
 
 /**
- *
+ * The DistanceComparator class compares two locations according their latitude and longitude;
  * @author zc
  */
 public class DistanceComparator implements Comparator<RequestLocation> {

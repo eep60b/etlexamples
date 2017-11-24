@@ -1,18 +1,13 @@
 package com.etlsolutions.examples.weather.data;
 
-import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_DATETIME_FORMAT;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 /**
  * The WxobsHourlyData class represents a single poind of data for the UK hourly
  * site-specific observations.
  *
  * @author zc
  */
-public final class WxobsHourlyData implements ResponseData {
+public final class WxobsHourlyData extends AbstractResponseData  {
 
-    private final DateTime dateTime;
     private final AbsolutePressure absolutePressure;
     private final PressureTendency pressureTendency;
     private final RealTemperature realTemprature;
@@ -25,7 +20,7 @@ public final class WxobsHourlyData implements ResponseData {
     private final WindSpeed windSpeed;
 
     public WxobsHourlyData(DateTime dateTime, AbsolutePressure absolutePressure, PressureTendency pressureTendency, RealTemperature realTemprature, RealVisibility realVisibility, RelativeHumidity relativeHumidity, DewPoint dewPoint, WeatherType weatherType, WindDirection windDirection, WindGust windGust, WindSpeed windSpeed) {
-        this.dateTime = dateTime;
+        super(dateTime);
         this.absolutePressure = absolutePressure;
         this.pressureTendency = pressureTendency;
         this.realTemprature = realTemprature;
@@ -39,20 +34,7 @@ public final class WxobsHourlyData implements ResponseData {
     }
 
     @Override
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    @Override
-    public String getOutputString() {
-        DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
-        return dateFormat.format(dateTime.getDateTime()) + "," + absolutePressure.getValue() + "," + pressureTendency.getValue() + ","
-                + realTemprature.getValue() + "," + realVisibility.getValue() + "," + relativeHumidity.getValue() + "," + dewPoint.getValue() + "," + weatherType.getCode() + ","
-                + windDirection.getValue() + "," + windGust.getValue() + "," + windSpeed.getValue();
-    }
-
-    @Override
-    public String getTitle(String additional) {
-        return "DTime,Press,PTend,Tempt,Visblt,Humid,DePnt,WType,WdDct,WdGst,WdSpd".replace(",", additional + ",") + additional;
+    public Valuable[] getValuables() {
+        return new Valuable[]{absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed};
     }
 }

@@ -5,7 +5,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class DewPoint {
+public final class DewPoint implements Valuable {
 
     private final double value;
 
@@ -26,12 +26,18 @@ public final class DewPoint {
      *
      * @return the dew point value
      */
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "Dew point: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "DwPnt";
     }
 }

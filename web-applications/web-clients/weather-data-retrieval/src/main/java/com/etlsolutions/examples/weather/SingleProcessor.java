@@ -46,7 +46,7 @@ public final class SingleProcessor {
                 }
             });
 
-            List<ResponseData> list = DataFileReader.getInstance().readData(dataBuilder, file);
+            List<ResponseData> oldList = DataFileReader.getInstance().readData(dataBuilder, file);
 
             HttpClient client = new HttpClient();
             client.start();
@@ -61,7 +61,7 @@ public final class SingleProcessor {
 
             Document doc = db.parse(is);
 
-            List<ResponseData> newList = dataBuilder.build(doc, list, requestMethod);
+            List<ResponseData> newList = dataBuilder.build(doc, oldList, requestMethod);
 
             String formattedLocationId = location.getId();
             
@@ -69,7 +69,7 @@ public final class SingleProcessor {
                 formattedLocationId = "0" + formattedLocationId;
             }
             
-            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters.getDataEncoding(), "-" + year + "-" + formattedLocationId);
+            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, "-" + year + "-" + formattedLocationId);
         }
     }
 }

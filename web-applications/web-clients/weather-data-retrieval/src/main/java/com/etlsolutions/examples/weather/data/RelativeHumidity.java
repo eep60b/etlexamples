@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public class RelativeHumidity {
+public class RelativeHumidity implements Valuable {
 
     private final double value;
 
@@ -17,7 +17,13 @@ public class RelativeHumidity {
         }
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "Humid";
     }
 }

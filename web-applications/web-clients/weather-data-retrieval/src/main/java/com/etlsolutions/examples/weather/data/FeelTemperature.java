@@ -5,21 +5,27 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class FeelTemperature {
+public final class FeelTemperature implements Valuable{
 
-    private final int value;
+    private final double value;
 
     public FeelTemperature(String value) {
 
-        this.value = Integer.parseInt(value);
+        this.value = Double.parseDouble(value);
     }
 
-    public int getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "Feel Temperature: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "FTemp";
     }
 }

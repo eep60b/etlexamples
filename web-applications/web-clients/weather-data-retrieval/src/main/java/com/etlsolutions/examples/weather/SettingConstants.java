@@ -36,6 +36,10 @@ public final class SettingConstants {
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
 
     public static final String RESOURCE_PROPERTIES_FILE_PATH_KEY = "resourcePropertiesFilePath";
+    
+    public static final String DATETIME_FORMAT_KEY = "datetimeFormat";
+    
+    public static final String DELIMITER_KEY = "delimiter";
 
     public static final String REQUEST_METHOD_TOKEN = "requestMethodToken";
 
@@ -59,6 +63,8 @@ public final class SettingConstants {
      * Example: 22/11/2017 15:00:00
      */
     public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/YYYY HH:mm:ss";
+    
+    public static final String DEFAULT_DELIMITER = ",";
 
     public static final String DEFAULT_RUN_MULTIPLE = "true";
 

@@ -6,7 +6,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class RealTemperature {
+public final class RealTemperature implements Valuable {
 
     private final double value;
 
@@ -15,13 +15,19 @@ public final class RealTemperature {
         this.value = Double.parseDouble(value);
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "Temperature: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "Tempt";
     }
 
 }

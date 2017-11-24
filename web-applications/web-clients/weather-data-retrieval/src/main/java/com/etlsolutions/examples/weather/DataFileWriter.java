@@ -33,25 +33,26 @@ public final class DataFileWriter {
      * @param list - The data list.
      * @param file - The main file.
      * @param additionalFiles - The additional files.
-     * @param dataEncoding - The encoding.
+     * @param parameters - The parameters.
      * @param titleAdditional - The additional information to add to the titles. 
      * @throws IOException if one of the files cannot be written.
      */
-    public void write(List<ResponseData> list, File file, List<File> additionalFiles, String dataEncoding, String titleAdditional) throws IOException {
+    public void write(List<ResponseData> list, File file, List<File> additionalFiles, ApplicationParameters parameters, String titleAdditional) throws IOException {
         
         StringBuilder builder = new StringBuilder();
         list.stream().forEach((data) -> {
             
             //Add an title before the added data.
             if (builder.length() == 0) {
-                builder.append(data.getTitle(titleAdditional)).append("\n");
+                builder.append(data.getTitle(parameters.getDelimiter(), titleAdditional)).append("\n");
             }
 
-            builder.append(data.getOutputString()).append("\n");
+            builder.append(data.getOutputString(parameters.getDatetimeFormat(), parameters.getDelimiter())).append("\n");
         });
 
         String content = new String(builder).substring(0, builder.length() - 1);
 
+        String dataEncoding = parameters.getDataEncoding();
         FileUtils.writeStringToFile(file, content, dataEncoding, false);
 
         Date currentTime = new Date();

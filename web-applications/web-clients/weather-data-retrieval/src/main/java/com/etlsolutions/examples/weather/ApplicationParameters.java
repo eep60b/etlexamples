@@ -23,9 +23,11 @@ public final class ApplicationParameters {
     private final String dataEncoding;
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
+    private final String datetimeFormat;
+    private final String delimiter;
 
     public ApplicationParameters(String dataDirectoryPath, List<RequesConfig> requestConfigs, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
-            String dataEncoding, String dataFileExtension, String intervalInMinutes) {
+            String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter) {
 
         this.dataDirectoryPath = dataDirectoryPath;
         this.requestConfigs = Collections.unmodifiableList(requestConfigs);
@@ -36,6 +38,8 @@ public final class ApplicationParameters {
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalMiliSeconds = 60 * 1000 * Long.parseLong(intervalInMinutes);
+        this.datetimeFormat = datetimeFormat;
+        this.delimiter = delimiter;
     }
 
     public String getDataDirectoryPath() {
@@ -74,6 +78,14 @@ public final class ApplicationParameters {
         return intervalMiliSeconds;
     }
 
+    public String getDatetimeFormat() {
+        return datetimeFormat;
+    }
+
+    public String getDelimiter() {
+        return delimiter;
+    }    
+    
     @Override
     public String toString() {
         return    "dataDirectoryPath = " + dataDirectoryPath + "\n"
@@ -84,7 +96,9 @@ public final class ApplicationParameters {
                 + "addtionalDataPaths  = " + Arrays.toString(addtionalDataPaths) + "\n"
                 + "dataEncoding  = " + dataEncoding + "\n"
                 + "dataFileExtension  = " + dataFileExtension + "\n"
-                + "interval in minutes  = " + intervalMiliSeconds / 60 / 1000;
+                + "interval in minutes  = " + intervalMiliSeconds / 60 / 1000 + "\n"
+                + "date time format = " + datetimeFormat + "\n"
+                + "delimiter = " + delimiter;
     }
 
 }

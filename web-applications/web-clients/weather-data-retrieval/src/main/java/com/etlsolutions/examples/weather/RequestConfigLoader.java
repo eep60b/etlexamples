@@ -46,7 +46,7 @@ public final class RequestConfigLoader {
             properties.load(new FileInputStream(resourcePropertiesFiles));
             propertieses.add(properties);
 
-        } else {
+        } else if (resourcePropertiesFiles.isDirectory()) {
 
             File[] files = resourcePropertiesFiles.listFiles();
             for (File file : files) {
@@ -56,7 +56,9 @@ public final class RequestConfigLoader {
                     propertieses.add(properties);
                 }
             }
-        }
+        } else {
+            throw new IOException("No valid resource properties files can be found at: " + resourcePropertiesFilesPath);
+        } 
 
         if(propertieses.isEmpty()) {
             throw new IOException("There is no valid configuration fould in " + resourcePropertiesFilesPath);

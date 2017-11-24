@@ -4,17 +4,17 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum PredictedVisibility {
+public enum PredictedVisibility implements Valuable {
     
     UNKOWN("UN", -1000, 0), VERY_POOR("VP", 0, 1000), POOR("PO", 1000, 4000), MODEARATE("MO", 4000, 10000), GOOD("GO", 10000, 20000), VERY_GOOD("VG", 20000, 40000), EXCELLENT("EX", 40000, 80000);
     
-    private final double minValue;
+    private final double value;
     private final double maxValue;
     private final String code;
     
     private PredictedVisibility(String code, double minValue, double maxValue) {
         this.code = code;
-        this.minValue = minValue;
+        this.value = minValue;
         this.maxValue = maxValue;
     }
 
@@ -22,8 +22,9 @@ public enum PredictedVisibility {
         return code;
     }
 
-    public double getMinValue() {
-        return minValue;
+    @Override
+    public Double getValue() {
+        return value;
     }
 
     public double getMaxValue() {
@@ -33,7 +34,7 @@ public enum PredictedVisibility {
     public static PredictedVisibility getPredictedVisibility(double value) {
         
         for(PredictedVisibility visibility : values()) {
-            if(visibility.minValue <= value && visibility.maxValue > value) {
+            if(visibility.value <= value && visibility.maxValue > value) {
                 return visibility;
             }
         }
@@ -51,4 +52,9 @@ public enum PredictedVisibility {
         
         throw new IllegalArgumentException("Unknow visibility code.");
     }    
+
+    @Override
+    public String getShortName() {
+        return "PrVis";
+    }
 }

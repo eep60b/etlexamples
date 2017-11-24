@@ -5,7 +5,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class UvIndex {
+public final class UvIndex implements Valuable {
 
     private final int value;
 
@@ -13,12 +13,18 @@ public final class UvIndex {
         this.value = Integer.parseInt(value);
     }
 
-    public int getValue() {
+    @Override
+    public Integer getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "UV index: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "UvIdx";
     }
 }

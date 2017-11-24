@@ -120,7 +120,7 @@ public final class Wxfcs3hourlyDataBuilder implements DataBuilder {
                                         RelativeHumidity relativeHumidity = new RelativeHumidity(hAttr == null ? "-100" : hAttr.getTextContent());
                                         UvIndex uvIndex = new UvIndex(repAttributes.getNamedItem("U").getTextContent());
                                         Node wAttr = repAttributes.getNamedItem("W");
-                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherType(wAttr.getTextContent());
+                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherTypeByCode(wAttr.getTextContent());
                                         Node dAttr = repAttributes.getNamedItem("D");
                                         WindDirection windDirection = dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent());
                                         Node sAttr = repAttributes.getNamedItem("S");

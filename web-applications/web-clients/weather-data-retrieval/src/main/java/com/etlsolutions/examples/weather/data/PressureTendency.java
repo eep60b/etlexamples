@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum PressureTendency {
+public enum PressureTendency implements Valuable {
      R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), UNKOWN(-100, "unkown");
     
         private final int value;
@@ -15,7 +15,8 @@ public enum PressureTendency {
         this.description = description;
     }
 
-    public int getValue() {
+     @Override
+    public Integer getValue() {
         return value;
     }
     
@@ -44,5 +45,10 @@ public enum PressureTendency {
     @Override
     public String toString() {
         return "Pressure tendency: " + description;
+    }
+
+    @Override
+    public String getShortName() {
+        return "PrTdc";
     }
 }

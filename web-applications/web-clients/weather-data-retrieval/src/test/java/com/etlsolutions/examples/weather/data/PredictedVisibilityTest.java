@@ -25,7 +25,7 @@ public final class PredictedVisibilityTest {
     @Test
     public void testGetMinValue() {
 
-        assertTrue(0.0 == PredictedVisibility.VERY_POOR.getMinValue());
+        assertTrue(0.0 == PredictedVisibility.VERY_POOR.getValue());
     }
 
     @Test

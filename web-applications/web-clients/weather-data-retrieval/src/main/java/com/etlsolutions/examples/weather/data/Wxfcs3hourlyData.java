@@ -1,18 +1,13 @@
 package com.etlsolutions.examples.weather.data;
 
-import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_DATETIME_FORMAT;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 /**
  * TheWxfcs3hourlyData class represents a single poind of data for the UK
  * 3-hourly site-specific forecast.
  *
  * @author zc
  */
-public final class Wxfcs3hourlyData implements ResponseData {
+public final class Wxfcs3hourlyData extends AbstractResponseData {
     
-    private final DateTime dateTime;   
     private final FeelTemperature feelTemperature;
     private final PrecipitationProbability precipitationProbability;
     private final RealTemperature realTemprature;
@@ -25,7 +20,7 @@ public final class Wxfcs3hourlyData implements ResponseData {
     private final WindSpeed windSpeed;
 
     public Wxfcs3hourlyData(DateTime dateTime, FeelTemperature feelTemperature, PrecipitationProbability precipitationProbability, RealTemperature realTemprature, PredictedVisibility predictedVisibility, RelativeHumidity relativeHumidity, UvIndex uvIndex, WeatherType weatherType, WindDirection windDirection, WindGust windGust, WindSpeed windSpeed) {
-        this.dateTime = dateTime;
+        super(dateTime);
         this.feelTemperature = feelTemperature;
         this.precipitationProbability = precipitationProbability;
         this.realTemprature = realTemprature;
@@ -39,21 +34,7 @@ public final class Wxfcs3hourlyData implements ResponseData {
     }
 
     @Override
-    public DateTime getDateTime() {
-        return dateTime;
-    }    
-    
-    
-    @Override
-    public String getOutputString() {
-        DateFormat dateFormat = new SimpleDateFormat(DEFAULT_DATETIME_FORMAT);
-        return dateFormat.format(dateTime.getDateTime()) + "," + feelTemperature.getValue() + "," + precipitationProbability.getValue() + ","
-                + realTemprature.getValue() + "," + predictedVisibility.getMinValue()+ "," + relativeHumidity.getValue() + "," + uvIndex.getValue() + "," + weatherType.getCode() + ","
-                        + windDirection.getValue() + "," + windGust.getValue() + "," + windSpeed.getValue();
-    }
-
-    @Override
-    public String getTitle(String additional) {
-        return "DTime,FTemp,PProb,Tempt,Visbl,Humid,UvInx,WType,WdDct,WdGst,WdSpd".replace(",", additional + ",") + additional;
+    public Valuable[] getValuables() {
+        return new Valuable[]{feelTemperature, precipitationProbability, realTemprature, predictedVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed};
     }
 }

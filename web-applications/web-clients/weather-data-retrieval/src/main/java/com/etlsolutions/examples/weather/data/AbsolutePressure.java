@@ -5,7 +5,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class AbsolutePressure {
+public final class AbsolutePressure implements Valuable {
 
     private final double value;
 
@@ -14,12 +14,18 @@ public final class AbsolutePressure {
         this.value = Double.parseDouble(value);
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "Pressure: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "Press";
     }
 }

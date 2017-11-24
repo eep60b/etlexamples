@@ -40,6 +40,10 @@ public final class DateTime implements Comparable<DateTime> {
     public String getYear() {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
+    
+    public String getShortName() {
+        return "DTime";
+    }
 
     @Override
     public int hashCode() {

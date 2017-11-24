@@ -5,7 +5,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class PrecipitationProbability {
+public final class PrecipitationProbability implements Valuable {
 
     private final double value;
 
@@ -18,12 +18,18 @@ public final class PrecipitationProbability {
         }
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
         return "Precipitation probability: " + value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "PpPrb";
     }
 }

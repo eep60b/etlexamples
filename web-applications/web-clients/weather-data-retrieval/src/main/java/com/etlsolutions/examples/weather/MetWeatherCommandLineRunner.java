@@ -19,13 +19,13 @@ public final class MetWeatherCommandLineRunner {
     public static void main(String[] args) {
 
         Logger logger = Logger.getLogger(MetWeatherCommandLineRunner.class);
-
+        
         try {
 
             ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
             ApplicationParameters parameters = factory.loadApplicationParameters(args);
 
-            logger.info("\n\n\nStart to retrieve data...");
+            logger.info("\nStart to retrieve data...");
             logger.info(new Date().toString());
             logger.info("\nConfigurations:");
             logger.info(parameters.toString() + "\n");
@@ -38,10 +38,10 @@ public final class MetWeatherCommandLineRunner {
 
             factory.saveParameters(parameters);
 
-            logger.info("Run success.");
+            logger.info("\nRun success.");
 
         } catch (Throwable th) {
-            logger.error("Run failed.", th);
+            logger.error("\nRun failed.", th);
             System.exit(-1);
         }
     }

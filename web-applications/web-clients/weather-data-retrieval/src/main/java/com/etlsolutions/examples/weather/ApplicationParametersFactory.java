@@ -51,6 +51,8 @@ public final class ApplicationParametersFactory {
         options.addOption(INTERVAL_MINUTES_KEY, true, "The interval in minutes to retrieval data.");
         options.addOption(REQUEST_LOCATIONS_FILE_PATH_KEY, true, "The path where the location file to be loaded.");
         options.addOption(RESOURCE_PROPERTIES_FILE_PATH_KEY, true, "The path where the resource properties files to be loaded.");
+        options.addOption(DATETIME_FORMAT_KEY, true, "The date time format.");
+        options.addOption(DELIMITER_KEY, true, "The delimiter to separate the data fields.");
 
         CommandLineParser parser = new PosixParser();
         CommandLine commandLine = parser.parse(options, args);
@@ -66,6 +68,8 @@ public final class ApplicationParametersFactory {
         String intervalMinutes = commandLine.getOptionValue(INTERVAL_MINUTES_KEY);
         String requestLocationfilePath = commandLine.getOptionValue(REQUEST_LOCATIONS_FILE_PATH_KEY);
         String requestPropertiesFilePath = commandLine.getOptionValue(RESOURCE_PROPERTIES_FILE_PATH_KEY);
+        String datetimeFormat = commandLine.getOptionValue(DATETIME_FORMAT_KEY);
+        String delimiter = commandLine.getOptionValue(DELIMITER_KEY);
 
         configFile = new File(configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath);
         if (configFile.isFile()) {
@@ -80,6 +84,8 @@ public final class ApplicationParametersFactory {
         String savedIntervalMinutes = properties.getProperty(INTERVAL_MINUTES_KEY);
         String savedRequestLocationfilePath = properties.getProperty(REQUEST_LOCATIONS_FILE_PATH_KEY);
         String savedRequestPropertiesFilePath = properties.getProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY);
+        String savedDatetimeFormat = properties.getProperty(DATETIME_FORMAT_KEY);
+        String savedDelimiter = properties.getProperty(DELIMITER_KEY);
 
         dataDirecotryPath = dataDirecotryPath == null ? (savedDataPath == null ? DEFAULT_DATA_DIRECTORY_PATH : savedDataPath) : dataDirecotryPath;
 
@@ -92,11 +98,14 @@ public final class ApplicationParametersFactory {
         dataEncoding = dataEncoding == null ? (savedDataEncoding == null ? DEFAULT_DATA_ENCODING : savedDataEncoding) : dataEncoding;
         dataFileExtension = dataFileExtension == null ? (savedDataFileExtension == null ? DEFAULT_DATA_FILE_EXTENSION : savedDataFileExtension) : dataFileExtension;
         intervalMinutes = intervalMinutes == null ? (savedIntervalMinutes == null ? DEFAULT_INTERVAL_MINUTES : savedIntervalMinutes) : intervalMinutes;
-        
-        requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_ADDITIONAL_DATA_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
+
+        requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_REQUEST_LOCATIONS_FILE_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
         requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
         List<RequesConfig> requestSources = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
-
+        
+        datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
+        delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
+        
         properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
         properties.setProperty(RUN_MULTIPLE_KEY, runMultipleString);
@@ -106,8 +115,10 @@ public final class ApplicationParametersFactory {
         properties.setProperty(INTERVAL_MINUTES_KEY, intervalMinutes);
         properties.setProperty(REQUEST_LOCATIONS_FILE_PATH_KEY, requestLocationfilePath);
         properties.setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, requestPropertiesFilePath);
-
-        return new ApplicationParameters(dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes);
+        properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
+        properties.setProperty(DELIMITER_KEY, delimiter);
+        
+        return new ApplicationParameters(dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
     public synchronized void saveParameters(ApplicationParameters parameters) throws IOException {

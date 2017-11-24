@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum WeatherType {
+public enum WeatherType implements Valuable {
 
     CLEAR_NIGHT(0, 0, "clear night"),
     SUNNY_DAY(1, 0, "sunny day"),
@@ -53,7 +53,19 @@ public enum WeatherType {
         return code;
     }
 
-    public static WeatherType getWeatherType(String code) {
+    public static WeatherType getWeatherType(String value) {
+
+        for (WeatherType type : values()) {
+            if (type.value == Integer.parseInt(value)) {
+                return type;
+            }
+        }
+
+        throw new IllegalArgumentException("Unknow weather type code: " + value);
+    }
+
+
+    public static WeatherType getWeatherTypeByCode(String code) {
 
         for (WeatherType type : values()) {
             if (type.code == Integer.parseInt(code)) {
@@ -61,15 +73,21 @@ public enum WeatherType {
             }
         }
 
-        throw new IllegalArgumentException("Unknow weather type code.");
-    }
-
-    public int getValue() {
+        throw new IllegalArgumentException("Unknow weather type code: " + code);
+    }    
+    
+    @Override
+    public Integer getValue() {
         return value;
     }
     
     @Override
     public String toString() {
         return description ;
+    }
+
+    @Override
+    public String getShortName() {
+        return "WType";
     }
 }

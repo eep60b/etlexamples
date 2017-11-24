@@ -7,7 +7,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 /**
- *
+ * The DataBuilder interface define an object which can build REsponseData objects.
  * @author zc
  */
 public interface DataBuilder {

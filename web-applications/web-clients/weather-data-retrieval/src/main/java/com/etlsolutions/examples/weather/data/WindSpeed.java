@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class WindSpeed {
+public final class WindSpeed implements Valuable {
 
     private final double value;
 
@@ -13,7 +13,13 @@ public final class WindSpeed {
         this.value = Double.parseDouble(value);
     }
 
-    public double getValue() {
+    @Override
+    public Double getValue() {
         return value;
+    }
+
+    @Override
+    public String getShortName() {
+        return "WnSpd";
     }
 }

@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -121,7 +122,7 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
                                         Node dpAttr = repAttributes.getNamedItem("Dp");
                                         DewPoint dewPoint = new DewPoint(dpAttr == null ? "-100" : dpAttr.getTextContent());
                                         Node wAttr = repAttributes.getNamedItem("W");
-                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherType(wAttr.getTextContent());
+                                        WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherTypeByCode(wAttr.getTextContent());
                                         Node dAttr = repAttributes.getNamedItem("D");
                                         WindDirection windDirection = dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent());
                                         Node sAttr = repAttributes.getNamedItem("S");
@@ -141,6 +142,6 @@ public final class WxobsHourlyDataBuilder implements DataBuilder {
             }
         }
 
-        return oldList;
+        return Collections.unmodifiableList(oldList);
     }
 }

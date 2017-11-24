@@ -35,7 +35,7 @@ public final class DataFileReader {
 
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line;
-                br.readLine();
+                br.readLine();  //The first lis is the title. It is skipped.
                 while ((line = br.readLine()) != null) {
 
                     ResponseData data = dataBuilder.build(line);

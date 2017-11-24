@@ -19,16 +19,24 @@ public interface ResponseData {
     /**
      * Get the title for this data.
      *
+     * @param delimiter - The delimiter to separate the fields.
      * @param addtional - The additional string to be insert into the title.
      * @return the title string.
      */
-    String getTitle(String addtional);
+    String getTitle(String delimiter, String addtional);
 
     /**
      * Get the output string for this data.
      *
-     * @return the output string.
-     * @throws ParseException 
+     * @param dateTimeFormat - The date time format.
+     * @param delimiter - The delimiter to separate the fields.
+     * @return the output string. 
      */
-    String getOutputString();
+    String getOutputString(String dateTimeFormat, String delimiter);
+    
+    /**
+     * Return all the Valuable fields in this object.
+     * @return the Valuable array.
+     */
+    Valuable[] getValuables();
 }
