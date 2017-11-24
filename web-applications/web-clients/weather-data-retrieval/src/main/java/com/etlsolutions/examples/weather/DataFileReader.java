@@ -27,7 +27,7 @@ public final class DataFileReader {
     }
     
     @SuppressWarnings("NestedAssignment")
-    public final List<ResponseData> readData(DataBuilder dataBuilder, File file) throws IOException, ParseException {
+    public final List<ResponseData> readData(ResponseDataBuilder dataBuilder, File file,  ApplicationParameters parameters) throws IOException, ParseException {
 
         List<ResponseData> list = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public final class DataFileReader {
                 br.readLine();  //The first lis is the title. It is skipped.
                 while ((line = br.readLine()) != null) {
 
-                    ResponseData data = dataBuilder.build(line);
+                    ResponseData data = dataBuilder.build(line, parameters);
                     if (data != null) {
                         list.add(data);
                     }

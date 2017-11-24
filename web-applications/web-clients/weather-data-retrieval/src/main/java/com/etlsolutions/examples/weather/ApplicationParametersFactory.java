@@ -15,6 +15,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 
 /**
  * The ApplicationParametersFactory class is a factory class which create the
@@ -71,9 +72,16 @@ public final class ApplicationParametersFactory {
         String datetimeFormat = commandLine.getOptionValue(DATETIME_FORMAT_KEY);
         String delimiter = commandLine.getOptionValue(DELIMITER_KEY);
 
-        configFile = new File(configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath);
+        configFilePath = configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath;
+        configFile = new File(configFilePath);
+        
+        Logger logger = Logger.getLogger(ApplicationParametersFactory.class);
         if (configFile.isFile()) {
+            logger.info("\nTry to load the configuration parameters from " + configFilePath + ".");
             properties.load(new FileInputStream(configFile));
+            logger.info("The configuration parameters have been successfully loaded.");
+        } else {
+            logger.warn("\nNo configuration file can be found. Use the embedded parameters.");            
         }
 
         String savedDataPath = properties.getProperty(DATA_DIRECTORY_PATH_KEY);
@@ -118,7 +126,7 @@ public final class ApplicationParametersFactory {
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
         
-        return new ApplicationParameters(dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
+        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
     public synchronized void saveParameters(ApplicationParameters parameters) throws IOException {

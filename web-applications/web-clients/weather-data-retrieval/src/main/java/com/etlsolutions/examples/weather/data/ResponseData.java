@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 
 /**
@@ -28,11 +29,11 @@ public interface ResponseData {
     /**
      * Get the output string for this data.
      *
-     * @param dateTimeFormat - The date time format.
+     * @param datetimeFormat - The date time format.
      * @param delimiter - The delimiter to separate the fields.
      * @return the output string. 
      */
-    String getOutputString(String dateTimeFormat, String delimiter);
+    String getOutputString(DateFormat datetimeFormat, String delimiter);
     
     /**
      * Return all the Valuable fields in this object.

@@ -40,7 +40,7 @@ public final class MultipleProcessor {
             // Use the lockFile channel to create a lock on the lockFile.
             // This method blocks until it can retrieve the lock.
             lock = channel.lock();
-            logger.info("The file " + RUNNING_LOCK_FILE_PATH + " has been locked. \nIt cannot be deleted until the program finishes.");
+            logger.info("The file " + RUNNING_LOCK_FILE_PATH + " has been locked. It cannot be deleted until the program finishes.");
 
             int count = 1;
             Properties runningProperties = new Properties();
@@ -68,7 +68,7 @@ public final class MultipleProcessor {
 
                     runningProperties.setProperty(STOP_PROCESS_KEY, "false");
                     runningProperties.store(new FileOutputStream(file), "updated");
-                    logger.info("The program is terminated manually at " + new Date().toString());
+                    logger.info("The program is terminated manually. \nTime: " + new Date().toString());
                     logger.info("To restart the program again, set stop.process property to false in " + RUNNING_CONFIG_FILE_PATH + ".");
                     break;
 
@@ -76,7 +76,7 @@ public final class MultipleProcessor {
                     singleProcessor.process(parameters);
                 }
 
-                logger.info("No." + count);
+                logger.info("\nNo." + count);
                 logger.info("Data recorded at " + new Date().toString());
                 logger.info("Data location:            " + parameters.getDataDirectoryPath());
                 logger.info("Data additional location: " + parameters.getAddtionalDataPaths());
@@ -89,7 +89,7 @@ public final class MultipleProcessor {
             //Release the lock.
             if (lock != null) {
                 lock.release();
-                logger.info("The lock file " + RUNNING_LOCK_FILE_PATH + " has been released. \n It is now can be deleted.");
+                logger.info("\nThe lock file " + RUNNING_LOCK_FILE_PATH + " has been released. It can be deleted.");
             }
 
             // Close the lockFile

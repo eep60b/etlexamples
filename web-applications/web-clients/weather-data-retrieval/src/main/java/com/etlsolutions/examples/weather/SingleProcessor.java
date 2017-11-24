@@ -10,8 +10,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.eclipse.jetty.client.HttpClient;
@@ -27,12 +25,12 @@ public final class SingleProcessor {
 
     public void process(ApplicationParameters parameters) throws Exception {
 
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DEFAULT_TIMEZONE), Locale.ENGLISH);
+        Calendar calendar = Calendar.getInstance();
 
         for (RequesConfig requestConfig : parameters.getRequestConfigs()) {
 
             RequestMethod requestMethod = requestConfig.getRequestMethod();
-            DataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
+            ResponseDataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
             RequestLocation location = requestConfig.getRequestLocation();
             int year = calendar.get(Calendar.YEAR);
             String fileName = requestMethod.getAbbreviation() + "-" + location.getName() + "-" + year + parameters.getDataFileExtension();
@@ -46,7 +44,7 @@ public final class SingleProcessor {
                 }
             });
 
-            List<ResponseData> oldList = DataFileReader.getInstance().readData(dataBuilder, file);
+            List<ResponseData> oldList = DataFileReader.getInstance().readData(dataBuilder, file, parameters);
 
             HttpClient client = new HttpClient();
             client.start();

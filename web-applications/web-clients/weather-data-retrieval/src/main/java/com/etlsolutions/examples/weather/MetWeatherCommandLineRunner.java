@@ -36,8 +36,10 @@ public final class MetWeatherCommandLineRunner {
                 new SingleProcessor().process(parameters);
             }
 
+            logger.info("\nSave configuration parameters to " + parameters.getConfigFilePath() + ".");
             factory.saveParameters(parameters);
-
+            logger.info("The configuration parameters has been saved.");
+            
             logger.info("\nRun success.");
 
         } catch (Throwable th) {

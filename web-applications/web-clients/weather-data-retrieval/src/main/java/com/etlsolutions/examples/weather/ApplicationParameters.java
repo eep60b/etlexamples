@@ -1,6 +1,8 @@
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.RequesConfig;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -14,8 +16,9 @@ import java.util.List;
  */
 public final class ApplicationParameters {
 
+    private final String configFilePath;
     private final String dataDirectoryPath;
-    private final List<RequesConfig> requestConfigs; 
+    private final List<RequesConfig> requestConfigs;
     private final Date startTime;
     private final Date stopTime;
     private final boolean runMultiple;
@@ -23,12 +26,13 @@ public final class ApplicationParameters {
     private final String dataEncoding;
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
-    private final String datetimeFormat;
+    private final SimpleDateFormat datetimeFormat;
     private final String delimiter;
 
-    public ApplicationParameters(String dataDirectoryPath, List<RequesConfig> requestConfigs, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
+    public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequesConfig> requestConfigs, Date startTime, Date stopTime, boolean runMultiple, String[] addtionalDataPaths,
             String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter) {
 
+        this.configFilePath = configFilePath;
         this.dataDirectoryPath = dataDirectoryPath;
         this.requestConfigs = Collections.unmodifiableList(requestConfigs);
         this.startTime = new Date(startTime.getTime());
@@ -38,8 +42,12 @@ public final class ApplicationParameters {
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalMiliSeconds = 60 * 1000 * Long.parseLong(intervalInMinutes);
-        this.datetimeFormat = datetimeFormat;
+        this.datetimeFormat = new SimpleDateFormat(datetimeFormat);
         this.delimiter = delimiter;
+    }
+
+    public String getConfigFilePath() {
+        return configFilePath;
     }
 
     public String getDataDirectoryPath() {
@@ -78,27 +86,28 @@ public final class ApplicationParameters {
         return intervalMiliSeconds;
     }
 
-    public String getDatetimeFormat() {
+    public DateFormat getDatetimeFormat() {
         return datetimeFormat;
     }
 
     public String getDelimiter() {
         return delimiter;
-    }    
-    
+    }
+
     @Override
     public String toString() {
-        return    "dataDirectoryPath = " + dataDirectoryPath + "\n"
-                + "Request configs = " + requestConfigs + "\n"
-                + "startTime = " + startTime + "\n"
-                + "stopTime  = " + stopTime + "\n"
-                + "runMultiple  = " + runMultiple + "\n"
-                + "addtionalDataPaths  = " + Arrays.toString(addtionalDataPaths) + "\n"
-                + "dataEncoding  = " + dataEncoding + "\n"
-                + "dataFileExtension  = " + dataFileExtension + "\n"
-                + "interval in minutes  = " + intervalMiliSeconds / 60 / 1000 + "\n"
-                + "date time format = " + datetimeFormat + "\n"
-                + "delimiter = " + delimiter;
+        return    "Configuration file =       " + configFilePath + "\n"
+                + "Request configs =          " + requestConfigs + "\n"
+                + "Data file directory =      " + dataDirectoryPath + "\n"
+                + "Addtional data directory = " + Arrays.toString(addtionalDataPaths) + "\n"
+                + "Start time =               " + startTime + "\n"
+                + "Stop time  =               " + (stopTime == null ? "Infinite" : stopTime.toString()) + "\n"
+                + "Multiple runs  =           " + runMultiple + "\n"
+                + "Data encoding  =           " + dataEncoding + "\n"
+                + "Data file extension  =     " + dataFileExtension + "\n"
+                + "Interval in minutes  =     " + intervalMiliSeconds / 60 / 1000 + "\n"
+                + "Date time format =         " + datetimeFormat.toLocalizedPattern() + "\n"
+                + "Delimiter =                [" + delimiter + "]";
     }
 
 }

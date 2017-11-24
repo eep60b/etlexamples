@@ -1,7 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 /**
  * The AbstractResponseData class is a super class which implements the common
@@ -23,9 +22,9 @@ public abstract class AbstractResponseData implements ResponseData {
     }
 
     @Override
-    public final String getOutputString(String dateTimeFormat, String delimiter) {
-        DateFormat dateFormat = new SimpleDateFormat(dateTimeFormat);
-        String output = dateFormat.format(dateTime.getDateTime());
+    public final String getOutputString(DateFormat dateTimeFormat, String delimiter) {
+
+        String output = dateTimeFormat.format(dateTime.getDateTime());
 
         for (Valuable valuable : getValuables()) {
             output = output + delimiter + valuable.getValue();

@@ -63,7 +63,7 @@ public final class RequestLocationsLoader {
                 locaitions = loadFile(new FileInputStream(defaultFile));
                 logger.info("The request locations has been successfully loaded from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
                 try {
-                    
+
                     FileUtils.copyFile(defaultFile, file);
                     logger.info("The request locations file has been copied to " + path + ".");
                 } catch (IOException ioe) {
@@ -73,16 +73,11 @@ public final class RequestLocationsLoader {
 
                 logger.warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
                 logger.info("Try to load request locations from the embedded location.");
-                InputStream in = RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH);
-                locaitions = loadFile(in);
+                locaitions = loadFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH));
                 logger.info("The request locations has been successfully loaded from the embedded locaiton.");
-                try {
-                    FileUtils.copyInputStreamToFile(in, defaultFile);
-                    logger.info("The request locations file has been copied to " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
-                    FileUtils.copyInputStreamToFile(in, file);
-                    logger.info("The request locations file has been copied to " + path + ".");
-                } catch (IOException ioe) {
-                    logger.info("Failed to copy the request locations file to " + path + " and/or " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".", ioe);
+                copyFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH), defaultFile, logger);
+                if (!path.trim().equalsIgnoreCase(DEFAULT_REQUEST_LOCATIONS_FILE_PATH.trim())) {
+                    copyFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH), file, logger);
                 }
             }
         }
@@ -120,5 +115,16 @@ public final class RequestLocationsLoader {
         }
 
         return Collections.unmodifiableList(locaitons);
+    }
+
+    private void copyFile(InputStream in, File file, Logger logger) {
+
+        String path = file.getAbsolutePath();
+        try {
+            FileUtils.copyInputStreamToFile(in, file);
+            logger.info("The request locations file has been copied to " + path + ".");
+        } catch (IOException ioe) {
+            logger.warn("Failed to copy the request locations file to " + path + ".", ioe);
+        }
     }
 }
