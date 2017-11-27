@@ -58,7 +58,7 @@ public final class SettingConstants {
     public static final String DEFAULT_TIMEZONE = "GMT-0:00";
 
     /**
-     * The default format (MM/dd/YYYY HH:mm:ss) for the data and time. This format is valid for the Igor program.
+     * The default format (MM/dd/yyyy HH:mm:ss) for the data and time. This format is valid for the Igor program.
      * 
      * Example: 22/11/2017 15:00:00
      */
