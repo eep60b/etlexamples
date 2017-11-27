@@ -1,21 +1,22 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
-import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestMethod;
 import com.etlsolutions.examples.weather.data.RequesConfig;
+import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestToken;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 /**
@@ -37,6 +38,8 @@ public final class RequestConfigLoader {
     @SuppressWarnings("NestedAssignment")
     public List<RequesConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
 
+        Logger logger = Logger.getLogger(RequestConfigLoader.class);
+
         List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath);
 
         List<Properties> propertieses = new ArrayList<>();
@@ -46,6 +49,7 @@ public final class RequestConfigLoader {
 
         if (resourcePropertiesFiles.isFile()) {
 
+            logger.info("\n Try to load request configurations from " + resourcePropertiesFiles.getAbsolutePath() + ".");
             Properties properties = new Properties();
             properties.load(new FileInputStream(resourcePropertiesFiles));
             propertieses.add(properties);
@@ -55,6 +59,7 @@ public final class RequestConfigLoader {
             File[] files = resourcePropertiesFiles.listFiles();
             for (File file : files) {
                 if (file.getName().endsWith(RESOURCES_PROPERTIES_FILE_EXTENSION)) {
+                    logger.info("n Try to load request configurations from " + file.getAbsolutePath() + ".");
                     Properties properties = new Properties();
                     properties.load(new FileInputStream(file));
                     propertieses.add(properties);
@@ -63,22 +68,36 @@ public final class RequestConfigLoader {
         } else {
 
             List<String> filenames = new ArrayList<>();
-            InputStream in = RequestConfigLoader.class.getResourceAsStream("/request-config");
-
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+            
+            logger.info("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");            
+            logger.info("Try to find request configuration files from the embedded directory.");
+                
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(RequestConfigLoader.class.getResourceAsStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH)))) {
                 String filename;
                 while ((filename = br.readLine()) != null) {
                     filenames.add(filename);
                 }
             }
+
+            logger.info("Request configuration files founded: " + filenames + ".");
             
-            for(String filename : filenames) {                
+            for (String filename : filenames) {
+                logger.info("Try to load request configurations from the embedded file " + filename + ".");
                 Properties properties = new Properties();
-                properties.load(RequestConfigLoader.class.getResourceAsStream("/request-config/" + filename));
+                String path = EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + filename;
+                properties.load(RequestConfigLoader.class.getResourceAsStream(path));
                 propertieses.add(properties);
+                logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");                
+                File file = new File(resourcePropertiesFilesPath + "/" + filename);
+                try {
+                    FileUtils.copyInputStreamToFile(RequestConfigLoader.class.getResourceAsStream(path), file);
+                    logger.info("The request location file " + filename + " has been copied to " + file.getAbsolutePath() + ".");
+                } catch (IOException ioe) {
+                    logger.warn("Failed to copy the request location file " + filename + " to " + file.getAbsolutePath() + ".", ioe);
+                }
             }
         }
-        
+
         if (propertieses.isEmpty()) {
             throw new IOException("There is no valid configuration fould.");
         }

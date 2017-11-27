@@ -26,13 +26,14 @@ public final class MultipleProcessor {
         FileLock lock = null;
         FileChannel channel = null;
         File lockFile = new File(RUNNING_LOCK_FILE_PATH);
+        String abusoluteLockFilePath = lockFile.getAbsolutePath();
         try {
 
             if (lockFile.isFile()) {
-                throw new IOException("The program detects another running instance. \nIf this is not the case, find " + RUNNING_LOCK_FILE_PATH + " and delete it before ruuning the program again.");
+                throw new IOException("The program detects another running instance. \nIf this is not the case, find " + abusoluteLockFilePath + " and delete it before ruuning the program again.");
             } else {
                 FileUtils.writeStringToFile(lockFile, "Once this file appears, there is an instance which is running. \nClose the instance if you want to run a new instance. \nThis file will be automatically deleted after the closure of the running instance.", parameters.getDataEncoding(), false);
-                logger.info("The lock file " + RUNNING_LOCK_FILE_PATH + " has been created.");
+                logger.info("The lock file " + abusoluteLockFilePath + " has been created.");
             }
 
             channel = new RandomAccessFile(lockFile, "rw").getChannel();
@@ -40,13 +41,14 @@ public final class MultipleProcessor {
             // Use the lockFile channel to create a lock on the lockFile.
             // This method blocks until it can retrieve the lock.
             lock = channel.lock();
-            logger.info("The file " + RUNNING_LOCK_FILE_PATH + " has been locked. It cannot be deleted until the program finishes.");
+            logger.info("The file " + abusoluteLockFilePath + " has been locked. It cannot be deleted until the program finishes.");
 
             int count = 1;
             Properties runningProperties = new Properties();
             SingleProcessor singleProcessor = new SingleProcessor();
             Date stopDate = parameters.getStopTime();
             File file = new File(RUNNING_CONFIG_FILE_PATH);
+            String absolutePath = file.getAbsolutePath();
             if (!file.isFile()) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
@@ -60,8 +62,8 @@ public final class MultipleProcessor {
 
                     runningProperties.setProperty(STOP_PROCESS_KEY, "false");
                     runningProperties.store(new FileOutputStream(file), "initialised");
-                    logger.info("\nThe running property file has been created and initialised: " + RUNNING_CONFIG_FILE_PATH + ".");
-                    logger.info("To stop the program, set stop.process property to true in " + RUNNING_CONFIG_FILE_PATH + ".");
+                    logger.info("\nThe running property file has been created and initialised: " + absolutePath + ".");
+                    logger.info("To stop the program, set stop.process property to true in " + absolutePath + ".");
                     singleProcessor.process(parameters);
 
                 } else if (stopProcess.trim().equalsIgnoreCase("true")) {
@@ -69,7 +71,7 @@ public final class MultipleProcessor {
                     runningProperties.setProperty(STOP_PROCESS_KEY, "false");
                     runningProperties.store(new FileOutputStream(file), "updated");
                     logger.info("The program is terminated manually. \nTime: " + new Date().toString());
-                    logger.info("To restart the program again, set stop.process property to false in " + RUNNING_CONFIG_FILE_PATH + ".");
+                    logger.info("To restart the program again, set stop.process property to false in " + absolutePath + ".");
                     break;
 
                 } else {
@@ -89,7 +91,7 @@ public final class MultipleProcessor {
             //Release the lock.
             if (lock != null) {
                 lock.release();
-                logger.info("\nThe lock file " + RUNNING_LOCK_FILE_PATH + " has been released. It can be deleted.");
+                logger.info("\nThe lock file " + abusoluteLockFilePath + " has been released. It can be deleted.");
             }
 
             // Close the lockFile
@@ -98,7 +100,7 @@ public final class MultipleProcessor {
             }
 
             lockFile.delete();
-            logger.info("The lock file " + RUNNING_LOCK_FILE_PATH + " has been deleted.");
+            logger.info("The lock file " + abusoluteLockFilePath + " has been deleted.");
         }
     }
 }

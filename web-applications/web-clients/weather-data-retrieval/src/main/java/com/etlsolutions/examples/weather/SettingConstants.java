@@ -53,7 +53,7 @@ public final class SettingConstants {
 
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
-    public static final String DEFAULT_DATA_DIRECTORY_PATH = System.getProperty("user.home") + File.separator + "Dropbox/Family/Houses/Garden/Environment/Weather/Data";
+    public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "data";
 
     public static final String DEFAULT_TIMEZONE = "GMT-0:00";
 
@@ -68,7 +68,7 @@ public final class SettingConstants {
 
     public static final String DEFAULT_RUN_MULTIPLE = "true";
 
-    public static final String DEFAULT_ADDITIONAL_DATA_PATH = APPLICATION_HOME + File.separator + "data";
+    public static final String DEFAULT_ADDITIONAL_DATA_PATH = "";
 
     public static final String DEFAULT_DATA_ENCODING = "ASCII";
 
@@ -93,6 +93,8 @@ public final class SettingConstants {
     public static final String RUNNING_LOCK_FILE_PATH = APPLICATION_HOME + File.separator + "lock/.wf.lock";
 
     public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/sources/request-locations.xml";
+    
+    public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/requestConfig";
     
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
 
