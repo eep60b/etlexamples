@@ -65,16 +65,16 @@ public final class DateTime implements Comparable<DateTime> {
 
         final DateTime other = (DateTime) obj;
 
-        return Objects.equals(this.calendar, other.calendar);
+        return Objects.equals(this.getDateTime(), other.getDateTime());
     }
 
     @Override
     public int compareTo(DateTime other) {
-        return this.calendar.compareTo(other.calendar);
+        return this.getDateTime().compareTo(other.getDateTime());
     }
 
     @Override
     public String toString() {
-        return calendar.toString();
+        return getDateTime().toString();
     }
 }

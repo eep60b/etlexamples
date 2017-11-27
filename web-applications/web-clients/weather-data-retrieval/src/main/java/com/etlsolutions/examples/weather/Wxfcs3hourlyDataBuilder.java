@@ -13,6 +13,8 @@ import com.etlsolutions.examples.weather.data.WindDirection;
 import com.etlsolutions.examples.weather.data.WindGust;
 import com.etlsolutions.examples.weather.data.WindSpeed;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -31,8 +33,8 @@ public final class Wxfcs3hourlyDataBuilder extends ResponseDataBuilder {
             return null;
         }
 
-        String[] cells = line.split(parameters.getDelimiter());
-        DateTime dateTime = new DateTime(parameters.getDatetimeFormat().parse(cells[0]));
+        String[] cells = line.split(parameters.getDelimiter());     
+DateTime dateTime = new DateTime(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(cells[0]));
         FeelTemperature feelTemperature = new FeelTemperature(cells[1]);
         PrecipitationProbability precipitationProbability = new PrecipitationProbability(cells[2]);
         RealTemperature realTemprature = new RealTemperature(cells[3]);

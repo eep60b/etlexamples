@@ -44,17 +44,18 @@ public abstract class ResponseDataBuilder {
     public abstract ResponseData createData(NamedNodeMap repAttributes, DateTime dateTime);
 
     /**
-     * Build a list of ResponseData objects from the given XML document and
-     * attached it to the end of existing list.
+     * Build a oldList of ResponseData objects from the given XML document and
+ attached it to the end of existing oldList.
      *
      * @param document - The XML document.
-     * @param savedData - The existing list.
+     * @param savedData - The existing oldList.
      * @param requestMethod - The method to request data.
-     * @return the new list of ResponseData objects.
+     * @return the new oldList of ResponseData objects.
      */
     public final List<ResponseData> build(Document document, List<ResponseData> savedData, RequestMethod requestMethod) {
 
-        List<ResponseData> list = new ArrayList<>(savedData);
+        List<ResponseData> oldList = new ArrayList<>(savedData);
+        List<ResponseData> newList = new ArrayList<>();
         NodeList documentChildren = document.getChildNodes();
 
         for (int i = 0; i < documentChildren.getLength(); i++) {
@@ -93,14 +94,14 @@ public abstract class ResponseDataBuilder {
 
                                         DateTime dateTime = new DateTime(date, timeString);
 
-                                        for (int n = list.size() - 1; n >= 0; n--) {
-                                            ResponseData data = list.get(n);
+                                        for (int n = oldList.size() - 1; n >= 0; n--) {
+                                            ResponseData data = oldList.get(n);
                                             if (data.getDateTime().equals(dateTime)) {
-                                                list.remove(n);
+                                                oldList.remove(n);
                                             }
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
-                                        list.add(createData(repAttributes, dateTime));
+                                        newList.add(createData(repAttributes, dateTime));
 
                                     }
                                 }
@@ -111,6 +112,7 @@ public abstract class ResponseDataBuilder {
             }
         }
 
-        return Collections.unmodifiableList(list);
+        oldList.addAll(newList);
+        return Collections.unmodifiableList(oldList);
     }
 }

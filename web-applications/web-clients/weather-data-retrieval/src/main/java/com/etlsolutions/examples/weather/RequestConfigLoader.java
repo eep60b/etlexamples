@@ -5,9 +5,12 @@ import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestMethod;
 import com.etlsolutions.examples.weather.data.RequesConfig;
 import com.etlsolutions.examples.weather.data.RequestToken;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,20 +29,21 @@ public final class RequestConfigLoader {
 
     private RequestConfigLoader() {
     }
-    
+
     public static final RequestConfigLoader getInstance() {
         return INSTANCE;
     }
-    
+
+    @SuppressWarnings("NestedAssignment")
     public List<RequesConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
 
         List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath);
-        
+
         List<Properties> propertieses = new ArrayList<>();
         List<RequesConfig> list = new ArrayList<>();
 
         File resourcePropertiesFiles = new File(resourcePropertiesFilesPath);
-        
+
         if (resourcePropertiesFiles.isFile()) {
 
             Properties properties = new Properties();
@@ -50,20 +54,35 @@ public final class RequestConfigLoader {
 
             File[] files = resourcePropertiesFiles.listFiles();
             for (File file : files) {
-                if (file.getName().endsWith(RESOURCES_PROPERTIES_FILE_EXTENSION )) {
+                if (file.getName().endsWith(RESOURCES_PROPERTIES_FILE_EXTENSION)) {
                     Properties properties = new Properties();
                     properties.load(new FileInputStream(file));
                     propertieses.add(properties);
                 }
             }
         } else {
-            throw new IOException("No valid resource properties files can be found at: " + resourcePropertiesFilesPath);
-        } 
 
-        if(propertieses.isEmpty()) {
-            throw new IOException("There is no valid configuration fould in " + resourcePropertiesFilesPath);
+            List<String> filenames = new ArrayList<>();
+            InputStream in = RequestConfigLoader.class.getResourceAsStream("/request-config");
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+                String filename;
+                while ((filename = br.readLine()) != null) {
+                    filenames.add(filename);
+                }
+            }
+            
+            for(String filename : filenames) {                
+                Properties properties = new Properties();
+                properties.load(RequestConfigLoader.class.getResourceAsStream("/request-config/" + filename));
+                propertieses.add(properties);
+            }
         }
-                
+        
+        if (propertieses.isEmpty()) {
+            throw new IOException("There is no valid configuration fould.");
+        }
+
         propertieses.stream().forEach((properties) -> {
             String locationId = properties.getProperty(LOCATION_TOKEN);
             RequestLocation location = getRequestLocation(locationId, locations);
@@ -71,7 +90,7 @@ public final class RequestConfigLoader {
             RequestToken requestToken = new RequestToken(properties.getProperty(REQUEST_TOEKN));
             list.add(new RequesConfig(requesttMethod, location, requestToken));
         });
-        
+
         return Collections.unmodifiableList(list);
     }
 

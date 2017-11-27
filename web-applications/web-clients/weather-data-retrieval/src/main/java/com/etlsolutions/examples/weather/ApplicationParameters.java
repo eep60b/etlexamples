@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.RequesConfig;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -96,9 +97,9 @@ public final class ApplicationParameters {
 
     @Override
     public String toString() {
-        return    "Configuration file =       " + configFilePath + "\n"
+        return    "Configuration file =       " + new File(configFilePath).getAbsolutePath() + "\n"
                 + "Request configs =          " + requestConfigs + "\n"
-                + "Data file directory =      " + dataDirectoryPath + "\n"
+                + "Data file directory =      " + new File(dataDirectoryPath).getAbsolutePath() + "\n"
                 + "Addtional data directory = " + Arrays.toString(addtionalDataPaths) + "\n"
                 + "Start time =               " + startTime + "\n"
                 + "Stop time  =               " + (stopTime == null ? "Infinite" : stopTime.toString()) + "\n"

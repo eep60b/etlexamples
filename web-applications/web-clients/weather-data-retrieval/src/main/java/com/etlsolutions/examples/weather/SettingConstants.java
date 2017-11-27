@@ -49,7 +49,7 @@ public final class SettingConstants {
 
     public static final String REQUEST_TOEKN = "requestToken";
 
-    public static final String APPLICATION_HOME = System.getProperty("user.home") + File.separator + ".weatherDataRetrieval";
+    public static final String APPLICATION_HOME = "target";
 
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
@@ -62,7 +62,7 @@ public final class SettingConstants {
      * 
      * Example: 22/11/2017 15:00:00
      */
-    public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/YYYY HH:mm:ss";
+    public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
     
     public static final String DEFAULT_DELIMITER = ",";
 

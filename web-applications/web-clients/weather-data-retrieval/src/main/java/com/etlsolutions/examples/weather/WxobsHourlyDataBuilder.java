@@ -13,6 +13,7 @@ import com.etlsolutions.examples.weather.data.WindGust;
 import com.etlsolutions.examples.weather.data.WindSpeed;
 import com.etlsolutions.examples.weather.data.WxobsHourlyData;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -33,7 +34,7 @@ public final class WxobsHourlyDataBuilder extends ResponseDataBuilder {
         }
 
         String[] cells = line.split(parameters.getDelimiter());
-        DateTime dateTime = new DateTime(parameters.getDatetimeFormat().parse(cells[0]));
+DateTime dateTime = new DateTime(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(cells[0]));
         AbsolutePressure absolutePressure = new AbsolutePressure(cells[1]);
         PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[2]);
         RealTemperature realTemprature = new RealTemperature(cells[3]);
