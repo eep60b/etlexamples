@@ -36,9 +36,9 @@ public final class SettingConstants {
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
 
     public static final String RESOURCE_PROPERTIES_FILE_PATH_KEY = "resourcePropertiesFilePath";
-    
+
     public static final String DATETIME_FORMAT_KEY = "datetimeFormat";
-    
+
     public static final String DELIMITER_KEY = "delimiter";
 
     public static final String REQUEST_METHOD_TOKEN = "requestMethodToken";
@@ -49,7 +49,9 @@ public final class SettingConstants {
 
     public static final String REQUEST_TOEKN = "requestToken";
 
-    public static final String APPLICATION_HOME = "target";
+    //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
+    private static final String TARGET_DIRECTORY_NAME = "target";
+    public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME ).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
 
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
@@ -58,12 +60,13 @@ public final class SettingConstants {
     public static final String DEFAULT_TIMEZONE = "GMT-0:00";
 
     /**
-     * The default format (MM/dd/yyyy HH:mm:ss) for the data and time. This format is valid for the Igor program.
-     * 
+     * The default format (MM/dd/yyyy HH:mm:ss) for the data and time. This
+     * format is valid for the Igor program.
+     *
      * Example: 22/11/2017 15:00:00
      */
     public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
-    
+
     public static final String DEFAULT_DELIMITER = ",";
 
     public static final String DEFAULT_RUN_MULTIPLE = "true";
@@ -93,9 +96,9 @@ public final class SettingConstants {
     public static final String RUNNING_LOCK_FILE_PATH = APPLICATION_HOME + File.separator + "lock/.wf.lock";
 
     public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/sources/request-locations.xml";
-    
+
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/requestConfig";
-    
+
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
 
     private SettingConstants() {

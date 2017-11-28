@@ -71,7 +71,7 @@ public final class RequestConfigLoader {
             
             logger.info("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");            
             logger.info("Try to find request configuration files from the embedded directory.");
-                
+    
             try (BufferedReader br = new BufferedReader(new InputStreamReader(RequestConfigLoader.class.getResourceAsStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH)))) {
                 String filename;
                 while ((filename = br.readLine()) != null) {

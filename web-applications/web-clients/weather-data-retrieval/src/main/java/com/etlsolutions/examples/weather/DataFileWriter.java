@@ -23,7 +23,8 @@ public final class DataFileWriter {
     }
 
     private final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-
+    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    
     public static final DataFileWriter getInstance() {
         return INSTANCE;
     }
@@ -58,7 +59,7 @@ public final class DataFileWriter {
         Date currentTime = new Date();
 
         File dataLogFile = new File(DATA_LOGGING_DIRECTORY_PATH + File.separator + dateFormat.format(currentTime) + ".log");
-        FileUtils.writeStringToFile(dataLogFile, "\n\n\nData updated at: " + currentTime + "\n\n" + content, dataEncoding, true);
+        FileUtils.writeStringToFile(dataLogFile, "\n\n" + timeFormat.format(currentTime) + "\n" + content, dataEncoding, true);
 
         for (File additionFile : additionalFiles) {
             FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);
