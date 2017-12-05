@@ -18,7 +18,7 @@ public final class MetDaemonRunner {
         daemon.init(daemonContext);
         daemon.start();
         
-        Thread.sleep(600000);
+        Thread.sleep(300000);
         daemon.stop();
     }
 }

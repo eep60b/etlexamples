@@ -62,7 +62,7 @@
                                     <archive>
                                         <manifest>
                                             <mainClass>
-                                                com.etlsolutions.examples.weather.MetWeatherCommandLineRunner
+                                                com.etlsolutions.examples.weather.MetDaemonRunner
                                             </mainClass>
                                         </manifest>
                                     </archive>

@@ -39,7 +39,7 @@ public final class SingleProcessor {
 
             List<File> additionalFiles = new ArrayList<>();
 
-            for (String path : parameters.getAddtionalDataPaths()) {
+            for (String path : parameters.getAdditionalDataDirectoryPaths()) {
                 if (!path.trim().isEmpty()) {
                     additionalFiles.add(new File(path + File.separator + fileName));
                 }

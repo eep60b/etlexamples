@@ -9,28 +9,33 @@ import java.io.File;
 public final class SettingConstants {
 
     //The configuration keys:
+    
+    /**
+     * The key to find the configuration file.
+     */
     public static final String CONFIG_FILE_PATH_KEY = "configFilePath";
 
+    /**
+     * The key to find the data directory.
+     */
     public static final String DATA_DIRECTORY_PATH_KEY = "dataDirectoryPath";
 
-    public static final String START_TIME_KEY = "startTime";
-
     /**
-     * The time to stop the application. This parameter is only valid for
-     * multiple processes.
+     * The key to find the additional data directories.
      */
-    public static final String STOP_TIME_KEY = "stopTime";
-
-    public static final String RUN_MULTIPLE_KEY = "runMultiple";
-
-    public static final String STOP_PROCESS_KEY = "stop.process";
-
     public static final String ADDITIONAL_DATA_PATH_KEY = "addtionalDataPath";
 
+    /**
+     * The key to find the data encoding.
+     */
     public static final String DATA_ENCODING_KEY = "dataEncoding";
 
+    /**
+     * The key to find the data file extension.
+     */
     public static final String DATA_FILE_EXTENSION_KEY = "dataFileEtension";
 
+    
     public static final String INTERVAL_MINUTES_KEY = "intervalMinutes";
 
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
@@ -39,6 +44,9 @@ public final class SettingConstants {
 
     public static final String DATETIME_FORMAT_KEY = "datetimeFormat";
 
+    /**
+     * The key to find the data delimiter.
+     */
     public static final String DELIMITER_KEY = "delimiter";
 
     public static final String REQUEST_METHOD_TOKEN = "requestMethodToken";
@@ -52,7 +60,7 @@ public final class SettingConstants {
     //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
     private static final String TARGET_DIRECTORY_NAME = "target";
     public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME ).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
-
+    
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "data";
@@ -68,8 +76,6 @@ public final class SettingConstants {
     public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
 
     public static final String DEFAULT_DELIMITER = ",";
-
-    public static final String DEFAULT_RUN_MULTIPLE = "true";
 
     public static final String DEFAULT_ADDITIONAL_DATA_PATH = "";
 
@@ -87,13 +93,7 @@ public final class SettingConstants {
 
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";
 
-    public static final String DATA_LOGGING_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "data/log";
-
-    public static final String RUNNING_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "running.properties";
-
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";
-
-    public static final String RUNNING_LOCK_FILE_PATH = APPLICATION_HOME + File.separator + "lock/.wf.lock";
 
     public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/data/locations/request-locations.xml";
 

@@ -84,48 +84,6 @@ public class ApplicationParametersTest {
     }
 
     /**
-     * Test of getStartTime method, of class ApplicationParameters.
-     */
-    @Test
-    public void testGetStartTime() {
-        System.out.println("getStartTime");
-        ApplicationParameters instance = null;
-        Date expResult = null;
-        Date result = instance.getStartTime();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getStopTime method, of class ApplicationParameters.
-     */
-    @Test
-    public void testGetStopTime() {
-        System.out.println("getStopTime");
-        ApplicationParameters instance = null;
-        Date expResult = null;
-        Date result = instance.getStopTime();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isRunMultiple method, of class ApplicationParameters.
-     */
-    @Test
-    public void testIsRunMultiple() {
-        System.out.println("isRunMultiple");
-        ApplicationParameters instance = null;
-        boolean expResult = false;
-        boolean result = instance.isRunMultiple();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getAddtionalDataPaths method, of class ApplicationParameters.
      */
     @Test
@@ -133,7 +91,7 @@ public class ApplicationParametersTest {
         System.out.println("getAddtionalDataPaths");
         ApplicationParameters instance = null;
         List<String> expResult = null;
-        List<String> result = instance.getAddtionalDataPaths();
+        List<String> result = instance.getAdditionalDataDirectoryPaths();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

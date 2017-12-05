@@ -12,11 +12,11 @@ import org.apache.log4j.Logger;
  */
 public class MetDaemon implements Daemon {
 
- 
     static {
         System.setProperty("metweather.home", "/tmp/metdata/log");
     }
-    
+
+    private final Logger logger = Logger.getLogger(MetDaemon.class);
     private Thread myThread;
     private boolean stopped = false;
     private static int count;
@@ -29,14 +29,11 @@ public class MetDaemon implements Daemon {
          * method as follows:
          */
         String[] args = daemonContext.getArguments();
-        final Logger logger = Logger.getLogger(MetDaemon.class);
-
-        logger.info("Start the service...");
+        
+        logger.info("Start to load the configurations...");
         logger.info(new Date().toString());
         ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
         final ApplicationParameters parameters = factory.loadApplicationParameters(args);
-
-        logger.info("\nStart to retrieve data...");
         logger.info("\nConfigurations:");
         logger.info(parameters.toString() + "\n");
 
@@ -51,16 +48,19 @@ public class MetDaemon implements Daemon {
             @Override
             @SuppressWarnings("SleepWhileInLoop")
             public void run() {
+
+                logger.info("\nStart to retrieve data...");
+
                 while (!stopped) {
                     String currentTime = new Date().toString();
                     try {
                         SingleProcessor singleProcessor = new SingleProcessor();
                         singleProcessor.process(parameters);
-                        
+
                         logger.info("\nNo." + count);
                         logger.info("Data recorded at " + currentTime);
                         logger.info("Data location:            " + parameters.getDataDirectoryPath());
-                        logger.info("Data additional location: " + parameters.getAddtionalDataPaths());
+                        logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
                         count++;
                         Thread.sleep(parameters.getIntervalMiliSeconds());
                     } catch (Exception ex) {
@@ -75,23 +75,33 @@ public class MetDaemon implements Daemon {
 
     @Override
     public void start() {
+        System.out.println(new Date().toString() + ":  Start the metd service.");
         myThread.start();
+        System.out.println(new Date().toString() + ":  The metd service has been successfully started.");
     }
 
     @Override
     public void stop() throws Exception {
         stopped = true;
         try {
+            System.out.println(new Date().toString() + ":  Stop the metd service.");
             myThread.join(1000);
+            System.out.println(new Date().toString() + ":  The metd service has been successfully stopped.");
+            
         } catch (InterruptedException e) {
+            
+            String message = "Failed to stop the metd service.";
+            logger.error(message, e);
+            System.out.println(message);
             System.err.println(e.getMessage());
-            myThread.interrupt();
-            throw e;
+            System.out.println("Force to terminate the metd service.");            
+            System.exit(-1);
         }
     }
 
     @Override
     public void destroy() {
         myThread = null;
+        System.out.println("The metd service thread has been destroyed.");        
     }
 }
