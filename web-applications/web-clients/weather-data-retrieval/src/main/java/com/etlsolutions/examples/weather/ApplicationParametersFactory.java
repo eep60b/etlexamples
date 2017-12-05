@@ -109,7 +109,7 @@ public final class ApplicationParametersFactory {
 
         requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_REQUEST_LOCATIONS_FILE_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
         requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
-        List<RequesConfig> requestSources = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
+        List<RequesConfig> requestConfigs = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
         
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
@@ -126,7 +126,7 @@ public final class ApplicationParametersFactory {
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
         
-        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestSources, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
+        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, startDate, stopDate, Boolean.parseBoolean(runMultipleString), additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
     public synchronized void saveParameters(ApplicationParameters parameters) throws IOException {

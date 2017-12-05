@@ -20,8 +20,8 @@ public final class NeaRequestLocationsFinder {
         
         Collections.sort(locations, new DistanceComparator(la, lo));
         
-        locations.stream().forEach((location) -> {
+        for (RequestLocation location : locations) {
             System.out.println(location);
-        });
+        }
     }
 }

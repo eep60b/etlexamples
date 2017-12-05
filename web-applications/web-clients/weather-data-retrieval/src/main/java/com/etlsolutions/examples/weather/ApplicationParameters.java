@@ -34,7 +34,7 @@ public final class ApplicationParameters {
             String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter) {
 
         this.configFilePath = configFilePath;
-        this.dataDirectoryPath = dataDirectoryPath;
+        this.dataDirectoryPath = new File(dataDirectoryPath).getAbsolutePath();
         this.requestConfigs = Collections.unmodifiableList(requestConfigs);
         this.startTime = new Date(startTime.getTime());
         this.stopTime = stopTime == null ? null : new Date(stopTime.getTime());

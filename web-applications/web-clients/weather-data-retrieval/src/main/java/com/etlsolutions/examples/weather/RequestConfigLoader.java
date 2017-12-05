@@ -49,29 +49,31 @@ public final class RequestConfigLoader {
 
         if (resourcePropertiesFiles.isFile()) {
 
-            logger.info("\n Try to load request configurations from " + resourcePropertiesFiles.getAbsolutePath() + ".");
+            logger.info("\nTry to load request configurations from " + resourcePropertiesFiles.getAbsolutePath() + ".");
             Properties properties = new Properties();
             properties.load(new FileInputStream(resourcePropertiesFiles));
             propertieses.add(properties);
+            logger.info("The request configurations have been loaded successfully from " + resourcePropertiesFiles.getAbsolutePath() + ".");
 
         } else if (resourcePropertiesFiles.isDirectory()) {
 
             File[] files = resourcePropertiesFiles.listFiles();
             for (File file : files) {
                 if (file.getName().endsWith(RESOURCES_PROPERTIES_FILE_EXTENSION)) {
-                    logger.info("n Try to load request configurations from " + file.getAbsolutePath() + ".");
+                    logger.info("\nTry to load request configurations from " + file.getAbsolutePath() + ".");
                     Properties properties = new Properties();
                     properties.load(new FileInputStream(file));
                     propertieses.add(properties);
+                    logger.info("The request configurations have been loaded successfully from " + file.getAbsolutePath() + ".");
                 }
             }
         } else {
 
             List<String> filenames = new ArrayList<>();
-            
-            logger.info("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");            
+
+            logger.info("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");
             logger.info("Try to find request configuration files from the embedded directory.");
-    
+
             try (BufferedReader br = new BufferedReader(new InputStreamReader(RequestConfigLoader.class.getResourceAsStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH)))) {
                 String filename;
                 while ((filename = br.readLine()) != null) {
@@ -80,14 +82,14 @@ public final class RequestConfigLoader {
             }
 
             logger.info("Request configuration files founded: " + filenames + ".");
-            
+
             for (String filename : filenames) {
                 logger.info("Try to load request configurations from the embedded file " + filename + ".");
                 Properties properties = new Properties();
                 String path = EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + filename;
                 properties.load(RequestConfigLoader.class.getResourceAsStream(path));
                 propertieses.add(properties);
-                logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");                
+                logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");
                 File file = new File(resourcePropertiesFilesPath + "/" + filename);
                 try {
                     FileUtils.copyInputStreamToFile(RequestConfigLoader.class.getResourceAsStream(path), file);
@@ -99,17 +101,20 @@ public final class RequestConfigLoader {
         }
 
         if (propertieses.isEmpty()) {
-            throw new IOException("There is no valid configuration fould.");
+            String message = "There is no valid configuration fould.";
+            logger.error(message);
+            throw new IOException(message);
         }
 
-        propertieses.stream().forEach((properties) -> {
+        for (Properties properties : propertieses) {
             String locationId = properties.getProperty(LOCATION_TOKEN);
             RequestLocation location = getRequestLocation(locationId, locations);
             RequestMethod requesttMethod = RequestMethod.getRequesttMethod(properties.getProperty(REQUEST_METHOD_TOKEN), properties.getProperty(REQUEST_INTERVAL_TOKEN));
             RequestToken requestToken = new RequestToken(properties.getProperty(REQUEST_TOEKN));
             list.add(new RequesConfig(requesttMethod, location, requestToken));
-        });
+        }
 
+        logger.info("\n" + list.size() + " sets of request configurations have been loaded successfully.");
         return Collections.unmodifiableList(list);
     }
 

@@ -95,9 +95,9 @@ public final class SettingConstants {
 
     public static final String RUNNING_LOCK_FILE_PATH = APPLICATION_HOME + File.separator + "lock/.wf.lock";
 
-    public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/sources/request-locations.xml";
+    public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/data/locations/request-locations.xml";
 
-    public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/requestConfig";
+    public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
 

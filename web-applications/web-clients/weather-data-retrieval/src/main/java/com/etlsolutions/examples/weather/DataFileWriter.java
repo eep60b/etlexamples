@@ -1,6 +1,5 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.DATA_LOGGING_DIRECTORY_PATH;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +40,8 @@ public final class DataFileWriter {
     public void write(List<ResponseData> list, File file, List<File> additionalFiles, ApplicationParameters parameters, String titleAdditional) throws IOException {
         
         StringBuilder builder = new StringBuilder();
-        list.stream().forEach((data) -> {
+        
+        for(ResponseData data : list) {
             
             //Add an title before the added data.
             if (builder.length() == 0) {
@@ -49,7 +49,7 @@ public final class DataFileWriter {
             }
 
             builder.append(data.getOutputString(parameters.getDatetimeFormat(), parameters.getDelimiter())).append("\n");
-        });
+        }
 
         String content = new String(builder).substring(0, builder.length() - 1);
 
@@ -58,8 +58,8 @@ public final class DataFileWriter {
 
         Date currentTime = new Date();
 
-        File dataLogFile = new File(DATA_LOGGING_DIRECTORY_PATH + File.separator + dateFormat.format(currentTime) + ".log");
-        FileUtils.writeStringToFile(dataLogFile, "\n\n" + timeFormat.format(currentTime) + "\n" + content, dataEncoding, true);
+        File dataLogFile = new File(parameters.getDataDirectoryPath() + File.separator + "log" + File.separator + "datalog" + File.separator + dateFormat.format(currentTime) + ".log");
+        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + content, dataEncoding, true);
 
         for (File additionFile : additionalFiles) {
             FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);

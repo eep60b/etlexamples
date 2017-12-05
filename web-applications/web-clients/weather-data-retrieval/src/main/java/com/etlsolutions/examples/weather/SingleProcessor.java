@@ -7,13 +7,14 @@ import com.etlsolutions.examples.weather.data.RequesConfig;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.StringReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.eclipse.jetty.client.HttpClient;
-import org.eclipse.jetty.client.api.ContentResponse;
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -38,35 +39,31 @@ public final class SingleProcessor {
 
             List<File> additionalFiles = new ArrayList<>();
 
-            parameters.getAddtionalDataPaths().stream().forEach((path) -> {
+            for (String path : parameters.getAddtionalDataPaths()) {
                 if (!path.trim().isEmpty()) {
                     additionalFiles.add(new File(path + File.separator + fileName));
                 }
-            });
+            }
 
             List<ResponseData> oldList = DataFileReader.getInstance().readData(dataBuilder, file, parameters);
 
-            HttpClient client = new HttpClient();
-            client.start();
-
-            ContentResponse response = client.newRequest(requestConfig.getUrl()).send();
-
-            client.stop();
-
+            URL url = new URL(requestConfig.getUrl());
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-            InputSource is = new InputSource(new StringReader(response.getContentAsString()));
+            InputSource is = new InputSource(new StringReader(IOUtils.toString(url, "UTF-8")));
 
             Document doc = db.parse(is);
 
             List<ResponseData> newList = dataBuilder.build(doc, oldList, requestMethod);
 
             String formattedLocationId = location.getId();
-            
+
             while (formattedLocationId.length() < MAXIMUM_LOCATION_ID_LENGTH) {
                 formattedLocationId = "0" + formattedLocationId;
             }
-            
+
             DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, "-" + year + "-" + formattedLocationId);
         }
     }

@@ -9,7 +9,7 @@
         </layout>
     </appender>
     <appender name="LOGFILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${metweather.home}/log/metweather.log" />
+        <param name="File" value="${metweather.home}/runlog/metweather.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%m%n" />
         </layout>
@@ -18,7 +18,7 @@
     <root>
         <level value="INFO" />
         <appender-ref ref="LOGFILE" />
-        <appender-ref ref="CONSOLE" />
+        <!--appender-ref ref="CONSOLE" /-->
     </root>
 
 </log4j:configuration>
