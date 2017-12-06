@@ -11,4 +11,15 @@
                 <activatedProfile>create-executable-jar</activatedProfile>
             </activatedProfiles>
         </action>
+        <action>
+            <actionName>CUSTOM-clean install</actionName>
+            <displayName>clean install linux-service</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>linux-service</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>

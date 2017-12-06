@@ -20,5 +20,6 @@ public final class MetDaemonRunner {
         
         Thread.sleep(300000);
         daemon.stop();
+        daemon.destroy();
     }
 }

@@ -19,10 +19,11 @@ public class MetDaemon implements Daemon {
     private final Logger logger = Logger.getLogger(MetDaemon.class);
     private Thread myThread;
     private boolean stopped = false;
-    private static int count;
+    private static int count = 1;
+    private final long delayTime = 1000;
 
     @Override
-    public void init(DaemonContext daemonContext) throws DaemonInitException, Exception {
+    public void init(DaemonContext daemonContext) throws Exception {
         /*
          * Construct objects and initialize variables here.
          * You can access the command line arguments that would normally be passed to your main() 
@@ -75,26 +76,36 @@ public class MetDaemon implements Daemon {
 
     @Override
     public void start() {
-        System.out.println(new Date().toString() + ":  Start the metd service.");
+        
+        String startMessage = new Date().toString() + ":  Start the metd service.";
+        logger.info(startMessage);
+        System.out.println(startMessage);
         myThread.start();
-        System.out.println(new Date().toString() + ":  The metd service has been successfully started.");
+        String startSuccessMessage = new Date().toString() + ":  The metd service has been successfully started.";
+        logger.info(startSuccessMessage);
+        System.out.println(startSuccessMessage);
     }
 
     @Override
     public void stop() throws Exception {
+        
         stopped = true;
         try {
-            System.out.println(new Date().toString() + ":  Stop the metd service.");
-            myThread.join(1000);
-            System.out.println(new Date().toString() + ":  The metd service has been successfully stopped.");
+            String stopServiceMessage = new Date().toString() + ":  Stop the metd service.";
+            logger.info(stopServiceMessage);
+            System.out.println(stopServiceMessage);
+            myThread.join(delayTime);
+            String stopSuccessMessage = new Date().toString() + ":  The metd service has been successfully stopped.";
+            logger.info(stopSuccessMessage);
+            System.out.println(stopSuccessMessage);
             
         } catch (InterruptedException e) {
             
             String message = "Failed to stop the metd service.";
             logger.error(message, e);
-            System.out.println(message);
+            System.err.println(message);
             System.err.println(e.getMessage());
-            System.out.println("Force to terminate the metd service.");            
+            System.err.println("Force to terminate the metd service.");            
             System.exit(-1);
         }
     }
@@ -102,6 +113,8 @@ public class MetDaemon implements Daemon {
     @Override
     public void destroy() {
         myThread = null;
-        System.out.println("The metd service thread has been destroyed.");        
+        String destroyMessage = "The metd service thread has been destroyed.";
+        logger.info(destroyMessage);
+        System.out.println(destroyMessage);        
     }
 }

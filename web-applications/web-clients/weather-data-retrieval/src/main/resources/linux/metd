@@ -5,7 +5,7 @@
 # Provides:          metd
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
-# Short-Description: Starts the MetDaemon service
+# Short-Description: Starts the metd service
 # Description:       This file is used to start the daemon
 #                    and should be placed in /etc/init.d
 ### END INIT INFO
@@ -15,19 +15,19 @@
 # Date:     29/11/2017
 
 NAME="metd"
-DESC="MetDaemon service"
+DESC="metd service"
 
 # The path to Jsvc
 EXEC="/usr/bin/jsvc"
 
-# The path to the folder containing MetDaemon.jar
+# The path to the folder containing metd.jar
 FILE_PATH="/home/zc/$NAME"
 
 # The path to the folder containing the java runtime
 JAVA_HOME="/usr/lib/jvm/java-7-oracle"
 
 # Our classpath including our jar file and the Apache Commons Daemon library
-CLASS_PATH="$FILE_PATH/lib/weather-data-retrieval-1.0.0-SNAPSHOT.jar:$FILE_PATH/lib/commons-daemon-1.0.15.jar:$FILE_PATH/lib/commons-cli-1.2.jar:$FILE_PATH/lib/commons-io-2.5.jar:$FILE_PATH/lib/log4j-1.2.17.jar:$FILE_PATH/lib/jetty-client-9.3.7.v20160115.jar:$FILE_PATH/lib/jetty-http-9.3.7.v20160115.jar:$FILE_PATH/lib/jetty-io-9.3.7.v20160115.jar:$FILE_PATH/lib/jetty-util-9.3.7.v20160115.jar"
+CLASS_PATH="$FILE_PATH/lib/metd.jar:$FILE_PATH/lib/commons-daemon-1.0.15.jar:$FILE_PATH/lib/commons-cli-1.2.jar:$FILE_PATH/lib/commons-io-2.5.jar:$FILE_PATH/lib/log4j-1.2.17.jar"
 
 # The fully qualified name of the class to execute
 CLASS="com.etlsolutions.examples.weather.MetDaemon"

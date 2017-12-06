@@ -32,12 +32,13 @@ public final class ApplicationParameters {
         this.configFilePath = new File(configFilePath).getAbsolutePath();
         this.dataDirectoryPath = new File(dataDirectoryPath).getAbsolutePath();
         this.requestConfigs = Collections.unmodifiableList(requestConfigs);
-        
-        for(String path : additionalDataDirectoryPaths)
-        {
-            this.additionalDataDirectoryPaths.add(new File(path).getAbsolutePath());
+
+        for (String path : additionalDataDirectoryPaths) {
+            if (path != null && !path.trim().isEmpty()) {
+                this.additionalDataDirectoryPaths.add(new File(path).getAbsolutePath());
+            }
         }
-        
+
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalMiliSeconds = 60 * 1000 * Long.parseLong(intervalInMinutes);
@@ -83,7 +84,7 @@ public final class ApplicationParameters {
 
     @Override
     public String toString() {
-        return    "Configuration file =       " + configFilePath + "\n"
+        return "Configuration file =       " + configFilePath + "\n"
                 + "Request configs =          " + requestConfigs + "\n"
                 + "Data file directory =      " + dataDirectoryPath + "\n"
                 + "Addtional data directory = " + additionalDataDirectoryPaths + "\n"
