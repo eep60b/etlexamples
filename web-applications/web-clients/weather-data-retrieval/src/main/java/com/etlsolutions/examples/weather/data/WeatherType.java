@@ -39,6 +39,8 @@ public enum WeatherType implements Valuable {
     THUNDER(30, 100, "thunder"),
     UNKOWN(-100, -100, "unknown");
 
+    public static final String SHORT_PARAMETER_NAME = "W";
+
     private final int code;
     private final int value;
     private final String description;
@@ -64,7 +66,6 @@ public enum WeatherType implements Valuable {
         throw new IllegalArgumentException("Unknow weather type code: " + value);
     }
 
-
     public static WeatherType getWeatherTypeByCode(String code) {
 
         for (WeatherType type : values()) {
@@ -74,16 +75,16 @@ public enum WeatherType implements Valuable {
         }
 
         throw new IllegalArgumentException("Unknow weather type code: " + code);
-    }    
-    
+    }
+
     @Override
     public Integer getValue() {
         return value;
     }
-    
+
     @Override
     public String toString() {
-        return description ;
+        return description;
     }
 
     @Override

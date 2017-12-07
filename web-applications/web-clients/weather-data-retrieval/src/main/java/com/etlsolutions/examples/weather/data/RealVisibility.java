@@ -6,6 +6,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class RealVisibility implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "V";
+
     private final double value;
 
     public RealVisibility(String value) {

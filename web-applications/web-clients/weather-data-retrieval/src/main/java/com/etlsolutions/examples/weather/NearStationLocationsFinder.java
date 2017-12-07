@@ -13,12 +13,10 @@ import java.util.List;
 public final class NearStationLocationsFinder {
 
     public static void main(String[] args) throws Throwable {
-        double la = 53.214571;
-        double lo = -4.151543;
 
         List<RequestLocation> locations = new ArrayList<>(StationLocationsLoader.getInstance().load(DEFAULT_STATION_LOCATIONS_FILE_PATH));
 
-        Collections.sort(locations, new DistanceComparator(la, lo));
+        Collections.sort(locations, new DistanceComparator(DEFAULT_LATITUDE, DEFAULT_LONGITUDE));
 
         for (RequestLocation location : locations) {
             System.out.println(location);

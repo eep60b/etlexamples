@@ -2,13 +2,13 @@ package com.etlsolutions.examples.weather.data;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
 
-
 /**
+ * The RequesConfig class contains the parameters to send a request.
  *
  * @author zc
  */
 public final class RequesConfig {
-    
+
     private final RequestMethod requestMethod;
     private final RequestLocation requestLocation;
     private final RequestToken requestToken;

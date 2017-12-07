@@ -11,6 +11,12 @@ public final class SettingConstants {
     //The configuration keys:
     
     /**
+     * The key to find the application user home. 
+     * 
+     */
+    public static final String APPLICATION_USERHOME_KEY = "metweather.home";
+
+    /**
      * The key to find the configuration file.
      */
     public static final String CONFIG_FILE_PATH_KEY = "configFilePath";
@@ -35,7 +41,6 @@ public final class SettingConstants {
      */
     public static final String DATA_FILE_EXTENSION_KEY = "dataFileEtension";
 
-    
     public static final String INTERVAL_MINUTES_KEY = "intervalMinutes";
 
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
@@ -57,10 +62,12 @@ public final class SettingConstants {
 
     public static final String REQUEST_TOEKN = "requestToken";
 
+    public static final String DEFAULT_APPLICATION_USERHOME = "/tmp/metdata/log";
+    
     //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
     private static final String TARGET_DIRECTORY_NAME = "target";
-    public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME ).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
-    
+    public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
+
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "data";
@@ -91,6 +98,10 @@ public final class SettingConstants {
 
     public static final String DEFAULT_RESORRCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
 
+    public static final double DEFAULT_LATITUDE = 53.214571;
+    
+    public static final double DEFAULT_LONGITUDE = -4.151543;
+    
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";
 
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";
@@ -100,7 +111,9 @@ public final class SettingConstants {
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
-
+    
+    public static final long MILI_SECONDS_PER_MINUTE = 60 * 1000;
+    
     private SettingConstants() {
     }
 }

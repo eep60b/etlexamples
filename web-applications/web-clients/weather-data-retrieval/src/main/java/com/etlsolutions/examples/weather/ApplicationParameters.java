@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.RequesConfig;
 import java.io.File;
 import java.text.DateFormat;
@@ -41,7 +42,7 @@ public final class ApplicationParameters {
 
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
-        this.intervalMiliSeconds = 60 * 1000 * Long.parseLong(intervalInMinutes);
+        this.intervalMiliSeconds = MILI_SECONDS_PER_MINUTE * Long.parseLong(intervalInMinutes);
         this.datetimeFormat = new SimpleDateFormat(datetimeFormat);
         this.delimiter = delimiter;
     }
@@ -90,7 +91,7 @@ public final class ApplicationParameters {
                 + "Addtional data directory = " + additionalDataDirectoryPaths + "\n"
                 + "Data encoding  =           " + dataEncoding + "\n"
                 + "Data file extension  =     " + dataFileExtension + "\n"
-                + "Interval in minutes  =     " + intervalMiliSeconds / 60 / 1000 + "\n"
+                + "Interval in minutes  =     " + intervalMiliSeconds/MILI_SECONDS_PER_MINUTE + "\n"
                 + "Date time format =         " + datetimeFormat.toLocalizedPattern() + "\n"
                 + "Delimiter =                [" + delimiter + "]";
     }

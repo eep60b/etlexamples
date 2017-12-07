@@ -1,9 +1,9 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.*;
 import java.util.Date;
 import org.apache.commons.daemon.Daemon;
 import org.apache.commons.daemon.DaemonContext;
-import org.apache.commons.daemon.DaemonInitException;
 import org.apache.log4j.Logger;
 
 /**
@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 public class MetDaemon implements Daemon {
 
     static {
-        System.setProperty("metweather.home", "/tmp/metdata/log");
+        System.setProperty(APPLICATION_USERHOME_KEY, DEFAULT_APPLICATION_USERHOME);
     }
 
     private final Logger logger = Logger.getLogger(MetDaemon.class);

@@ -6,6 +6,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public class RelativeHumidity implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "H";
+
     private final double value;
 
     public RelativeHumidity(String value) {

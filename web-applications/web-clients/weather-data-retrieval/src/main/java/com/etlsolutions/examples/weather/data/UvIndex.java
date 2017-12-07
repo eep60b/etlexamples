@@ -7,6 +7,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class UvIndex implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "U";
+
     private final int value;
 
     public UvIndex(String value) {

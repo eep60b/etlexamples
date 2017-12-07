@@ -33,17 +33,18 @@ public final class WxobsHourlyDataBuilder extends ResponseDataBuilder {
         }
 
         String[] cells = line.split(parameters.getDelimiter());
-        DateTime dateTime = new DateTime(parameters.getDatetimeFormat().parse(cells[0]));
-        AbsolutePressure absolutePressure = new AbsolutePressure(cells[1]);
-        PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[2]);
-        RealTemperature realTemprature = new RealTemperature(cells[3]);
-        RealVisibility realVisibility = new RealVisibility(cells[4]);
-        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[5]);
-        DewPoint dewPoint = new DewPoint(cells[6]);
-        WeatherType weatherType = WeatherType.getWeatherType(cells[7]);
-        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[8]));
-        WindGust windGust = new WindGust(cells[9]);
-        WindSpeed windSpeed = new WindSpeed(cells[10]);
+        int index = 0;
+        DateTime dateTime = new DateTime(parameters.getDatetimeFormat().parse(cells[index++]));
+        AbsolutePressure absolutePressure = new AbsolutePressure(cells[index++]);
+        PressureTendency pressureTendency = PressureTendency.getPressureTendencyByValue(cells[index++]);
+        RealTemperature realTemprature = new RealTemperature(cells[index++]);
+        RealVisibility realVisibility = new RealVisibility(cells[index++]);
+        RelativeHumidity relativeHumidity = new RelativeHumidity(cells[index++]);
+        DewPoint dewPoint = new DewPoint(cells[index++]);
+        WeatherType weatherType = WeatherType.getWeatherType(cells[index++]);
+        WindDirection windDirection = WindDirection.getWindDirection(Integer.parseInt(cells[index++]));
+        WindGust windGust = new WindGust(cells[index++]);
+        WindSpeed windSpeed = new WindSpeed(cells[index++]);
 
         return new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);
     }
@@ -51,25 +52,25 @@ public final class WxobsHourlyDataBuilder extends ResponseDataBuilder {
     @Override
     public WxobsHourlyData createData(NamedNodeMap repAttributes, DateTime dateTime) {
 
-        Node pAttr = repAttributes.getNamedItem("P");
-        AbsolutePressure absolutePressure = new AbsolutePressure(pAttr == null ? "-100" : pAttr.getTextContent());
-        Node ptAttr = repAttributes.getNamedItem("Pt");
+        Node pAttr = repAttributes.getNamedItem(AbsolutePressure.SHORT_PARAMETER_NAME);
+        AbsolutePressure absolutePressure = new AbsolutePressure(pAttr == null ? AbsolutePressure.UNKNOW_VALUE : pAttr.getTextContent());
+        Node ptAttr = repAttributes.getNamedItem(PressureTendency.SHORT_PARAMETER_NAME);
         PressureTendency pressureTendency = ptAttr == null ? PressureTendency.UNKOWN : PressureTendency.getPressureTendency(ptAttr.getTextContent());
-        Node tAttr = repAttributes.getNamedItem("T");
-        RealTemperature realTemprature = new RealTemperature(tAttr == null ? "-100" : tAttr.getTextContent());
-        Node vAttr = repAttributes.getNamedItem("V");
-        RealVisibility realVisibility = new RealVisibility(vAttr == null ? "-100" : vAttr.getTextContent());
-        Node hAttr = repAttributes.getNamedItem("H");
-        RelativeHumidity relativeHumidity = new RelativeHumidity(hAttr == null ? "-100" : hAttr.getTextContent());
-        Node dpAttr = repAttributes.getNamedItem("Dp");
-        DewPoint dewPoint = new DewPoint(dpAttr == null ? "-100" : dpAttr.getTextContent());
-        Node wAttr = repAttributes.getNamedItem("W");
+        Node tAttr = repAttributes.getNamedItem(RealTemperature.SHORT_PARAMETER_NAME);
+        RealTemperature realTemprature = new RealTemperature(tAttr == null ? RealTemperature.UNKNOW_VALUE : tAttr.getTextContent());
+        Node vAttr = repAttributes.getNamedItem(RealVisibility.SHORT_PARAMETER_NAME);
+        RealVisibility realVisibility = new RealVisibility(vAttr == null ? RealVisibility.UNKNOW_VALUE : vAttr.getTextContent());
+        Node hAttr = repAttributes.getNamedItem(RelativeHumidity.SHORT_PARAMETER_NAME);
+        RelativeHumidity relativeHumidity = new RelativeHumidity(hAttr == null ? RelativeHumidity.UNKNOW_VALUE : hAttr.getTextContent());
+        Node dpAttr = repAttributes.getNamedItem(DewPoint.SHORT_PARAMETER_NAME);
+        DewPoint dewPoint = new DewPoint(dpAttr == null ? DewPoint.UNKNOW_VALUE : dpAttr.getTextContent());
+        Node wAttr = repAttributes.getNamedItem(WeatherType.SHORT_PARAMETER_NAME);
         WeatherType weatherType = wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherTypeByCode(wAttr.getTextContent());
-        Node dAttr = repAttributes.getNamedItem("D");
+        Node dAttr = repAttributes.getNamedItem(WindDirection.SHORT_PARAMETER_NAME);
         WindDirection windDirection = dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent());
-        Node sAttr = repAttributes.getNamedItem("S");
-        WindSpeed windSpeed = new WindSpeed(sAttr == null ? "-100" : sAttr.getTextContent());
-        Node windGustAttribute = repAttributes.getNamedItem("G");
+        Node sAttr = repAttributes.getNamedItem(WindSpeed.SHORT_PARAMETER_NAME);
+        WindSpeed windSpeed = new WindSpeed(sAttr == null ? WindSpeed.UNKNOW_VALUE : sAttr.getTextContent());
+        Node windGustAttribute = repAttributes.getNamedItem(WindGust.SHORT_PARAMETER_NAME);
         WindGust windGust = windGustAttribute == null ? new WindGust(windSpeed) : new WindGust(windGustAttribute.getTextContent());
 
         return new WxobsHourlyData(dateTime, absolutePressure, pressureTendency, realTemprature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windGust, windSpeed);

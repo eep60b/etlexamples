@@ -6,6 +6,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class WindGust implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "G";
+
     private final double value;
 
     public WindGust(String value) {

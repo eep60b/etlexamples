@@ -1,53 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.RequesConfig;
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Test of class ApplicationParameters.
  *
  * @author zc
  */
-public class ApplicationParametersTest {
-    
-    public ApplicationParametersTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ApplicationParameters.class, RequesConfig.class})
+public final class ApplicationParametersTest {
+
+    private final String configFilePath = "onaofdoa";
+    private final String dataDirectoryPath = "lnad99aa233";
+    private final List<RequesConfig> requestConfigs = Arrays.asList(PowerMockito.mock(RequesConfig.class), PowerMockito.mock(RequesConfig.class));
+    private final String[] additionalDataDirectoryPaths = {"inlafdqla", "linn232", "afafa.txt"};
+    private final String dataEncoding = "ASCII";
+    private final String dataFileExtension = ".dat";
+    private final String intervalInMinutes = "30";
+    private final String datetimeFormat = "yyyy-MM/dd HH:mm:ss";
+    private final String delimiter = "_";
+
+    private final ApplicationParameters instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter);
+
     @Before
     public void setUp() {
     }
-    
-    @After
-    public void tearDown() {
-    }
 
-    /**
-     * Test of getConfigFilePath method, of class ApplicationParameters.
-     */
     @Test
     public void testGetConfigFilePath() {
-        System.out.println("getConfigFilePath");
-        ApplicationParameters instance = null;
+
         String expResult = "";
         String result = instance.getConfigFilePath();
         assertEquals(expResult, result);
@@ -180,5 +173,5 @@ public class ApplicationParametersTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

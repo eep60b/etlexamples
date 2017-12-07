@@ -6,7 +6,9 @@ package com.etlsolutions.examples.weather.data;
  * @author zc
  */
 public final class PrecipitationProbability implements Valuable {
-
+    
+    public static final String SHORT_PARAMETER_NAME = "Pp";
+    
     private final double value;
 
     public PrecipitationProbability(String value) {

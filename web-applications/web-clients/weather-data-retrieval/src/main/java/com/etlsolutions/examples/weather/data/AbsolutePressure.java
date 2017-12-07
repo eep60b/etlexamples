@@ -7,6 +7,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class AbsolutePressure implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "P";
+    
     private final double value;
 
     public AbsolutePressure(String value) {

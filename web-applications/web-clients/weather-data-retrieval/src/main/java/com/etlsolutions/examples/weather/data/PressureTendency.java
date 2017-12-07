@@ -5,8 +5,10 @@ package com.etlsolutions.examples.weather.data;
  * @author zc
  */
 public enum PressureTendency implements Valuable {
-     R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), UNKOWN(-100, "unkown");
+     
+    R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), UNKOWN(-100, "unkown");
     
+        public static final String SHORT_PARAMETER_NAME = "Pt";
         private final int value;
         private final String description;
     

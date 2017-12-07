@@ -6,6 +6,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class WindSpeed implements Valuable {
 
+    public static final String SHORT_PARAMETER_NAME = "S";
+
     private final double value;
 
     public WindSpeed(String value) {

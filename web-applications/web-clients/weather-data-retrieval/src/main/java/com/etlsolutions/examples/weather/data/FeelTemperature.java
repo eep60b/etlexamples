@@ -7,6 +7,8 @@ package com.etlsolutions.examples.weather.data;
  */
 public final class FeelTemperature implements Valuable{
 
+    public static final String SHORT_PARAMETER_NAME = "F";
+    
     private final double value;
 
     public FeelTemperature(String value) {
