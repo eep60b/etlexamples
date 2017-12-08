@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  * The Valuable interface defines an object which has a value.
  *
  * @param <T> - The value type.
- * @author zc 
+ * @author zc
  */
 public interface Valuable<T> {
 

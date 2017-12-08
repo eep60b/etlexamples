@@ -4,24 +4,17 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class WindGust implements Valuable {
+public final class WindGust extends AbstractValuable<Double> {
 
     public static final String SHORT_PARAMETER_NAME = "G";
 
-    private final double value;
-
+    public WindGust(WindSpeed windSpeed) {
+        super(windSpeed.getValue());
+    }
+    
     public WindGust(String value) {
 
-        this.value = Double.parseDouble(value);
-    }
-
-    public WindGust(WindSpeed windSpeed) {
-        this.value = windSpeed.getValue();
-    }
-
-    @Override
-    public Double getValue() {
-        return value;
+        this(new WindSpeed(value));
     }
 
     @Override

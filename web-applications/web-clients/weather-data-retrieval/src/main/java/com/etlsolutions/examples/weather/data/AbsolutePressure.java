@@ -5,21 +5,15 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class AbsolutePressure implements Valuable {
+public final class AbsolutePressure extends AbstractValuable<Double> {
 
     public static final String SHORT_PARAMETER_NAME = "P";
     
-    private final double value;
-
     public AbsolutePressure(String value) {
 
-        this.value = Double.parseDouble(value);
+        super(Double.parseDouble(value));
     }
 
-    @Override
-    public Double getValue() {
-        return value;
-    }
 
     @Override
     public String toString() {

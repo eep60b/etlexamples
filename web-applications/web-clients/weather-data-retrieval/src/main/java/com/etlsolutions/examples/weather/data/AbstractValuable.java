@@ -9,7 +9,7 @@ import java.util.Objects;
  */
 public abstract class AbstractValuable<T> implements Valuable<T> {
 
-    private final T value;
+    protected final T value;
 
     public AbstractValuable(T value) {
         this.value = value;

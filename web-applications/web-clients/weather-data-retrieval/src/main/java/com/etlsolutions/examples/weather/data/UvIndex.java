@@ -5,19 +5,12 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class UvIndex implements Valuable {
+public final class UvIndex extends AbstractValuable<Integer>  {
 
     public static final String SHORT_PARAMETER_NAME = "U";
 
-    private final int value;
-
     public UvIndex(String value) {
-        this.value = Integer.parseInt(value);
-    }
-
-    @Override
-    public Integer getValue() {
-        return value;
+        super(Integer.parseInt(value));
     }
 
     @Override

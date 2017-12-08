@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum PressureTendency implements Valuable {
+public enum PressureTendency implements Valuable<Integer> {
      
     R(2, "rising"), RF(1, "rising then falling"), S(0, "steady"), FR(-1, "falling then rising"), F(-2, "falling"), UNKOWN(-100, "unkown");
     

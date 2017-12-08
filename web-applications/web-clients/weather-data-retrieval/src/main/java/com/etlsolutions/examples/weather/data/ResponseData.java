@@ -1,7 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 
 /**
  * The REsponseData class represents a single response data point.

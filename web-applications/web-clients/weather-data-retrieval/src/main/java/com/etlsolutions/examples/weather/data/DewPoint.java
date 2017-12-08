@@ -5,12 +5,10 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class DewPoint implements Valuable {
+public final class DewPoint extends AbstractValuable<Double> {
 
     public static final String SHORT_PARAMETER_NAME = "Dp";    
     
-    private final double value;
-
     /**
      * Construct an object using the given value.
      *
@@ -20,17 +18,7 @@ public final class DewPoint implements Valuable {
      */
     public DewPoint(String value) {
 
-        this.value = Double.parseDouble(value);
-    }
-
-    /**
-     * Get the dew point value.
-     *
-     * @return the dew point value
-     */
-    @Override
-    public Double getValue() {
-        return value;
+        super(Double.parseDouble(value));
     }
 
     @Override

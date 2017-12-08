@@ -6,20 +6,13 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class RealTemperature implements Valuable {
+public final class RealTemperature extends AbstractValuable<Double> {
 
     public static final String SHORT_PARAMETER_NAME = "T";
 
-    private final double value;
-
     public RealTemperature(String value) {
 
-        this.value = Double.parseDouble(value);
-    }
-
-    @Override
-    public Double getValue() {
-        return value;
+        super(Double.parseDouble(value));
     }
 
     @Override
@@ -31,5 +24,4 @@ public final class RealTemperature implements Valuable {
     public String getShortName() {
         return "Tempt";
     }
-
 }

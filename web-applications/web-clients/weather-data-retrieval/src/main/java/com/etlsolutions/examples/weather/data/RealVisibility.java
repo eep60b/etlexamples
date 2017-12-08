@@ -4,20 +4,13 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class RealVisibility implements Valuable {
+public final class RealVisibility extends AbstractValuable<Double> {
 
     public static final String SHORT_PARAMETER_NAME = "V";
 
-    private final double value;
-
     public RealVisibility(String value) {
 
-        this.value = Double.parseDouble(value);
-    }
-
-    @Override
-    public Double getValue() {
-        return value;
+        super(Double.parseDouble(value));
     }
 
     @Override

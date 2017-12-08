@@ -5,20 +5,13 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public final class FeelTemperature implements Valuable{
+public final class FeelTemperature extends AbstractValuable<Double>{
 
     public static final String SHORT_PARAMETER_NAME = "F";
     
-    private final double value;
-
     public FeelTemperature(String value) {
 
-        this.value = Double.parseDouble(value);
-    }
-
-    @Override
-    public Double getValue() {
-        return value;
+        super(Double.parseDouble(value));
     }
 
     @Override

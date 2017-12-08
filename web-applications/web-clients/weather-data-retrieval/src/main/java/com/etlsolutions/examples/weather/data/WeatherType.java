@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum WeatherType implements Valuable {
+public enum WeatherType implements Valuable<Integer> {
 
     CLEAR_NIGHT(0, 0, "clear night"),
     SUNNY_DAY(1, 0, "sunny day"),
