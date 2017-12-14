@@ -4,7 +4,7 @@ package com.etlsolutions.examples.weather.data;
  *
  * @author zc
  */
-public enum PredictedVisibility implements Valuable<Double> {
+public enum PredictedVisibility implements Valuable {
 
     UNKOWN("UN", -100, 0), VERY_POOR("VP", 0, 1000), POOR("PO", 1000, 4000), MODEARATE("MO", 4000, 10000), GOOD("GO", 10000, 20000), VERY_GOOD("VG", 20000, 40000), EXCELLENT("EX", 40000, 80000);
 

@@ -3,11 +3,13 @@ package com.etlsolutions.examples.weather.data;
 /**
  * The Valuable interface defines an object which has a value.
  *
- * @param <T> - The value type.
  * @author zc
  */
-public interface Valuable<T> {
+public interface Valuable {
 
+    /**
+     * The value for a value which is not available.
+     */
     String UNKNOW_VALUE = "-100";
 
     /**
@@ -15,7 +17,7 @@ public interface Valuable<T> {
      *
      * @return the value.
      */
-    T getValue();
+    Object getValue();
 
     /**
      * Get the short name of this value.

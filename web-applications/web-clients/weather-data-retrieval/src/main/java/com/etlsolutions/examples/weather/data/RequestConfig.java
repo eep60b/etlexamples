@@ -3,18 +3,18 @@ package com.etlsolutions.examples.weather.data;
 import static com.etlsolutions.examples.weather.SettingConstants.*;
 
 /**
- * The RequesConfig class contains the parameters to send a request.
+ * The RequestConfig class contains the parameters to send a request.
  *
  * @author zc
  */
-public final class RequesConfig {
+public final class RequestConfig {
 
     private final RequestMethod requestMethod;
     private final RequestLocation requestLocation;
     private final RequestToken requestToken;
     private final String url;
 
-    public RequesConfig(RequestMethod requesttMethod, RequestLocation requestLocation, RequestToken requestToken) {
+    public RequestConfig(RequestMethod requesttMethod, RequestLocation requestLocation, RequestToken requestToken) {
         this.requestMethod = requesttMethod;
         this.requestLocation = requestLocation;
         this.requestToken = requestToken;

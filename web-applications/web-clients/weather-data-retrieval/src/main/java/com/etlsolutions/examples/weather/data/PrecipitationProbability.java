@@ -8,14 +8,12 @@ package com.etlsolutions.examples.weather.data;
 public final class PrecipitationProbability extends AbstractValuable<Double> {
     
     public static final String SHORT_PARAMETER_NAME = "Pp";
+    public static final double MINIMUM_VALUE = 0;
+    public static final double MAXIMUM_VALUE = 100;
     
     public PrecipitationProbability(String value) {
 
         super(Double.parseDouble(value));
-
-        if ((this.value < 0 || this.value > 100) && this.value != -100) {
-            throw new IllegalArgumentException("Invalid precipitation probability value: " + this.value);
-        }
     }
 
     @Override

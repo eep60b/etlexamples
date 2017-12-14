@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
 import org.junit.After;
@@ -16,9 +11,9 @@ import static org.junit.Assert.*;
  *
  * @author zc
  */
-public class RequesConfigTest {
+public final class RequestConfigTest {
     
-    public RequesConfigTest() {
+    public RequestConfigTest() {
     }
     
     @BeforeClass
@@ -38,12 +33,12 @@ public class RequesConfigTest {
     }
 
     /**
-     * Test of getRequestMethod method, of class RequesConfig.
+     * Test of getRequestMethod method, of class RequestConfig.
      */
     @Test
     public void testGetRequestMethod() {
         System.out.println("getRequestMethod");
-        RequesConfig instance = null;
+        RequestConfig instance = null;
         RequestMethod expResult = null;
         RequestMethod result = instance.getRequestMethod();
         assertEquals(expResult, result);
@@ -52,12 +47,12 @@ public class RequesConfigTest {
     }
 
     /**
-     * Test of getRequestLocation method, of class RequesConfig.
+     * Test of getRequestLocation method, of class RequestConfig.
      */
     @Test
     public void testGetRequestLocation() {
         System.out.println("getRequestLocation");
-        RequesConfig instance = null;
+        RequestConfig instance = null;
         RequestLocation expResult = null;
         RequestLocation result = instance.getRequestLocation();
         assertEquals(expResult, result);
@@ -66,12 +61,12 @@ public class RequesConfigTest {
     }
 
     /**
-     * Test of getRequestToken method, of class RequesConfig.
+     * Test of getRequestToken method, of class RequestConfig.
      */
     @Test
     public void testGetRequestToken() {
         System.out.println("getRequestToken");
-        RequesConfig instance = null;
+        RequestConfig instance = null;
         RequestToken expResult = null;
         RequestToken result = instance.getRequestToken();
         assertEquals(expResult, result);
@@ -80,12 +75,12 @@ public class RequesConfigTest {
     }
 
     /**
-     * Test of getUrl method, of class RequesConfig.
+     * Test of getUrl method, of class RequestConfig.
      */
     @Test
     public void testGetUrl() {
         System.out.println("getUrl");
-        RequesConfig instance = null;
+        RequestConfig instance = null;
         String expResult = "";
         String result = instance.getUrl();
         assertEquals(expResult, result);
@@ -94,12 +89,12 @@ public class RequesConfigTest {
     }
 
     /**
-     * Test of toString method, of class RequesConfig.
+     * Test of toString method, of class RequestConfig.
      */
     @Test
     public void testToString() {
         System.out.println("toString");
-        RequesConfig instance = null;
+        RequestConfig instance = null;
         String expResult = "";
         String result = instance.toString();
         assertEquals(expResult, result);

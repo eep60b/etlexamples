@@ -1,10 +1,11 @@
 package com.etlsolutions.examples.weather.data;
 
 /**
+ * The WeatherTyp enum defines all the weather types in data.
  *
  * @author zc
  */
-public enum WeatherType implements Valuable<Integer> {
+public enum WeatherType implements Valuable {
 
     CLEAR_NIGHT(0, 0, "clear night"),
     SUNNY_DAY(1, 0, "sunny day"),

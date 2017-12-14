@@ -54,9 +54,9 @@ public final class Wxfcs3hourlyDataBuilder extends ResponseDataBuilder {
         Node fAttr = repAttributes.getNamedItem(FeelTemperature.SHORT_PARAMETER_NAME);
         FeelTemperature feelTemperature = new FeelTemperature(fAttr == null ? FeelTemperature.UNKNOW_VALUE : fAttr.getTextContent());
         Node ppAttr = repAttributes.getNamedItem(PrecipitationProbability.SHORT_PARAMETER_NAME);
-        PrecipitationProbability precipitationProbability = new PrecipitationProbability(ppAttr == null ? "-100" : ppAttr.getTextContent());
+        PrecipitationProbability precipitationProbability = new PrecipitationProbability(ppAttr == null ? PrecipitationProbability.UNKNOW_VALUE : ppAttr.getTextContent());
         Node tAttr = repAttributes.getNamedItem(RealTemperature.SHORT_PARAMETER_NAME);
-        RealTemperature realTemprature = new RealTemperature(tAttr == null ? "-100" : tAttr.getTextContent());
+        RealTemperature realTemprature = new RealTemperature(tAttr == null ? RealTemperature.UNKNOW_VALUE : tAttr.getTextContent());
         Node vAttr = repAttributes.getNamedItem(PredictedVisibility.SHORT_PARAMETER_NAME);
         PredictedVisibility realVisibility = vAttr == null ? PredictedVisibility.UNKOWN: PredictedVisibility.getPredictedVisibility(vAttr.getTextContent());
         Node hAttr = repAttributes.getNamedItem(RelativeHumidity.SHORT_PARAMETER_NAME);

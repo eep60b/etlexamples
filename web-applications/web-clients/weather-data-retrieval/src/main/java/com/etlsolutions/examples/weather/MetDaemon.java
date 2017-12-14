@@ -7,6 +7,7 @@ import org.apache.commons.daemon.DaemonContext;
 import org.apache.log4j.Logger;
 
 /**
+ * The MetDaemon class is a JVSC daemon which can be run as a linux service.
  *
  * @author zc
  */
@@ -19,18 +20,20 @@ public class MetDaemon implements Daemon {
     private final Logger logger = Logger.getLogger(MetDaemon.class);
     private Thread myThread;
     private boolean stopped = false;
-    private static int count = 1;
+    private final SingleProcessor singleProcessor = new SingleProcessor();
+    private int count = 1;
     private final long delayTime = 1000;
 
     @Override
     public void init(DaemonContext daemonContext) throws Exception {
+
         /*
          * Construct objects and initialize variables here.
          * You can access the command line arguments that would normally be passed to your main() 
          * method as follows:
          */
         String[] args = daemonContext.getArguments();
-        
+
         logger.info("Start to load the configurations...");
         logger.info(new Date().toString());
         ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
@@ -53,9 +56,11 @@ public class MetDaemon implements Daemon {
                 logger.info("\nStart to retrieve data...");
 
                 while (!stopped) {
+                    
                     String currentTime = new Date().toString();
+                    
                     try {
-                        SingleProcessor singleProcessor = new SingleProcessor();
+
                         singleProcessor.process(parameters);
 
                         logger.info("\nNo." + count);
@@ -76,7 +81,7 @@ public class MetDaemon implements Daemon {
 
     @Override
     public void start() {
-        
+
         String startMessage = new Date().toString() + ":  Start the metd service.";
         logger.info(startMessage);
         System.out.println(startMessage);
@@ -88,7 +93,7 @@ public class MetDaemon implements Daemon {
 
     @Override
     public void stop() throws Exception {
-        
+
         stopped = true;
         try {
             String stopServiceMessage = new Date().toString() + ":  Stop the metd service.";
@@ -98,14 +103,14 @@ public class MetDaemon implements Daemon {
             String stopSuccessMessage = new Date().toString() + ":  The metd service has been successfully stopped.";
             logger.info(stopSuccessMessage);
             System.out.println(stopSuccessMessage);
-            
+
         } catch (InterruptedException e) {
-            
+
             String message = "Failed to stop the metd service.";
             logger.error(message, e);
             System.err.println(message);
             System.err.println(e.getMessage());
-            System.err.println("Force to terminate the metd service.");            
+            System.err.println("Force to terminate the metd service.");
             System.exit(-1);
         }
     }
@@ -115,6 +120,6 @@ public class MetDaemon implements Daemon {
         myThread = null;
         String destroyMessage = "The metd service thread has been destroyed.";
         logger.info(destroyMessage);
-        System.out.println(destroyMessage);        
+        System.out.println(destroyMessage);
     }
 }

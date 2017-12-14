@@ -3,7 +3,7 @@ package com.etlsolutions.examples.weather;
 import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestMethod;
-import com.etlsolutions.examples.weather.data.RequesConfig;
+import com.etlsolutions.examples.weather.data.RequestConfig;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.StringReader;
@@ -19,16 +19,23 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 /**
+ * The SingleProcessor class generates a single set of data each time.
  *
  * @author zc
  */
 public final class SingleProcessor {
 
+    /**
+     * Generate a single set of data for the given parameters.
+     *
+     * @param parameters - The specified parameters.
+     * @throws Exception if an error occurs.
+     */
     public void process(ApplicationParameters parameters) throws Exception {
 
         Calendar calendar = Calendar.getInstance();
 
-        for (RequesConfig requestConfig : parameters.getRequestConfigs()) {
+        for (RequestConfig requestConfig : parameters.getRequestConfigs()) {
 
             RequestMethod requestMethod = requestConfig.getRequestMethod();
             ResponseDataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);

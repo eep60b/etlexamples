@@ -1,13 +1,15 @@
 package com.etlsolutions.examples.weather;
 
-import com.etlsolutions.examples.weather.data.RequesConfig;
-import java.text.DateFormat;
+import com.etlsolutions.examples.weather.data.RequestConfig;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -18,12 +20,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ApplicationParameters.class, RequesConfig.class})
+@PrepareForTest({ApplicationParameters.class, RequestConfig.class})
 public final class ApplicationParametersTest {
 
     private final String configFilePath = "onaofdoa";
     private final String dataDirectoryPath = "lnad99aa233";
-    private final List<RequesConfig> requestConfigs = Arrays.asList(PowerMockito.mock(RequesConfig.class), PowerMockito.mock(RequesConfig.class));
+    private final List<RequestConfig> requestConfigs = Arrays.asList(PowerMockito.mock(RequestConfig.class), PowerMockito.mock(RequestConfig.class));
     private final String[] additionalDataDirectoryPaths = {"inlafdqla", "linn232", "afafa.txt"};
     private final String dataEncoding = "ASCII";
     private final String dataFileExtension = ".dat";
@@ -34,143 +36,102 @@ public final class ApplicationParametersTest {
     private final ApplicationParameters instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter);
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        
+        File configFile = Mockito.mock(File.class); 
+        PowerMockito.whenNew(File.class).withArguments("onaofdoa").thenReturn(configFile);
+        Mockito.when(configFile.getAbsolutePath()).thenReturn("/home/onaofdoa");
+        
+        
     }
-
+    
+    /**
+     * Test of getConfigFilePath method.
+     */
     @Test
     public void testGetConfigFilePath() {
 
-        String expResult = "";
-        String result = instance.getConfigFilePath();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("/home/onaofdoa", instance.getConfigFilePath());
     }
 
     /**
-     * Test of getDataDirectoryPath method, of class ApplicationParameters.
+     * Test of getDataDirectoryPath method.
      */
     @Test
     public void testGetDataDirectoryPath() {
-        System.out.println("getDataDirectoryPath");
-        ApplicationParameters instance = null;
-        String expResult = "";
-        String result = instance.getDataDirectoryPath();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("lnad99aa233", instance.getDataDirectoryPath());
     }
 
     /**
-     * Test of getRequestConfigs method, of class ApplicationParameters.
+     * Test of getRequestConfigs method.
      */
     @Test
     public void testGetRequestConfigs() {
-        System.out.println("getRequestConfigs");
-        ApplicationParameters instance = null;
-        List<RequesConfig> expResult = null;
-        List<RequesConfig> result = instance.getRequestConfigs();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(requestConfigs, instance.getRequestConfigs());
     }
 
     /**
-     * Test of getAddtionalDataPaths method, of class ApplicationParameters.
+     * Test of getAddtionalDataPaths method.
      */
     @Test
     public void testGetAddtionalDataPaths() {
-        System.out.println("getAddtionalDataPaths");
-        ApplicationParameters instance = null;
-        List<String> expResult = null;
-        List<String> result = instance.getAdditionalDataDirectoryPaths();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(Arrays.asList("inlafdqla", "linn232", "afafa.txt"), instance.getAdditionalDataDirectoryPaths());
     }
 
     /**
-     * Test of getDataEncoding method, of class ApplicationParameters.
+     * Test of getDataEncoding method.
      */
     @Test
     public void testGetDataEncoding() {
-        System.out.println("getDataEncoding");
-        ApplicationParameters instance = null;
-        String expResult = "";
-        String result = instance.getDataEncoding();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals("ASCII", instance.getDataEncoding());
     }
 
     /**
-     * Test of getDataFileExtension method, of class ApplicationParameters.
+     * Test of getDataFileExtension method.
      */
     @Test
     public void testGetDataFileExtension() {
-        System.out.println("getDataFileExtension");
-        ApplicationParameters instance = null;
-        String expResult = "";
-        String result = instance.getDataFileExtension();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(".dat", instance.getDataFileExtension());
+
     }
 
     /**
-     * Test of getIntervalMiliSeconds method, of class ApplicationParameters.
+     * Test of getIntervalMiliSeconds method.
      */
     @Test
     public void testGetIntervalMiliSeconds() {
-        System.out.println("getIntervalMiliSeconds");
-        ApplicationParameters instance = null;
-        long expResult = 0L;
-        long result = instance.getIntervalMiliSeconds();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(1800000, instance.getIntervalMiliSeconds());
     }
 
     /**
-     * Test of getDatetimeFormat method, of class ApplicationParameters.
+     * Test of getDatetimeFormat method.
      */
     @Test
     public void testGetDatetimeFormat() {
-        System.out.println("getDatetimeFormat");
-        ApplicationParameters instance = null;
-        DateFormat expResult = null;
-        DateFormat result = instance.getDatetimeFormat();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(new SimpleDateFormat(datetimeFormat), instance.getDatetimeFormat());
     }
 
     /**
-     * Test of getDelimiter method, of class ApplicationParameters.
+     * Test of getDelimiter method.
      */
     @Test
     public void testGetDelimiter() {
-        System.out.println("getDelimiter");
-        ApplicationParameters instance = null;
-        String expResult = "";
-        String result = instance.getDelimiter();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("_", instance.getDelimiter());
     }
 
     /**
-     * Test of toString method, of class ApplicationParameters.
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        ApplicationParameters instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
+        assertEquals("", instance.toString());
+    }
 }

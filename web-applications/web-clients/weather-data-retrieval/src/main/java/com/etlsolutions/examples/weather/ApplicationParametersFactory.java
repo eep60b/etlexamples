@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
-import com.etlsolutions.examples.weather.data.RequesConfig;
+import com.etlsolutions.examples.weather.data.RequestConfig;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -93,7 +93,7 @@ public final class ApplicationParametersFactory {
 
         requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_REQUEST_LOCATIONS_FILE_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
         requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
-        List<RequesConfig> requestConfigs = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
+        List<RequestConfig> requestConfigs = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
         
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
@@ -109,10 +109,15 @@ public final class ApplicationParametersFactory {
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
         
-        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
+        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
-    public synchronized void saveParameters(ApplicationParameters parameters) throws IOException {
+    public synchronized void saveParameters() throws IOException {
+        
+        if(configFile == null) {
+            return;
+        }
+        
         configFile.getParentFile().mkdirs();
         configFile.createNewFile();
         properties.store(new FileOutputStream(configFile), URL_BASE);

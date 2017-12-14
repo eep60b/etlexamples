@@ -7,7 +7,7 @@ import java.util.Objects;
  * @author zc
  * @param <T>
  */
-public abstract class AbstractValuable<T> implements Valuable<T> {
+public abstract class AbstractValuable<T> implements Valuable {
 
     protected final T value;
 

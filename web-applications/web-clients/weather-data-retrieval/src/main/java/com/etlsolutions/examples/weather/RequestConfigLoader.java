@@ -2,7 +2,7 @@ package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.RequestMethod;
-import com.etlsolutions.examples.weather.data.RequesConfig;
+import com.etlsolutions.examples.weather.data.RequestConfig;
 import com.etlsolutions.examples.weather.data.RequestLocation;
 import com.etlsolutions.examples.weather.data.RequestToken;
 import java.io.BufferedReader;
@@ -36,14 +36,14 @@ public final class RequestConfigLoader {
     }
 
     @SuppressWarnings("NestedAssignment")
-    public List<RequesConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
+    public List<RequestConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
 
         Logger logger = Logger.getLogger(RequestConfigLoader.class);
 
         List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath);
 
         List<Properties> propertieses = new ArrayList<>();
-        List<RequesConfig> list = new ArrayList<>();
+        List<RequestConfig> list = new ArrayList<>();
 
         File resourcePropertiesFiles = new File(resourcePropertiesFilesPath);
 
@@ -111,7 +111,7 @@ public final class RequestConfigLoader {
             RequestLocation location = getRequestLocation(locationId, locations);
             RequestMethod requesttMethod = RequestMethod.getRequesttMethod(properties.getProperty(REQUEST_METHOD_TOKEN), properties.getProperty(REQUEST_INTERVAL_TOKEN));
             RequestToken requestToken = new RequestToken(properties.getProperty(REQUEST_TOEKN));
-            list.add(new RequesConfig(requesttMethod, location, requestToken));
+            list.add(new RequestConfig(requesttMethod, location, requestToken));
         }
 
         logger.info("\n" + list.size() + " sets of request configurations have been loaded successfully.");
