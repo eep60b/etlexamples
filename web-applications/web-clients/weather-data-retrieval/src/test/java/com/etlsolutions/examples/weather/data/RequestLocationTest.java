@@ -1,9 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -40,41 +37,26 @@ public final class RequestLocationTest {
      */
     @Test
     public void testGetName() {
-        System.out.println("getName");
-        RequestLocation instance = null;
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("inalld", instance.getName());
     }
 
     /**
-     * Test of getLatitude method, of class RequestLocation.
+     * Test of getLatitude method.
      */
     @Test
     public void testGetLatitude() {
-        System.out.println("getLatitude");
-        RequestLocation instance = null;
-        double expResult = 0.0;
-        double result = instance.getLatitude();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(21.92311, instance.getLatitude(), 0.0);
     }
 
     /**
-     * Test of getLongitude method, of class RequestLocation.
+     * Test of getLongitude method.
      */
     @Test
     public void testGetLongitude() {
-        System.out.println("getLongitude");
-        RequestLocation instance = null;
-        double expResult = 0.0;
-        double result = instance.getLongitude();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(-13.91323, instance.getLongitude(), 0.0);
     }
 
     /**

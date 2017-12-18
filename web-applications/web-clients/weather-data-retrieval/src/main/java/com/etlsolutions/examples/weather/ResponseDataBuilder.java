@@ -13,8 +13,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The ResponseDataBuilder interface define an object which can build REsponseData
- objects.
+ * The ResponseDataBuilder interface define an object which can build
+ * REsponseData objects.
  *
  * @author zc
  */
@@ -37,7 +37,8 @@ public abstract class ResponseDataBuilder {
     /**
      * Create a new ResponseData object.
      *
-     * @param repAttributes - The node attributes which contains information of the data.
+     * @param repAttributes - The node attributes which contains information of
+     * the data.
      * @param dateTime - The data and time of the data collected.
      * @return the new ResponseData object.
      */
@@ -45,7 +46,7 @@ public abstract class ResponseDataBuilder {
 
     /**
      * Build a oldList of ResponseData objects from the given XML document and
- attached it to the end of existing oldList.
+     * attached it to the end of existing oldList.
      *
      * @param document - The XML document.
      * @param savedData - The existing oldList.

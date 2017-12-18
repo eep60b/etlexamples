@@ -17,40 +17,23 @@ import static org.junit.Assert.*;
  */
 public final class DataFileReaderTest {
 
-    public DataFileReaderTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
+    private final DataFileReader instance = DataFileReader.getInstance();
     @Before
     public void setUp() {
     }
 
-    @After
-    public void tearDown() {
-    }
 
     /**
-     * Test of getInstance method, of class DataFileReader.
+     * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        DataFileReader expResult = null;
-        DataFileReader result = DataFileReader.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertSame(DataFileReader.getInstance(), instance);
     }
 
     /**
-     * Test of readData method, of class DataFileReader.
+     * Test of readData method.
      */
     @Test
     public void testReadData() throws Exception {
@@ -58,7 +41,7 @@ public final class DataFileReaderTest {
         ResponseDataBuilder dataBuilder = null;
         File file = null;
         ApplicationParameters parameters = null;
-        DataFileReader instance = null;
+        
         List<ResponseData> expResult = null;
         List<ResponseData> result = instance.readData(dataBuilder, file, parameters);
         assertEquals(expResult, result);

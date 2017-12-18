@@ -7,11 +7,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test of class RequestConfigLoader.
  *
  * @author zc
  */
 public final class RequestConfigLoaderTest {
-    
+
     private final RequestConfigLoader instance = RequestConfigLoader.getInstance();
 
     @Before
@@ -19,16 +20,16 @@ public final class RequestConfigLoaderTest {
     }
 
     /**
-     * Test of getInstance method, of class RequestConfigLoader.
+     * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
-        
+
         assertSame(RequestConfigLoader.getInstance(), instance);
     }
 
     /**
-     * Test of load method, of class RequestConfigLoader.
+     * Test of load method.
      */
     @Test
     public void testLoad() throws Exception {
@@ -41,5 +42,5 @@ public final class RequestConfigLoaderTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

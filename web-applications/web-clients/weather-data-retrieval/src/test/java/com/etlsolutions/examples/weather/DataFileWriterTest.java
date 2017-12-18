@@ -1,60 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test of class DataFileWriter.
  *
  * @author zc
  */
-public class DataFileWriterTest {
+public final class DataFileWriterTest {
+
     
-    public DataFileWriterTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private final DataFileWriter instance = DataFileWriter.getInstance();
     
     @Before
     public void setUp() {
     }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
-     * Test of getInstance method, of class DataFileWriter.
+     * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        DataFileWriter expResult = null;
-        DataFileWriter result = DataFileWriter.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertSame(DataFileWriter.getInstance(), instance);
     }
 
     /**
-     * Test of write method, of class DataFileWriter.
+     * Test of write method.
      */
     @Test
     public void testWrite() throws Exception {
@@ -64,10 +41,9 @@ public class DataFileWriterTest {
         List<File> additionalFiles = null;
         ApplicationParameters parameters = null;
         String titleAdditional = "";
-        DataFileWriter instance = null;
         instance.write(list, file, additionalFiles, parameters, titleAdditional);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

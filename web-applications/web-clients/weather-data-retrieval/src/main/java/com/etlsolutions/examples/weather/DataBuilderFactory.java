@@ -4,7 +4,7 @@ import com.etlsolutions.examples.weather.data.RequestMethod;
 
 /**
  * The DataBuilderFactory class is a factory class to create ResponseDataBuilder
- objects.
+ * objects.
  *
  * @author zc
  */
@@ -25,7 +25,8 @@ public final class DataBuilderFactory {
     }
 
     /**
-     * Create a ResponseDataBuilder object according to the the given request method.
+     * Create a ResponseDataBuilder object according to the the given request
+     * method.
      *
      * @param requestMethod - The specified request method.
      * @return the newly created ResponseDataBuilder object.

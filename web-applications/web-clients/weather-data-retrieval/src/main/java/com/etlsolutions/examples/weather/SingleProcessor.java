@@ -34,6 +34,7 @@ public final class SingleProcessor {
     public void process(ApplicationParameters parameters) throws Exception {
 
         Calendar calendar = Calendar.getInstance();
+        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
         for (RequestConfig requestConfig : parameters.getRequestConfigs()) {
 
@@ -41,11 +42,12 @@ public final class SingleProcessor {
             ResponseDataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
             RequestLocation location = requestConfig.getRequestLocation();
             int year = calendar.get(Calendar.YEAR);
-            String fileName = requestMethod.getAbbreviation() + "-" + location.getName() + "-" + year + parameters.getDataFileExtension();
+            String fileName = requestMethod.getAbbreviation() + FILE_NAME_SEPARATER + location.getName() + FILE_NAME_SEPARATER + year + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
 
             List<File> additionalFiles = new ArrayList<>();
 
+            //Don't user functional operations here to compatible for Java 1.7
             for (String path : parameters.getAdditionalDataDirectoryPaths()) {
                 if (!path.trim().isEmpty()) {
                     additionalFiles.add(new File(path + File.separator + fileName));
@@ -57,9 +59,8 @@ public final class SingleProcessor {
             URL url = new URL(requestConfig.getUrl());
             URLConnection conn = url.openConnection();
             conn.setDoOutput(true);
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-            InputSource is = new InputSource(new StringReader(IOUtils.toString(url, "UTF-8")));
+            InputSource is = new InputSource(new StringReader(IOUtils.toString(url, WEBSITE_ENCODING)));
 
             Document doc = db.parse(is);
 
@@ -71,7 +72,7 @@ public final class SingleProcessor {
                 formattedLocationId = "0" + formattedLocationId;
             }
 
-            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, "-" + year + "-" + formattedLocationId);
+            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, FILE_NAME_SEPARATER + year + FILE_NAME_SEPARATER + formattedLocationId);
         }
     }
 }

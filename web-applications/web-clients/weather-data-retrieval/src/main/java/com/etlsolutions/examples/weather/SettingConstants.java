@@ -47,6 +47,9 @@ public final class SettingConstants {
 
     public static final String RESOURCE_PROPERTIES_FILE_PATH_KEY = "resourcePropertiesFilePath";
 
+    /**
+     * The key to find datetime format.
+     */
     public static final String DATETIME_FORMAT_KEY = "datetimeFormat";
 
     /**
@@ -82,6 +85,9 @@ public final class SettingConstants {
      */
     public static final String DEFAULT_DATETIME_FORMAT = "MM/dd/yyyy HH:mm:ss";
 
+    /**
+     * The default delimiter to separate data cells.
+     */
     public static final String DEFAULT_DELIMITER = ",";
 
     public static final String DEFAULT_ADDITIONAL_DATA_PATH = "";
@@ -110,10 +116,23 @@ public final class SettingConstants {
 
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
+    /**
+     * According to the locations data, the maximum length of a location ID is 6.
+     */
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
     
+    /**
+     * This constant is used to convert between miliseconds and minutes.
+     */
     public static final long MILI_SECONDS_PER_MINUTE = 60 * 1000;
     
+    /**
+     * The encoding of the web site.
+     */
+    public static final String WEBSITE_ENCODING = "UTF-8";
+    
+    
+    public static final String FILE_NAME_SEPARATER = "-";
     private SettingConstants() {
     }
 }
