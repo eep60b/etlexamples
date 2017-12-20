@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
 import org.junit.After;
@@ -16,7 +11,7 @@ import static org.junit.Assert.*;
  *
  * @author zc
  */
-public class RealTemperatureTest {
+public final class RealTemperatureTest {
     
     public RealTemperatureTest() {
     }

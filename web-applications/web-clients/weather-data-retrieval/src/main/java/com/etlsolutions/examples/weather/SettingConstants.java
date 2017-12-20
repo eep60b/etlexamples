@@ -9,10 +9,9 @@ import java.io.File;
 public final class SettingConstants {
 
     //The configuration keys:
-    
     /**
-     * The key to find the application user home. 
-     * 
+     * The key to find the application user home.
+     *
      */
     public static final String APPLICATION_USERHOME_KEY = "metweather.home";
 
@@ -66,7 +65,7 @@ public final class SettingConstants {
     public static final String REQUEST_TOEKN = "requestToken";
 
     public static final String DEFAULT_APPLICATION_USERHOME = "/tmp/metdata/log";
-    
+
     //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
     private static final String TARGET_DIRECTORY_NAME = "target";
     public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
@@ -105,9 +104,9 @@ public final class SettingConstants {
     public static final String DEFAULT_RESORRCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
 
     public static final double DEFAULT_LATITUDE = 53.214571;
-    
+
     public static final double DEFAULT_LONGITUDE = -4.151543;
-    
+
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";
 
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";
@@ -117,22 +116,34 @@ public final class SettingConstants {
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
     /**
-     * According to the locations data, the maximum length of a location ID is 6.
+     * According to the locations data, the maximum length of a location ID is
+     * 6.
      */
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
-    
+
     /**
      * This constant is used to convert between miliseconds and minutes.
      */
     public static final long MILI_SECONDS_PER_MINUTE = 60 * 1000;
-    
+
     /**
      * The encoding of the web site.
      */
     public static final String WEBSITE_ENCODING = "UTF-8";
+
+    /**
+     * The separator used in the data filename.
+     */
+    public static final String DATA_FILENAME_SEPARATOR = "-";
+
+    public static final String DATA_XMLFILE_NODENAME_SITE_REP = "SiteRep";
     
+    public static final String DATA_XMLFILE_NODENAME_DV = "DV";
     
-    public static final String FILE_NAME_SEPARATER = "-";
+    public static final String DATA_XMLFILE_NODENAME_LOCATION = "Location";
+    
+    public static final String DATA_XMLFILE_NODENAME_VALUE = "value";
+
     private SettingConstants() {
     }
 }

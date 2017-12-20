@@ -4,20 +4,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test of class UvIndex.
+ * Test  of class PrecipitationProbability.
  *
  * @author zc
  */
-public final class UvIndexTest {
+public final class PrecipitationProbabilityTest {
 
-    private final UvIndex instance = new UvIndex("94");
-
+    private final PrecipitationProbability instance = new PrecipitationProbability("56.37");
+    
     /**
      * Test of getValue method.
      */
     @Test
     public void testGetValue() {
-        assertTrue(instance.getValue() == 94);
+        
+        assertEquals(56.37, instance.getValue(), 0.0);
     }
 
     /**
@@ -26,7 +27,7 @@ public final class UvIndexTest {
     @Test
     public void testToString() {
 
-        assertEquals("UV Index: 94", instance.toString());
+        assertEquals("Precipitation Probability: 56.73", instance.toString());
     }
 
     /**
@@ -35,6 +36,6 @@ public final class UvIndexTest {
     @Test
     public void testGetShortName() {
 
-        assertEquals("UvIdx", instance.getShortName());
+        assertEquals("P", instance.getShortName());
     }
 }

@@ -10,7 +10,7 @@ import java.text.DateFormat;
  */
 public abstract class AbstractResponseData implements ResponseData {
 
-    private final DateTime dateTime;
+    protected final DateTime dateTime;
 
     protected AbstractResponseData(DateTime dateTime) {
         this.dateTime = dateTime;

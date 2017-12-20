@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.DateTime;
@@ -16,39 +11,27 @@ import static org.junit.Assert.*;
 import org.w3c.dom.NamedNodeMap;
 
 /**
+ * Test of class Wxfcs3hourlyDataBuilder.
  *
  * @author zc
  */
-public class Wxfcs3hourlyDataBuilderTest {
-    
-    public Wxfcs3hourlyDataBuilderTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+public final class Wxfcs3hourlyDataBuilderTest {
+
+    private final Wxfcs3hourlyDataBuilder instance = new Wxfcs3hourlyDataBuilder();
     
     @Before
     public void setUp() {
     }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
-     * Test of build method, of class Wxfcs3hourlyDataBuilder.
+     * Test of build method.
      */
     @Test
     public void testBuild() throws Exception {
         System.out.println("build");
         String line = "";
         ApplicationParameters parameters = null;
-        Wxfcs3hourlyDataBuilder instance = new Wxfcs3hourlyDataBuilder();
+        
         Wxfcs3hourlyData expResult = null;
         Wxfcs3hourlyData result = instance.build(line, parameters);
         assertEquals(expResult, result);
@@ -71,5 +54,5 @@ public class Wxfcs3hourlyDataBuilderTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

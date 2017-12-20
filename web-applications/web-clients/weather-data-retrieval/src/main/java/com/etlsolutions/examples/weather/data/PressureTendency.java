@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather.data;
 
 /**
+ * The PressureTendency enum represents the pressure tendency forecast.
  *
  * @author zc
  */

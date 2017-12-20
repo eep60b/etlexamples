@@ -1,5 +1,7 @@
 package com.etlsolutions.examples.weather.data;
 
+import java.util.Objects;
+
 /**
  * TheWxfcs3hourlyData class represents a single poind of data for the UK
  * 3-hourly site-specific forecast.
@@ -36,5 +38,71 @@ public final class Wxfcs3hourlyData extends AbstractResponseData {
     @Override
     public Valuable[] getValuables() {
         return new Valuable[]{feelTemperature, precipitationProbability, realTemprature, predictedVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed};
+    }
+
+    @Override
+    public int hashCode() {
+        
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.predictedVisibility);
+        hash = 97 * hash + Objects.hashCode(this.uvIndex);
+        hash = 97 * hash + Objects.hashCode(this.weatherType);
+        hash = 97 * hash + Objects.hashCode(this.windSpeed);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Wxfcs3hourlyData other = (Wxfcs3hourlyData) obj;
+        if (!Objects.equals(this.feelTemperature, other.feelTemperature)) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.precipitationProbability, other.precipitationProbability)) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.realTemprature, other.realTemprature)) {
+            return false;
+        }
+        
+        if (this.predictedVisibility != other.predictedVisibility) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.relativeHumidity, other.relativeHumidity)) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.uvIndex, other.uvIndex)) {
+            return false;
+        }
+        
+        if (this.weatherType != other.weatherType) {
+            return false;
+        }
+        
+        if (this.windDirection != other.windDirection) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.windGust, other.windGust)) {
+            return false;
+        }
+        
+        if (!Objects.equals(this.windSpeed, other.windSpeed)) {
+            return false;
+        }
+        
+        return Objects.equals(this.dateTime, other.dateTime);
     }
 }

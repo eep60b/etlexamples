@@ -1,68 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test of class FeelTemperature.
  *
  * @author zc
  */
-public class FeelTemperatureTest {
-    
-    public FeelTemperatureTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
+public final class FeelTemperatureTest {
+
+    private final FeelTemperature instance = new FeelTemperature("73.82");
 
     /**
      * Test of toString method, of class FeelTemperature.
      */
     @Test
-    public void testToString() {
-        System.out.println("toString");
-        FeelTemperature instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testGetValue() {
+        assertEquals(73.82, instance.getValue(), 0.0);
     }
 
     /**
-     * Test of getShortName method, of class FeelTemperature.
+     * Test of toString method.
+     */
+    @Test
+    public void testToString() {
+
+        assertEquals("Feel temperature: 73.82", instance.toString());
+    }
+
+    /**
+     * Test of getShortName method.
      */
     @Test
     public void testGetShortName() {
-        System.out.println("getShortName");
-        FeelTemperature instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("FTemp", instance.getShortName());
     }
-    
 }

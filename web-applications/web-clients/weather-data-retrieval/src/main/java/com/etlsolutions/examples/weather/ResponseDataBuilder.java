@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.DateTime;
-import com.etlsolutions.examples.weather.data.RequestMethod;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -50,10 +50,9 @@ public abstract class ResponseDataBuilder {
      *
      * @param document - The XML document.
      * @param savedData - The existing oldList.
-     * @param requestMethod - The method to request data.
      * @return the new oldList of ResponseData objects.
      */
-    public final List<ResponseData> build(Document document, List<ResponseData> savedData, RequestMethod requestMethod) {
+    public final List<ResponseData> build(Document document, List<ResponseData> savedData) {
 
         List<ResponseData> oldList = new ArrayList<>(savedData);
         List<ResponseData> newList = new ArrayList<>();
@@ -62,7 +61,7 @@ public abstract class ResponseDataBuilder {
         for (int i = 0; i < documentChildren.getLength(); i++) {
 
             Node documentChild = documentChildren.item(i);
-            if (documentChild.getNodeName().equals("SiteRep")) {
+            if (DATA_XMLFILE_NODENAME_SITE_REP.equals(documentChild.getNodeName())) {
 
                 NodeList siteRepChildren = documentChild.getChildNodes();
 
@@ -70,14 +69,14 @@ public abstract class ResponseDataBuilder {
 
                     Node siteRepChild = siteRepChildren.item(j);
 
-                    if (siteRepChild.getNodeName().equals("DV")) {
+                    if (DATA_XMLFILE_NODENAME_DV.equals(siteRepChild.getNodeName())) {
 
                         NodeList dvChildren = siteRepChild.getChildNodes();
 
                         for (int k = 0; k < dvChildren.getLength(); k++) {
 
                             Node dvChild = dvChildren.item(k);
-                            if (dvChild.getNodeName().equals("Location")) {
+                            if (DATA_XMLFILE_NODENAME_LOCATION.equals(dvChild.getNodeName())) {
 
                                 NodeList locationChildren = dvChild.getChildNodes();
 
@@ -85,7 +84,7 @@ public abstract class ResponseDataBuilder {
 
                                     Node periodNode = locationChildren.item(l);
                                     NamedNodeMap periodAttributes = periodNode.getAttributes();
-                                    String date = periodAttributes.getNamedItem("value").getTextContent();
+                                    String date = periodAttributes.getNamedItem(DATA_XMLFILE_NODENAME_VALUE).getTextContent();
                                     NodeList periodChildren = periodNode.getChildNodes();
 
                                     for (int m = 0; m < periodChildren.getLength(); m++) {
@@ -103,7 +102,6 @@ public abstract class ResponseDataBuilder {
                                         }
                                         NamedNodeMap repAttributes = repNode.getAttributes();
                                         newList.add(createData(repAttributes, dateTime));
-
                                     }
                                 }
                             }

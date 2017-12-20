@@ -3,9 +3,10 @@ package com.etlsolutions.examples.weather.data;
 import java.util.Objects;
 
 /**
+ * The AbstractValuable class has implemented some common methods for concrete Valuable classes.
  *
  * @author zc
- * @param <T>
+ * @param <T> - The value type.
  */
 public abstract class AbstractValuable<T> implements Valuable {
 
@@ -14,7 +15,7 @@ public abstract class AbstractValuable<T> implements Valuable {
     public AbstractValuable(T value) {
         this.value = value;
     }
-    
+
     @Override
     public final T getValue() {
         return value;
@@ -29,13 +30,17 @@ public abstract class AbstractValuable<T> implements Valuable {
 
     @Override
     public boolean equals(Object obj) {
-        
-        if (!(obj instanceof AbstractValuable)) {
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
             return false;
         }
 
         final AbstractValuable<?> other = (AbstractValuable<?>) obj;
-
         return Objects.equals(this.value, other.value);
     }
+
 }

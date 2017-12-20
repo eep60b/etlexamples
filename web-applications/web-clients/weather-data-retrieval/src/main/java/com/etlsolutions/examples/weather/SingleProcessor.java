@@ -42,7 +42,7 @@ public final class SingleProcessor {
             ResponseDataBuilder dataBuilder = DataBuilderFactory.getInstance().createDataBuilder(requestMethod);
             RequestLocation location = requestConfig.getRequestLocation();
             int year = calendar.get(Calendar.YEAR);
-            String fileName = requestMethod.getAbbreviation() + FILE_NAME_SEPARATER + location.getName() + FILE_NAME_SEPARATER + year + parameters.getDataFileExtension();
+            String fileName = requestMethod.getAbbreviation() + DATA_FILENAME_SEPARATOR + location.getName() + DATA_FILENAME_SEPARATOR + year + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
 
             List<File> additionalFiles = new ArrayList<>();
@@ -64,7 +64,7 @@ public final class SingleProcessor {
 
             Document doc = db.parse(is);
 
-            List<ResponseData> newList = dataBuilder.build(doc, oldList, requestMethod);
+            List<ResponseData> newList = dataBuilder.build(doc, oldList);
 
             String formattedLocationId = location.getId();
 
@@ -72,7 +72,7 @@ public final class SingleProcessor {
                 formattedLocationId = "0" + formattedLocationId;
             }
 
-            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, FILE_NAME_SEPARATER + year + FILE_NAME_SEPARATER + formattedLocationId);
+            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, DATA_FILENAME_SEPARATOR + year + DATA_FILENAME_SEPARATOR + formattedLocationId);
         }
     }
 }

@@ -160,8 +160,8 @@ public final class SingleProcessorTest {
         Mockito.when(db.parse(inputSource1)).thenReturn(doc1);
         Mockito.when(db.parse(inputSource2)).thenReturn(doc2);   
         
-        Mockito.when(dataBuilder1.build(doc1, oldList1, RequestMethod.FCS_3HOURLY)).thenReturn(newList1);
-        Mockito.when(dataBuilder2.build(doc2, oldList2, RequestMethod.OBS_HOURLY)).thenReturn(newList2);        
+        Mockito.when(dataBuilder1.build(doc1, oldList1)).thenReturn(newList1);
+        Mockito.when(dataBuilder2.build(doc2, oldList2)).thenReturn(newList2);        
     }
 
     /**

@@ -1,54 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Test of class Wxfcs3hourlyData.
  *
  * @author zc
  */
-public class Wxfcs3hourlyDataTest {
-    
-    public Wxfcs3hourlyDataTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Wxfcs3hourlyData.class})
+public final class Wxfcs3hourlyDataTest {
+
+    private final FeelTemperature feelTemperature = PowerMockito.mock(FeelTemperature.class);
+    private final PrecipitationProbability precipitationProbability = PowerMockito.mock(PrecipitationProbability.class);
+    private final RealTemperature realTemprature = PowerMockito.mock(RealTemperature.class);
+    private final PredictedVisibility predictedVisibility = PredictedVisibility.VERY_GOOD;
+    private final RelativeHumidity relativeHumidity = PowerMockito.mock(RelativeHumidity.class);
+    private final UvIndex uvIndex = PowerMockito.mock(UvIndex.class);
+    private final WeatherType weatherType = WeatherType.HEAVY_RAIN;
+    private final WindDirection windDirection = WindDirection.ESE;
+    private final WindGust windGust = PowerMockito.mock(WindGust.class);
+    private final WindSpeed windSpeed = PowerMockito.mock(WindSpeed.class);
+
+    private final Wxfcs3hourlyData instance = new Wxfcs3hourlyData(null, feelTemperature, precipitationProbability, realTemprature, predictedVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed);
 
     /**
-     * Test of getValuables method, of class Wxfcs3hourlyData.
+     * Test of getValuables method.
      */
     @Test
     public void testGetValuables() {
-        System.out.println("getValuables");
-        Wxfcs3hourlyData instance = null;
-        Valuable[] expResult = null;
-        Valuable[] result = instance.getValuables();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertArrayEquals(new Valuable[]{feelTemperature, precipitationProbability, realTemprature, predictedVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windGust, windSpeed}, instance.getValuables());
     }
-    
 }

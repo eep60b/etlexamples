@@ -1,68 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test of class DewPoint.
  *
  * @author zc
  */
-public class DewPointTest {
-    
-    public DewPointTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
+public final class DewPointTest {
 
+    private final DewPoint instance = new DewPoint("34.11");
+    
     /**
-     * Test of toString method, of class DewPoint.
+     * Test of toString method.
+     */
+    @Test
+    public void testGetValue() {
+
+        assertEquals(34.11, instance.getValue(), 0.0);
+    }
+    
+    /**
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        DewPoint instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("Dew point: 34.11", instance.toString());
     }
 
     /**
-     * Test of getShortName method, of class DewPoint.
+     * Test of getShortName method.
      */
     @Test
     public void testGetShortName() {
-        System.out.println("getShortName");
-        DewPoint instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("DwPnt", instance.getShortName());
     }
-    
+
 }
