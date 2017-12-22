@@ -176,11 +176,11 @@ public final class SingleProcessorTest {
         inOrder.verify(additionalFiles1).add(additionalFile11);
         inOrder.verify(additionalFiles1).add(additionalFile21);        
         inOrder.verify(conn1).setDoOutput(Boolean.TRUE);
-        inOrder.verify(dataFileWriter).write(newList1, file1, additionalFiles1, parameters, "-2017-000342");
+        inOrder.verify(dataFileWriter).write("contentns1", newList1, file1, additionalFiles1, parameters, "-2017-000342");
         inOrder.verify(additionalFiles2).add(additionalFile12);
         inOrder.verify(additionalFiles2).add(additionalFile22);         
         inOrder.verify(conn2).setDoOutput(true);      
-        inOrder.verify(dataFileWriter).write(newList2, file2, additionalFiles2, parameters, "-2018-698127");
+        inOrder.verify(dataFileWriter).write("contentns2", newList2, file2, additionalFiles2, parameters, "-2018-698127");
         
         Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile31);
         Mockito.verify(additionalFiles2, Mockito.never()).add(additionalFile32);

@@ -23,26 +23,27 @@ public final class DataFileWriter {
 
     private final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
     private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    
+
     public static final DataFileWriter getInstance() {
         return INSTANCE;
     }
 
     /**
      * Write the list of data to the files using the given character encoding.
+     * @param xmlContent
      * @param list - The data list.
      * @param file - The main file.
      * @param additionalFiles - The additional files.
      * @param parameters - The parameters.
-     * @param titleAdditional - The additional information to add to the titles. 
+     * @param titleAdditional - The additional information to add to the titles.
      * @throws IOException if one of the files cannot be written.
      */
-    public void write(List<ResponseData> list, File file, List<File> additionalFiles, ApplicationParameters parameters, String titleAdditional) throws IOException {
-        
+    public void write(String xmlContent, List<ResponseData> list, File file, List<File> additionalFiles, ApplicationParameters parameters, String titleAdditional) throws IOException {
+
         StringBuilder builder = new StringBuilder();
-        
+
         for(ResponseData data : list) {
-            
+
             //Add an title before the added data.
             if (builder.length() == 0) {
                 builder.append(data.getTitle(parameters.getDelimiter(), titleAdditional)).append("\n");
@@ -59,7 +60,7 @@ public final class DataFileWriter {
         Date currentTime = new Date();
 
         File dataLogFile = new File(parameters.getDataDirectoryPath() + File.separator + "log" + File.separator + "datalog" + File.separator + dateFormat.format(currentTime) + ".log");
-        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + content, dataEncoding, true);
+        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + xmlContent, dataEncoding, true);
 
         for (File additionFile : additionalFiles) {
             FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);

@@ -60,7 +60,8 @@ public final class SingleProcessor {
             URLConnection conn = url.openConnection();
             conn.setDoOutput(true);
 
-            InputSource is = new InputSource(new StringReader(IOUtils.toString(url, WEBSITE_ENCODING)));
+            String xmlContent = IOUtils.toString(url, WEBSITE_ENCODING);
+            InputSource is = new InputSource(new StringReader(xmlContent));
 
             Document doc = db.parse(is);
 
@@ -72,7 +73,7 @@ public final class SingleProcessor {
                 formattedLocationId = "0" + formattedLocationId;
             }
 
-            DataFileWriter.getInstance().write(newList, file, additionalFiles, parameters, DATA_FILENAME_SEPARATOR + year + DATA_FILENAME_SEPARATOR + formattedLocationId);
+            DataFileWriter.getInstance().write(xmlContent.replaceAll("><", ">\n<"), newList, file, additionalFiles, parameters, DATA_FILENAME_SEPARATOR + year + DATA_FILENAME_SEPARATOR + formattedLocationId);
         }
     }
 }
