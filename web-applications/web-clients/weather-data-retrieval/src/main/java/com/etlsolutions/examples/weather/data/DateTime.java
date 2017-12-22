@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.TimeZone;
+import org.apache.log4j.Logger;
 
 /**
  * The DateTime class represent a time point in the data set.
@@ -14,15 +15,17 @@ import java.util.TimeZone;
  */
 public final class DateTime implements Comparable<DateTime> {
 
+    public static final DateTime UNKNOWN_DATETIME = new DateTime(new Date(0));
+
     private final Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DEFAULT_TIMEZONE), Locale.ENGLISH);
-    
-    public DateTime(Date dateTime) {
+
+    private DateTime(Date dateTime) {
         calendar.setTime(dateTime);
     }
-    
-    public DateTime(String date, String time) {
 
-        String[] dateParts = date.replaceAll("Z", "").split("-");
+    private DateTime(String date, String time) {
+
+        String[] dateParts = date.toLowerCase().trim().replaceAll("z", "").split("-");
 
         calendar.set(Calendar.YEAR, Integer.parseInt(dateParts[0]));
         calendar.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
@@ -33,6 +36,27 @@ public final class DateTime implements Comparable<DateTime> {
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
+    public static DateTime getInstance(Date dateTime) {
+        
+        try {
+            return new DateTime(dateTime);
+        } catch (Exception ex) {
+            Logger.getLogger(DateTime.class).warn("Invalid date/time value: " + dateTime, ex);
+            return UNKNOWN_DATETIME;
+        }
+    }
+
+    public static DateTime getInstance(String date, String time) {
+
+        try {
+            return new DateTime(date, time);
+        } catch (Exception ex) {
+
+            Logger.getLogger(DateTime.class).warn("Invalid date/time value: " + date + "/" + time, ex);
+            return UNKNOWN_DATETIME;
+        }
+    }
+
     public Date getDateTime() {
         return calendar.getTime();
     }
@@ -40,7 +64,7 @@ public final class DateTime implements Comparable<DateTime> {
     public String getYear() {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
-    
+
     public String getShortName() {
         return "DTime";
     }
@@ -48,7 +72,7 @@ public final class DateTime implements Comparable<DateTime> {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + calendar.hashCode();
+        hash = 37 * hash + Objects.hashCode(getDateTime());
         return hash;
     }
 

@@ -1,141 +1,126 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
+import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Test of class DateTime.
  *
  * @author zc
  */
-public class DateTimeTest {
-    
-    public DateTimeTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({DateTime.class, Logger.class})
+public final class DateTimeTest {
+
+    private final Logger logger = Mockito.mock(Logger.class);
+    private final Date dateTime = new Date(1423819371983L);
+    private final DateTime instance = DateTime.getInstance(dateTime);
+
     @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+    public void setUp() throws Exception {
+
+        PowerMockito.mockStatic(Logger.class);
+        Mockito.when(Logger.getLogger(DateTime.class)).thenReturn(logger);
     }
 
     /**
-     * Test of getDateTime method, of class DateTime.
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance_Date() {
+
+        assertEquals(DateTime.getInstance(dateTime), instance);
+        assertNotSame(DateTime.getInstance(dateTime), instance);
+        assertEquals(new Date(0), DateTime.getInstance(null).getDateTime());
+        Mockito.verify(logger).warn(Mockito.eq("Invalid date/time value: null"), Mockito.any(NullPointerException.class));
+    }
+
+    /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance_String_String() {
+
+         assertEquals(DateTime.getInstance("2017-12-28z", "720"), DateTime.getInstance("   2017-12-28Z   ", "720"));
+        assertNotSame(DateTime.getInstance("2017-12-28z", "720"), DateTime.getInstance("   2017-12-28Z   ", "720"));       
+        assertEquals(new Date(1514462400000L), DateTime.getInstance("   2017-12-28Z   ", "720").getDateTime());
+        assertEquals(new Date(0), DateTime.getInstance("2017-12-28a", "720").getDateTime());
+        Mockito.verify(logger).warn(Mockito.eq("Invalid date/time value: 2017-12-28a/720"), Mockito.any(NullPointerException.class));
+    }
+
+    /**
+     * Test of getDateTime method.
      */
     @Test
     public void testGetDateTime() {
-        System.out.println("getDateTime");
-        DateTime instance = null;
-        Date expResult = null;
-        Date result = instance.getDateTime();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(new Date(1423819371983L), instance.getDateTime());
     }
 
     /**
-     * Test of getYear method, of class DateTime.
+     * Test of getYear method.
      */
     @Test
     public void testGetYear() {
-        System.out.println("getYear");
-        DateTime instance = null;
-        String expResult = "";
-        String result = instance.getYear();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("2015", instance.getYear());
     }
 
     /**
-     * Test of getShortName method, of class DateTime.
+     * Test of getShortName method.
      */
     @Test
     public void testGetShortName() {
-        System.out.println("getShortName");
-        DateTime instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("DTime", instance.getShortName());
     }
 
     /**
-     * Test of hashCode method, of class DateTime.
+     * Test of hashCode method.
      */
     @Test
     public void testHashCode() {
-        System.out.println("hashCode");
-        DateTime instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(DateTime.getInstance(dateTime).hashCode(), instance.hashCode());
+        assertNotEquals(DateTime.getInstance(new Date(1423819371981L)).hashCode(), instance.hashCode());
     }
 
     /**
-     * Test of equals method, of class DateTime.
+     * Test of equals method.
      */
     @Test
+    @SuppressWarnings("ObjectEqualsNull")
     public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        DateTime instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertTrue(instance.equals(DateTime.getInstance(new Date(1423819371983L))));
+        assertFalse(instance.equals(DateTime.getInstance(new Date(1423819371981L))));
+        assertFalse(instance.equals(new Object()));
+        assertFalse(instance.equals(null));       
     }
 
     /**
-     * Test of compareTo method, of class DateTime.
+     * Test of compareTo method.
      */
     @Test
     public void testCompareTo() {
-        System.out.println("compareTo");
-        DateTime other = null;
-        DateTime instance = null;
-        int expResult = 0;
-        int result = instance.compareTo(other);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(dateTime.compareTo(new Date(1514462400000L)), instance.compareTo(DateTime.getInstance("   2017-12-28Z   ", "720")));
     }
 
     /**
-     * Test of toString method, of class DateTime.
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        DateTime instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("Fri Feb 13 09:22:51 GMT 2015", instance.toString());
     }
-    
 }

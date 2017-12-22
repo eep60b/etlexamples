@@ -31,23 +31,23 @@ public enum PressureTendency implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow pressure tendency value:" + value);
+        return UNKOWN;
     }
 
     public static PressureTendency getPressureTendency(String name) {
 
         for (PressureTendency pressureTendency : values()) {
-            if (pressureTendency.name().equals(name)) {
+            if (pressureTendency.name().equalsIgnoreCase(name)) {
                 return pressureTendency;
             }
         }
 
-        throw new IllegalArgumentException("Unknow pressure tendency name:" + name);
+        return UNKOWN;
     }
 
     @Override
     public String toString() {
-        return "Pressure tendency: " + description;
+        return "PressureTendency: " + description;
     }
 
     @Override

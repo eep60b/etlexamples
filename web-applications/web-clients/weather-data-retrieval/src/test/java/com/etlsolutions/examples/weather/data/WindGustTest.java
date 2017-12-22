@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
  */
 public final class WindGustTest {
 
-    private final WindGust instance1 = new WindGust("12.4");
-    private final WindGust instance2 = new WindGust(new WindSpeed("12.4"));    
+    private final WindGust instance1 = WindGust.getInstance("12.4");
+    private final WindGust instance2 = WindGust.getInstance(WindSpeed.getInstance("12.4"));    
     /**
      * Test of constructors.
      */

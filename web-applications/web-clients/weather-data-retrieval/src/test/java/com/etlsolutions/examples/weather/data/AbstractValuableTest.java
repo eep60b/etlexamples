@@ -41,12 +41,12 @@ public final class AbstractValuableTest {
     public void testEquals() {
        
         assertTrue(instance1.equals(instance2));
-        assertTrue(new FeelTemperature("22.95").equals(new FeelTemperature("22.95"))); 
+        assertTrue(FeelTemperature.getInstance("22.95").equals(FeelTemperature.getInstance("22.95"))); 
         
         assertFalse(instance1.equals(instance3));
         assertFalse(instance1.equals(new Object()));
         assertFalse(instance1.equals(null));
-        assertFalse(new FeelTemperature("22.95").equals(new RealTemperature("22.95")));
+        assertFalse(FeelTemperature.getInstance("22.95").equals(RealTemperature.getInstance("22.95")));
     }
 
     private final class AbstractValuableImpl extends AbstractValuable<String> {

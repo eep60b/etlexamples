@@ -107,6 +107,14 @@ public final class SettingConstants {
 
     public static final double DEFAULT_LONGITUDE = -4.151543;
 
+    /**
+     * The URL base which used to retrieve data after the tokens substitute by the valid values.
+     * 
+     * Examples: 
+     * http://datapoint.metoffice.gov.uk/public/data/val/wxobs/all/xml/3302?res=hourly&key=8412a27d-b855-4b0c-8b2d-b8b8f5285ae8
+     * http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/xml/350235?res=3hourly&key=8412a27d-b855-4b0c-8b2d-b8b8f5285ae8
+     * 
+     */
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";
 
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";

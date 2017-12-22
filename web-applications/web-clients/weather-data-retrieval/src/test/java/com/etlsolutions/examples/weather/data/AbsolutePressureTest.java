@@ -12,7 +12,7 @@ public final class AbsolutePressureTest {
 
     private final String value = "48.28";
 
-    private final AbsolutePressure instance = new AbsolutePressure(value);
+    private final AbsolutePressure instance = AbsolutePressure.getInstance(value);
 
 
     /**

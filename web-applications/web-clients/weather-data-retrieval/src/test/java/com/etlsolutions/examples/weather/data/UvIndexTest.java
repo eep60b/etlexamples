@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public final class UvIndexTest {
 
-    private final UvIndex instance = new UvIndex("94");
+    private final UvIndex instance = UvIndex.getInstance("94");
 
     /**
      * Test of getValue method.

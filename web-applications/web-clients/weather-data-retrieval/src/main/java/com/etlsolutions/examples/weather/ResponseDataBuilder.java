@@ -92,7 +92,7 @@ public abstract class ResponseDataBuilder {
                                         Node repNode = periodChildren.item(m);
                                         String timeString = repNode.getTextContent();
 
-                                        DateTime dateTime = new DateTime(date, timeString);
+                                        DateTime dateTime = DateTime.getInstance(date, timeString);
 
                                         for (int n = oldList.size() - 1; n >= 0; n--) {
                                             ResponseData data = oldList.get(n);

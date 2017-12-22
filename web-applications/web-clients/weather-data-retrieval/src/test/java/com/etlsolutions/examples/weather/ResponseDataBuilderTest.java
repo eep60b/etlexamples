@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.w3c.dom.Document;
@@ -24,16 +25,16 @@ import org.w3c.dom.NodeList;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ResponseDataBuilder.class})
+@PrepareForTest({ResponseDataBuilder.class, ResponseData.class})
 public final class ResponseDataBuilderTest {
 
-    private final ResponseData responseData1 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData2 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData3 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData00 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData10 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData11 = Mockito.mock(ResponseData.class);
-    private final ResponseData responseData20 = Mockito.mock(ResponseData.class);
+    private final ResponseData responseData1 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData2 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData3 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData00 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData10 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData11 = PowerMockito.mock(ResponseData.class);
+    private final ResponseData responseData20 = PowerMockito.mock(ResponseData.class);
     private final List<ResponseData> savedData = Arrays.asList(responseData1, responseData2, responseData3);
     private final Document document = Mockito.mock(Document.class);
     private final NodeList documentChildren = Mockito.mock(NodeList.class);
@@ -72,9 +73,9 @@ public final class ResponseDataBuilderTest {
     @Before
     public void setUp() {
 
-        Mockito.when(responseData1.getDateTime()).thenReturn(new DateTime("2017-11-09Z", "180"));
-        Mockito.when(responseData2.getDateTime()).thenReturn(new DateTime("2017-11-10Z", "180"));
-        Mockito.when(responseData3.getDateTime()).thenReturn(new DateTime("2017-11-11Z", "180"));
+        Mockito.when(responseData1.getDateTime()).thenReturn(DateTime.getInstance("2017-11-09Z", "180"));
+        Mockito.when(responseData2.getDateTime()).thenReturn(DateTime.getInstance("2017-11-10Z", "180"));
+        Mockito.when(responseData3.getDateTime()).thenReturn(DateTime.getInstance("2017-11-11Z", "180"));
 
 
         Mockito.when(document.getChildNodes()).thenReturn(documentChildren);
@@ -154,19 +155,19 @@ public final class ResponseDataBuilderTest {
         @Override
         public ResponseData createData(NamedNodeMap repAttributes, DateTime dateTime) {
 
-            if (repAttributes == repAttributes00 && Objects.equals(dateTime, new DateTime("2017-11-10Z", "180"))) {
+            if (repAttributes == repAttributes00 && Objects.equals(dateTime, DateTime.getInstance("2017-11-10Z", "180"))) {
                 return responseData00;
             }
 
-            if (repAttributes == repAttributes10 && Objects.equals(dateTime, new DateTime("2017-11-11Z", "180"))) {
+            if (repAttributes == repAttributes10 && Objects.equals(dateTime, DateTime.getInstance("2017-11-11Z", "180"))) {
                 return responseData10;
             }
 
-            if (repAttributes == repAttributes11 && Objects.equals(dateTime, new DateTime("2017-11-11Z", "360"))) {
+            if (repAttributes == repAttributes11 && Objects.equals(dateTime, DateTime.getInstance("2017-11-11Z", "360"))) {
                 return responseData11;
             }
 
-            if (repAttributes == repAttributes20 && Objects.equals(dateTime, new DateTime("2017-11-12Z", "720"))) {
+            if (repAttributes == repAttributes20 && Objects.equals(dateTime, DateTime.getInstance("2017-11-12Z", "720"))) {
                 return responseData20;
             }
 

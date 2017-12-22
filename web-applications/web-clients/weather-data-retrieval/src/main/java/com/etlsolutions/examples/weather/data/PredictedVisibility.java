@@ -10,9 +10,9 @@ public enum PredictedVisibility implements Valuable {
 
     public static final String SHORT_PARAMETER_NAME = "V";
 
+    private final String code;    
     private final double value;
     private final double maxValue;
-    private final String code;
 
     private PredictedVisibility(String code, double minValue, double maxValue) {
         this.code = code;
@@ -41,7 +41,7 @@ public enum PredictedVisibility implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow visibility code.");
+        return UNKOWN;
     }
 
     public static PredictedVisibility getPredictedVisibility(String code) {
@@ -52,11 +52,17 @@ public enum PredictedVisibility implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow visibility code.");
+        return UNKOWN;
     }
 
     @Override
     public String getShortName() {
         return "PrVis";
     }
+
+    @Override
+    public String toString() {
+        return "PredictedVisibility: " + value;
+    }
+    
 }

@@ -30,7 +30,7 @@ public enum WindDirection implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow wind direction value:" + value);
+        return UNKOWN;
     }
 
     public static WindDirection getWindDirection(String code) {
@@ -41,11 +41,16 @@ public enum WindDirection implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow wind direction value:" + code);
+        return UNKOWN;
     }
 
     @Override
     public String getShortName() {
         return "WdDrc";
+    }
+
+    @Override
+    public String toString() {
+        return "WindDirection: " + value;
     }
 }

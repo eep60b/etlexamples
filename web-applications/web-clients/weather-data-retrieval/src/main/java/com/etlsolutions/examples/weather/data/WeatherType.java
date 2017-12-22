@@ -52,21 +52,6 @@ public enum WeatherType implements Valuable {
         this.description = description;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public static WeatherType getWeatherType(String value) {
-
-        for (WeatherType type : values()) {
-            if (type.value == Integer.parseInt(value)) {
-                return type;
-            }
-        }
-
-        throw new IllegalArgumentException("Unknow weather type code: " + value);
-    }
-
     public static WeatherType getWeatherTypeByCode(String code) {
 
         for (WeatherType type : values()) {
@@ -75,17 +60,17 @@ public enum WeatherType implements Valuable {
             }
         }
 
-        throw new IllegalArgumentException("Unknow weather type code: " + code);
+        return UNKOWN;
     }
 
     @Override
     public Integer getValue() {
-        return value;
+        return code;
     }
 
     @Override
     public String toString() {
-        return description;
+        return "WeatherType: " + description;
     }
 
     @Override

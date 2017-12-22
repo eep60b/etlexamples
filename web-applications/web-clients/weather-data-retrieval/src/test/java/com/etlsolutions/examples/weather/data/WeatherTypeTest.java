@@ -11,18 +11,7 @@ import static org.junit.Assert.*;
  *
  * @author zc
  */
-public class WeatherTypeTest {
-    
-    public WeatherTypeTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+public final class WeatherTypeTest {
     
     @Before
     public void setUp() {
@@ -59,33 +48,6 @@ public class WeatherTypeTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of getCode method, of class WeatherType.
-     */
-    @Test
-    public void testGetCode() {
-        System.out.println("getCode");
-        WeatherType instance = null;
-        int expResult = 0;
-        int result = instance.getCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getWeatherType method, of class WeatherType.
-     */
-    @Test
-    public void testGetWeatherType() {
-        System.out.println("getWeatherType");
-        String value = "";
-        WeatherType expResult = null;
-        WeatherType result = WeatherType.getWeatherType(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getWeatherTypeByCode method, of class WeatherType.
@@ -121,7 +83,7 @@ public class WeatherTypeTest {
     @Test
     public void testToString() {
 
-        assertEquals("", WeatherType.HAIL_SHOWER_DAY.toString());
+        assertEquals("WeatherType: hail shower day", WeatherType.HAIL_SHOWER_DAY.toString());
     }
 
     /**
@@ -132,5 +94,4 @@ public class WeatherTypeTest {
 
         assertEquals("WType", WeatherType.CLEAR_NIGHT.getShortName());
     }
-    
 }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public final class FeelTemperatureTest {
 
-    private final FeelTemperature instance = new FeelTemperature("73.82");
+    private final FeelTemperature instance = FeelTemperature.getInstance("73.82");
 
     /**
      * Test of toString method, of class FeelTemperature.

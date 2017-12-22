@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  */
 public final class PrecipitationProbabilityTest {
 
-    private final PrecipitationProbability instance = new PrecipitationProbability("56.37");
+    private final PrecipitationProbability instance = PrecipitationProbability.getInstance("56.37");
     
     /**
      * Test of getValue method.

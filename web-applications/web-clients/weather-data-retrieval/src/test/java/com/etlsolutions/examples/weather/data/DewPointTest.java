@@ -1,24 +1,41 @@
 package com.etlsolutions.examples.weather.data;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * Test of class DewPoint.
  *
  * @author zc
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({DewPoint.class, Logger.class})
 public final class DewPointTest {
 
-    private final DewPoint instance = new DewPoint("34.11");
-    
+    private final Logger logger = Mockito.mock(Logger.class);
+    private final DewPoint instance = DewPoint.getInstance("    34.11    ");
+
     /**
-     * Test of toString method.
+     * Test of getInstance method.
      */
     @Test
-    public void testGetValue() {
-
+    public void testGetInstance() {
+        PowerMockito.mockStatic(Logger.class);
+        Mockito.when(Logger.getLogger(DewPoint.class)).thenReturn(logger);
+        
         assertEquals(34.11, instance.getValue(), 0.0);
+        assertEquals(-100, DewPoint.getInstance(null).getValue(), 0.0);
+        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: null"), Mockito.any(NullPointerException.class));
+        assertEquals(-100, DewPoint.getInstance("aiialld").getValue(), 0.0);        
+        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: aiialld"), Mockito.any(NumberFormatException.class));
+        assertEquals(-100, DewPoint.getInstance("NAN").getValue(), 0.0);                
+        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: NAN"), Mockito.any(NumberFormatException.class));        
     }
     
     /**
