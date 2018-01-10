@@ -7,6 +7,8 @@ import com.etlsolutions.examples.weather.data.RequestConfig;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
 import java.io.StringReader;
+import java.net.HttpURLConnection;
+import static java.net.HttpURLConnection.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -57,8 +60,31 @@ public final class SingleProcessor {
             List<ResponseData> oldList = DataFileReader.getInstance().readData(dataBuilder, file, parameters);
 
             URL url = new URL(requestConfig.getUrl());
-            URLConnection conn = url.openConnection();
-            conn.setDoOutput(true);
+            boolean doIt = true;
+            int redirects = 0;            
+            
+            while (doIt) {
+                
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();                
+                int stat = http.getResponseCode();
+                
+                //If it is redirected, find the redirect URL before return the result.
+                doIt = stat == HTTP_MOVED_PERM || stat == HTTP_MOVED_TEMP || stat == HTTP_SEE_OTHER || stat == HTTP_USE_PROXY;                
+                if (doIt) {
+                    
+                    URL base = http.getURL();
+                    String loc = http.getHeaderField("Location");
+                    URL target = loc == null ? null : new URL(base, loc);
+                    http.disconnect();
+                    // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.
+                    if (target == null || !(target.getProtocol().equals("http") || target.getProtocol().equals("https")) || redirects >= 5) {
+                        throw new SecurityException("Illegal URL redirect");
+                    }
+                    
+                    Logger.getLogger(SingleProcessor.class).info("Use redirect URL: " + loc);
+                    url = target;
+                }
+            }
 
             String xmlContent = IOUtils.toString(url, WEBSITE_ENCODING);
             InputSource is = new InputSource(new StringReader(xmlContent));

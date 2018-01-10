@@ -26,7 +26,7 @@ public final class FeelTemperatureTest {
     @Test
     public void testToString() {
 
-        assertEquals("Feel temperature: 73.82", instance.toString());
+        assertEquals("FeelTemperature: 73.82", instance.toString());
     }
 
     /**

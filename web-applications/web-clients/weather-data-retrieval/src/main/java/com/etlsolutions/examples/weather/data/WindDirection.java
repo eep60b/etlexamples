@@ -33,17 +33,6 @@ public enum WindDirection implements Valuable {
         return UNKOWN;
     }
 
-    public static WindDirection getWindDirection(String code) {
-
-        for (WindDirection windDirection : values()) {
-            if (windDirection.name().equals(code)) {
-                return windDirection;
-            }
-        }
-
-        return UNKOWN;
-    }
-
     @Override
     public String getShortName() {
         return "WdDrc";
@@ -51,6 +40,6 @@ public enum WindDirection implements Valuable {
 
     @Override
     public String toString() {
-        return "WindDirection: " + value;
+        return "WindDirection: " + name();
     }
 }

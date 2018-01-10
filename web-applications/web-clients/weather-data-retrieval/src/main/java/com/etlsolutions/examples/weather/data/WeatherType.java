@@ -1,5 +1,7 @@
 package com.etlsolutions.examples.weather.data;
 
+import org.apache.log4j.Logger;
+
 /**
  * The WeatherTyp enum defines all the weather types in data.
  *
@@ -7,65 +9,67 @@ package com.etlsolutions.examples.weather.data;
  */
 public enum WeatherType implements Valuable {
 
-    CLEAR_NIGHT(0, 0, "clear night"),
-    SUNNY_DAY(1, 0, "sunny day"),
-    PARTLY_CLOUDY_NIGHT(2, 10, "partly cloudy night"),
-    PARTLY_CLOUDY_DAY(3, 10, "partly cloudy day"),
-    NOT_USED(4, -1, "not used"),
-    MIST(5, 40, "mist"),
-    FOG(6, 50, "fog"),
-    CLOUDY(7, 20, "cloudy"),
-    OVERCAST(8, 30, "overcast"),
-    LIGHT_RAIN_SHOWER_NIGHT(9, 80, "light rain shower night"),
-    LIGHT_RAIN_SHOWER_DAY(10, 80, "light rain shower day"),
-    DRIZZLE(11, 70, "drizzle"),
-    LIGHT_RAIN(12, 80, "light rain"),
-    HEAVY_RAIN_SHOWER_NIGHT(13, 100, "heavy rain shower night"),
-    HEAVY_RAIN_SHOWER_DAY(14, 100, "heavy rain shower day"),
-    HEAVY_RAIN(15, 90, "heavy rain"),
-    SLEET_SHOWER_NIGHT(16, 90, "sleet shower night"),
-    SLEET_SHOWER_DAY(17, 90, "sleet shower day"),
-    SLEET(18, 80, "sleet"),
-    HAIL_SHOWER_NIGHT(19, 90, "hail shower night"),
-    HAIL_SHOWER_DAY(20, 90, "hail shower day"),
-    HAIL(21, 80, "hail"),
-    LIGHT_SNOW_SHOWER_NIGHT(22, 80, "light snow night"),
-    LIGHT_SNOW_SHOWER_DAY(23, 80, "light snow night"),
-    LIGHT_SNOW(24, 80, "light snow"),
-    HEAVY_SNOW_SHOWER_NIGHT(25, 100, "heavy snow shower night"),
-    HEAVY_SNOW_SHOWER_DAY(26, 100, "heavy snow shower day"),
-    HEAVY_SNOW(27, 100, "heavy snow"),
-    THUNDER_SHOWER_NIGHT(28, 100, "thunder shower night"),
-    THUNDER_SHOWER_DAY(29, 100, "thunder shower day"),
-    THUNDER(30, 100, "thunder"),
-    UNKOWN(-100, -100, "unknown");
+    CLEAR_NIGHT(0, "clear night"),
+    SUNNY_DAY(1, "sunny day"),
+    PARTLY_CLOUDY_NIGHT(2, "partly cloudy night"),
+    PARTLY_CLOUDY_DAY(3, "partly cloudy day"),
+    NOT_USED(4, "not used"),
+    MIST(5, "mist"),
+    FOG(6, "fog"),
+    CLOUDY(7, "cloudy"),
+    OVERCAST(8, "overcast"),
+    LIGHT_RAIN_SHOWER_NIGHT(9, "light rain shower night"),
+    LIGHT_RAIN_SHOWER_DAY(10, "light rain shower day"),
+    DRIZZLE(11, "drizzle"),
+    LIGHT_RAIN(12, "light rain"),
+    HEAVY_RAIN_SHOWER_NIGHT(13, "heavy rain shower night"),
+    HEAVY_RAIN_SHOWER_DAY(14, "heavy rain shower day"),
+    HEAVY_RAIN(15, "heavy rain"),
+    SLEET_SHOWER_NIGHT(16, "sleet shower night"),
+    SLEET_SHOWER_DAY(17, "sleet shower day"),
+    SLEET(18, "sleet"),
+    HAIL_SHOWER_NIGHT(19, "hail shower night"),
+    HAIL_SHOWER_DAY(20, "hail shower day"),
+    HAIL(21, "hail"),
+    LIGHT_SNOW_SHOWER_NIGHT(22, "light snow night"),
+    LIGHT_SNOW_SHOWER_DAY(23, "light snow night"),
+    LIGHT_SNOW(24, "light snow"),
+    HEAVY_SNOW_SHOWER_NIGHT(25, "heavy snow shower night"),
+    HEAVY_SNOW_SHOWER_DAY(26, "heavy snow shower day"),
+    HEAVY_SNOW(27, "heavy snow"),
+    THUNDER_SHOWER_NIGHT(28, "thunder shower night"),
+    THUNDER_SHOWER_DAY(29, "thunder shower day"),
+    THUNDER(30, "thunder"),
+    UNKOWN(-100, "unknown");
 
     public static final String SHORT_PARAMETER_NAME = "W";
 
-    private final int code;
     private final int value;
     private final String description;
 
-    private WeatherType(int code, int value, String description) {
-        this.code = code;
+    private WeatherType(int value, String description) {
         this.value = value;
         this.description = description;
     }
 
-    public static WeatherType getWeatherTypeByCode(String code) {
+    public static WeatherType getWeatherType(String value) {
 
-        for (WeatherType type : values()) {
-            if (type.code == Integer.parseInt(code)) {
-                return type;
+        try {
+            for (WeatherType type : values()) {
+                if (type.value == Integer.parseInt(value)) {
+                    return type;
+                }
             }
+        } catch (Exception ex) {
+            Logger.getLogger(WeatherType.class).warn("Unknown weather type value: " + value, ex);
         }
-
+        
         return UNKOWN;
     }
 
     @Override
     public Integer getValue() {
-        return code;
+        return value;
     }
 
     @Override

@@ -1,13 +1,19 @@
 package com.etlsolutions.examples.weather.data;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * Test of enum PressureTendency.
  *
  * @author zc
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({PressureTendency.class, Logger.class})
 public final class PressureTendencyTest {
 
     /**
@@ -34,35 +40,24 @@ public final class PressureTendencyTest {
     @Test
     public void testGetPressureTendency() {
 
-        assertEquals(PressureTendency.FR, PressureTendency.getPressureTendency("falling then rising"));
+        assertEquals(PressureTendency.FR, PressureTendency.getPressureTendency("FR"));
     }
 
     /**
-     * Test of toString method, of class PressureTendency.
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        PressureTendency instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("PressureTendency: steady", PressureTendency.S.toString());
     }
 
     /**
-     * Test of getShortName method, of class PressureTendency.
+     * Test of getShortName method.
      */
     @Test
     public void testGetShortName() {
-        System.out.println("getShortName");
-        PressureTendency instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
+        assertEquals("PrTdc", PressureTendency.FR.getShortName());
+    }
 }

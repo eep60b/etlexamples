@@ -4,6 +4,7 @@ import static com.etlsolutions.examples.weather.data.Valuable.UNKNOW_VALUE;
 import org.apache.log4j.Logger;
 
 /**
+ * The WindSpeed class represents the wind speed in data.
  *
  * @author zc
  */
@@ -31,7 +32,7 @@ public final class WindSpeed extends AbstractValuable<Double> {
             return new WindSpeed(UNKNOW_VALUE);
         }
     }
-     
+
     @Override
     public String getShortName() {
         return "WnSpd";

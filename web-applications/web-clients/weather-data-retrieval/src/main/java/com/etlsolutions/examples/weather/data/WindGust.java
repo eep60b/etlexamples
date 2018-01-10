@@ -4,7 +4,7 @@ import static com.etlsolutions.examples.weather.data.Valuable.UNKNOW_VALUE;
 import org.apache.log4j.Logger;
 
 /**
- * The WindGust class represents a forecast wind gust.
+ * The WindGust class represents the wind gust in data.
  *
  * @author zc
  */

@@ -44,7 +44,7 @@ public final class Wxfcs3hourlyDataBuilder extends ResponseDataBuilder {
         valuables.add(PredictedVisibility.getPredictedVisibility(Double.parseDouble(cells[index++])));
         valuables.add(RelativeHumidity.getInstance(cells[index++]));
         valuables.add(UvIndex.getInstance(cells[index++]));
-        valuables.add(WeatherType.getWeatherTypeByCode(cells[index++]));
+        valuables.add(WeatherType.getWeatherType(cells[index++]));
         valuables.add(WindDirection.getWindDirection(Integer.parseInt(cells[index++])));
         valuables.add(WindSpeed.getInstance(cells[index++]));
         valuables.add(WindGust.getInstance(cells[index++]));
@@ -69,9 +69,9 @@ public final class Wxfcs3hourlyDataBuilder extends ResponseDataBuilder {
         Node uAttr = repAttributes.getNamedItem(UvIndex.SHORT_PARAMETER_NAME);
         valuables.add(UvIndex.getInstance(uAttr == null ? UvIndex.UNKNOW_VALUE : uAttr.getTextContent()));
         Node wAttr = repAttributes.getNamedItem(WeatherType.SHORT_PARAMETER_NAME);
-        valuables.add(wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherTypeByCode(wAttr.getTextContent()));
+        valuables.add(wAttr == null ? WeatherType.UNKOWN : WeatherType.getWeatherType(wAttr.getTextContent()));
         Node dAttr = repAttributes.getNamedItem(WindDirection.SHORT_PARAMETER_NAME);
-        valuables.add(dAttr == null ? WindDirection.UNKOWN : WindDirection.getWindDirection(dAttr.getTextContent()));
+        valuables.add(dAttr == null ? WindDirection.UNKOWN : WindDirection.valueOf(dAttr.getTextContent()));
         Node sAttr = repAttributes.getNamedItem(WindSpeed.SHORT_PARAMETER_NAME);
         WindSpeed windSpeed = WindSpeed.getInstance(sAttr == null ? WindSpeed.UNKNOW_VALUE : sAttr.getTextContent());
         valuables.add(windSpeed);

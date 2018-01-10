@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -19,10 +18,6 @@ public final class ResponseDataTest {
     private final List<Valuable> valuables = Arrays.asList(FeelTemperature.getInstance("29.11"), PressureTendency.RF);
 
     private final ResponseData instance = new ResponseData(dateTime, valuables);
-
-    @Before
-    public void setUp() {
-    }
 
     /**
      * Test of getDateTime method.

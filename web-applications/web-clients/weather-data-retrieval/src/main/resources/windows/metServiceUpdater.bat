@@ -1,0 +1,1 @@
+C:\Programs\apache\commons-daemon\commons-daemon-1.1.0-bin-windows\prunsrv.exe //US//MetWeatherService --Description="Update the jar for met Service"

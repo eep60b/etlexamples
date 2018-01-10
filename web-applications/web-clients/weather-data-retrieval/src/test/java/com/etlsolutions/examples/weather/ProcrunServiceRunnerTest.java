@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.etlsolutions.examples.weather;
 
 import org.junit.After;
@@ -11,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author zc
  */
-public final class MetDaemonRunnerTest {
+public class ProcrunServiceRunnerTest {
     
-    public MetDaemonRunnerTest() {
+    public ProcrunServiceRunnerTest() {
     }
     
     @BeforeClass
@@ -33,13 +38,13 @@ public final class MetDaemonRunnerTest {
     }
 
     /**
-     * Test of main method, of class MetDaemonRunner.
+     * Test of main method, of class ProcrunServiceRunner.
      */
     @Test
     public void testMain() throws Exception {
         System.out.println("main");
         String[] args = null;
-        MetDaemonRunner.main(args);
+        ProcrunServiceRunner.main(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

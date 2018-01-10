@@ -11,9 +11,9 @@ import static org.junit.Assert.*;
  *
  * @author zc
  */
-public final class MetDaemonRunnerTest {
+public final class ProcrunServiceTest {
     
-    public MetDaemonRunnerTest() {
+    public ProcrunServiceTest() {
     }
     
     @BeforeClass
@@ -33,13 +33,25 @@ public final class MetDaemonRunnerTest {
     }
 
     /**
-     * Test of main method, of class MetDaemonRunner.
+     * Test of start method, of class ProcrunService.
      */
     @Test
-    public void testMain() throws Exception {
-        System.out.println("main");
+    public void testStart() {
+        System.out.println("start");
         String[] args = null;
-        MetDaemonRunner.main(args);
+        ProcrunService.start(args);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of stop method, of class ProcrunService.
+     */
+    @Test
+    public void testStop() {
+        System.out.println("stop");
+        String[] args = null;
+        ProcrunService.stop(args);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

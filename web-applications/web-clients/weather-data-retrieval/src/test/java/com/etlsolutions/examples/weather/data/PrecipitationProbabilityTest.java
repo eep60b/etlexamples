@@ -27,7 +27,7 @@ public final class PrecipitationProbabilityTest {
     @Test
     public void testToString() {
 
-        assertEquals("Precipitation Probability: 56.73", instance.toString());
+        assertEquals("PrecipitationProbability: 56.73", instance.toString());
     }
 
     /**
@@ -36,6 +36,6 @@ public final class PrecipitationProbabilityTest {
     @Test
     public void testGetShortName() {
 
-        assertEquals("P", instance.getShortName());
+        assertEquals("PpPrb", instance.getShortName());
     }
 }

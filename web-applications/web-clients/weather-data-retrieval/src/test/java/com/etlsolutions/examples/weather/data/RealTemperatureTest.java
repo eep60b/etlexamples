@@ -59,5 +59,19 @@ public final class RealTemperatureTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+    /**
+     * Test of getInstance method, of class RealTemperature.
+     */
+    @Test
+    public void testGetInstance() {
+        System.out.println("getInstance");
+        String value = "";
+        RealTemperature expResult = null;
+        RealTemperature result = RealTemperature.getInstance(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
     
 }

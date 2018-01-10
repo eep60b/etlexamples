@@ -10,3 +10,7 @@ To create a service on Debian Linux 8.8:
 80. copy config.properties to /home/zc/metd/props
 90. copy wxfcs3hourly-bangor.properties etc. to /home/zc/metd/props/resources
 100. service metd start
+110. If the following error occurs:
+        [Failed to start metd.service: Unit metd.service failed to load: No such file or directory.]
+    Run this command: systemctl daemon-reload
+    Rerun service metd start.

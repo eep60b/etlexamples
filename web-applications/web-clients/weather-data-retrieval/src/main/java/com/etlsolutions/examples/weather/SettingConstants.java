@@ -64,8 +64,10 @@ public final class SettingConstants {
 
     public static final String REQUEST_TOEKN = "requestToken";
 
-    public static final String DEFAULT_APPLICATION_USERHOME = "/tmp/metdata/log";
+    public static final String DEFAULT_APPLICATION_LOGHOME = "/tmp/metdata/log";    
 
+    public static final String DEFAULT_PROCRUN_LOGHOME = "C:\\ProgramData\\metdata\\log";    
+    
     //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
     private static final String TARGET_DIRECTORY_NAME = "target";
     public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME).isDirectory() ? TARGET_DIRECTORY_NAME : ".";

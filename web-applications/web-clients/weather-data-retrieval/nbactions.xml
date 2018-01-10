@@ -22,4 +22,15 @@
                 <activatedProfile>linux-service</activatedProfile>
             </activatedProfiles>
         </action>
+        <action>
+            <actionName>CUSTOM-clean install windows-service</actionName>
+            <displayName>clean install windows-service</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>windows-service</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>

@@ -1,54 +1,62 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import org.apache.log4j.Logger;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Test of class RelativeHumidity.
  *
  * @author zc
  */
-public class RelativeHumidityTest {
-    
-    public RelativeHumidityTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({RelativeHumidity.class, Logger.class})
+public final class RelativeHumidityTest {
+
+    private final Logger logger = Mockito.mock(Logger.class);
+
+    private final RelativeHumidity instance = RelativeHumidity.getInstance("100");
     
     @Before
     public void setUp() {
+        PowerMockito.mockStatic(Logger.class);
+        Mockito.when(Logger.getLogger(RelativeHumidity.class)).thenReturn(logger);
     }
     
-    @After
-    public void tearDown() {
-    }
-
     /**
-     * Test of getShortName method, of class RelativeHumidity.
+     * Test of getShortName method.
      */
     @Test
     public void testGetShortName() {
-        System.out.println("getShortName");
-        RelativeHumidity instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("Humid", instance.getShortName());
     }
-    
+
+    /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance() {
+        
+        assertEquals(RelativeHumidity.getInstance("100"), instance);
+        assertEquals(RelativeHumidity.getInstance(RelativeHumidity.UNKNOW_VALUE), RelativeHumidity.getInstance("aaa"));
+        Mockito.verify(logger).warn("Invald ralative humidity value: aaa");
+              
+    }
+
+    /**
+     * Test of toString method.
+     */
+    @Test
+    public void testToString() {
+
+        assertEquals("RelativeHumidity: 100.0", instance.toString());
+    }
+
 }

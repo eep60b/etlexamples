@@ -8,59 +8,23 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * Test of class WeatherType.
  *
  * @author zc
  */
 public final class WeatherTypeTest {
-    
+
     @Before
     public void setUp() {
     }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
-     * Test of values method, of class WeatherType.
+     * Test of getWeatherType method.
      */
     @Test
-    public void testValues() {
-        System.out.println("values");
-        WeatherType[] expResult = null;
-        WeatherType[] result = WeatherType.values();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    public void testGetWeatherType() {
 
-    /**
-     * Test of valueOf method, of class WeatherType.
-     */
-    @Test
-    public void testValueOf() {
-        System.out.println("valueOf");
-        String name = "";
-        WeatherType expResult = null;
-        WeatherType result = WeatherType.valueOf(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-
-    /**
-     * Test of getWeatherTypeByCode method, of class WeatherType.
-     */
-    @Test
-    public void testGetWeatherTypeByCode() {
-        System.out.println("getWeatherTypeByCode");
-        String code = "";
-        WeatherType expResult = null;
-        WeatherType result = WeatherType.getWeatherTypeByCode(code);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(WeatherType.DRIZZLE, WeatherType.getWeatherType("11"));
     }
 
     /**

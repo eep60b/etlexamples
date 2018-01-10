@@ -115,7 +115,82 @@
                 </resources>
             </build>
         </profile>
-
+        
+        <profile>
+            <id>windows-service</id>
+            <build>
+                <finalName>metprocrun</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.0</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>                    
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <!-- here the phase you need -->
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <directory>src/main/resources/windows/log4j</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>                            
+                            <execution>
+                                <id>copy-jar</id>
+                                <!-- here the phase you need -->
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>/home/zc/procrun/lib</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <directory>target</directory>
+                                            <includes>
+                                                <include>metprocrun.jar</include>
+                                                <include>classes/windows/metServiceDebugger.bat</include>                                                
+                                                <include>classes/windows/metServiceInstaller.bat</include>                                                
+                                                <include>classes/windows/metServiceInstaller.bat</include>
+                                                <include>classes/windows/metServiceRemover.bat</include>
+                                                <include>classes/windows/metServiceUpdater.bat</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>
+                        </executions>
+                    </plugin> 
+                </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>
+                                log4j.xml
+                            </exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        
         <profile>
             <id>create-executable-jar-with-dependencies</id>
             <build>
