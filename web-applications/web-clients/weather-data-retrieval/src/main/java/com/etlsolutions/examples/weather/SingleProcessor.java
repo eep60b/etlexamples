@@ -6,11 +6,11 @@ import com.etlsolutions.examples.weather.data.RequestMethod;
 import com.etlsolutions.examples.weather.data.RequestConfig;
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import static java.net.HttpURLConnection.*;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,6 +20,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * The SingleProcessor class generates a single set of data each time.
@@ -32,9 +33,12 @@ public final class SingleProcessor {
      * Generate a single set of data for the given parameters.
      *
      * @param parameters - The specified parameters.
+     * @return true if data is retrieved correctly, otherwise return false.
      * @throws Exception if an error occurs.
      */
-    public void process(ApplicationParameters parameters) throws Exception {
+    public boolean process(ApplicationParameters parameters) throws Exception {
+
+        Logger logger = Logger.getLogger(SingleProcessor.class);
 
         Calendar calendar = Calendar.getInstance();
         DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -61,27 +65,28 @@ public final class SingleProcessor {
 
             URL url = new URL(requestConfig.getUrl());
             boolean doIt = true;
-            int redirects = 0;            
-            
+            int redirects = 0;
+
             while (doIt) {
-                
-                HttpURLConnection http = (HttpURLConnection) url.openConnection();                
+
+                HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 int stat = http.getResponseCode();
-                
+
                 //If it is redirected, find the redirect URL before return the result.
-                doIt = stat == HTTP_MOVED_PERM || stat == HTTP_MOVED_TEMP || stat == HTTP_SEE_OTHER || stat == HTTP_USE_PROXY;                
+                doIt = stat == HTTP_MOVED_PERM || stat == HTTP_MOVED_TEMP || stat == HTTP_SEE_OTHER || stat == HTTP_USE_PROXY;
                 if (doIt) {
-                    
+
                     URL base = http.getURL();
                     String loc = http.getHeaderField("Location");
                     URL target = loc == null ? null : new URL(base, loc);
                     http.disconnect();
                     // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.
                     if (target == null || !(target.getProtocol().equals("http") || target.getProtocol().equals("https")) || redirects >= 5) {
-                        throw new SecurityException("Illegal URL redirect");
+                        logger.error("\n\nIllegal URL redirect: " + loc);
+                        return false;
                     }
-                    
-                    Logger.getLogger(SingleProcessor.class).info("Use redirect URL: " + loc);
+
+                    logger.info("Use redirect URL: " + loc);
                     url = target;
                 }
             }
@@ -89,7 +94,14 @@ public final class SingleProcessor {
             String xmlContent = IOUtils.toString(url, WEBSITE_ENCODING);
             InputSource is = new InputSource(new StringReader(xmlContent));
 
-            Document doc = db.parse(is);
+            Document doc;
+            try {
+                doc = db.parse(is);
+            } catch (SAXException | IOException ex) {
+
+                logger.error("\nFailed to parse xml file: \n" + xmlContent, ex);
+                return false;
+            }
 
             List<ResponseData> newList = dataBuilder.build(doc, oldList);
 
@@ -101,5 +113,6 @@ public final class SingleProcessor {
 
             DataFileWriter.getInstance().write(xmlContent.replaceAll("><", ">\n<"), newList, file, additionalFiles, parameters, DATA_FILENAME_SEPARATOR + year + DATA_FILENAME_SEPARATOR + formattedLocationId);
         }
+        return true;
     }
 }

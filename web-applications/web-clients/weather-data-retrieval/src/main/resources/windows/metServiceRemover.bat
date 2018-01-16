@@ -1,1 +1,1 @@
-C:\Programs\apache\commons-daemon\commons-daemon-1.1.0-bin-windows\prunsrv.exe //DS//MetWeatherService
+C:\Programs\metd\service.exe //DS//MyWeatherService

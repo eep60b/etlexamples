@@ -75,6 +75,8 @@ public final class MetThreadServiceTest {
     @Test
     public void testStart() throws Exception {
 
+        Mockito.when(singleProcessor.process(parameters)).thenReturn(Boolean.TRUE);
+        
         instance.init(args);
         instance.start();
         Thread.sleep(5000);
@@ -85,8 +87,8 @@ public final class MetThreadServiceTest {
         inOrder.verify(logger).info("myparas.\n");
         inOrder.verify(logger).info("12/12/2017 12:00:32:  Start the metd service.");
         inOrder.verify(logger).info("12/12/2017 12:00:32:  The metd service has been successfully started.");
-        Mockito.verify(singleProcessor, Mockito.times(2)).process(parameters);
         inOrder.verify(logger).info("\nNo.1");
+        inOrder.verify(logger).info("\nData successfully recorded at 12/12/2017 12:00:32");
         inOrder.verify(logger).info("Data location:            myDataDirectoryPathABC");
         inOrder.verify(logger).info("Data additional location: [add1]");
         inOrder.verify(logger).info("\nNo.2");
@@ -108,7 +110,7 @@ public final class MetThreadServiceTest {
         Mockito.verify(singleProcessor, Mockito.times(1)).process(parameters);
         inOrder.verify(logger).info("\nNo.1");
         inOrder.verify(logger).info("Data location:            myDataDirectoryPathABC");
-        inOrder.verify(logger).info("12/12/2017 12:00:32:  Stop the metd service.");
+        inOrder.verify(logger).info("\n\n12/12/2017 12:00:32:  Stop the metd service.");
         inOrder.verify(logger).info("12/12/2017 12:00:32:  The metd service has been successfully stopped.");
 
     }

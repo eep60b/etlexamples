@@ -3,7 +3,8 @@ package com.etlsolutions.examples.weather;
 import org.apache.log4j.Logger;
 
 /**
- * The ProcrunService class provides methods which can be run by Windows service.
+ * The ProcrunService class provides methods which can be run by Windows
+ * service.
  *
  * @author zc
  */
@@ -13,11 +14,11 @@ public final class ProcrunService {
 
     public static void start(String[] args) {
         try {
-           
+
             MET_DAEMON.init(args);
             MET_DAEMON.start();
         } catch (Throwable th) {
-            Logger.getLogger(MetThreadService.class).error("Failed to start ProcrunService", th);
+            Logger.getLogger(ProcrunService.class).error("Failed to start ProcrunService", th);
             System.exit(-1);
         }
     }

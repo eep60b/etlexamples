@@ -116,7 +116,7 @@ public final class MetDaemonTest {
         Mockito.verify(singleProcessor, Mockito.times(1)).process(parameters);
         inOrder.verify(logger).info("\nNo.1");
         inOrder.verify(logger).info("Data location:            myDataDirectoryPathABC");
-        inOrder.verify(logger).info("12/12/2017 12:00:32:  Stop the metd service.");
+        inOrder.verify(logger).info("\n\n12/12/2017 12:00:32:  Stop the metd service.");
         inOrder.verify(logger).info("12/12/2017 12:00:32:  The metd service has been successfully stopped.");
         
     }

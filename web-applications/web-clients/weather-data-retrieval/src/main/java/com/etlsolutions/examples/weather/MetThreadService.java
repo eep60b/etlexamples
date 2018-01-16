@@ -4,7 +4,8 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * The MetThreadService class is a JVSC daemon which can be run as a linux service.
+ * The MetThreadService class is a JVSC daemon which can be run as a linux
+ * service.
  *
  * @author zc
  */
@@ -12,14 +13,13 @@ public class MetThreadService {
 
     private final Logger logger = Logger.getLogger(MetThreadService.class);
     private Thread myThread;
-    private boolean stopped = false;
+    private boolean stopped;
     private final SingleProcessor singleProcessor = new SingleProcessor();
     private int count = 1;
     private final long delayTime = 1000;
 
- 
     public void init(String[] args) throws Exception {
-        
+
         logger.info("\n\nStart to load the configurations...");
         logger.info(new Date().toString());
         ApplicationParametersFactory factory = ApplicationParametersFactory.getInstance();
@@ -42,17 +42,22 @@ public class MetThreadService {
                 logger.info("\nStart to retrieve data...");
 
                 while (!stopped) {
-                    
+
                     String currentTime = new Date().toString();
-                    
+
                     try {
 
-                        singleProcessor.process(parameters);
+                        boolean success = singleProcessor.process(parameters);
 
                         logger.info("\nNo." + count);
-                        logger.info("Data recorded at " + currentTime);
-                        logger.info("Data location:            " + parameters.getDataDirectoryPath());
-                        logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
+                        if (success) {
+                            logger.info("Data successfully recorded at " + currentTime);
+                            logger.info("Data location:            " + parameters.getDataDirectoryPath());
+                            logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
+                        } else{
+                            logger.info("Failed to record data at " + currentTime);
+                        }
+                        
                         count++;
                         Thread.sleep(parameters.getIntervalMiliSeconds());
                     } catch (Exception ex) {
@@ -67,6 +72,7 @@ public class MetThreadService {
 
     public void start() {
 
+        stopped = false;
         String startMessage = new Date().toString() + ":  Start the metd service.";
         logger.info(startMessage);
         System.out.println(startMessage);
@@ -80,7 +86,7 @@ public class MetThreadService {
 
         stopped = true;
         try {
-            String stopServiceMessage = new Date().toString() + ":  Stop the metd service.";
+            String stopServiceMessage = "\n\n" + new Date().toString() + ":  Stop the metd service.";
             logger.info(stopServiceMessage);
             System.out.println(stopServiceMessage);
             myThread.join(delayTime);

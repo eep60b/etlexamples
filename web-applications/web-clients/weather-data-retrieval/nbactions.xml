@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
         <action>
-            <actionName>CUSTOM-clean install create-executable-jar</actionName>
-            <displayName>clean install create-executable-jar</displayName>
-            <goals>
-                <goal>clean</goal>
-                <goal>install</goal>
-            </goals>
-            <activatedProfiles>
-                <activatedProfile>create-executable-jar</activatedProfile>
-            </activatedProfiles>
-        </action>
-        <action>
             <actionName>CUSTOM-clean install</actionName>
             <displayName>clean install linux-service</displayName>
             <goals>

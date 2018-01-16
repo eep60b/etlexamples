@@ -47,6 +47,10 @@
     <profiles>
         <profile>
             <id>linux-service</id>
+            <properties>
+                <application.location>/home/zc/metd</application.location>
+                <data.location>/tmp</data.location>
+            </properties>
             <build>
                 <finalName>metd</finalName>
                 <plugins>
@@ -58,7 +62,31 @@
                             <source>1.7</source>
                             <target>1.7</target>
                         </configuration>
-                    </plugin>                    
+                    </plugin>  
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <archive>
+                                        <manifest>
+                                            <mainClass>
+                                                com.etlsolutions.examples.weather.MetDaemonRunner
+                                            </mainClass>
+                                        </manifest>
+                                    </archive>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>                                      
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>3.0.2</version>
@@ -79,7 +107,24 @@
                                         </resource>
                                     </resources>              
                                 </configuration>            
-                            </execution>                            
+                            </execution> 
+                            <execution>
+                                <id>copy-props</id>
+                                <!-- here the phase you need -->
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${application.location}/props</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <directory>${basedir}/target/classes/props</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>                           
                             <execution>
                                 <id>copy-jar</id>
                                 <!-- here the phase you need -->
@@ -118,8 +163,12 @@
         
         <profile>
             <id>windows-service</id>
+            <properties>
+                <application.location>/Programs/metd</application.location>
+                <data.location>/Programs/metd</data.location>
+            </properties>
             <build>
-                <finalName>metprocrun</finalName>
+                <finalName>metd</finalName>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -129,73 +178,7 @@
                             <source>1.8</source>
                             <target>1.8</target>
                         </configuration>
-                    </plugin>                    
-                    <plugin>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <version>3.0.2</version>
-                        <executions>
-                            <execution>
-                                <id>copy-resources</id>
-                                <!-- here the phase you need -->
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${basedir}/target/classes</outputDirectory>
-                                    <resources>          
-                                        <resource>
-                                            <directory>src/main/resources/windows/log4j</directory>
-                                            <filtering>true</filtering>
-                                        </resource>
-                                    </resources>              
-                                </configuration>            
-                            </execution>                            
-                            <execution>
-                                <id>copy-jar</id>
-                                <!-- here the phase you need -->
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>copy-resources</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>/home/zc/procrun/lib</outputDirectory>
-                                    <resources>          
-                                        <resource>
-                                            <directory>target</directory>
-                                            <includes>
-                                                <include>metprocrun.jar</include>
-                                                <include>classes/windows/metServiceDebugger.bat</include>                                                
-                                                <include>classes/windows/metServiceInstaller.bat</include>                                                
-                                                <include>classes/windows/metServiceInstaller.bat</include>
-                                                <include>classes/windows/metServiceRemover.bat</include>
-                                                <include>classes/windows/metServiceUpdater.bat</include>
-                                            </includes>
-                                        </resource>
-                                    </resources>              
-                                </configuration>            
-                            </execution>
-                        </executions>
-                    </plugin> 
-                </plugins>
-                <resources>
-                    <resource>
-                        <directory>src/main/resources</directory>
-                        <excludes>
-                            <exclude>
-                                log4j.xml
-                            </exclude>
-                        </excludes>
-                    </resource>
-                </resources>
-            </build>
-        </profile>
-        
-        <profile>
-            <id>create-executable-jar-with-dependencies</id>
-            <build>
-                <finalName>metd</finalName>
-                <plugins>
+                    </plugin>  
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
@@ -220,8 +203,142 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>copy-log4j</id>
+                                <!-- here the phase you need -->
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/classes</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <directory>src/main/resources/windows/log4j</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>                            
+                            <execution>
+                                <id>copy-props</id>
+                                <!-- here the phase you need -->
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${application.location}/props</outputDirectory>
+                                    <resources>          
+                                        <resource>
+                                            <directory>${basedir}/target/classes/props</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>              
+                                </configuration>            
+                            </execution>
+                        </executions>
+                    </plugin> 
+                    <plugin>
+                        <groupId>com.coderplus.maven.plugins</groupId>
+                        <artifactId>copy-rename-maven-plugin</artifactId>
+                        <version>1.0</version>
+                        <executions>
+                            <execution>
+                                <id>copy-and-rename-metd-jar</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/metd-jar-with-dependencies.jar</sourceFile>
+                                    <destinationFile>${application.location}/lib/metd.jar</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-install-bat</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/metServiceInstaller.bat</sourceFile>
+                                    <destinationFile>${application.location}/install.bat</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-uninstall-bat</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/metServiceRemover.bat</sourceFile>
+                                    <destinationFile>${application.location}/uninstall.bat</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-update-bat</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/metServiceUpdater.bat</sourceFile>
+                                    <destinationFile>${application.location}/update.bat</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-debug-bat</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/metServiceDebugger.bat</sourceFile>
+                                    <destinationFile>${application.location}/debug.bat</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-prunsrv-exe</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/prunsrv.exe</sourceFile>
+                                    <destinationFile>${application.location}/service.exe</destinationFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-and-rename-prunmgr-exe</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>rename</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceFile>${basedir}/target/classes/windows/prunmgr.exe</sourceFile>
+                                    <destinationFile>${application.location}/monitor.exe</destinationFile>
+                                </configuration>
+                            </execution>                           
+                        </executions>
+                    </plugin>                    
                 </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>
+                                log4j.xml
+                            </exclude>
+                        </excludes>
+                    </resource>
+                </resources>
             </build>
-        </profile>
+        </profile>    
     </profiles>
 </project>

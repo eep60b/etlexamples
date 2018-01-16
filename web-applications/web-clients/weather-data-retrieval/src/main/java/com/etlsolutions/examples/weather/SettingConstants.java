@@ -74,7 +74,7 @@ public final class SettingConstants {
 
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
-    public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "data";
+    public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "metdata";
 
     public static final String DEFAULT_TIMEZONE = "GMT-0:00";
 
