@@ -40,26 +40,34 @@ public class MetThreadService {
             public void run() {
 
                 logger.info("\nStart to retrieve data...");
-
+                int minutes = parameters.getIntervalInMinutes();
                 while (!stopped) {
 
                     String currentTime = new Date().toString();
 
                     try {
 
-                        boolean success = singleProcessor.process(parameters);
+                        if (minutes >= parameters.getIntervalInMinutes()) {
 
-                        logger.info("\nNo." + count);
-                        if (success) {
-                            logger.info("Data successfully recorded at " + currentTime);
-                            logger.info("Data location:            " + parameters.getDataDirectoryPath());
-                            logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
-                        } else{
-                            logger.info("Failed to record data at " + currentTime);
+                            boolean success = singleProcessor.process(parameters);
+
+                            logger.info("\nNo." + count);
+                            if (success) {
+                                logger.info("Data successfully recorded at " + currentTime);
+                                logger.info("Data location:            " + parameters.getDataDirectoryPath());
+                                logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
+                            } else {
+                                logger.info("Failed to record data at " + currentTime);
+                            }
+
+                            count++;
+                            minutes = 0;
+
+                        } else {
+                            minutes++;
                         }
-                        
-                        count++;
-                        Thread.sleep(parameters.getIntervalMiliSeconds());
+
+                        Thread.sleep(60 * 1000L);
                     } catch (Exception ex) {
                         logger.error("Process error occured at " + currentTime + ".", ex);
                         System.err.println("Process error occured at " + currentTime + ".\n" + ex);

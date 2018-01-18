@@ -26,6 +26,7 @@ public final class ProcrunService {
     public static void stop(String[] args) {
         try {
             MET_DAEMON.stop();
+            MET_DAEMON.destroy();
         } catch (Throwable th) {
             Logger.getLogger(MetThreadService.class).error("Failed to stop ProcrunService", th);
             System.exit(-1);

@@ -11,4 +11,6 @@ set PR_INSTALL=C:\Programs\metd\${service.name}
     --StartMethod=start ^
     --StopMode=jvm ^
     --StopClass=com.etlsolutions.examples.weather.ProcrunService ^
-    --StopMethod=stop
+    --StopMethod=stop ^
+    --StdOutput="C:\Programs\metd\metdata\log\standout\standout.log" ^
+    --StdError="C:\Programs\metd\metdata\log\standerr\standerr.log" 

@@ -25,6 +25,7 @@ public final class ApplicationParameters {
     private final String dataEncoding;
     private final String dataFileExtension;
     private final long intervalMiliSeconds;
+    private final int intervalInMinutes;
     private final SimpleDateFormat datetimeFormat;
     private final String delimiter;
 
@@ -44,6 +45,7 @@ public final class ApplicationParameters {
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalMiliSeconds = MILI_SECONDS_PER_MINUTE * Long.parseLong(intervalInMinutes);
+        this.intervalInMinutes = Integer.parseInt(intervalInMinutes);
         this.datetimeFormat = new SimpleDateFormat(datetimeFormat);
         this.delimiter = delimiter;
     }
@@ -74,6 +76,10 @@ public final class ApplicationParameters {
 
     public long getIntervalMiliSeconds() {
         return intervalMiliSeconds;
+    }
+
+    public int getIntervalInMinutes() {
+        return intervalInMinutes;
     }
 
     public DateFormat getDatetimeFormat() {
