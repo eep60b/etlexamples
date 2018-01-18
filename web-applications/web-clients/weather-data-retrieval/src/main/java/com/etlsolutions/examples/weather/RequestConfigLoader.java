@@ -101,7 +101,7 @@ public final class RequestConfigLoader {
         }
 
         if (propertieses.isEmpty()) {
-            String message = "There is no valid configuration fould.";
+            String message = "There is no valid configuration found.";
             logger.error(message);
             throw new IOException(message);
         }

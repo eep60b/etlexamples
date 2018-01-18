@@ -1,1 +1,0 @@
-C:\Programs\metd\service.exe //US//MyWeatherService --Description="Update the jar for Met Weather Service"

@@ -121,7 +121,7 @@ public final class SettingConstants {
 
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";
 
-    public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/data/locations/request-locations.xml";
+    public static final String EMBEDDED_LOCATIONS_FILE_PATH = "/metdata/locations/request-locations.xml";
 
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
