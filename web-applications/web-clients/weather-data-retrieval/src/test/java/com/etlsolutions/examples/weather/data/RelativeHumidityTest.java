@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
+import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,11 +24,14 @@ public final class RelativeHumidityTest {
 
     private final RelativeHumidity instance = RelativeHumidity.getInstance("100");
     
+
+    //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
     public void setUp() {
+
         PowerMockito.mockStatic(Logger.class);
-        Mockito.when(Logger.getLogger(RelativeHumidity.class)).thenReturn(logger);
-    }
+        Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
+    }  
     
     /**
      * Test of getShortName method.

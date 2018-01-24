@@ -12,45 +12,59 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * Test of class RealTemperature.
  *
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({RealTemperature.class, Logger.class})
-public final class RealTemperatureTest {
-
+@PrepareForTest({WindSpeed.class, Logger.class})
+public final class WindSpeedTest {
+    
     private final Logger logger = Mockito.mock(Logger.class);
-
+    
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
     public void setUp() throws Exception {
 
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
-    }
+    }  
 
     /**
-     * Test of toString method, of class RealTemperature.
+     * Test of getInstance method, of class WindSpeed.
      */
     @Test
-    public void testToString() {
-        System.out.println("toString");
-        RealTemperature instance = null;
-        String expResult = "";
-        String result = instance.toString();
+    public void testGetInstance_String_String() {
+        System.out.println("getInstance");
+        String value = "";
+        String name = "";
+        WindSpeed expResult = null;
+        WindSpeed result = WindSpeed.getInstance(value, name);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getShortName method, of class RealTemperature.
+     * Test of getInstance method, of class WindSpeed.
+     */
+    @Test
+    public void testGetInstance_String() {
+        System.out.println("getInstance");
+        String value = "";
+        WindSpeed expResult = null;
+        WindSpeed result = WindSpeed.getInstance(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getShortName method, of class WindSpeed.
      */
     @Test
     public void testGetShortName() {
         System.out.println("getShortName");
-        RealTemperature instance = null;
+        WindSpeed instance = null;
         String expResult = "";
         String result = instance.getShortName();
         assertEquals(expResult, result);
@@ -59,17 +73,17 @@ public final class RealTemperatureTest {
     }
 
     /**
-     * Test of getInstance method, of class RealTemperature.
+     * Test of toString method, of class WindSpeed.
      */
     @Test
-    public void testGetInstance() {
-        System.out.println("getInstance");
-        String value = "";
-        RealTemperature expResult = null;
-        RealTemperature result = RealTemperature.getInstance(value);
+    public void testToString() {
+        System.out.println("toString");
+        WindSpeed instance = null;
+        String expResult = "";
+        String result = instance.toString();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    
 }

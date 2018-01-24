@@ -1,10 +1,9 @@
-package com.etlsolutions.examples.weather.data;
+package com.etlsolutions.examples.weather;
 
-import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -12,48 +11,41 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * Test of class UvIndex.
+ * Test of class RecoverableDoubleParser
  *
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({UvIndex.class, Logger.class})
-public final class UvIndexTest {
+@PrepareForTest({RecoverableDoubleParser.class, Logger.class})
+public final class RecoverableDoubleParserTest {
 
     private final Logger logger = Mockito.mock(Logger.class);
-    private final UvIndex instance = UvIndex.getInstance("94");
 
+    private final RecoverableDoubleParser instance = RecoverableDoubleParser.getInstance();
+    
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
     public void setUp() throws Exception {
 
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
-    }  
-    
-    /**
-     * Test of getValue method.
-     */
-    @Test
-    public void testGetValue() {
-        assertTrue(instance.getValue() == 94);
     }
 
     /**
-     * Test of toString method.
+     * Test of getInstance method.
      */
     @Test
-    public void testToString() {
-
-        assertEquals("UV Index: 94", instance.toString());
+    public void testGetInstance() {
+        
+        assertEquals(RecoverableDoubleParser.getInstance(), instance);
     }
 
     /**
-     * Test of getShortName method.
+     * Test of parseNumber method.
      */
     @Test
-    public void testGetShortName() {
+    public void testParseNumber() {
 
-        assertEquals("UvIdx", instance.getShortName());
+        assertEquals(24.33, instance.parseNumber("24.33"), 0.0);
     }
 }

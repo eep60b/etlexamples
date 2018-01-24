@@ -23,6 +23,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PrepareForTest({MetDaemon.class, MetThreadService.class, ApplicationParametersFactory.class, ApplicationParameters.class, Logger.class, SingleProcessor.class})
 public final class MetDaemonTest {
 
+    private final MetThreadService metThreadService = Mockito.mock(MetThreadService.class);
     private final DaemonContext daemonContext = Mockito.mock(DaemonContext.class);
     private final String[] args = {"abc"};
     private final ApplicationParametersFactory factory = PowerMockito.mock(ApplicationParametersFactory.class);
@@ -37,6 +38,7 @@ public final class MetDaemonTest {
     @Before
     public void setUp() throws Exception {
 
+        PowerMockito.whenNew(MetThreadService.class).withNoArguments().thenReturn(metThreadService);
         Mockito.when(daemonContext.getArguments()).thenReturn(args);
 
         PowerMockito.mockStatic(ApplicationParametersFactory.class);
@@ -44,7 +46,7 @@ public final class MetDaemonTest {
         Mockito.when(factory.loadApplicationParameters(args)).thenReturn(parameters);
         Mockito.when(parameters.getDataDirectoryPath()).thenReturn("myDataDirectoryPathABC");
         Mockito.when(parameters.getAdditionalDataDirectoryPaths()).thenReturn(Arrays.asList("add1"));
-        Mockito.when(parameters.getIntervalMiliSeconds()).thenReturn(7000L);
+        Mockito.when(parameters.getIntervalInMinutes()).thenReturn(7);
 
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(MetThreadService.class)).thenReturn(logger);

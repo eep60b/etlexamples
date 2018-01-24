@@ -1,8 +1,5 @@
 package com.etlsolutions.examples.weather.data;
 
-import static com.etlsolutions.examples.weather.data.Valuable.UNKNOW_VALUE;
-import org.apache.log4j.Logger;
-
 /**
  * The WindGust class represents the wind gust in data.
  *
@@ -18,7 +15,7 @@ public final class WindGust extends AbstractValuable<Double> {
 
     private WindGust(String value) {
 
-        this(WindSpeed.getInstance(value));
+        this(WindSpeed.getInstance(value, "Wind Gust"));
     }
 
     /**
@@ -29,12 +26,8 @@ public final class WindGust extends AbstractValuable<Double> {
      * object is returned. No exception will be thrown.
      */
     public static WindGust getInstance(String value) {
-        try {
-            return new WindGust(value);
-        } catch (Exception ex) {
-            Logger.getLogger(WindGust.class).warn("Unknown wind gust value: " + value, ex);
-            return new WindGust(UNKNOW_VALUE);
-        }
+
+        return new WindGust(value);
     }
 
     /**
@@ -45,12 +38,8 @@ public final class WindGust extends AbstractValuable<Double> {
      * object is returned. No exception will be thrown.
      */
     public static WindGust getInstance(WindSpeed value) {
-        try {
-            return new WindGust(value);
-        } catch (Exception ex) {
-            Logger.getLogger(WindGust.class).warn("Unknown wind gust value: " + value, ex);
-            return new WindGust(UNKNOW_VALUE);
-        }
+
+        return new WindGust(value);
     }
 
     @Override

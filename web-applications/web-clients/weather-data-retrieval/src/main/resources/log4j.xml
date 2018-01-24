@@ -16,7 +16,7 @@
     </appender>
 
     <root>
-        <level value="INFO" />
+        <level value="TRACE" />
         <appender-ref ref="LOGFILE" />
         <appender-ref ref="CONSOLE" />
     </root>

@@ -40,6 +40,7 @@ public final class ApplicationParametersFactory {
         options.addOption(CONFIG_FILE_PATH_KEY, true, "The config file path");
         options.addOption(DATA_DIRECTORY_PATH_KEY, true, "The data file path");
         options.addOption(ADDITIONAL_DATA_PATH_KEY, true, "The additional data paths.");
+        options.addOption(BASE_DATA_PATH_KEY, true, "The base data path.");
         options.addOption(DATA_ENCODING_KEY, true, "The data encoding method.");
         options.addOption(DATA_FILE_EXTENSION_KEY, true, "The data file extension.");
         options.addOption(INTERVAL_MINUTES_KEY, true, "The interval in minutes to retrieval data.");
@@ -54,6 +55,7 @@ public final class ApplicationParametersFactory {
         String configFilePath = commandLine.getOptionValue(CONFIG_FILE_PATH_KEY);
         String dataDirecotryPath = commandLine.getOptionValue(DATA_DIRECTORY_PATH_KEY);
         String additionalDataPathString = commandLine.getOptionValue(ADDITIONAL_DATA_PATH_KEY);
+        String baseDataPathString = commandLine.getOptionValue(BASE_DATA_PATH_KEY);
         String dataEncoding = commandLine.getOptionValue(DATA_ENCODING_KEY);
         String dataFileExtension = commandLine.getOptionValue(DATA_FILE_EXTENSION_KEY);
         String intervalMinutes = commandLine.getOptionValue(INTERVAL_MINUTES_KEY);
@@ -76,6 +78,7 @@ public final class ApplicationParametersFactory {
 
         String savedDataPath = properties.getProperty(DATA_DIRECTORY_PATH_KEY);
         String savedAdditionalDataPathString = properties.getProperty(ADDITIONAL_DATA_PATH_KEY);
+        String savedBaseDataPathString = properties.getProperty(BASE_DATA_PATH_KEY);
         String savedDataEncoding = properties.getProperty(DATA_ENCODING_KEY);
         String savedDataFileExtension = properties.getProperty(DATA_FILE_EXTENSION_KEY);
         String savedIntervalMinutes = properties.getProperty(INTERVAL_MINUTES_KEY);
@@ -87,9 +90,10 @@ public final class ApplicationParametersFactory {
         dataDirecotryPath = dataDirecotryPath == null ? (savedDataPath == null ? DEFAULT_DATA_DIRECTORY_PATH : savedDataPath) : dataDirecotryPath;
 
         additionalDataPathString = additionalDataPathString == null ? (savedAdditionalDataPathString == null ? DEFAULT_ADDITIONAL_DATA_PATH : savedAdditionalDataPathString) : additionalDataPathString;
+        baseDataPathString = baseDataPathString == null ? (savedBaseDataPathString == null ? DEFAULT_BASE_DATA_PATH : savedBaseDataPathString) : baseDataPathString;
         dataEncoding = dataEncoding == null ? (savedDataEncoding == null ? DEFAULT_DATA_ENCODING : savedDataEncoding) : dataEncoding;
         dataFileExtension = dataFileExtension == null ? (savedDataFileExtension == null ? DEFAULT_DATA_FILE_EXTENSION : savedDataFileExtension) : dataFileExtension;
-        intervalMinutes = intervalMinutes == null ? (savedIntervalMinutes == null ? DEFAULT_INTERVAL_MINUTES : savedIntervalMinutes) : intervalMinutes;
+        intervalMinutes = intervalMinutes == null ? savedIntervalMinutes : intervalMinutes;
 
         requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_REQUEST_LOCATIONS_FILE_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
         requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
@@ -101,6 +105,7 @@ public final class ApplicationParametersFactory {
         properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
         properties.setProperty(ADDITIONAL_DATA_PATH_KEY, additionalDataPathString);
+        properties.setProperty(BASE_DATA_PATH_KEY, baseDataPathString);
         properties.setProperty(DATA_ENCODING_KEY, dataEncoding);
         properties.setProperty(DATA_FILE_EXTENSION_KEY, dataFileExtension);
         properties.setProperty(INTERVAL_MINUTES_KEY, intervalMinutes);
@@ -109,7 +114,7 @@ public final class ApplicationParametersFactory {
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
         
-        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
+        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
     public synchronized void saveParameters() throws IOException {

@@ -30,7 +30,7 @@ public final class ApplicationParametersFactoryTest {
     @SuppressWarnings("unchecked")
     private final List<RequestConfig> requestConfigs = Mockito.mock(List.class);
     private final ApplicationParameters applicationParameters = new ApplicationParameters("configFilePath", "dataDirectoryPath", requestConfigs,
-            new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
+            new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
 
     private final ApplicationParametersFactory instance = ApplicationParametersFactory.getInstance();
 
@@ -82,7 +82,7 @@ public final class ApplicationParametersFactoryTest {
     public void testLoadApplicationParameters_from_properties() throws Exception {
 
     ApplicationParameters expectedResult = new ApplicationParameters("configFilePath", "dataDirectoryPath", requestConfigs,
-            new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
+            new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
 
         assertEquals(expectedResult, instance.loadApplicationParameters(null));
     }
@@ -98,6 +98,7 @@ public final class ApplicationParametersFactoryTest {
         Mockito.when(properties.getProperty("configFilePath")).thenReturn("configFilePath");
         Mockito.when(properties.getProperty("dataDirectoryPath")).thenReturn("dataDirectoryPath");
         Mockito.when(properties.getProperty("addtionalDataPath")).thenReturn("addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3");
+        Mockito.when(properties.getProperty("baseDataPath")).thenReturn("aaa");
         Mockito.when(properties.getProperty("dataEncoding")).thenReturn("ASKII");
         Mockito.when(properties.getProperty("dataFileEtension")).thenReturn(".fxt");
         Mockito.when(properties.getProperty("intervalMinutes")).thenReturn("11");

@@ -22,14 +22,14 @@ public final class ApplicationParameters {
     private final String dataDirectoryPath;
     private final List<RequestConfig> requestConfigs;
     private final List<String> additionalDataDirectoryPaths = new ArrayList<>();
+    private final String baseDataDirectoryPath;    
     private final String dataEncoding;
     private final String dataFileExtension;
-    private final long intervalMiliSeconds;
     private final int intervalInMinutes;
     private final SimpleDateFormat datetimeFormat;
     private final String delimiter;
 
-    public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths,
+    public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths, String baseDataDirectoryPath,
             String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter) {
 
         this.configFilePath = new File(configFilePath).getAbsolutePath();
@@ -42,10 +42,10 @@ public final class ApplicationParameters {
             }
         }
 
+        this.baseDataDirectoryPath = baseDataDirectoryPath;
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
-        this.intervalMiliSeconds = MILI_SECONDS_PER_MINUTE * Long.parseLong(intervalInMinutes);
-        this.intervalInMinutes = Integer.parseInt(intervalInMinutes);
+        this.intervalInMinutes = RecoverableIntParser.getInstance().parseNumber(intervalInMinutes, DEFAULT_INTERVAL_MINUTES, "interval in minutes");
         this.datetimeFormat = new SimpleDateFormat(datetimeFormat);
         this.delimiter = delimiter;
     }
@@ -66,16 +66,16 @@ public final class ApplicationParameters {
         return Collections.unmodifiableList(additionalDataDirectoryPaths);
     }
 
+    public String getBaseDataDirectoryPath() {
+        return baseDataDirectoryPath;
+    }
+    
     public String getDataEncoding() {
         return dataEncoding;
     }
 
     public String getDataFileExtension() {
         return dataFileExtension;
-    }
-
-    public long getIntervalMiliSeconds() {
-        return intervalMiliSeconds;
     }
 
     public int getIntervalInMinutes() {
@@ -97,9 +97,10 @@ public final class ApplicationParameters {
         hash = 59 * hash + Objects.hashCode(this.dataDirectoryPath);
         hash = 59 * hash + Objects.hashCode(this.requestConfigs);
         hash = 59 * hash + Objects.hashCode(this.additionalDataDirectoryPaths);
+        hash = 59 * hash + Objects.hashCode(this.baseDataDirectoryPath);
         hash = 59 * hash + Objects.hashCode(this.dataEncoding);
         hash = 59 * hash + Objects.hashCode(this.dataFileExtension);
-        hash = 59 * hash + (int) (this.intervalMiliSeconds ^ (this.intervalMiliSeconds >>> 32));
+        hash = 59 * hash + this.intervalInMinutes;
         hash = 59 * hash + Objects.hashCode(this.datetimeFormat);
         hash = 59 * hash + Objects.hashCode(this.delimiter);
         return hash;
@@ -129,13 +130,16 @@ public final class ApplicationParameters {
         if (!Objects.equals(this.additionalDataDirectoryPaths, other.additionalDataDirectoryPaths)) {
             return false;
         }
+        if (!Objects.equals(this.baseDataDirectoryPath, other.baseDataDirectoryPath)) {
+            return false;
+        }
         if (!Objects.equals(this.dataEncoding, other.dataEncoding)) {
             return false;
         }
         if (!Objects.equals(this.dataFileExtension, other.dataFileExtension)) {
             return false;
         }
-        if (this.intervalMiliSeconds != other.intervalMiliSeconds) {
+        if (this.intervalInMinutes != other.intervalInMinutes) {
             return false;
         }
         if (!Objects.equals(this.datetimeFormat, other.datetimeFormat)) {
@@ -153,9 +157,10 @@ public final class ApplicationParameters {
                 + "Request configs =          " + requestConfigs + "\n"
                 + "Data file directory =      " + dataDirectoryPath + "\n"
                 + "Addtional data directory = " + additionalDataDirectoryPaths + "\n"
+                + "Base data directory =      " + baseDataDirectoryPath + "\n"
                 + "Data encoding  =           " + dataEncoding + "\n"
                 + "Data file extension  =     " + dataFileExtension + "\n"
-                + "Interval in minutes  =     " + intervalMiliSeconds/MILI_SECONDS_PER_MINUTE + "\n"
+                + "Interval in minutes  =     " + intervalInMinutes + "\n"
                 + "Date time format =         " + datetimeFormat.toLocalizedPattern() + "\n"
                 + "Delimiter =                [" + delimiter + "]";
     }

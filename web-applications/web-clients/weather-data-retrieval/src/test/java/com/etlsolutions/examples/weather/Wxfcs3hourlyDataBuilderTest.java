@@ -33,7 +33,7 @@ import org.w3c.dom.Node;
 public final class Wxfcs3hourlyDataBuilderTest {
 
     private final String line = "12/08/2017 12:00:00,-2.0,9.0,3.0,40000.0,74.0,1,8,2925,34.0,18.0";
-     private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "", "", "1", "MM/dd/yyyy HH:mm:ss", ",");
+    private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "a", "", "", "1", "MM/dd/yyyy HH:mm:ss", ",");
     private final DateTime dateTime = DateTime.getInstance("2017-12-08Z", "720");
     private final FeelTemperature feelTemperature = FeelTemperature.getInstance("-2.0");
     private final PrecipitationProbability precipitationProbability = PrecipitationProbability.getInstance("9.0");
@@ -43,7 +43,7 @@ public final class Wxfcs3hourlyDataBuilderTest {
     private final UvIndex uvIndex = UvIndex.getInstance("1");
     private final WeatherType weatherType = WeatherType.OVERCAST;
     private final WindDirection windDirection = WindDirection.WNW;
-    private final WindSpeed windSpeed = WindSpeed.getInstance("34.0");    
+    private final WindSpeed windSpeed = WindSpeed.getInstance("34.0");
     private final WindGust windGust = WindGust.getInstance("18.0");
     private final List<Valuable> valuables = Arrays.asList(feelTemperature, precipitationProbability, realTemperature, predictedVisibility, relativeHumidity, uvIndex, weatherType, windDirection, windSpeed, windGust);
     private final ResponseData responseData = new ResponseData(dateTime, valuables);
@@ -59,11 +59,12 @@ public final class Wxfcs3hourlyDataBuilderTest {
     private final Node dAttr = Mockito.mock(Node.class);
     private final Node sAttr = Mockito.mock(Node.class);
     private final Node gAttr = Mockito.mock(Node.class);
-    
+
     private final Wxfcs3hourlyDataBuilder instance = new Wxfcs3hourlyDataBuilder();
 
     /**
      * Test of build method.
+     *
      * @throws Exception if an error occurs.
      */
     @Test
@@ -101,7 +102,7 @@ public final class Wxfcs3hourlyDataBuilderTest {
         Mockito.when(dAttr.getTextContent()).thenReturn("WNW");
         Mockito.when(sAttr.getTextContent()).thenReturn("34.0");
         Mockito.when(gAttr.getTextContent()).thenReturn("18.0");
-        
+
         assertEquals(responseData, instance.createData(repAttributes, dateTime));
     }
 

@@ -29,6 +29,11 @@ public final class SettingConstants {
      * The key to find the additional data directories.
      */
     public static final String ADDITIONAL_DATA_PATH_KEY = "addtionalDataPath";
+    
+    /**
+     * The key to find the base data.
+     */
+    public static final String BASE_DATA_PATH_KEY = "baseDataPath"; 
 
     /**
      * The key to find the data encoding.
@@ -76,6 +81,22 @@ public final class SettingConstants {
 
     public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "metdata";
 
+    /**
+     * The additional data locations where the data will be saved.
+     */
+    public static final String DEFAULT_ADDITIONAL_DATA_PATH = "";
+    
+
+    /**
+     * The base data locations.
+     * 
+     * The base data is the data which will be copied to the data directory if they are newer than those inside the data directory.
+     */
+    public static final String DEFAULT_BASE_DATA_PATH = "";
+
+    /**
+     * The default time zone is GMT-0:00.
+     */ 
     public static final String DEFAULT_TIMEZONE = "GMT-0:00";
 
     /**
@@ -91,13 +112,11 @@ public final class SettingConstants {
      */
     public static final String DEFAULT_DELIMITER = ",";
 
-    public static final String DEFAULT_ADDITIONAL_DATA_PATH = "";
-
     public static final String DEFAULT_DATA_ENCODING = "ASCII";
 
     public static final String DEFAULT_DATA_FILE_EXTENSION = ".dat";
 
-    public static final String DEFAULT_INTERVAL_MINUTES = "1";
+    public static final String DEFAULT_INTERVAL_MINUTES = "30";
 
     public static final String DEFAULT_REQUEST_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "request-locations.xml";
 

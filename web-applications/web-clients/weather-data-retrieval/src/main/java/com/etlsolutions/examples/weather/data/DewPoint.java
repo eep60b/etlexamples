@@ -1,13 +1,11 @@
 package com.etlsolutions.examples.weather.data;
 
-import org.apache.log4j.Logger;
-
 /**
  * The DewPoint class represents a dew point.
  *
  * @author zc
  */
-public final class DewPoint extends AbstractValuable<Double> {
+public final class DewPoint extends AbstractDoubleValuable {
 
     public static final String SHORT_PARAMETER_NAME = "Dp";
 
@@ -20,7 +18,7 @@ public final class DewPoint extends AbstractValuable<Double> {
      */
     private DewPoint(String value) {
 
-        super(Double.parseDouble(value));
+        super(value, "Dew Point");
     }
 
     /**
@@ -31,17 +29,13 @@ public final class DewPoint extends AbstractValuable<Double> {
      * object is returned. No exception will be thrown.
      */
     public static DewPoint getInstance(String value) {
-        try {
-            return new DewPoint(value);
-        } catch (Exception ex) {
-            Logger.getLogger(DewPoint.class).warn("Unknown dew point value: " + value, ex);
-            return new DewPoint(UNKNOW_VALUE);
-        }
+        
+        return new DewPoint(value);
     }
 
     @Override
     public String toString() {
-        return "DewPoint: " + value;
+        return "Dew Point: " + value;
     }
 
     @Override

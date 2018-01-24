@@ -1,8 +1,10 @@
 package com.etlsolutions.examples.weather.data;
 
+import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -21,13 +23,19 @@ public final class DewPointTest {
     private final Logger logger = Mockito.mock(Logger.class);
     private final DewPoint instance = DewPoint.getInstance("    34.11    ");
 
+    //Keep the logger mock to prevent the logger from printing to the output log.
+    @Before
+    public void setUp() throws Exception {
+
+        PowerMockito.mockStatic(Logger.class);
+        Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
+    }  
+    
     /**
      * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
-        PowerMockito.mockStatic(Logger.class);
-        Mockito.when(Logger.getLogger(DewPoint.class)).thenReturn(logger);
         
         assertEquals(34.11, instance.getValue(), 0.0);
         assertEquals(-100, DewPoint.getInstance(null).getValue(), 0.0);

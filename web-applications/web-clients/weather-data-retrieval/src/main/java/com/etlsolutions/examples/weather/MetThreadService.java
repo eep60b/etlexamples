@@ -1,5 +1,7 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.net.ConnectException;
 import java.util.Date;
 import org.apache.log4j.Logger;
 
@@ -49,15 +51,15 @@ public class MetThreadService {
 
                         if (minutes >= parameters.getIntervalInMinutes()) {
 
+                            logger.info("\nNo." + count);
                             boolean success = singleProcessor.process(parameters);
 
-                            logger.info("\nNo." + count);
                             if (success) {
                                 logger.info("Data successfully recorded at " + currentTime);
                                 logger.info("Data location:            " + parameters.getDataDirectoryPath());
                                 logger.info("Data additional location: " + parameters.getAdditionalDataDirectoryPaths());
                             } else {
-                                logger.info("Failed to record data at " + currentTime);
+                                logger.warn("Failed to record data at " + currentTime);
                             }
 
                             count++;
@@ -65,9 +67,13 @@ public class MetThreadService {
 
                         } else {
                             minutes++;
+                            Thread.sleep(MILI_SECONDS_PER_MINUTE);
                         }
 
-                        Thread.sleep(60 * 1000L);
+                    } catch (ConnectException ex) {
+
+                        logger.warn("Process error occured at " + currentTime + ".\nThis error is treated as recoverable error.\nThe application is not shutdown.", ex);
+                    
                     } catch (Exception ex) {
                         logger.error("Process error occured at " + currentTime + ".", ex);
                         System.err.println("Process error occured at " + currentTime + ".\n" + ex);

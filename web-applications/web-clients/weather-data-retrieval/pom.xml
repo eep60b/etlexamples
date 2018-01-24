@@ -169,7 +169,7 @@
                 <monitor.name>metmonitor.exe</monitor.name>
                 <application.location>/Programs/metd</application.location>     <!--Don't change this to C:\Programs....-->
                 <jar.name>metd</jar.name>
-                <interval.in.minutes>10</interval.in.minutes>
+                <interval.in.minutes>30</interval.in.minutes>
                 <config.properties.path>${application.location}/props/config.properties</config.properties.path>
             </properties>
             <build>

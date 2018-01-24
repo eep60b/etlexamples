@@ -36,6 +36,7 @@ public final class SingleProcessor {
      * @return true if data is retrieved correctly, otherwise return false.
      * @throws Exception if an error occurs.
      */
+    @SuppressWarnings("SleepWhileInLoop")
     public boolean process(ApplicationParameters parameters) throws Exception {
 
         Logger logger = Logger.getLogger(SingleProcessor.class);
@@ -51,7 +52,11 @@ public final class SingleProcessor {
             int year = calendar.get(Calendar.YEAR);
             String fileName = requestMethod.getAbbreviation() + DATA_FILENAME_SEPARATOR + location.getName() + DATA_FILENAME_SEPARATOR + year + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
-
+            
+            //Copy the base file if it is newer than current data file.
+            File baseFile = new File(parameters.getBaseDataDirectoryPath() + File.separator + fileName);           
+            BaseFileCopier.getInstance().copy(baseFile, file);
+            
             List<File> additionalFiles = new ArrayList<>();
 
             //Don't user functional operations here to compatible for Java 1.7
@@ -82,24 +87,26 @@ public final class SingleProcessor {
                     http.disconnect();
                     // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.
                     if (target == null || !(target.getProtocol().equals("http") || target.getProtocol().equals("https")) || redirects >= 5) {
-                        logger.error("\n\nIllegal URL redirect: " + loc);
+                        logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
                         return false;
                     }
 
-                    logger.info("Use redirect URL: " + loc);
+                    logger.info("\nUse redirect URL: " + loc);
                     url = target;
                 }
             }
 
-            String xmlContent = IOUtils.toString(url, WEBSITE_ENCODING);
-            InputSource is = new InputSource(new StringReader(xmlContent));
-
+            String xmlContent = null;
             Document doc;
             try {
+
+                xmlContent = IOUtils.toString(url, WEBSITE_ENCODING);
+                InputSource is = new InputSource(new StringReader(xmlContent));
                 doc = db.parse(is);
+
             } catch (SAXException | IOException ex) {
 
-                logger.error("\nFailed to parse xml file: \n" + xmlContent, ex);
+                logger.warn("\nFailed to parse the xml file: \n" + xmlContent, ex);
                 return false;
             }
 

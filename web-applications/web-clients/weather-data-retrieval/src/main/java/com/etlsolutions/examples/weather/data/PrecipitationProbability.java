@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
+import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import static com.etlsolutions.examples.weather.data.Valuable.UNKNOW_VALUE;
 import org.apache.log4j.Logger;
 
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
  *
  * @author zc
  */
-public final class PrecipitationProbability extends AbstractValuable<Double> {
+public final class PrecipitationProbability extends AbstractDoubleValuable {
     
     public static final String SHORT_PARAMETER_NAME = "Pp";
     public static final double MINIMUM_VALUE = 0;
@@ -16,7 +17,7 @@ public final class PrecipitationProbability extends AbstractValuable<Double> {
     
     private PrecipitationProbability(String value) {
 
-        super(Double.parseDouble(value));
+        super(value, "Precipitation Probability");
     }
     /**
      * Get an instance of the PrecipitationProbability class.
@@ -26,12 +27,7 @@ public final class PrecipitationProbability extends AbstractValuable<Double> {
      * object is returned. No exception will be thrown.
      */
     public static PrecipitationProbability getInstance(String value) {
-        try {
             return new PrecipitationProbability(value);
-        } catch (Exception ex) {
-            Logger.getLogger(DewPoint.class).warn("Unknown precipitation probability value: " + value, ex);
-            return new PrecipitationProbability(UNKNOW_VALUE);
-        }
     }
  
     @Override

@@ -25,6 +25,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+import sun.tools.attach.BsdVirtualMachine;
 
 /**
  * Test of class SingleProcessor.
@@ -32,12 +33,13 @@ import org.xml.sax.InputSource;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({SingleProcessor.class, ApplicationParameters.class, Calendar.class, DataBuilderFactory.class, DataFileReader.class, DocumentBuilderFactory.class, 
+@PrepareForTest({SingleProcessor.class, ApplicationParameters.class, Calendar.class, DataBuilderFactory.class, BaseFileCopier.class, DataFileReader.class, DocumentBuilderFactory.class, 
     DataFileWriter.class, ResponseDataBuilder.class, IOUtils.class, RequestConfig.class, RequestLocation.class, URL.class, URLConnection.class})
 public final class SingleProcessorTest {
 
     private final ApplicationParameters parameters = PowerMockito.mock(ApplicationParameters.class);
     private final Calendar calendar = Mockito.mock(Calendar.class);
+    private final BaseFileCopier baseFileCopier = PowerMockito.mock(BaseFileCopier.class);
     private final RequestConfig requestConfig1 = PowerMockito.mock(RequestConfig.class);
     private final RequestConfig requestConfig2 = PowerMockito.mock(RequestConfig.class);    
     private final List<RequestConfig> requestConfigs = Arrays.asList(requestConfig1, requestConfig2);
@@ -52,6 +54,8 @@ public final class SingleProcessorTest {
     private final RequestLocation location2 = PowerMockito.mock(RequestLocation.class);
     private final File file1 = Mockito.mock(File.class);
     private final File file2 = Mockito.mock(File.class);    
+    private final File baseFile1 = Mockito.mock(File.class);
+    private final File baseFile2 = Mockito.mock(File.class); 
     private final File additionalFile11 = Mockito.mock(File.class);
     private final File additionalFile12 = Mockito.mock(File.class);
     private final File additionalFile31 = Mockito.mock(File.class);    
@@ -80,7 +84,7 @@ public final class SingleProcessorTest {
     @SuppressWarnings("unchecked")
     private final List<ResponseData> newList2 = Mockito.mock(List.class);
     
-    private final InOrder inOrder = Mockito.inOrder(additionalFiles1, additionalFiles2, conn1, conn2, dataFileWriter);
+    private final InOrder inOrder = Mockito.inOrder(baseFileCopier, additionalFiles1, additionalFiles2, conn1, conn2, dataFileWriter);
     
     private final SingleProcessor instance = new SingleProcessor();
     
@@ -92,6 +96,9 @@ public final class SingleProcessorTest {
         
         PowerMockito.mockStatic(DataBuilderFactory.class);
         Mockito.when(DataBuilderFactory.getInstance()).thenReturn(dataBuilderFactory);
+
+        PowerMockito.mockStatic(BaseFileCopier.class);
+        Mockito.when(BaseFileCopier.getInstance()).thenReturn(baseFileCopier);        
         
         PowerMockito.mockStatic(DataFileReader.class);
         Mockito.when(DataFileReader.getInstance()).thenReturn(dataFileReader);
@@ -102,12 +109,13 @@ public final class SingleProcessorTest {
         
         PowerMockito.mockStatic(DataFileWriter.class);
         Mockito.when(DataFileWriter.getInstance()).thenReturn(dataFileWriter);
-        
+               
         Mockito.when(parameters.getRequestConfigs()).thenReturn(requestConfigs);
         Mockito.when(parameters.getDataFileExtension()).thenReturn(".ttt").thenReturn(".dac");
         Mockito.when(parameters.getDataDirectoryPath()).thenReturn("datadirectoPpa");
         List<String> addtionalPaths = Arrays.asList("additon1", "   ", "addaodt2");
         Mockito.when(parameters.getAdditionalDataDirectoryPaths()).thenReturn(addtionalPaths);
+        Mockito.when(parameters.getBaseDataDirectoryPath()).thenReturn("basebase");
         
         Mockito.when(requestConfig1.getRequestMethod()).thenReturn(RequestMethod.FCS_3HOURLY);
         Mockito.when(requestConfig2.getRequestMethod()).thenReturn(RequestMethod.OBS_HOURLY); 
@@ -130,6 +138,9 @@ public final class SingleProcessorTest {
         PowerMockito.whenNew(File.class).withArguments("datadirectoPpa" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(file1);
         PowerMockito.whenNew(File.class).withArguments("datadirectoPpa" + File.separator + "obs1h-caernar-2018.dac").thenReturn(file2);     
 
+        PowerMockito.whenNew(File.class).withArguments("basebase" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(baseFile1);
+        PowerMockito.whenNew(File.class).withArguments("basebase" + File.separator + "obs1h-caernar-2018.dac").thenReturn(baseFile2);        
+        
         PowerMockito.whenNew(File.class).withArguments("additon1" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(additionalFile11);        
         PowerMockito.whenNew(File.class).withArguments("addaodt2" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(additionalFile21);  
         PowerMockito.whenNew(File.class).withArguments("   " + File.separator + "fcs3h-bango-2017.ttt").thenReturn(additionalFile31);   
@@ -173,10 +184,13 @@ public final class SingleProcessorTest {
         
         instance.process(parameters);
         
+        inOrder.verify(baseFileCopier).copy(baseFile1, file1);
         inOrder.verify(additionalFiles1).add(additionalFile11);
         inOrder.verify(additionalFiles1).add(additionalFile21);        
         inOrder.verify(conn1).setDoOutput(Boolean.TRUE);
         inOrder.verify(dataFileWriter).write("contentns1", newList1, file1, additionalFiles1, parameters, "-2017-000342");
+        
+        inOrder.verify(baseFileCopier).copy(baseFile2, file2);        
         inOrder.verify(additionalFiles2).add(additionalFile12);
         inOrder.verify(additionalFiles2).add(additionalFile22);         
         inOrder.verify(conn2).setDoOutput(true);      
