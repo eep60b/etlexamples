@@ -35,7 +35,7 @@ public final class PredictedVisibilityTest {
     }
 
     @Test
-    public void testGetPredictedVisibility() {
+    public void testGetPredictedVisibility_double() {
         
         assertEquals(PredictedVisibility.UNKOWN, PredictedVisibility.getPredictedVisibility(-1000));
         assertEquals(PredictedVisibility.VERY_POOR, PredictedVisibility.getPredictedVisibility(0));
@@ -50,5 +50,43 @@ public final class PredictedVisibilityTest {
     public void testgetPredictedVisibility() {
 
         assertEquals(PredictedVisibility.VERY_POOR, PredictedVisibility.getPredictedVisibility("VP"));
+    }
+
+    /**
+     * Test of getValue method.
+     */
+    @Test
+    public void testGetValue() {
+
+        assertEquals(0, PredictedVisibility.VERY_POOR.getValue(), 0);
+    }
+
+
+    /**
+     * Test of getPredictedVisibility method.
+     */
+    @Test
+    public void testGetPredictedVisibility_String() {
+
+        assertEquals(PredictedVisibility.POOR, PredictedVisibility.getPredictedVisibility("PO"));
+        assertEquals(PredictedVisibility.UNKOWN, PredictedVisibility.getPredictedVisibility("POX"));
+    }
+
+    /**
+     * Test of getShortName method.
+     */
+    @Test
+    public void testGetShortName() {
+
+        assertEquals("PrVis", PredictedVisibility.VERY_GOOD.getShortName());
+    }
+
+    /**
+     * Test of toString method.
+     */
+    @Test
+    public void testToString() {
+
+        assertEquals("Predicted visibility: MODEARATE(4000.0-10000.0)", PredictedVisibility.MODEARATE.toString());
     }
 }

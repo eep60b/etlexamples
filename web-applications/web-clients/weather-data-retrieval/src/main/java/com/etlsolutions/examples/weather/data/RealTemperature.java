@@ -29,7 +29,7 @@ public final class RealTemperature extends AbstractDoubleValuable {
 
     @Override
     public String toString() {
-        return "RealTemperature: " + value;
+        return "Real temperature: " + value;
     }
 
     @Override

@@ -33,6 +33,6 @@ public class RelativeHumidity extends AbstractDoubleValuable {
 
     @Override
     public String toString() {
-        return "RelativeHumidity: " + value;
+        return "Relative humidity: " + value;
     }
 }

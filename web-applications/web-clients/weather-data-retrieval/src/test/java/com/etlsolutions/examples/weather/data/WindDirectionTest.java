@@ -44,6 +44,6 @@ public final class WindDirectionTest {
     @Test
     public void testToString() {
 
-        assertEquals("WindDirection: SSW", WindDirection.SSW.toString());
+        assertEquals("Wind direction: SSW", WindDirection.SSW.toString());
     }
 }

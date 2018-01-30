@@ -40,6 +40,6 @@ public enum WindDirection implements Valuable {
 
     @Override
     public String toString() {
-        return "WindDirection: " + name();
+        return "Wind direction: " + name();
     }
 }

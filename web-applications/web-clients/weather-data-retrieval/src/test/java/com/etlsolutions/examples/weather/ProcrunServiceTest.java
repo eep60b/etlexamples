@@ -1,60 +1,56 @@
 package com.etlsolutions.examples.weather;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.InOrder;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 /**
  * Test of class ProcrunService.
  *
  * @author zc
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ProcrunService.class, MetThreadService.class})
 public final class ProcrunServiceTest {
 
-    public ProcrunServiceTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private final MetThreadService service = PowerMockito.mock(MetThreadService.class);
+    private final String[] args = {"abad", "bbia"};
+    private final InOrder inOrder = Mockito.inOrder(service);
 
     @Before
     public void setUp() {
-    }
 
-    @After
-    public void tearDown() {
+        Whitebox.setInternalState(MetThreadService.class, service);
     }
 
     /**
-     * Test of start method, of class ProcrunService.
+     * Test of start method.
+     *
+     * @throws Exception if an error occurs.
      */
     @Test
-    public void testStart() {
-        System.out.println("start");
-        String[] args = null;
+    public void testStart() throws Exception {
+
         ProcrunService.start(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        inOrder.verify(service).init(args);
+        inOrder.verify(service).start();
     }
 
     /**
-     * Test of stop method, of class ProcrunService.
+     * Test of stop method.
      */
     @Test
     public void testStop() {
-        System.out.println("stop");
-        String[] args = null;
+
         ProcrunService.stop(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        inOrder.verify(service).stop();
     }
 
 }

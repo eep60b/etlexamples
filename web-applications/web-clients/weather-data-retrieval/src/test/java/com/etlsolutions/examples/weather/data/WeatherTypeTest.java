@@ -1,9 +1,6 @@
 package com.etlsolutions.examples.weather.data;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -28,17 +25,12 @@ public final class WeatherTypeTest {
     }
 
     /**
-     * Test of getValue method, of class WeatherType.
+     * Test of getValue method.
      */
     @Test
     public void testGetValue() {
-        System.out.println("getValue");
-        WeatherType instance = null;
-        Integer expResult = null;
-        Integer result = instance.getValue();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(11, WeatherType.DRIZZLE.getValue(), 0);
     }
 
     /**

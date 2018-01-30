@@ -1,7 +1,9 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.URL_BASE;
 import com.etlsolutions.examples.weather.data.RequestConfig;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Properties;
 import org.apache.log4j.Logger;
@@ -9,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -67,7 +70,7 @@ public final class ApplicationParametersFactoryTest {
     public void testLoadApplicationParameters() throws Exception {
 
         String[] args = {"-configFilePath", "configFilePath", "-dataDirectoryPath", "dataDirectoryPath", "-addtionalDataPath", "addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3",
-            "-dataEncoding", "ASKII", "-dataFileEtension", ".fxt", "-intervalMinutes", "11", "-requestLocationFilePath", "requestLocationFilePath",
+            "-baseDataPath", "aaa", "-dataEncoding", "ASKII", "-dataFileEtension", ".fxt", "-intervalMinutes", "11", "-requestLocationFilePath", "requestLocationFilePath",
             "-resourcePropertiesFilePath", "resourcePropertiesFilePath", "-datetimeFormat", "mmYYYYHH/ss/dd", "-delimiter", "/"};
 
         assertEquals(applicationParameters, instance.loadApplicationParameters(args));
@@ -81,8 +84,8 @@ public final class ApplicationParametersFactoryTest {
     @Test
     public void testLoadApplicationParameters_from_properties() throws Exception {
 
-    ApplicationParameters expectedResult = new ApplicationParameters("configFilePath", "dataDirectoryPath", requestConfigs,
-            new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
+        ApplicationParameters expectedResult = new ApplicationParameters("configFilePath", "dataDirectoryPath", requestConfigs,
+                new String[]{"addtionalDataPath1\naddtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", "", ".fxt", "mmYYYYHH/ss/dd", "/");
 
         assertEquals(expectedResult, instance.loadApplicationParameters(null));
     }
@@ -109,7 +112,7 @@ public final class ApplicationParametersFactoryTest {
 
         assertEquals(applicationParameters, instance.loadApplicationParameters(null));
     }
-    
+
     /**
      * Test of saveParameters method.
      *
@@ -120,11 +123,37 @@ public final class ApplicationParametersFactoryTest {
 
         File parentFile = Mockito.mock(File.class);
         Mockito.when(configFile.getParentFile()).thenReturn(parentFile);
-
+        FileOutputStream outputStream = Mockito.mock(FileOutputStream.class);
+        PowerMockito.whenNew(FileOutputStream.class).withArguments(configFile).thenReturn(outputStream);
         String[] args = {"-configFilePath", "configFilePath"};
+
+        InOrder inOrder = Mockito.inOrder(parentFile, properties);
 
         instance.loadApplicationParameters(args);
 
         instance.saveParameters();
+
+        inOrder.verify(parentFile).mkdirs();
+        inOrder.verify(parentFile).createNewFile();
+        inOrder.verify(properties).store(outputStream, "Met Weather Service");
+    }
+
+    /**
+     * Test of saveParameters method.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSaveParameters_nullConfigFile() throws Exception {
+
+
+        String[] args = {"-configFilePath", "configFilePath"};
+        PowerMockito.whenNew(File.class).withArguments("configFilePath").thenReturn(null);
+
+        instance.loadApplicationParameters(args);
+
+        instance.saveParameters();
+
+        Mockito.verifyZeroInteractions(properties);
     }
 }

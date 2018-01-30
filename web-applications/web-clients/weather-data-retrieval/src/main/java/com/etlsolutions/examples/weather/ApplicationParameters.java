@@ -22,7 +22,7 @@ public final class ApplicationParameters {
     private final String dataDirectoryPath;
     private final List<RequestConfig> requestConfigs;
     private final List<String> additionalDataDirectoryPaths = new ArrayList<>();
-    private final String baseDataDirectoryPath;    
+    private final String baseDataDirectoryPath;
     private final String dataEncoding;
     private final String dataFileExtension;
     private final int intervalInMinutes;
@@ -42,7 +42,7 @@ public final class ApplicationParameters {
             }
         }
 
-        this.baseDataDirectoryPath = baseDataDirectoryPath;
+        this.baseDataDirectoryPath = (baseDataDirectoryPath == null || baseDataDirectoryPath.isEmpty()) ? "" : new File(baseDataDirectoryPath).getAbsolutePath();
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalInMinutes = RecoverableIntParser.getInstance().parseNumber(intervalInMinutes, DEFAULT_INTERVAL_MINUTES, "interval in minutes");
@@ -69,7 +69,7 @@ public final class ApplicationParameters {
     public String getBaseDataDirectoryPath() {
         return baseDataDirectoryPath;
     }
-    
+
     public String getDataEncoding() {
         return dataEncoding;
     }
@@ -108,15 +108,15 @@ public final class ApplicationParameters {
 
     @Override
     public boolean equals(Object obj) {
-        
+
         if (obj == null) {
             return false;
         }
-        
+
         if (getClass() != obj.getClass()) {
             return false;
         }
-        
+
         final ApplicationParameters other = (ApplicationParameters) obj;
         if (!Objects.equals(this.configFilePath, other.configFilePath)) {
             return false;
@@ -148,9 +148,6 @@ public final class ApplicationParameters {
         return Objects.equals(this.delimiter, other.delimiter);
     }
 
-    
-    
-    
     @Override
     public String toString() {
         return "Configuration file =       " + configFilePath + "\n"

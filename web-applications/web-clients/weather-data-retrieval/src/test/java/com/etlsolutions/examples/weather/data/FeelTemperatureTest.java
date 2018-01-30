@@ -2,9 +2,12 @@ package com.etlsolutions.examples.weather.data;
 
 import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import org.apache.log4j.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -22,8 +25,6 @@ public final class FeelTemperatureTest {
 
     private final Logger logger = Mockito.mock(Logger.class);    
     private final FeelTemperature instance = FeelTemperature.getInstance("73.82");
-
-    
     
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
@@ -32,6 +33,16 @@ public final class FeelTemperatureTest {
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
     }  
+    
+    /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance() {
+
+        assertEquals(FeelTemperature.getInstance("73.82"), instance);
+        assertNotSame(FeelTemperature.getInstance("73.82"), instance);
+    }
     
     /**
      * Test of toString method, of class FeelTemperature.

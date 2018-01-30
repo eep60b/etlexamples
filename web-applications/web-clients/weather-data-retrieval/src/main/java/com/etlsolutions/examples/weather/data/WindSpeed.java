@@ -18,6 +18,7 @@ public final class WindSpeed extends AbstractDoubleValuable {
      * Get an instance of the WindSpeed class for the given value.
      *
      * @param value - The wind speed value.
+     * @param name - The value name. 
      * @return the wind speed value. If the given value is invalid, an unknown
      * object is returned. No exception will be thrown.
      */
@@ -45,6 +46,6 @@ public final class WindSpeed extends AbstractDoubleValuable {
 
     @Override
     public String toString() {
-        return "WindSpeed: " + value;
+        return "Wind speed: " + value;
     }
 }

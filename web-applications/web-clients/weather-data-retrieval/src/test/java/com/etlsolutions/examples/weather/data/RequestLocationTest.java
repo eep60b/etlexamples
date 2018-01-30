@@ -46,7 +46,7 @@ public final class RequestLocationTest {
      */
     @Test
     public void testGetLatitude() {
-        
+
         assertEquals(21.92311, instance.getLatitude(), 0.0);
     }
 
@@ -55,65 +55,49 @@ public final class RequestLocationTest {
      */
     @Test
     public void testGetLongitude() {
-        
+
         assertEquals(-13.91323, instance.getLongitude(), 0.0);
     }
 
     /**
-     * Test of getElevation method, of class RequestLocation.
+     * Test of getElevation method.
      */
     @Test
     public void testGetElevation() {
-        System.out.println("getElevation");
-        RequestLocation instance = null;
-        double expResult = 0.0;
-        double result = instance.getElevation();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(221.31321, instance.getElevation(), 0.0);
     }
 
     /**
-     * Test of hashCode method, of class RequestLocation.
+     * Test of hashCode method.
      */
     @Test
     public void testHashCode() {
-        System.out.println("hashCode");
-        RequestLocation instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
+        assertEquals(new RequestLocation(id, name, latitude, longitude, elevation).hashCode(), instance.hashCode());
+        assertNotEquals(new RequestLocation("2231", name, latitude, longitude, elevation).hashCode(), instance.hashCode());    }
 
     /**
-     * Test of equals method, of class RequestLocation.
+     * Test of equals method.
      */
     @Test
+    @SuppressWarnings("ObjectEqualsNull")
     public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        RequestLocation instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertTrue(instance.equals(instance));
+        assertTrue(instance.equals(new RequestLocation(id, name, latitude, longitude, elevation)));
+
+        assertFalse(instance.equals(new RequestLocation("8862", name, latitude, longitude, elevation)));
+        assertFalse(instance.equals(new Object()));
+        assertFalse(instance.equals(null));
     }
 
     /**
-     * Test of toString method, of class RequestLocation.
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        RequestLocation instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
+        assertEquals("RequestLocation{id=923281,name=inalld}", instance.toString());
+    }
 }

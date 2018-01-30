@@ -2,6 +2,7 @@ package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -46,11 +47,11 @@ public final class DataFileWriterTest {
 
     @Before
     public void setUp() throws Exception {
-        
+
         Mockito.when(parameters.getDelimiter()).thenReturn(delimiter);
         Mockito.when(parameters.getDataEncoding()).thenReturn(dataEncoding);
         Mockito.when(parameters.getDataDirectoryPath()).thenReturn("Datapath");
-        
+
         Mockito.when(responseData1.getTitle(delimiter, titleAdditional)).thenReturn("DTime,afad-afa");
         Mockito.when(parameters.getDatetimeFormat()).thenReturn(dateFormat);
         Mockito.when(responseData1.getOutputString(dateFormat, delimiter)).thenReturn("12,32,1");
@@ -60,7 +61,7 @@ public final class DataFileWriterTest {
         PowerMockito.mockStatic(FileUtils.class);
 
         PowerMockito.whenNew(Date.class).withNoArguments().thenReturn(currentTime);
-        
+
         PowerMockito.whenNew(File.class).withArguments("Datapath" + File.separator + "log" + File.separator + "datalog" + File.separator + "1970-01-01.log").thenReturn(dataLogFile);
     }
 
@@ -88,6 +89,30 @@ public final class DataFileWriterTest {
 
         PowerMockito.verifyStatic();
         FileUtils.writeStringToFile(additionalFile1, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);
+
+        PowerMockito.verifyStatic();
+        FileUtils.writeStringToFile(additionalfile2, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);
+
+        PowerMockito.verifyStatic();
+        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at 01:00:00\n</DV></SiteRep>", dataEncoding, true);
+    }
+
+    /**
+     * Test of write method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testWrite_withException() throws Exception {
+
+        PowerMockito.mockStatic(FileUtils.class);
+        PowerMockito.doThrow(new IOException()).when(FileUtils.class);
+        FileUtils.writeStringToFile(additionalFile1, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);
+        
+        instance.write("</DV></SiteRep>", list, file, additionalFiles, parameters, titleAdditional);
+
+        PowerMockito.verifyStatic();
+        FileUtils.writeStringToFile(file, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);
 
         PowerMockito.verifyStatic();
         FileUtils.writeStringToFile(additionalfile2, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);

@@ -2,9 +2,12 @@ package com.etlsolutions.examples.weather.data;
 
 import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import org.apache.log4j.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -30,6 +33,17 @@ public final class UvIndexTest {
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
     }  
+
+    /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance() {
+
+        assertEquals(UvIndex.getInstance("94"), instance);
+        assertNotSame(UvIndex.getInstance("94"), instance);       
+    }    
+    
     
     /**
      * Test of getValue method.
@@ -56,4 +70,5 @@ public final class UvIndexTest {
 
         assertEquals("UvIdx", instance.getShortName());
     }
+
 }

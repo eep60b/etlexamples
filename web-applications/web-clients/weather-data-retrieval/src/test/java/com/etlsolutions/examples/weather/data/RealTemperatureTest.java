@@ -22,6 +22,8 @@ public final class RealTemperatureTest {
 
     private final Logger logger = Mockito.mock(Logger.class);
 
+    private final RealTemperature instance = RealTemperature.getInstance("10.9");
+    
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
     public void setUp() throws Exception {
@@ -31,45 +33,31 @@ public final class RealTemperatureTest {
     }
 
     /**
-     * Test of toString method, of class RealTemperature.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        RealTemperature instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getShortName method, of class RealTemperature.
-     */
-    @Test
-    public void testGetShortName() {
-        System.out.println("getShortName");
-        RealTemperature instance = null;
-        String expResult = "";
-        String result = instance.getShortName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getInstance method, of class RealTemperature.
+     * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        String value = "";
-        RealTemperature expResult = null;
-        RealTemperature result = RealTemperature.getInstance(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(RealTemperature.getInstance("10.9"), instance);
+        assertNotSame(RealTemperature.getInstance("10.9"), instance);
+    }    
+    
+    /**
+     * Test of toString method.
+     */
+    @Test
+    public void testToString() {
+
+        assertEquals("Real temperature 10.9", instance.toString());
+    }
+
+    /**
+     * Test of getShortName method.
+     */
+    @Test
+    public void testGetShortName() {
+
+        assertEquals("Tempt", instance.getShortName());
     }
 
 }

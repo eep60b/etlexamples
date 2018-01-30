@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import static java.net.HttpURLConnection.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
@@ -72,27 +73,45 @@ public final class SingleProcessor {
             boolean doIt = true;
             int redirects = 0;
 
+            HttpURLConnection http = null;
             while (doIt) {
 
-                HttpURLConnection http = (HttpURLConnection) url.openConnection();
+                http = (HttpURLConnection) url.openConnection();
                 int stat = http.getResponseCode();
 
+                List<Integer> stats = Arrays.asList(HTTP_MOVED_PERM, HTTP_MOVED_TEMP, HTTP_SEE_OTHER, HTTP_USE_PROXY);
+                
                 //If it is redirected, find the redirect URL before return the result.
-                doIt = stat == HTTP_MOVED_PERM || stat == HTTP_MOVED_TEMP || stat == HTTP_SEE_OTHER || stat == HTTP_USE_PROXY;
+                doIt = stats.contains(stat);
                 if (doIt) {
 
                     URL base = http.getURL();
                     String loc = http.getHeaderField("Location");
                     URL target = loc == null ? null : new URL(base, loc);
                     http.disconnect();
-                    // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.
-                    if (target == null || !(target.getProtocol().equals("http") || target.getProtocol().equals("https")) || redirects >= 5) {
+                    
+                    // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.                   
+                    if (target == null) {
                         logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
                         return false;
                     }
 
+                    if (redirects > stats.size()) {
+                        logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
+                        logger.warn("\nToo many redirects.");
+                        return false;
+                    }
+                    
+                    String protocol = target.getProtocol();
+                    if (!(protocol.equals("http") || protocol.equals("https"))) {
+                        logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
+                        logger.warn("Uknown protocol: " + protocol);
+                        return false;
+                    }
+                    
                     logger.info("\nUse redirect URL: " + loc);
                     url = target;
+                    redirects++;
                 }
             }
 
@@ -107,6 +126,10 @@ public final class SingleProcessor {
             } catch (SAXException | IOException ex) {
 
                 logger.warn("\nFailed to parse the xml file: \n" + xmlContent, ex);
+                
+                if(http != null) {
+                  logger.warn(http.getResponseMessage());  
+                }
                 return false;
             }
 

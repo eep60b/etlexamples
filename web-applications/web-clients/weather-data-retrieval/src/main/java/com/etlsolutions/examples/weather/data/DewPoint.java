@@ -35,7 +35,7 @@ public final class DewPoint extends AbstractDoubleValuable {
 
     @Override
     public String toString() {
-        return "Dew Point: " + value;
+        return "Dew point: " + value;
     }
 
     @Override

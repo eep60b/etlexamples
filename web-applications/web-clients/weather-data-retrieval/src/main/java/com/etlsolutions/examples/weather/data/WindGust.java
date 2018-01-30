@@ -49,6 +49,6 @@ public final class WindGust extends AbstractValuable<Double> {
 
     @Override
     public String toString() {
-        return "WindGust: " + value;
+        return "Wind gust: " + value;
     }
 }

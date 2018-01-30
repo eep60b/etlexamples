@@ -36,7 +36,7 @@ public class MetDaemon implements Daemon {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
 
         service.stop();
     }

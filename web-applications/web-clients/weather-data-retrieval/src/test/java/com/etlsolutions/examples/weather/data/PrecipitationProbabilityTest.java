@@ -22,7 +22,7 @@ public final class PrecipitationProbabilityTest {
 
     private final Logger logger = Mockito.mock(Logger.class);    
     private final PrecipitationProbability instance = PrecipitationProbability.getInstance("56.37");
-    
+
 
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
@@ -31,6 +31,16 @@ public final class PrecipitationProbabilityTest {
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
     }      
+
+    /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance() {
+
+        assertEquals(PrecipitationProbability.getInstance("56.37"), instance);
+        assertNotSame(PrecipitationProbability.getInstance("56.37"), instance);
+    }
     
     /**
      * Test of getValue method.
@@ -47,7 +57,7 @@ public final class PrecipitationProbabilityTest {
     @Test
     public void testToString() {
 
-        assertEquals("PrecipitationProbability: 56.73", instance.toString());
+        assertEquals("PrecipitationProbability: 56.37", instance.toString());
     }
 
     /**

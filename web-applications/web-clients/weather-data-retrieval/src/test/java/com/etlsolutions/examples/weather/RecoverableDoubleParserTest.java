@@ -11,7 +11,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * Test of class RecoverableDoubleParser
+ * Test of class RecoverableDoubleParser provides a parser to parse a string to
+ * a integer number. If the operation fails, Error will be logged as warning
+ * information instead of an exception being thrown out.
  *
  * @author zc
  */
@@ -22,7 +24,7 @@ public final class RecoverableDoubleParserTest {
     private final Logger logger = Mockito.mock(Logger.class);
 
     private final RecoverableDoubleParser instance = RecoverableDoubleParser.getInstance();
-    
+
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
     public void setUp() throws Exception {
@@ -36,7 +38,7 @@ public final class RecoverableDoubleParserTest {
      */
     @Test
     public void testGetInstance() {
-        
+
         assertEquals(RecoverableDoubleParser.getInstance(), instance);
     }
 

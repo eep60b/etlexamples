@@ -62,7 +62,6 @@ public enum PredictedVisibility implements Valuable {
 
     @Override
     public String toString() {
-        return "PredictedVisibility: " + value;
+        return "Predicted visibility: " + name() + "(" + value + "-" + maxValue+ ")";
     }
-    
 }

@@ -25,12 +25,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
+ * Test of WxobsHourlyDataBuilder class.
  *
  * @author zc
  */
 public final class WxobsHourlyDataBuilderTest {
 
     private final String line = "12/06/2017 04:00:00,1026.0,-2,10.7,11000.0,83.8,8.1,7,2250,21.0,30.0";
+    @SuppressWarnings("Convert2Diamond")
     private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "a", "", "", "1", "MM/dd/yyyy HH:mm:ss", ",");
     private final DateTime dateTime = DateTime.getInstance("2017-12-06z", "240");
     private final AbsolutePressure absolutePressure = AbsolutePressure.getInstance("1026.0");
@@ -41,7 +43,7 @@ public final class WxobsHourlyDataBuilderTest {
     private final DewPoint dewPoint = DewPoint.getInstance("8.1");
     private final WeatherType weatherType = WeatherType.CLOUDY;
     private final WindDirection windDirection = WindDirection.SW;
-    private final WindSpeed windSpeed = WindSpeed.getInstance("21.0");    
+    private final WindSpeed windSpeed = WindSpeed.getInstance("21.0");
     private final WindGust windGust = WindGust.getInstance("30.0");
     private final List<Valuable> valuables = Arrays.asList(absolutePressure, pressureTendency, realTemperature, realVisibility, relativeHumidity, dewPoint, weatherType, windDirection, windSpeed, windGust);
     private final ResponseData responseData = new ResponseData(dateTime, valuables);
@@ -100,7 +102,7 @@ public final class WxobsHourlyDataBuilderTest {
         Mockito.when(dAttr.getTextContent()).thenReturn("SW");
         Mockito.when(sAttr.getTextContent()).thenReturn("21.0");
         Mockito.when(gAttr.getTextContent()).thenReturn("30.0");
-        
+
         assertEquals(responseData, instance.createData(repAttributes, dateTime));
     }
 

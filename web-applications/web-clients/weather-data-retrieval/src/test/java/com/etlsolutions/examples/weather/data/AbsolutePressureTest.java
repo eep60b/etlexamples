@@ -34,6 +34,16 @@ public final class AbsolutePressureTest {
     }    
 
     /**
+     * Test of getInstance method.
+     */
+    @Test
+    public void testGetInstance() {
+
+        assertEquals(AbsolutePressure.getInstance(value),instance);
+        assertNotSame(AbsolutePressure.getInstance(value),instance);
+    }    
+    
+    /**
      * Test of getValue method.
      */
     @Test

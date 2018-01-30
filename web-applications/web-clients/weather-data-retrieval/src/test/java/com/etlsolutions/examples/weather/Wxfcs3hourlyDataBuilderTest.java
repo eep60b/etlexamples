@@ -33,6 +33,7 @@ import org.w3c.dom.Node;
 public final class Wxfcs3hourlyDataBuilderTest {
 
     private final String line = "12/08/2017 12:00:00,-2.0,9.0,3.0,40000.0,74.0,1,8,2925,34.0,18.0";
+    @SuppressWarnings("Convert2Diamond")
     private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "a", "", "", "1", "MM/dd/yyyy HH:mm:ss", ",");
     private final DateTime dateTime = DateTime.getInstance("2017-12-08Z", "720");
     private final FeelTemperature feelTemperature = FeelTemperature.getInstance("-2.0");
@@ -76,7 +77,7 @@ public final class Wxfcs3hourlyDataBuilderTest {
     }
 
     /**
-     * Test of createData method, of class Wxfcs3hourlyDataBuilder.
+     * Test of createData method.
      */
     @Test
     public void testCreateData() {

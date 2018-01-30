@@ -1,105 +1,86 @@
 package com.etlsolutions.examples.weather.data;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
+ * Test of class RequestConfig.
  *
  * @author zc
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({RequestConfig.class, RequestMethod.class, RequestLocation.class, RequestToken.class})
 public final class RequestConfigTest {
-    
-    public RequestConfigTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+
+    private final RequestMethod requestMethod = PowerMockito.mock(RequestMethod.class);
+    private final RequestLocation requestLocation = PowerMockito.mock(RequestLocation.class);
+    private final RequestToken requestToken = PowerMockito.mock(RequestToken.class);
+
+    private RequestConfig instance;
     
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        
+        Mockito.when(requestMethod.getMethodToken()).thenReturn("mmyya");
+        Mockito.when(requestMethod.getInterval()).thenReturn("hourly");
+        Mockito.when(requestLocation.getId()).thenReturn("55931");
+        Mockito.when(requestToken.getValue()).thenReturn("1572-6847-7219-1430");
+        instance = new RequestConfig(requestMethod, requestLocation, requestToken);
     }
 
     /**
-     * Test of getRequestMethod method, of class RequestConfig.
+     * Test of getRequestMethod method.
      */
     @Test
     public void testGetRequestMethod() {
-        System.out.println("getRequestMethod");
-        RequestConfig instance = null;
-        RequestMethod expResult = null;
-        RequestMethod result = instance.getRequestMethod();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(requestMethod, instance.getRequestMethod());
     }
 
     /**
-     * Test of getRequestLocation method, of class RequestConfig.
+     * Test of getRequestLocation method.
      */
     @Test
     public void testGetRequestLocation() {
-        System.out.println("getRequestLocation");
-        RequestConfig instance = null;
-        RequestLocation expResult = null;
-        RequestLocation result = instance.getRequestLocation();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(requestLocation, instance.getRequestLocation());
     }
 
     /**
-     * Test of getRequestToken method, of class RequestConfig.
+     * Test of getRequestToken method.
      */
     @Test
     public void testGetRequestToken() {
-        System.out.println("getRequestToken");
-        RequestConfig instance = null;
-        RequestToken expResult = null;
-        RequestToken result = instance.getRequestToken();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(requestToken, instance.getRequestToken());
     }
 
     /**
-     * Test of getUrl method, of class RequestConfig.
+     * Test of getUrl method.
      */
     @Test
     public void testGetUrl() {
-        System.out.println("getUrl");
-        RequestConfig instance = null;
-        String expResult = "";
-        String result = instance.getUrl();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals("http://datapoint.metoffice.gov.uk/public/data/val/mmyya/all/xml/55931?res=hourly&key=1572-6847-7219-1430", instance.getUrl());
     }
 
     /**
-     * Test of toString method, of class RequestConfig.
+     * Test of toString method.
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
-        RequestConfig instance = null;
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Mockito.when(requestMethod.toString()).thenReturn("myMethod");
+        Mockito.when(requestLocation.toString()).thenReturn("myLocation");
+        Mockito.when(requestToken.toString()).thenReturn("myToken");
+        
+        assertEquals("RequesConfig{" + "method=myMethod, location=myLocation, user token=myToken, url=http://datapoint.metoffice.gov.uk/public/data/val/mmyya/all/xml/55931?res=hourly&key=1572-6847-7219-1430}", instance.toString());
     }
-    
 }

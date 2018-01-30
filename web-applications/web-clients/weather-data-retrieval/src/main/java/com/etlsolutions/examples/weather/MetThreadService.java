@@ -96,7 +96,7 @@ public class MetThreadService {
         System.out.println(startSuccessMessage);
     }
 
-    public void stop() throws Exception {
+    public void stop() {
 
         stopped = true;
         try {
@@ -108,7 +108,7 @@ public class MetThreadService {
             logger.info(stopSuccessMessage);
             System.out.println(stopSuccessMessage);
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
 
             String message = "Failed to stop the metd service.";
             logger.error(message, e);

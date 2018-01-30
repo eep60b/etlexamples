@@ -50,7 +50,6 @@ public final class RelativeHumidityTest {
         
         assertEquals(RelativeHumidity.getInstance("100"), instance);
         assertEquals(RelativeHumidity.getInstance(RelativeHumidity.UNKNOW_VALUE), RelativeHumidity.getInstance("aaa"));
-        Mockito.verify(logger).warn("Invald ralative humidity value: aaa");
               
     }
 
@@ -60,7 +59,6 @@ public final class RelativeHumidityTest {
     @Test
     public void testToString() {
 
-        assertEquals("RelativeHumidity: 100.0", instance.toString());
+        assertEquals("Relative humidity: 100.0", instance.toString());
     }
-
 }

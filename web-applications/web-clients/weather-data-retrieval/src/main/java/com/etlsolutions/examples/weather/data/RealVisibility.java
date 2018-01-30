@@ -33,6 +33,6 @@ public final class RealVisibility extends AbstractDoubleValuable {
 
     @Override
     public String toString() {
-        return "RealVisibility: " + value;
+        return "Real visibility: " + value;
     }
 }

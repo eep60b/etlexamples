@@ -125,6 +125,6 @@ public final class ApplicationParametersFactory {
         
         configFile.getParentFile().mkdirs();
         configFile.createNewFile();
-        properties.store(new FileOutputStream(configFile), URL_BASE);
+        properties.store(new FileOutputStream(configFile), "Met Weather Service");
     }
 }

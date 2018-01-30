@@ -3,9 +3,12 @@ package com.etlsolutions.examples.weather.data;
 import com.etlsolutions.examples.weather.RecoverableDoubleParser;
 import com.etlsolutions.examples.weather.RecoverableIntParser;
 import org.apache.log4j.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
@@ -32,7 +35,7 @@ public final class WindGustTest {
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
     }  
-    
+
     /**
      * Test of constructors.
      */
@@ -49,5 +52,34 @@ public final class WindGustTest {
     @Test
     public void testGetShortName() {
         assertEquals("WdGst", instance1.getShortName());
+    }
+
+    /**
+     * Test of getInstance method with the String argument.
+     */
+    @Test
+    public void testGetInstance_String() {
+
+        assertEquals(WindGust.getInstance("12.4"), instance1);
+        assertNotSame(WindGust.getInstance("12.4"), instance1);
+    }
+
+    /**
+     * Test of getInstance method with the WindSppeed argument.
+     */
+    @Test
+    public void testGetInstance_WindSpeed() {
+
+        assertEquals(WindGust.getInstance(WindSpeed.getInstance("12.4")), instance1);
+        assertNotSame(WindGust.getInstance(WindSpeed.getInstance("12.4")), instance1);
+    }
+
+    /**
+     * Test of toString method.
+     */
+    @Test
+    public void testToString() {
+
+        assertEquals("Wind gust: 12.4", instance1.toString());
     }
 }

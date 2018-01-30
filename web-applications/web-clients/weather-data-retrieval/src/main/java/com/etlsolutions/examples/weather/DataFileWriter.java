@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 /**
  * The DataFileWriter class write data to local hard drive.
@@ -30,6 +31,7 @@ public final class DataFileWriter {
 
     /**
      * Write the list of data to the files using the given character encoding.
+     *
      * @param xmlContent
      * @param list - The data list.
      * @param file - The main file.
@@ -42,7 +44,7 @@ public final class DataFileWriter {
 
         StringBuilder builder = new StringBuilder();
 
-        for(ResponseData data : list) {
+        for (ResponseData data : list) {
 
             //Add an title before the added data.
             if (builder.length() == 0) {
@@ -63,7 +65,12 @@ public final class DataFileWriter {
         FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + xmlContent, dataEncoding, true);
 
         for (File additionFile : additionalFiles) {
-            FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);
+            try {
+                FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);
+            } catch (IOException ex) {
+                Logger.getLogger(DataFileWriter.class).warn("Failed to write the additional file: " + additionFile.getAbsolutePath(), ex);
+            }
         }
+
     }
 }

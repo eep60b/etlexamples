@@ -30,21 +30,15 @@ public final class DewPointTest {
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
     }  
-    
+
     /**
      * Test of getInstance method.
      */
     @Test
     public void testGetInstance() {
         
-        assertEquals(34.11, instance.getValue(), 0.0);
-        assertEquals(-100, DewPoint.getInstance(null).getValue(), 0.0);
-        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: null"), Mockito.any(NullPointerException.class));
-        assertEquals(-100, DewPoint.getInstance("aiialld").getValue(), 0.0);        
-        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: aiialld"), Mockito.any(NumberFormatException.class));
-        assertEquals(-100, DewPoint.getInstance("NAN").getValue(), 0.0);                
-        Mockito.verify(logger).warn(Mockito.eq("Unknown dew point value: NAN"), Mockito.any(NumberFormatException.class));        
-    }
+        assertEquals(DewPoint.getInstance("34.11"), instance);
+        assertNotSame(DewPoint.getInstance("34.11"), instance);    }
     
     /**
      * Test of toString method.
