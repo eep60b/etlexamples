@@ -28,7 +28,7 @@ import org.xml.sax.SAXException;
  */
 public final class StationLocationsLoader {
 
-    private static final RequestLocationsLoader INSTANCE = new RequestLocationsLoader();
+    private static final RequestLocationsLoader INSTANCE = RequestLocationsLoader.getInstance();
 
     public StationLocationsLoader() {
     }

@@ -46,6 +46,6 @@ public final class RecoverableLongParserTest {
     @Test
     public void testParseNumber() {
 
-        assertEquals(18563L, instance.parseNumber("18563L"), 0);
+        assertEquals(18563L, instance.parseNumber("18563"), 0);
     }
 }

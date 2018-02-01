@@ -48,7 +48,7 @@ public final class RealTemperatureTest {
     @Test
     public void testToString() {
 
-        assertEquals("Real temperature 10.9", instance.toString());
+        assertEquals("Real temperature: 10.9", instance.toString());
     }
 
     /**

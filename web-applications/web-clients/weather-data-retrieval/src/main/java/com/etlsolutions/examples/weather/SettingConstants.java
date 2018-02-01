@@ -45,8 +45,14 @@ public final class SettingConstants {
      */
     public static final String DATA_FILE_EXTENSION_KEY = "dataFileEtension";
 
+    /**
+     * The key to find the interval time in minutes to separate two data retrievals.
+     */
     public static final String INTERVAL_MINUTES_KEY = "intervalMinutes";
 
+    /**
+     * 
+     */
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
 
     public static final String RESOURCE_PROPERTIES_FILE_PATH_KEY = "resourcePropertiesFilePath";
@@ -116,8 +122,14 @@ public final class SettingConstants {
 
     public static final String DEFAULT_DATA_FILE_EXTENSION = ".dat";
 
+    /**
+     * The default interval to retrieve data.
+     */
     public static final String DEFAULT_INTERVAL_MINUTES = "30";
 
+    /**
+     * The default path to the file to find locations that the data broadcasts for. 
+     */
     public static final String DEFAULT_REQUEST_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "request-locations.xml";
 
     public static final String DEFAULT_STATION_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "station-locations.xml";

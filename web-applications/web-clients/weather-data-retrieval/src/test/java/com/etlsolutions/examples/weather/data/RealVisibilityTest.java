@@ -58,6 +58,6 @@ public final class RealVisibilityTest {
     @Test
     public void testToString() {
 
-        assertEquals("Real visibility: 2100", instance.toString());
+        assertEquals("Real visibility: 2100.0", instance.toString());
     }
 }

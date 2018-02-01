@@ -68,7 +68,7 @@ public final class ApplicationParametersFactory {
         configFile = new File(configFilePath);
         
         Logger logger = Logger.getLogger(ApplicationParametersFactory.class);
-        if (configFile.isFile()) {
+        if (configFile != null && configFile.isFile()) {
             logger.info("\nTry to load the configuration parameters from " + configFilePath + ".");
             properties.load(new FileInputStream(configFile));
             logger.info("The configuration parameters have been successfully loaded.");

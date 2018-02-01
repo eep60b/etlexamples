@@ -53,11 +53,13 @@ public final class SingleProcessor {
             int year = calendar.get(Calendar.YEAR);
             String fileName = requestMethod.getAbbreviation() + DATA_FILENAME_SEPARATOR + location.getName() + DATA_FILENAME_SEPARATOR + year + parameters.getDataFileExtension();
             File file = new File(parameters.getDataDirectoryPath() + File.separator + fileName);
-            
+
             //Copy the base file if it is newer than current data file.
-            File baseFile = new File(parameters.getBaseDataDirectoryPath() + File.separator + fileName);           
-            BaseFileCopier.getInstance().copy(baseFile, file);
-            
+            String baseDataDirectoryPath = parameters.getBaseDataDirectoryPath();
+            if (new File(baseDataDirectoryPath).isDirectory()) {
+                File baseFile = new File(baseDataDirectoryPath + File.separator + fileName);
+                BaseFileCopier.getInstance().copy(baseFile, file);
+            }
             List<File> additionalFiles = new ArrayList<>();
 
             //Don't user functional operations here to compatible for Java 1.7
@@ -80,7 +82,7 @@ public final class SingleProcessor {
                 int stat = http.getResponseCode();
 
                 List<Integer> stats = Arrays.asList(HTTP_MOVED_PERM, HTTP_MOVED_TEMP, HTTP_SEE_OTHER, HTTP_USE_PROXY);
-                
+
                 //If it is redirected, find the redirect URL before return the result.
                 doIt = stats.contains(stat);
                 if (doIt) {
@@ -89,7 +91,7 @@ public final class SingleProcessor {
                     String loc = http.getHeaderField("Location");
                     URL target = loc == null ? null : new URL(base, loc);
                     http.disconnect();
-                    
+
                     // Redirection should be allowed only for HTTP and HTTPS and should be limited to 5 redirections at most.                   
                     if (target == null) {
                         logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
@@ -101,14 +103,14 @@ public final class SingleProcessor {
                         logger.warn("\nToo many redirects.");
                         return false;
                     }
-                    
+
                     String protocol = target.getProtocol();
                     if (!(protocol.equals("http") || protocol.equals("https"))) {
                         logger.warn("\nIllegal URL redirect: " + loc + "\nData not recorded.");
                         logger.warn("Uknown protocol: " + protocol);
                         return false;
                     }
-                    
+
                     logger.info("\nUse redirect URL: " + loc);
                     url = target;
                     redirects++;
@@ -126,9 +128,9 @@ public final class SingleProcessor {
             } catch (SAXException | IOException ex) {
 
                 logger.warn("\nFailed to parse the xml file: \n" + xmlContent, ex);
-                
-                if(http != null) {
-                  logger.warn(http.getResponseMessage());  
+
+                if (http != null) {
+                    logger.warn(http.getResponseMessage());
                 }
                 return false;
             }

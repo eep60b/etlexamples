@@ -98,6 +98,6 @@ public final class RequestLocationTest {
     @Test
     public void testToString() {
 
-        assertEquals("RequestLocation{id=923281,name=inalld}", instance.toString());
+        assertEquals("RequestLocation{id=923281, name=inalld}", instance.toString());
     }
 }

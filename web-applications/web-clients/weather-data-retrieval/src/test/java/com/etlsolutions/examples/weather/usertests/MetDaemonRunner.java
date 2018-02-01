@@ -1,5 +1,6 @@
-package com.etlsolutions.examples.weather;
+package com.etlsolutions.examples.weather.usertests;
 
+import com.etlsolutions.examples.weather.MetDaemon;
 import org.apache.commons.daemon.support.DaemonLoader.Context;
 
 /**

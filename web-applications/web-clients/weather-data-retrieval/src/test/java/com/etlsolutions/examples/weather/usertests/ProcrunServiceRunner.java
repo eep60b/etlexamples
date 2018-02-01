@@ -1,4 +1,6 @@
-package com.etlsolutions.examples.weather;
+package com.etlsolutions.examples.weather.usertests;
+
+import com.etlsolutions.examples.weather.ProcrunService;
 
 /**
  *

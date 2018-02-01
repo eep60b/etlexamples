@@ -3,6 +3,7 @@ package com.etlsolutions.examples.weather;
 import com.etlsolutions.examples.weather.data.RequestMethod;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mockito.Mockito;
 
 /**
  * Test of class DataBuilderFactory.
@@ -38,6 +39,6 @@ public final class DataBuilderFactoryTest {
     @Test(expected = IllegalArgumentException.class)
     public void testCreateDataBuilder_exception() {
 
-        instance.createDataBuilder(null);
+        instance.createDataBuilder(Mockito.eq(RequestMethod.FCS_3HOURLY));
     }
 }

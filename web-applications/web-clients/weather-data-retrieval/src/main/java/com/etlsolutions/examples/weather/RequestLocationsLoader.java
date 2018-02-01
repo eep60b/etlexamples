@@ -31,7 +31,7 @@ public final class RequestLocationsLoader {
 
     private static final RequestLocationsLoader INSTANCE = new RequestLocationsLoader();
 
-    public RequestLocationsLoader() {
+    private RequestLocationsLoader() {
     }
 
     public static final RequestLocationsLoader getInstance() {
@@ -95,20 +95,20 @@ public final class RequestLocationsLoader {
         for (int i = 0; i < documentChildren.getLength(); i++) {
 
             Node node = documentChildren.item(i);
-            if (node.getNodeName().equals("Locations")) {
+            if (node.getNodeName().equalsIgnoreCase("Locations")) {
                 NodeList locationsChildren = node.getChildNodes();
                 for (int j = 0; j < locationsChildren.getLength(); j++) {
                     Node locationsChild = locationsChildren.item(j);
-                    if (locationsChild.getNodeName().endsWith("Location")) {
+                    if (locationsChild.getNodeName().equalsIgnoreCase("Location")) {
                         NamedNodeMap locationAttributes = locationsChild.getAttributes();
                         String id = locationAttributes.getNamedItem("id").getTextContent();
                         String name = locationAttributes.getNamedItem("name").getTextContent();
-                        double latitude = Double.parseDouble(locationAttributes.getNamedItem("latitude").getTextContent());
+                        double lastitude = Double.parseDouble(locationAttributes.getNamedItem("latitude").getTextContent());
                         double longitude = Double.parseDouble(locationAttributes.getNamedItem("longitude").getTextContent());
                         Node elevationAttribute = locationAttributes.getNamedItem("elevation");
-                        double elevation = Double.parseDouble(elevationAttribute == null ? "-1.0" : elevationAttribute.getTextContent());
+                        double elevation = Double.parseDouble(elevationAttribute == null ? "-100.0" : elevationAttribute.getTextContent());
 
-                        locaitons.add(new RequestLocation(id, name, latitude, longitude, elevation));
+                        locaitons.add(new RequestLocation(id, name, lastitude, longitude, elevation));
                     }
                 }
             }

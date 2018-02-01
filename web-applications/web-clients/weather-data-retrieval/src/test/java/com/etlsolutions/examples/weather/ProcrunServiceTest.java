@@ -26,7 +26,7 @@ public final class ProcrunServiceTest {
     @Before
     public void setUp() {
 
-        Whitebox.setInternalState(MetThreadService.class, service);
+        Whitebox.setInternalState(MetThreadService.class, "MET_DAEMON", service);
     }
 
     /**

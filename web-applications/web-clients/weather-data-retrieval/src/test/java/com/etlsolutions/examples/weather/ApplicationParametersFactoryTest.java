@@ -23,7 +23,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ApplicationParametersFactory.class, Logger.class, RequestConfigLoader.class})
+@PrepareForTest({ApplicationParametersFactory.class, Logger.class, RequestConfigLoader.class, RecoverableIntParser.class})
 public final class ApplicationParametersFactoryTest {
 
     private final Properties properties = Mockito.mock(Properties.class);
@@ -44,12 +44,13 @@ public final class ApplicationParametersFactoryTest {
 
         PowerMockito.mockStatic(Logger.class);
         Mockito.when(Logger.getLogger(ApplicationParametersFactory.class)).thenReturn(logger);
-
+        Mockito.when(Logger.getLogger(RecoverableIntParser.class)).thenReturn(logger);
+        
         PowerMockito.whenNew(File.class).withArguments("configFilePath").thenReturn(configFile);
 
         PowerMockito.mockStatic(RequestConfigLoader.class);
         Mockito.when(RequestConfigLoader.getInstance()).thenReturn(requestConfigLoader);
-        Mockito.when(requestConfigLoader.load("requestLocationFilePath", "resourcePropertiesFilePath")).thenReturn(requestConfigs);
+        Mockito.when(requestConfigLoader.load("resourcePropertiesFilePath", "requestLocationFilePath")).thenReturn(requestConfigs);
     }
 
     /**
@@ -109,7 +110,7 @@ public final class ApplicationParametersFactoryTest {
         Mockito.when(properties.getProperty("resourcePropertiesFilePath")).thenReturn("resourcePropertiesFilePath");
         Mockito.when(properties.getProperty("datetimeFormat")).thenReturn("mmYYYYHH/ss/dd");
         Mockito.when(properties.getProperty("delimiter")).thenReturn("/");
-
+        
         assertEquals(applicationParameters, instance.loadApplicationParameters(null));
     }
 
@@ -127,14 +128,14 @@ public final class ApplicationParametersFactoryTest {
         PowerMockito.whenNew(FileOutputStream.class).withArguments(configFile).thenReturn(outputStream);
         String[] args = {"-configFilePath", "configFilePath"};
 
-        InOrder inOrder = Mockito.inOrder(parentFile, properties);
+        InOrder inOrder = Mockito.inOrder(parentFile, configFile, properties);
 
         instance.loadApplicationParameters(args);
 
         instance.saveParameters();
 
         inOrder.verify(parentFile).mkdirs();
-        inOrder.verify(parentFile).createNewFile();
+        inOrder.verify(configFile).createNewFile();
         inOrder.verify(properties).store(outputStream, "Met Weather Service");
     }
 

@@ -60,6 +60,7 @@ public final class SingleProcessorTest {
     private final RequestLocation location2 = PowerMockito.mock(RequestLocation.class);
     private final File file1 = Mockito.mock(File.class);
     private final File file2 = Mockito.mock(File.class);
+    private final File baseDataDirectory = Mockito.mock(File.class);
     private final File baseFile1 = Mockito.mock(File.class);
     private final File baseFile2 = Mockito.mock(File.class);
     private final File additionalFile11 = Mockito.mock(File.class);
@@ -149,6 +150,7 @@ public final class SingleProcessorTest {
         PowerMockito.whenNew(File.class).withArguments("datadirectoPpa" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(file1);
         PowerMockito.whenNew(File.class).withArguments("datadirectoPpa" + File.separator + "obs1h-caernar-2018.dac").thenReturn(file2);
 
+        PowerMockito.whenNew(File.class).withArguments("basebase").thenReturn(baseDataDirectory);
         PowerMockito.whenNew(File.class).withArguments("basebase" + File.separator + "fcs3h-bango-2017.ttt").thenReturn(baseFile1);
         PowerMockito.whenNew(File.class).withArguments("basebase" + File.separator + "obs1h-caernar-2018.dac").thenReturn(baseFile2);
 
@@ -207,6 +209,7 @@ public final class SingleProcessorTest {
 
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_OK);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertTrue(instance.process(parameters));
 
@@ -230,11 +233,41 @@ public final class SingleProcessorTest {
      * @throws Exception if an error occurs
      */
     @Test
+    public void testProcess_NoBaseDataDirectory() throws Exception {
+
+        Mockito.when(http1.getResponseCode()).thenReturn(HTTP_OK);
+        Mockito.when(http2.getResponseCode()).thenReturn(HTTP_OK);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.FALSE);
+
+        assertTrue(instance.process(parameters));
+
+        inOrder.verify(additionalFiles1).add(additionalFile21);
+        inOrder.verify(dataFileWriter).write("contentns1", newList1, file1, additionalFiles1, parameters, "-2017-000342");
+
+        inOrder.verify(baseFileCopier).copy(baseFile2, file2);
+        inOrder.verify(additionalFiles2).add(additionalFile12);
+        inOrder.verify(additionalFiles2).add(additionalFile22);
+        inOrder.verify(dataFileWriter).write("contentns2", newList2, file2, additionalFiles2, parameters, "-2018-698127");
+
+        Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile31);
+        Mockito.verify(additionalFiles2, Mockito.never()).add(additionalFile32);
+        
+        Mockito.verify(baseFileCopier, Mockito.never()).copy(baseFile1, file1);
+        Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile11);        
+    }
+    
+    /**
+     * Test of process method.
+     *
+     * @throws Exception if an error occurs
+     */
+    @Test
     public void testProcess_Redirect_http() throws Exception {
 
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_TEMP).thenReturn(HTTP_SEE_OTHER).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(url.getProtocol()).thenReturn("http");
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertTrue(instance.process(parameters));
 
@@ -268,6 +301,7 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_TEMP).thenReturn(HTTP_SEE_OTHER).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(url.getProtocol()).thenReturn("https");
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertTrue(instance.process(parameters));
 
@@ -302,6 +336,7 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(db.parse(inputSource1)).thenThrow(ex);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertFalse(instance.process(parameters));
 
@@ -321,6 +356,7 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(db.parse(inputSource1)).thenThrow(ex);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertFalse(instance.process(parameters));
 
@@ -340,6 +376,7 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_OK);
         Mockito.when(IOUtils.toString(url, "UTF-8")).thenThrow(ex);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertFalse(instance.process(parameters));
 
@@ -359,6 +396,7 @@ public final class SingleProcessorTest {
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_TEMP).thenReturn(HTTP_SEE_OTHER).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(url.getProtocol()).thenReturn("http");
         Mockito.when(http1.getHeaderField("Location")).thenReturn(null);
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertFalse(instance.process(parameters));
 
@@ -376,6 +414,7 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_TEMP).thenReturn(HTTP_SEE_OTHER).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(url.getProtocol()).thenReturn("httpks");
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
 
         assertFalse(instance.process(parameters));
 
@@ -394,9 +433,11 @@ public final class SingleProcessorTest {
         Mockito.when(http1.getResponseCode()).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(http2.getResponseCode()).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_PERM).thenReturn(HTTP_MOVED_TEMP).thenReturn(HTTP_SEE_OTHER).thenReturn(HTTP_USE_PROXY).thenReturn(HTTP_OK);
         Mockito.when(url.getProtocol()).thenReturn("http");
+        Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.TRUE);
+
         assertFalse(instance.process(parameters));
 
         Mockito.verify(logger).warn("\nIllegal URL redirect: loc24\nData not recorded.");
-        Mockito.verify(logger).warn("\nToo many redirects.");     
+        Mockito.verify(logger).warn("\nToo many redirects.");
     }
 }
