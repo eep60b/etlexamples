@@ -42,7 +42,7 @@ public final class ApplicationParameters {
             }
         }
 
-        this.baseDataDirectoryPath = (baseDataDirectoryPath == null || baseDataDirectoryPath.isEmpty()) ? "" : new File(baseDataDirectoryPath).getAbsolutePath();
+        this.baseDataDirectoryPath = (baseDataDirectoryPath == null || baseDataDirectoryPath.trim().isEmpty()) ? "" : new File(baseDataDirectoryPath).getAbsolutePath();
         this.dataEncoding = dataEncoding;
         this.dataFileExtension = dataFileExtension;
         this.intervalInMinutes = RecoverableIntParser.getInstance().parseNumber(intervalInMinutes, DEFAULT_INTERVAL_MINUTES, "interval in minutes");

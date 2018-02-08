@@ -29,14 +29,14 @@ public final class ApplicationParametersTest {
     private final String dataDirectoryPath = "lnad99aa233";
     private final List<RequestConfig> requestConfigs = Arrays.asList(PowerMockito.mock(RequestConfig.class), PowerMockito.mock(RequestConfig.class));
     private final String[] additionalDataDirectoryPaths = {"inlafdqla", "     ", "afafa.txt", null};
-    private final String baseDataDirectoryPath = "lnad99aa233";
+    private final String baseDataDirectoryPath = "bbsasdatalnad99aa233";
     private final String dataEncoding = "ASCII";
     private final String dataFileExtension = ".dat";
     private final String intervalInMinutes = "30";
     private final String datetimeFormat = "yyyy-MM/dd HH:mm:ss";
     private final String delimiter = "_";
 
-    private final ApplicationParameters instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter);
+    private ApplicationParameters instance;
 
     //Keep the logger mock to prevent the logger from printing to the output log.
     @Before
@@ -48,10 +48,16 @@ public final class ApplicationParametersTest {
         PowerMockito.whenNew(File.class).withArguments("onaofdoa").thenReturn(configFile);
         Mockito.when(configFile.getAbsolutePath()).thenReturn("/home/onaofdoa");
 
+        File cfile = Mockito.mock(File.class);
+        PowerMockito.whenNew(File.class).withArguments("nowcFilePath").thenReturn(cfile);
+
         File dataDirectory = Mockito.mock(File.class);
         PowerMockito.whenNew(File.class).withArguments(dataDirectoryPath).thenReturn(dataDirectory);
         Mockito.when(dataDirectory.getAbsolutePath()).thenReturn("data/datadir/aaa");
-        
+
+        File dfile = Mockito.mock(File.class);
+        PowerMockito.whenNew(File.class).withArguments("newdataDirePath").thenReturn(dfile);
+
         File additionalFile1 = Mockito.mock(File.class);
         File additionalFile2 = Mockito.mock(File.class);
         PowerMockito.whenNew(File.class).withArguments("inlafdqla").thenReturn(additionalFile1);
@@ -59,9 +65,19 @@ public final class ApplicationParametersTest {
         Mockito.when(additionalFile1.getAbsolutePath()).thenReturn("/temp/aaax/inlafdql.dat");
         Mockito.when(additionalFile2.getAbsolutePath()).thenReturn("home/afafa.txt");
 
+        File a1file = Mockito.mock(File.class);
+        PowerMockito.whenNew(File.class).withArguments("21121").thenReturn(a1file);
+        File a2file = Mockito.mock(File.class);
+        PowerMockito.whenNew(File.class).withArguments(",diiald").thenReturn(a2file);
+
         File baseDataDirectory = Mockito.mock(File.class);
         PowerMockito.whenNew(File.class).withArguments(baseDataDirectoryPath).thenReturn(baseDataDirectory);
         Mockito.when(baseDataDirectory.getAbsolutePath()).thenReturn("onedrive/aaa/lnad99aa233");
+
+        File bfile = Mockito.mock(File.class);
+        PowerMockito.whenNew(File.class).withArguments("newAbDataDirectoryh").thenReturn(bfile);        
+        
+        instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter);
     }
 
     /**
@@ -97,7 +113,7 @@ public final class ApplicationParametersTest {
     @Test
     public void testGetAddtionalDataPaths() {
 
-        assertEquals(Arrays.asList("inlafdqla", "linn232", "afafa.txt"), instance.getAdditionalDataDirectoryPaths());
+        assertEquals(Arrays.asList("/temp/aaax/inlafdql.dat", "home/afafa.txt"), instance.getAdditionalDataDirectoryPaths());
     }
 
     /**
@@ -206,7 +222,7 @@ public final class ApplicationParametersTest {
         assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, "HH:MM yyyy.mm.DD", delimiter)));
         assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, "/")));
         assertFalse(instance.equals(new Object()));
-        assertFalse(instance.equals(null));        
+        assertFalse(instance.equals(null));
     }
 
     /**
@@ -215,16 +231,17 @@ public final class ApplicationParametersTest {
     @Test
     public void testToString() {
 
+System.out.println(instance.toString());
+        
         assertEquals("Configuration file =       /home/onaofdoa\n"
                 + "Request configs =          " + requestConfigs + "\n"
                 + "Data file directory =      data/datadir/aaa\n"
-                + "Addtional data directory = [/temp/aaax/inlafdql.dat,home/afafa.txt]\n"
+                + "Addtional data directory = [/temp/aaax/inlafdql.dat, home/afafa.txt]\n"
                 + "Base data directory =      onedrive/aaa/lnad99aa233\n"
                 + "Data encoding  =           ASCII\n"
                 + "Data file extension  =     .dat\n"
                 + "Interval in minutes  =     30\n"
                 + "Date time format =         yyyy-MM/dd HH:mm:ss\n"
-                + "Delimiter =                [_]"
-                , instance.toString());
+                + "Delimiter =                [_]", instance.toString());
     }
 }

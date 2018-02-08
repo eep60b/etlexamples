@@ -1,7 +1,6 @@
 package com.etlsolutions.examples.weather;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -22,11 +21,19 @@ public final class ProcrunServiceTest {
     private final MetThreadService service = PowerMockito.mock(MetThreadService.class);
     private final String[] args = {"abad", "bbia"};
     private final InOrder inOrder = Mockito.inOrder(service);
+    
+    private MetThreadService cachedService;
 
     @Before
     public void setUp() {
 
+        cachedService = Whitebox.getInternalState(service, "MET_DAEMON", MetThreadService.class);
         Whitebox.setInternalState(MetThreadService.class, "MET_DAEMON", service);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Whitebox.setInternalState(MetThreadService.class, "MET_DAEMON", cachedService);        
     }
 
     /**

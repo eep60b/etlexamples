@@ -17,6 +17,9 @@ import static org.junit.Assert.*;
  */
 public final class StationLocationsLoaderTest {
 
+    
+    
+    private final StationLocationsLoader instance = new StationLocationsLoader();
     @Before
     public void setUp() {
     }
@@ -26,12 +29,8 @@ public final class StationLocationsLoaderTest {
      */
     @Test
     public void testGetInstance() {
-        System.out.println("getInstance");
-        RequestLocationsLoader expResult = null;
-        RequestLocationsLoader result = StationLocationsLoader.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertSame(StationLocationsLoader.getInstance(), instance);
     }
 
     /**
@@ -41,7 +40,7 @@ public final class StationLocationsLoaderTest {
     public void testLoad() throws Exception {
         System.out.println("load");
         String path = "";
-        StationLocationsLoader instance = new StationLocationsLoader();
+        
         List<RequestLocation> expResult = null;
         List<RequestLocation> result = instance.load(path);
         assertEquals(expResult, result);

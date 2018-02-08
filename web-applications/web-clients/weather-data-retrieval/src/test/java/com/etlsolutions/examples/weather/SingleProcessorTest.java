@@ -244,7 +244,6 @@ public final class SingleProcessorTest {
         inOrder.verify(additionalFiles1).add(additionalFile21);
         inOrder.verify(dataFileWriter).write("contentns1", newList1, file1, additionalFiles1, parameters, "-2017-000342");
 
-        inOrder.verify(baseFileCopier).copy(baseFile2, file2);
         inOrder.verify(additionalFiles2).add(additionalFile12);
         inOrder.verify(additionalFiles2).add(additionalFile22);
         inOrder.verify(dataFileWriter).write("contentns2", newList2, file2, additionalFiles2, parameters, "-2018-698127");
@@ -253,7 +252,9 @@ public final class SingleProcessorTest {
         Mockito.verify(additionalFiles2, Mockito.never()).add(additionalFile32);
         
         Mockito.verify(baseFileCopier, Mockito.never()).copy(baseFile1, file1);
-        Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile11);        
+        Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile11);   
+        
+        Mockito.verify(baseFileCopier, Mockito.never()).copy(baseFile2, file2);        
     }
     
     /**

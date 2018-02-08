@@ -1,41 +1,34 @@
 package com.etlsolutions.examples.weather;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+     * Test of class SettingConstants
  * @author zc
  */
-public class SettingConstantsTest {
-    
-    public SettingConstantsTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+public final class SettingConstantsTest {
+
+    /**
+     * Test of constructor.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test(expected = InvocationTargetException.class)
+    public void testConstructor() throws Exception {
+
+        Constructor<?>[] constructors = SettingConstants.class.getDeclaredConstructors();
+
+        assertEquals(1, constructors.length);
+
+        Constructor<?> constructor = constructors[0];
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+
+        constructor.setAccessible(true);
+        constructor.newInstance();
     }
 
-    @Test
-    public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }

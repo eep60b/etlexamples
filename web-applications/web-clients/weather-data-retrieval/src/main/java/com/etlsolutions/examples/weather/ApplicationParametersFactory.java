@@ -25,6 +25,7 @@ public final class ApplicationParametersFactory {
     private static final ApplicationParametersFactory INSTANCE = new ApplicationParametersFactory();
 
     private final Properties properties = new Properties();
+    
     private File configFile;
 
     private ApplicationParametersFactory() {
@@ -34,6 +35,12 @@ public final class ApplicationParametersFactory {
         return INSTANCE;
     }
 
+    /**
+     * Load the 
+     * @param args
+     * @return
+     * @throws Exception 
+     */
     public synchronized ApplicationParameters loadApplicationParameters(String[] args) throws Exception {
 
         Options options = new Options();
@@ -66,14 +73,14 @@ public final class ApplicationParametersFactory {
 
         configFilePath = configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath;
         configFile = new File(configFilePath);
-        
+
         Logger logger = Logger.getLogger(ApplicationParametersFactory.class);
         if (configFile != null && configFile.isFile()) {
             logger.info("\nTry to load the configuration parameters from " + configFilePath + ".");
             properties.load(new FileInputStream(configFile));
             logger.info("The configuration parameters have been successfully loaded.");
         } else {
-            logger.warn("\nNo configuration file can be found. Use the embedded parameters.");            
+            logger.warn("\nNo configuration file can be found. Use the embedded parameters.");
         }
 
         String savedDataPath = properties.getProperty(DATA_DIRECTORY_PATH_KEY);
@@ -93,15 +100,15 @@ public final class ApplicationParametersFactory {
         baseDataPathString = baseDataPathString == null ? (savedBaseDataPathString == null ? DEFAULT_BASE_DATA_PATH : savedBaseDataPathString) : baseDataPathString;
         dataEncoding = dataEncoding == null ? (savedDataEncoding == null ? DEFAULT_DATA_ENCODING : savedDataEncoding) : dataEncoding;
         dataFileExtension = dataFileExtension == null ? (savedDataFileExtension == null ? DEFAULT_DATA_FILE_EXTENSION : savedDataFileExtension) : dataFileExtension;
-        intervalMinutes = intervalMinutes == null ? savedIntervalMinutes : intervalMinutes;
+        intervalMinutes = intervalMinutes == null ? (savedIntervalMinutes == null ? DEFAULT_INTERVAL_MINUTES : savedIntervalMinutes) : intervalMinutes;
 
         requestLocationfilePath = requestLocationfilePath == null ? (savedRequestLocationfilePath == null ? DEFAULT_REQUEST_LOCATIONS_FILE_PATH : savedRequestLocationfilePath) : requestLocationfilePath;
-        requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORRCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
+        requestPropertiesFilePath = requestPropertiesFilePath == null ? (savedRequestPropertiesFilePath == null ? DEFAULT_RESORUCE_PROPERTIES_FILE_PATH : savedRequestPropertiesFilePath) : requestPropertiesFilePath;
         List<RequestConfig> requestConfigs = RequestConfigLoader.getInstance().load(requestPropertiesFilePath, requestLocationfilePath);
-        
+
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
-        
+
         properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
         properties.setProperty(ADDITIONAL_DATA_PATH_KEY, additionalDataPathString);
@@ -113,16 +120,17 @@ public final class ApplicationParametersFactory {
         properties.setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, requestPropertiesFilePath);
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
-        
+
+        ApplicationParameters a = new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
         return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
     }
 
     public synchronized void saveParameters() throws IOException {
-        
-        if(configFile == null) {
+
+        if (configFile == null) {
             return;
         }
-        
+
         configFile.getParentFile().mkdirs();
         configFile.createNewFile();
         properties.store(new FileOutputStream(configFile), "Met Weather Service");

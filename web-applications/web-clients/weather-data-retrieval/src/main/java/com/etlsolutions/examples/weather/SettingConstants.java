@@ -134,7 +134,7 @@ public final class SettingConstants {
 
     public static final String DEFAULT_STATION_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "station-locations.xml";
 
-    public static final String DEFAULT_RESORRCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
+    public static final String DEFAULT_RESORUCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
 
     public static final double DEFAULT_LATITUDE = 53.214571;
 
@@ -186,5 +186,6 @@ public final class SettingConstants {
     public static final String DATA_XMLFILE_NODENAME_VALUE = "value";
 
     private SettingConstants() {
+        throw new UnsupportedOperationException("This private constructor should not be initialized.\n");
     }
 }

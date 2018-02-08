@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +32,23 @@ public final class RequestConfigLoader {
     private RequestConfigLoader() {
     }
 
+    /**
+     *
+     * @return the singleton instance of this class.
+     */
     public static final RequestConfigLoader getInstance() {
         return INSTANCE;
     }
 
+    /**
+     *
+     * @param resourcePropertiesFilesPath
+     * @param requestLocationsPath
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
     @SuppressWarnings("NestedAssignment")
     public List<RequestConfig> load(String resourcePropertiesFilesPath, String requestLocationsPath) throws ParserConfigurationException, SAXException, IOException {
 
@@ -51,7 +65,8 @@ public final class RequestConfigLoader {
 
             logger.info("\nTry to load request configurations from " + resourcePropertiesFiles.getAbsolutePath() + ".");
             Properties properties = new Properties();
-            properties.load(new FileInputStream(resourcePropertiesFiles));
+            FileInputStream fileInputStream = new FileInputStream(resourcePropertiesFiles);
+            properties.load(fileInputStream);
             propertieses.add(properties);
             logger.info("The request configurations have been loaded successfully from " + resourcePropertiesFiles.getAbsolutePath() + ".");
 
@@ -71,10 +86,14 @@ public final class RequestConfigLoader {
 
             List<String> filenames = new ArrayList<>();
 
-            logger.info("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");
+            logger.warn("\nThe request configuration file path " + resourcePropertiesFiles.getAbsolutePath() + " does not exist.");
             logger.info("Try to find request configuration files from the embedded directory.");
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(RequestConfigLoader.class.getResourceAsStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH)))) {
+            EmbeddedInputStreamProvider provider = EmbeddedInputStreamProvider.getInstance();
+            try (InputStream inputStream = provider.getInputStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH);
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader br = new BufferedReader(inputStreamReader)) {
+
                 String filename;
                 while ((filename = br.readLine()) != null) {
                     filenames.add(filename);
@@ -87,15 +106,18 @@ public final class RequestConfigLoader {
                 logger.info("Try to load request configurations from the embedded file " + filename + ".");
                 Properties properties = new Properties();
                 String path = EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + filename;
-                properties.load(RequestConfigLoader.class.getResourceAsStream(path));
-                propertieses.add(properties);
-                logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");
-                File file = new File(resourcePropertiesFilesPath + "/" + filename);
-                try {
-                    FileUtils.copyInputStreamToFile(RequestConfigLoader.class.getResourceAsStream(path), file);
-                    logger.info("The request location file " + filename + " has been copied to " + file.getAbsolutePath() + ".");
-                } catch (IOException ioe) {
-                    logger.warn("Failed to copy the request location file " + filename + " to " + file.getAbsolutePath() + ".", ioe);
+                File embeddedFile = new File(path);
+                if (filename.toLowerCase().trim().endsWith(".properties") && embeddedFile.isFile()) {
+                    properties.load(provider.getInputStream(path));
+                    propertieses.add(properties);
+                    logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");
+                    File file = new File(resourcePropertiesFilesPath + "/" + filename);
+                    try {
+                        FileUtils.copyInputStreamToFile(provider.getInputStream(path), file);
+                        logger.info("The request location file " + filename + " has been copied to " + file.getAbsolutePath() + ".");
+                    } catch (IOException ioe) {
+                        logger.warn("Failed to copy the request location file " + filename + " to " + file.getAbsolutePath() + ".", ioe);
+                    }
                 }
             }
         }
@@ -111,7 +133,8 @@ public final class RequestConfigLoader {
             RequestLocation location = getRequestLocation(locationId, locations);
             RequestMethod requesttMethod = RequestMethod.getRequesttMethod(properties.getProperty(REQUEST_METHOD_TOKEN), properties.getProperty(REQUEST_INTERVAL_TOKEN));
             RequestToken requestToken = new RequestToken(properties.getProperty(REQUEST_TOEKN));
-            list.add(new RequestConfig(requesttMethod, location, requestToken));
+            RequestConfig requestConfig = new RequestConfig(requesttMethod, location, requestToken);
+            list.add(requestConfig);
         }
 
         logger.info("\n" + list.size() + " sets of request configurations have been loaded successfully.");

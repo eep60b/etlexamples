@@ -67,17 +67,18 @@ public final class RequestLocationsLoader {
                     FileUtils.copyFile(defaultFile, file);
                     logger.info("The request locations file has been copied to " + path + ".");
                 } catch (IOException ioe) {
-                    logger.info("Failed to copy the request locations file to " + path + ".", ioe);
+                    logger.warn("Failed to copy the request locations file to " + path + ".", ioe);
                 }
             } else {
 
                 logger.warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
                 logger.info("Try to load request locations from the embedded location.");
-                locaitions = loadFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH));
+                EmbeddedInputStreamProvider inputStreamProvider = EmbeddedInputStreamProvider.getInstance();
+                locaitions = loadFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH));
                 logger.info("The request locations has been successfully loaded from the embedded locaiton.");
-                copyFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH), defaultFile, logger);
+                copyFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH), defaultFile, logger);
                 if (!path.trim().equalsIgnoreCase(DEFAULT_REQUEST_LOCATIONS_FILE_PATH.trim())) {
-                    copyFile(RequestLocationsLoader.class.getResourceAsStream(EMBEDDED_LOCATIONS_FILE_PATH), file, logger);
+                    copyFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH), file, logger);
                 }
             }
         }
@@ -103,12 +104,12 @@ public final class RequestLocationsLoader {
                         NamedNodeMap locationAttributes = locationsChild.getAttributes();
                         String id = locationAttributes.getNamedItem("id").getTextContent();
                         String name = locationAttributes.getNamedItem("name").getTextContent();
-                        double lastitude = Double.parseDouble(locationAttributes.getNamedItem("latitude").getTextContent());
+                        double latitude = Double.parseDouble(locationAttributes.getNamedItem("latitude").getTextContent());
                         double longitude = Double.parseDouble(locationAttributes.getNamedItem("longitude").getTextContent());
                         Node elevationAttribute = locationAttributes.getNamedItem("elevation");
                         double elevation = Double.parseDouble(elevationAttribute == null ? "-100.0" : elevationAttribute.getTextContent());
 
-                        locaitons.add(new RequestLocation(id, name, lastitude, longitude, elevation));
+                        locaitons.add(new RequestLocation(id, name, latitude, longitude, elevation));
                     }
                 }
             }
