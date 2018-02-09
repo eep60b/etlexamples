@@ -53,7 +53,7 @@ public class ProcrunServiceIntegrationTest {
             int size = lines.size();
 
             for (int i = lines.size() - 1; i > 0; i--) {
-                if (format.parse(lines.get(i).split(",")[0]).getTime() > (calendar.getTimeInMillis() - 120 * 60 * 1000)) {
+                if (format.parse(lines.get(i).split(",")[0]).getTime() > (calendar.getTimeInMillis() - 240 * 60 * 1000)) {
                     lines.remove(i);
                 }
             }

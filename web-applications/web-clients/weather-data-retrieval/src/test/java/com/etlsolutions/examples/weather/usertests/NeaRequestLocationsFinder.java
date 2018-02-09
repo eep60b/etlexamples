@@ -16,7 +16,7 @@ public final class NeaRequestLocationsFinder {
      
     public static void main(String[] args) throws Throwable {
 
-        List<RequestLocation> locations = new ArrayList<>(RequestLocationsLoader.getInstance().load(DEFAULT_REQUEST_LOCATIONS_FILE_PATH));
+        List<RequestLocation> locations = new ArrayList<>(RequestLocationsLoader.getInstance().load(DEFAULT_REQUEST_LOCATIONS_FILE_PATH, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
         
         Collections.sort(locations, new DistanceComparator(DEFAULT_LATITUDE, DEFAULT_LONGITUDE));
         

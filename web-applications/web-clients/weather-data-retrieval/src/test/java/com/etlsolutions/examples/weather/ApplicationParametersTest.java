@@ -43,7 +43,7 @@ public final class ApplicationParametersTest {
     public void setUp() throws Exception {
 
         PowerMockito.mockStatic(Logger.class);
-        Mockito.when(Logger.getLogger(RecoverableDoubleParser.class)).thenReturn(logger);
+        Mockito.when(Logger.getLogger(RecoverableIntParser.class)).thenReturn(logger);
         File configFile = Mockito.mock(File.class);
         PowerMockito.whenNew(File.class).withArguments("onaofdoa").thenReturn(configFile);
         Mockito.when(configFile.getAbsolutePath()).thenReturn("/home/onaofdoa");
@@ -230,8 +230,6 @@ public final class ApplicationParametersTest {
      */
     @Test
     public void testToString() {
-
-System.out.println(instance.toString());
         
         assertEquals("Configuration file =       /home/onaofdoa\n"
                 + "Request configs =          " + requestConfigs + "\n"

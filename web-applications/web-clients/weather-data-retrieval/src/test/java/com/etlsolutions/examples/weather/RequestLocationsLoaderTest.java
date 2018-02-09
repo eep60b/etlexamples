@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.DEFAULT_REQUEST_LOCATIONS_FILE_PATH;
-import static com.etlsolutions.examples.weather.SettingConstants.EMBEDDED_LOCATIONS_FILE_PATH;
+import static com.etlsolutions.examples.weather.SettingConstants.EMBEDDED_REQUEST_LOCATIONS_FILE_PATH;
 import com.etlsolutions.examples.weather.data.RequestLocation;
 import java.io.File;
 import java.io.FileInputStream;
@@ -303,7 +303,7 @@ public final class RequestLocationsLoaderTest {
 
         PowerMockito.mockStatic(EmbeddedInputStreamProvider.class);
         Mockito.when(EmbeddedInputStreamProvider.getInstance()).thenReturn(provider);
-        Mockito.when(provider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH)).thenReturn(embeddedInputStream);
+        Mockito.when(provider.getInputStream(EMBEDDED_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(embeddedInputStream);
         PowerMockito.whenNew(InputSource.class).withArguments(embeddedInputStream).thenReturn(embeddedinputSource);
         Mockito.when(db.parse(embeddedinputSource)).thenReturn(embeddeddocument);
 
@@ -393,7 +393,7 @@ public final class RequestLocationsLoaderTest {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
         
-        assertEquals(Arrays.asList(requestLocation0, requestLocation1, requestLocation2), instance.load(path));
+        assertEquals(Arrays.asList(requestLocation0, requestLocation1, requestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).info("The request locations has been successfully loaded from apbbapath.");
@@ -410,7 +410,7 @@ public final class RequestLocationsLoaderTest {
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.TRUE);
         
-        assertEquals(Arrays.asList(defaultRequestLocation0, defaultRequestLocation1, defaultRequestLocation2), instance.load(path));
+        assertEquals(Arrays.asList(defaultRequestLocation0, defaultRequestLocation1, defaultRequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).warn("\nThe file, apbbapath, does NOT exist.");
@@ -436,7 +436,7 @@ public final class RequestLocationsLoaderTest {
         PowerMockito.doThrow(ioe).when(FileUtils.class);
         FileUtils.copyFile(defaultFile, file);
 
-        assertEquals(Arrays.asList(defaultRequestLocation0, defaultRequestLocation1, defaultRequestLocation2), instance.load(path));
+        assertEquals(Arrays.asList(defaultRequestLocation0, defaultRequestLocation1, defaultRequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).warn("\nThe file, apbbapath, does NOT exist.");
@@ -456,7 +456,7 @@ public final class RequestLocationsLoaderTest {
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.FALSE);
         
-        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path));
+        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).warn("\nThe file, apbbapath, does NOT exist.");
@@ -467,7 +467,7 @@ public final class RequestLocationsLoaderTest {
         inOrder.verify(logger).info("The request locations file has been copied to dddfauutltttdPathth.");
         inOrder.verify(logger).info("The request locations file has been copied to apbbapath.");
         
-        Mockito.verify(provider, Mockito.times(3)).getInputStream(EMBEDDED_LOCATIONS_FILE_PATH);
+        Mockito.verify(provider, Mockito.times(3)).getInputStream(EMBEDDED_REQUEST_LOCATIONS_FILE_PATH);
         
         PowerMockito.verifyStatic();
         FileUtils.copyInputStreamToFile(embeddedInputStream, file);
@@ -487,7 +487,7 @@ public final class RequestLocationsLoaderTest {
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.FALSE);
         
-        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(DEFAULT_REQUEST_LOCATIONS_FILE_PATH));
+        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(DEFAULT_REQUEST_LOCATIONS_FILE_PATH, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
         inOrder.verify(logger).warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
@@ -518,7 +518,7 @@ public final class RequestLocationsLoaderTest {
         PowerMockito.doThrow(ioe).when(FileUtils.class);
         FileUtils.copyInputStreamToFile(embeddedInputStream, file);      
         
-        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path));
+        assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).warn("\nThe file, apbbapath, does NOT exist.");

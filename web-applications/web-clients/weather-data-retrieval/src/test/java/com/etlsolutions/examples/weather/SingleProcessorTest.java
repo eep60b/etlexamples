@@ -240,7 +240,8 @@ public final class SingleProcessorTest {
         Mockito.when(baseDataDirectory.isDirectory()).thenReturn(Boolean.FALSE);
 
         assertTrue(instance.process(parameters));
-
+        
+        Mockito.verify(additionalFiles1).add(additionalFile11);  
         inOrder.verify(additionalFiles1).add(additionalFile21);
         inOrder.verify(dataFileWriter).write("contentns1", newList1, file1, additionalFiles1, parameters, "-2017-000342");
 
@@ -252,7 +253,7 @@ public final class SingleProcessorTest {
         Mockito.verify(additionalFiles2, Mockito.never()).add(additionalFile32);
         
         Mockito.verify(baseFileCopier, Mockito.never()).copy(baseFile1, file1);
-        Mockito.verify(additionalFiles1, Mockito.never()).add(additionalFile11);   
+ 
         
         Mockito.verify(baseFileCopier, Mockito.never()).copy(baseFile2, file2);        
     }

@@ -1,6 +1,6 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.EMBEDDED_LOCATIONS_FILE_PATH;
+import static com.etlsolutions.examples.weather.SettingConstants.EMBEDDED_REQUEST_LOCATIONS_FILE_PATH;
 import java.io.IOException;
 import java.io.InputStream;
 import org.junit.*;
@@ -34,11 +34,11 @@ public final class EmbeddedInputStreamProviderTest {
 
         byte[] b = new byte[10];
 
-        InputStream result = instance.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH);
+        InputStream result = instance.getInputStream(EMBEDDED_REQUEST_LOCATIONS_FILE_PATH);
         
         assertEquals(916994, result.available());
         
-        instance.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH).read(b);
+        instance.getInputStream(EMBEDDED_REQUEST_LOCATIONS_FILE_PATH).read(b);
         
         assertArrayEquals(new byte[]{60,63,120,109,108,32,118,101,114,115}, b);        
     }

@@ -1,6 +1,5 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.etlsolutions.examples.weather.data.RequestLocation;
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +37,7 @@ public final class RequestLocationsLoader {
         return INSTANCE;
     }
 
-    public List<RequestLocation> load(String path) throws ParserConfigurationException, SAXException, IOException {
+    public List<RequestLocation> load(String path, String defaultPath, String embeddedPath) throws ParserConfigurationException, SAXException, IOException {
 
         List<RequestLocation> locaitions;
         Logger logger = Logger.getLogger(RequestLocationsLoader.class);
@@ -55,13 +54,13 @@ public final class RequestLocationsLoader {
         } else {
 
             logger.warn("\nThe file, " + path + ", does NOT exist.");
-            logger.info("Try to load request locations from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
-            File defaultFile = new File(DEFAULT_REQUEST_LOCATIONS_FILE_PATH);
+            logger.info("Try to load request locations from " +defaultPath + ".");
+            File defaultFile = new File(defaultPath);
 
             if (defaultFile.isFile()) {
 
                 locaitions = loadFile(new FileInputStream(defaultFile));
-                logger.info("The request locations has been successfully loaded from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
+                logger.info("The request locations has been successfully loaded from " + defaultPath + ".");
                 try {
 
                     FileUtils.copyFile(defaultFile, file);
@@ -71,14 +70,14 @@ public final class RequestLocationsLoader {
                 }
             } else {
 
-                logger.warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
+                logger.warn("\nThe file, " + defaultPath + ", does NOT exist.");
                 logger.info("Try to load request locations from the embedded location.");
                 EmbeddedInputStreamProvider inputStreamProvider = EmbeddedInputStreamProvider.getInstance();
-                locaitions = loadFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH));
+                locaitions = loadFile(inputStreamProvider.getInputStream(embeddedPath));
                 logger.info("The request locations has been successfully loaded from the embedded locaiton.");
-                copyFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH), defaultFile, logger);
-                if (!path.trim().equalsIgnoreCase(DEFAULT_REQUEST_LOCATIONS_FILE_PATH.trim())) {
-                    copyFile(inputStreamProvider.getInputStream(EMBEDDED_LOCATIONS_FILE_PATH), file, logger);
+                copyFile(inputStreamProvider.getInputStream(embeddedPath), defaultFile, logger);
+                if (!path.trim().equalsIgnoreCase(defaultPath.trim())) {
+                    copyFile(inputStreamProvider.getInputStream(embeddedPath), file, logger);
                 }
             }
         }

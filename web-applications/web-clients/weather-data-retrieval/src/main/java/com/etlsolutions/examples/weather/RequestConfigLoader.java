@@ -54,7 +54,7 @@ public final class RequestConfigLoader {
 
         Logger logger = Logger.getLogger(RequestConfigLoader.class);
 
-        List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath);
+        List<RequestLocation> locations = RequestLocationsLoader.getInstance().load(requestLocationsPath, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH);
 
         List<Properties> propertieses = new ArrayList<>();
         List<RequestConfig> list = new ArrayList<>();
@@ -104,10 +104,10 @@ public final class RequestConfigLoader {
 
             for (String filename : filenames) {
                 logger.info("Try to load request configurations from the embedded file " + filename + ".");
-                Properties properties = new Properties();
                 String path = EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + filename;
                 File embeddedFile = new File(path);
                 if (filename.toLowerCase().trim().endsWith(".properties") && embeddedFile.isFile()) {
+                    Properties properties = new Properties();
                     properties.load(provider.getInputStream(path));
                     propertieses.add(properties);
                     logger.info("The request configurations has been successfully loaded from the embedded file " + filename + ".");

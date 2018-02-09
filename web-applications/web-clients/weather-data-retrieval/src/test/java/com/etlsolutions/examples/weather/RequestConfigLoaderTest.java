@@ -87,7 +87,7 @@ public final class RequestConfigLoaderTest {
 
         PowerMockito.mockStatic(RequestLocationsLoader.class);
         Mockito.when(RequestLocationsLoader.getInstance()).thenReturn(requestLocationsLoader);
-        Mockito.when(requestLocationsLoader.load(requestLocationsPath)).thenReturn(Arrays.asList(requestLocation1, requestLocation2, requestLocation3));
+        Mockito.when(requestLocationsLoader.load(requestLocationsPath,DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(Arrays.asList(requestLocation1, requestLocation2, requestLocation3));
 
         Mockito.when(requestLocation1.getId()).thenReturn("44278");
         Mockito.when(requestLocation2.getId()).thenReturn("83462");
@@ -141,7 +141,7 @@ public final class RequestConfigLoaderTest {
         PowerMockito.whenNew(InputStreamReader.class).withArguments(directoryInputStream).thenReturn(inputStreamReader);
         PowerMockito.whenNew(BufferedReader.class).withArguments(inputStreamReader).thenReturn(bufferedReader);
 
-        Mockito.when(bufferedReader.readLine()).thenReturn("directory").thenReturn("file1.properties").thenReturn("fle2.properties").thenReturn("file3.txt").thenReturn(null);
+        Mockito.when(bufferedReader.readLine()).thenReturn("directory").thenReturn("file1.properties").thenReturn("file2.properties").thenReturn("file3.txt").thenReturn(null);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "directory").thenReturn(embeddedDirectory);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file1.properties").thenReturn(embeddedFile1);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file2.properties").thenReturn(embeddedFile2);
@@ -248,12 +248,11 @@ public final class RequestConfigLoaderTest {
         inOrder.verify(logger).info("Try to load request configurations from the embedded file file1.properties.");
         inOrder.verify(properties1).load(inputStream1);
         inOrder.verify(logger).info("The request configurations has been successfully loaded from the embedded file file1.properties.");
-        inOrder.verify(logger).info("The request location file file1.properties has been copied to paifa/afla/afammkk.properties");
+        inOrder.verify(logger).info("The request location file file1.properties has been copied to paifa/afla/afammkk.properties.");
 
         inOrder.verify(logger).info("Try to load request configurations from the embedded file file2.properties.");
         inOrder.verify(properties2).load(inputStream2);
         inOrder.verify(logger).info("The request configurations has been successfully loaded from the embedded file file2.properties.");
-        inOrder.verify(logger).info("The request location file file1.properties has been copied to 9laf;/fadfkdi.properties");
         inOrder.verify(logger).warn("Failed to copy the request location file file2.properties to 9laf;/fadfkdi.properties.", ex);
 
         PowerMockito.mockStatic(FileUtils.class);

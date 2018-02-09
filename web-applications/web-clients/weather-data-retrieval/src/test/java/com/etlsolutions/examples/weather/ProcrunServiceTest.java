@@ -27,13 +27,13 @@ public final class ProcrunServiceTest {
     @Before
     public void setUp() {
 
-        cachedService = Whitebox.getInternalState(service, "MET_DAEMON", MetThreadService.class);
-        Whitebox.setInternalState(MetThreadService.class, "MET_DAEMON", service);
+        cachedService = Whitebox.getInternalState(service, "MET_DAEMON", ProcrunService.class);
+        Whitebox.setInternalState(ProcrunService.class, "MET_DAEMON", service);
     }
 
     @After
     public void tearDown() throws Exception {
-        Whitebox.setInternalState(MetThreadService.class, "MET_DAEMON", cachedService);        
+        Whitebox.setInternalState(ProcrunService.class, "MET_DAEMON", cachedService);        
     }
 
     /**
