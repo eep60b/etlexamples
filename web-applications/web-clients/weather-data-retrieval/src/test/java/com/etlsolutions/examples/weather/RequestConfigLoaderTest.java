@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -172,17 +173,22 @@ public final class RequestConfigLoaderTest {
      *
      * @throws Exception if an error occurs.
      */
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void testLoad() throws Exception {
 
         Mockito.when(resourcePropertiesFiles.isFile()).thenReturn(Boolean.TRUE);
 
-        assertEquals(Arrays.asList(requestConfig1), instance.load(resourcePropertiesFilesPath, requestLocationsPath));
+        List<RequestConfig> result = instance.load(resourcePropertiesFilesPath, requestLocationsPath);
+        
+        assertEquals(Arrays.asList(requestConfig1), result);
 
         inOrder.verify(logger).info("\nTry to load request configurations from resourcePropertiesFilesPathA.");
         inOrder.verify(properties1).load(fileInputStream1);
         inOrder.verify(logger).info("The request configurations have been loaded successfully from resourcePropertiesFilesPathA.");
         inOrder.verify(logger).info("\n1 sets of request configurations have been loaded successfully.");
+        
+        //The results should not changable.
+        result.remove(0);
     }
 
     /**

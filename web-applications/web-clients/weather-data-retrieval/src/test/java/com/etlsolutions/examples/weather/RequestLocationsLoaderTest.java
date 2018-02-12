@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.commons.io.FileUtils;
@@ -388,15 +389,19 @@ public final class RequestLocationsLoaderTest {
      *
      * @throws Exception if an error occurs.
      */
-    @Test
+    @Test(expected = UnsupportedOperationException.class)
     public void testLoad() throws Exception {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
-        
-        assertEquals(Arrays.asList(requestLocation0, requestLocation1, requestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
+
+        List<RequestLocation> result = instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH);
+        assertEquals(Arrays.asList(requestLocation0, requestLocation1, requestLocation2), result);
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
         inOrder.verify(logger).info("The request locations has been successfully loaded from apbbapath.");
+
+        //The results should not changable.
+        result.remove(0);
     }
 
     /**
@@ -409,7 +414,7 @@ public final class RequestLocationsLoaderTest {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.TRUE);
-        
+
         assertEquals(Arrays.asList(defaultRequestLocation0, defaultRequestLocation1, defaultRequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
@@ -455,7 +460,7 @@ public final class RequestLocationsLoaderTest {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.FALSE);
-        
+
         assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
@@ -466,14 +471,14 @@ public final class RequestLocationsLoaderTest {
         inOrder.verify(logger).info("The request locations has been successfully loaded from the embedded locaiton.");
         inOrder.verify(logger).info("The request locations file has been copied to dddfauutltttdPathth.");
         inOrder.verify(logger).info("The request locations file has been copied to apbbapath.");
-        
+
         Mockito.verify(provider, Mockito.times(3)).getInputStream(EMBEDDED_REQUEST_LOCATIONS_FILE_PATH);
-        
+
         PowerMockito.verifyStatic();
         FileUtils.copyInputStreamToFile(embeddedInputStream, file);
-        
+
         PowerMockito.verifyStatic();
-        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);        
+        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);
     }
 
     /**
@@ -486,7 +491,7 @@ public final class RequestLocationsLoaderTest {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.FALSE);
-        
+
         assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(DEFAULT_REQUEST_LOCATIONS_FILE_PATH, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ".");
@@ -496,12 +501,12 @@ public final class RequestLocationsLoaderTest {
         inOrder.verify(logger).info("Try to load request locations from the embedded location.");
         inOrder.verify(logger).info("The request locations has been successfully loaded from the embedded locaiton.");
         inOrder.verify(logger).info("The request locations file has been copied to dddfauutltttdPathth.");
-        
+
         PowerMockito.verifyStatic(Mockito.never());
         FileUtils.copyInputStreamToFile(embeddedInputStream, file);
-        
+
         PowerMockito.verifyStatic();
-        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);         
+        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);
     }
 
     /**
@@ -514,10 +519,10 @@ public final class RequestLocationsLoaderTest {
 
         Mockito.when(file.isFile()).thenReturn(Boolean.FALSE);
         Mockito.when(defaultFile.isFile()).thenReturn(Boolean.FALSE);
- 
+
         PowerMockito.doThrow(ioe).when(FileUtils.class);
-        FileUtils.copyInputStreamToFile(embeddedInputStream, file);      
-        
+        FileUtils.copyInputStreamToFile(embeddedInputStream, file);
+
         assertEquals(Arrays.asList(embeddedrequestLocation0, embeddedrequestLocation1, embeddedrequestLocation2), instance.load(path, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH));
 
         inOrder.verify(logger).info("\nTry to load request locations from apbbapath.");
@@ -526,10 +531,10 @@ public final class RequestLocationsLoaderTest {
         inOrder.verify(logger).warn("\nThe file, " + DEFAULT_REQUEST_LOCATIONS_FILE_PATH + ", does NOT exist.");
         inOrder.verify(logger).info("Try to load request locations from the embedded location.");
         inOrder.verify(logger).info("The request locations has been successfully loaded from the embedded locaiton.");
-        inOrder.verify(logger).info("The request locations file has been copied to dddfauutltttdPathth.");        
+        inOrder.verify(logger).info("The request locations file has been copied to dddfauutltttdPathth.");
         inOrder.verify(logger).warn("Failed to copy the request locations file to apbbapath.", ioe);
-        
+
         PowerMockito.verifyStatic();
-        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);             
+        FileUtils.copyInputStreamToFile(embeddedInputStream, defaultFile);
     }
 }

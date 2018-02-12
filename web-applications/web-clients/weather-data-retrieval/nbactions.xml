@@ -22,4 +22,16 @@
                 <activatedProfile>windows-service</activatedProfile>
             </activatedProfiles>
         </action>
+        <action>
+            <actionName>CUSTOM-clean install cobertura:cobertura test-coverage</actionName>
+            <displayName>clean install cobertura:cobertura test-coverage</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+                <goal>cobertura:cobertura</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>test-coverage</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>
