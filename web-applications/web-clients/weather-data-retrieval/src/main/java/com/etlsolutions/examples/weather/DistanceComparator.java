@@ -7,7 +7,7 @@ import java.util.Comparator;
  * The DistanceComparator class compares two locations according their latitude and longitude;
  * @author zc
  */
-public class DistanceComparator implements Comparator<RequestLocation> {
+public final class DistanceComparator implements Comparator<RequestLocation> {
 
     private final double latitude;
     private final double longitude;

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,7 +25,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({DataFileWriter.class, ResponseData.class, ApplicationParameters.class, FileUtils.class, SimpleDateFormat.class})
+@PrepareForTest({DataFileWriter.class, ResponseData.class, ApplicationParameters.class, FileUtils.class, SimpleDateFormat.class, Logger.class})
 public final class DataFileWriterTest {
 
     private final ResponseData responseData1 = PowerMockito.mock(ResponseData.class);
@@ -105,10 +106,17 @@ public final class DataFileWriterTest {
     @Test
     public void testWrite_withException() throws Exception {
 
+        IOException ex = Mockito.mock(IOException.class);
         PowerMockito.mockStatic(FileUtils.class);
-        PowerMockito.doThrow(new IOException()).when(FileUtils.class);
+        PowerMockito.doThrow(ex).when(FileUtils.class);
         FileUtils.writeStringToFile(additionalFile1, "DTime,afad-afa\n12,32,1\n87,32,a1\n1256,2,f", dataEncoding, false);
         
+        Mockito.when(additionalFile1.getAbsolutePath()).thenReturn("additionalFile1.absolutepaht");
+
+        Logger logger = Mockito.mock(Logger.class);
+        PowerMockito.mockStatic(Logger.class);
+        Mockito.when(Logger.getLogger(DataFileWriter.class)).thenReturn(logger);
+
         instance.write("</DV></SiteRep>", list, file, additionalFiles, parameters, titleAdditional);
 
         PowerMockito.verifyStatic();
@@ -119,6 +127,8 @@ public final class DataFileWriterTest {
 
         PowerMockito.verifyStatic();
         FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at 01:00:00\n</DV></SiteRep>", dataEncoding, true);
+        
+        Mockito.verify(logger).warn("Failed to write the additional file: additionalFile1.absolutepaht", ex);
     }
 
 }

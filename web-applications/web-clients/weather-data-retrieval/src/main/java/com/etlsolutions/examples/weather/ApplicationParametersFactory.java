@@ -25,21 +25,27 @@ public final class ApplicationParametersFactory {
     private static final ApplicationParametersFactory INSTANCE = new ApplicationParametersFactory();
 
     private final Properties properties = new Properties();
-    
+
     private File configFile;
 
     private ApplicationParametersFactory() {
     }
 
+    /**
+     * Get the singleton instance of this class.
+     *
+     * @return the instance.
+     */
     public static final ApplicationParametersFactory getInstance() {
         return INSTANCE;
     }
 
     /**
-     * Load the 
+     * Load the
+     *
      * @param args
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public synchronized ApplicationParameters loadApplicationParameters(String[] args) throws Exception {
 

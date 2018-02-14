@@ -26,7 +26,7 @@ public enum PressureTendency implements Valuable {
     }
 
     public static PressureTendency getPressureTendencyByValue(String value) {
-        
+
         try {
             for (PressureTendency pressureTendency : values()) {
                 if (pressureTendency.value == Integer.parseInt(value)) {
@@ -40,17 +40,13 @@ public enum PressureTendency implements Valuable {
     }
 
     public static PressureTendency getPressureTendency(String name) {
-        
-        try {
-            for (PressureTendency pressureTendency : values()) {
-                if (pressureTendency.name().equalsIgnoreCase(name)) {
-                    return pressureTendency;
-                }
+
+        for (PressureTendency pressureTendency : values()) {
+            if (pressureTendency.name().equalsIgnoreCase(name)) {
+                return pressureTendency;
             }
-        } catch (Exception ex) {
-            Logger.getLogger(PressureTendency.class).warn("Unkown Pressure Tendency: " + name, ex);
         }
-        
+
         return UNKOWN;
     }
 

@@ -50,34 +50,66 @@ public final class ApplicationParameters {
         this.delimiter = delimiter;
     }
 
+    /**
+     * Get the absolute path to find the configuration file.
+     * @return the path string.
+     */
     public String getConfigFilePath() {
         return configFilePath;
     }
 
+    /**
+     * Get the absolute path of data directory.
+     * @return the path string.
+     */
     public String getDataDirectoryPath() {
         return dataDirectoryPath;
     }
 
+    /**
+     * Get the list of request configurations.
+     * @return the configuration list.
+     */
     public List<RequestConfig> getRequestConfigs() {
         return requestConfigs;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<String> getAdditionalDataDirectoryPaths() {
         return Collections.unmodifiableList(additionalDataDirectoryPaths);
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getBaseDataDirectoryPath() {
         return baseDataDirectoryPath;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDataEncoding() {
         return dataEncoding;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getDataFileExtension() {
         return dataFileExtension;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getIntervalInMinutes() {
         return intervalInMinutes;
     }
@@ -86,6 +118,10 @@ public final class ApplicationParameters {
         return datetimeFormat;
     }
 
+    /**
+     * Get the delimiter which separates the fields in the data row.
+     * @return the delimiter string.
+     */
     public String getDelimiter() {
         return delimiter;
     }

@@ -188,6 +188,6 @@ public final class SettingConstants {
     public static final String DATA_XMLFILE_NODENAME_VALUE = "value";
 
     private SettingConstants() {
-        throw new UnsupportedOperationException("This private constructor should not be initialized.\n");
+        throw new UnsupportedOperationException("This private constructor should not be initialized.");
     }
 }

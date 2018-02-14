@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.io.PrintStream;
 import java.net.ConnectException;
 import java.util.Date;
 import org.apache.log4j.Logger;
@@ -11,9 +12,11 @@ import org.apache.log4j.Logger;
  *
  * @author zc
  */
-public class MetThreadService {
+public final class MetThreadService {
 
     private final Logger logger = Logger.getLogger(MetThreadService.class);
+    private final MetServiceExceptionHandler exceptionHandler = new MetServiceExceptionHandler(logger);
+    private final PrintStream printStream = System.out;
     private Thread myThread;
     private boolean stopped;
     private final SingleProcessor singleProcessor = new SingleProcessor();
@@ -72,12 +75,11 @@ public class MetThreadService {
 
                     } catch (ConnectException ex) {
 
-                        logger.warn("Process error occured at " + currentTime + ".\nThis error is treated as recoverable error.\nThe application is not shutdown.", ex);
-                    
+                        exceptionHandler.handleWarning(ex);
+
                     } catch (Exception ex) {
-                        logger.error("Process error occured at " + currentTime + ".", ex);
-                        System.err.println("Process error occured at " + currentTime + ".\n" + ex);
-                        System.exit(-1);
+                        exceptionHandler.handleError(ex, "Process error occured");
+                        return;
                     }
                 }
             }
@@ -89,11 +91,11 @@ public class MetThreadService {
         stopped = false;
         String startMessage = new Date().toString() + ":  Start the metd service.";
         logger.info(startMessage);
-        System.out.println(startMessage);
+        printStream.println(startMessage);
         myThread.start();
         String startSuccessMessage = new Date().toString() + ":  The metd service has been successfully started.";
         logger.info(startSuccessMessage);
-        System.out.println(startSuccessMessage);
+        printStream.println(startSuccessMessage);
     }
 
     public void stop() {
@@ -102,20 +104,15 @@ public class MetThreadService {
         try {
             String stopServiceMessage = "\n\n" + new Date().toString() + ":  Stop the metd service.";
             logger.info(stopServiceMessage);
-            System.out.println(stopServiceMessage);
+            printStream.println(stopServiceMessage);
             myThread.join(delayTime);
             String stopSuccessMessage = new Date().toString() + ":  The metd service has been successfully stopped.";
             logger.info(stopSuccessMessage);
-            System.out.println(stopSuccessMessage);
+            printStream.println(stopSuccessMessage);
 
-        } catch (Exception e) {
-
-            String message = "Failed to stop the metd service.";
-            logger.error(message, e);
-            System.err.println(message);
-            System.err.println(e.getMessage());
-            System.err.println("Force to terminate the metd service.");
-            System.exit(-1);
+        } catch (Exception ex) {
+            
+            exceptionHandler.handleError(ex, "Failed to stop the metd service");
         }
     }
 
@@ -123,6 +120,6 @@ public class MetThreadService {
         myThread = null;
         String destroyMessage = "The metd service thread has been destroyed.";
         logger.info(destroyMessage);
-        System.out.println(destroyMessage);
+        printStream.println(destroyMessage);
     }
 }

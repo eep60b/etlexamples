@@ -51,6 +51,7 @@ public final class RequestConfigLoaderTest {
     private final File resourcePropertiesFile1 = Mockito.mock(File.class);
     private final File resourcePropertiesFile2 = Mockito.mock(File.class);
     private final File resourcePropertiesFile3 = Mockito.mock(File.class);
+    private final File resourcePropertiesFile4 = Mockito.mock(File.class);
     private final RequestLocation requestLocation1 = PowerMockito.mock(RequestLocation.class);
     private final RequestLocation requestLocation2 = PowerMockito.mock(RequestLocation.class);
     private final RequestLocation requestLocation3 = PowerMockito.mock(RequestLocation.class);
@@ -72,6 +73,7 @@ public final class RequestConfigLoaderTest {
     private final File embeddedFile1 = Mockito.mock(File.class);
     private final File embeddedFile2 = Mockito.mock(File.class);
     private final File embeddedFile3 = Mockito.mock(File.class);
+    private final File embeddedFile4 = Mockito.mock(File.class);
 
     private final InputStream inputStream1 = Mockito.mock(InputStream.class);
     private final InputStream inputStream2 = Mockito.mock(InputStream.class);
@@ -88,7 +90,7 @@ public final class RequestConfigLoaderTest {
 
         PowerMockito.mockStatic(RequestLocationsLoader.class);
         Mockito.when(RequestLocationsLoader.getInstance()).thenReturn(requestLocationsLoader);
-        Mockito.when(requestLocationsLoader.load(requestLocationsPath,DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(Arrays.asList(requestLocation1, requestLocation2, requestLocation3));
+        Mockito.when(requestLocationsLoader.load(requestLocationsPath, DEFAULT_REQUEST_LOCATIONS_FILE_PATH, EMBEDDED_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(Arrays.asList(requestLocation1, requestLocation2, requestLocation3));
 
         Mockito.when(requestLocation1.getId()).thenReturn("44278");
         Mockito.when(requestLocation2.getId()).thenReturn("83462");
@@ -106,6 +108,7 @@ public final class RequestConfigLoaderTest {
         Mockito.when(resourcePropertiesFile1.getName()).thenReturn("afammkk.properties");
         Mockito.when(resourcePropertiesFile2.getName()).thenReturn("fadfkdi.properties");
         Mockito.when(resourcePropertiesFile3.getName()).thenReturn("sfs.properties");
+        Mockito.when(resourcePropertiesFile4.getName()).thenReturn("sfs.propert");
         Mockito.when(resourcePropertiesFile1.getAbsolutePath()).thenReturn("paifa/afla/afammkk.properties");
         Mockito.when(resourcePropertiesFile2.getAbsolutePath()).thenReturn("9laf;/fadfkdi.properties");
         Mockito.when(resourcePropertiesFile3.getAbsolutePath()).thenReturn("kai/fkskkk//sfs.properties");
@@ -142,19 +145,20 @@ public final class RequestConfigLoaderTest {
         PowerMockito.whenNew(InputStreamReader.class).withArguments(directoryInputStream).thenReturn(inputStreamReader);
         PowerMockito.whenNew(BufferedReader.class).withArguments(inputStreamReader).thenReturn(bufferedReader);
 
-        Mockito.when(bufferedReader.readLine()).thenReturn("directory").thenReturn("file1.properties").thenReturn("file2.properties").thenReturn("file3.txt").thenReturn(null);
+        Mockito.when(bufferedReader.readLine()).thenReturn("directory").thenReturn("file1.properties").thenReturn("file2.properties").thenReturn("file3.properties").thenReturn("file3.txt").thenReturn(null);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "directory").thenReturn(embeddedDirectory);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file1.properties").thenReturn(embeddedFile1);
         PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file2.properties").thenReturn(embeddedFile2);
-        PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file3.txt").thenReturn(embeddedFile3);
+        PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file3.properties").thenReturn(embeddedFile3);
+        PowerMockito.whenNew(File.class).withArguments(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file3.txt").thenReturn(embeddedFile4);
         Mockito.when(embeddedFile1.isFile()).thenReturn(Boolean.TRUE);
         Mockito.when(embeddedFile2.isFile()).thenReturn(Boolean.TRUE);
-        Mockito.when(embeddedFile3.isFile()).thenReturn(Boolean.TRUE);
+        Mockito.when(embeddedFile3.isFile()).thenReturn(Boolean.FALSE);
+        Mockito.when(embeddedFile4.isFile()).thenReturn(Boolean.TRUE);
         Mockito.when(provider.getInputStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file1.properties")).thenReturn(inputStream1);
         Mockito.when(provider.getInputStream(EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH + "/" + "file2.properties")).thenReturn(inputStream2);
         PowerMockito.whenNew(File.class).withArguments("resourcePropertiesFilesPathA/file1.properties").thenReturn(resourcePropertiesFile1);
-        PowerMockito.whenNew(File.class).withArguments("resourcePropertiesFilesPathA/file2.properties").thenReturn(resourcePropertiesFile2);        
-        
+        PowerMockito.whenNew(File.class).withArguments("resourcePropertiesFilesPathA/file2.properties").thenReturn(resourcePropertiesFile2);
 
         PowerMockito.mockStatic(FileUtils.class);
     }
@@ -179,14 +183,14 @@ public final class RequestConfigLoaderTest {
         Mockito.when(resourcePropertiesFiles.isFile()).thenReturn(Boolean.TRUE);
 
         List<RequestConfig> result = instance.load(resourcePropertiesFilesPath, requestLocationsPath);
-        
+
         assertEquals(Arrays.asList(requestConfig1), result);
 
         inOrder.verify(logger).info("\nTry to load request configurations from resourcePropertiesFilesPathA.");
         inOrder.verify(properties1).load(fileInputStream1);
         inOrder.verify(logger).info("The request configurations have been loaded successfully from resourcePropertiesFilesPathA.");
         inOrder.verify(logger).info("\n1 sets of request configurations have been loaded successfully.");
-        
+
         //The results should not changable.
         result.remove(0);
     }
@@ -200,7 +204,7 @@ public final class RequestConfigLoaderTest {
     public void testLoad_directory() throws Exception {
 
         Mockito.when(resourcePropertiesFiles.isDirectory()).thenReturn(Boolean.TRUE);
-        Mockito.when(resourcePropertiesFiles.listFiles()).thenReturn(new File[]{resourcePropertiesFile1, resourcePropertiesFile2, resourcePropertiesFile3});
+        Mockito.when(resourcePropertiesFiles.listFiles()).thenReturn(new File[]{resourcePropertiesFile1, resourcePropertiesFile2, resourcePropertiesFile3, resourcePropertiesFile4});
 
         assertEquals(Arrays.asList(requestConfig1, requestConfig2, requestConfig3), instance.load(resourcePropertiesFilesPath, requestLocationsPath));
 
@@ -263,5 +267,18 @@ public final class RequestConfigLoaderTest {
 
         PowerMockito.mockStatic(FileUtils.class);
         FileUtils.copyInputStreamToFile(inputStream1, resourcePropertiesFile1);
+    }
+
+    /**
+     * Test of load method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testLoad_invalid_ID() throws Exception {
+
+        Mockito.when(properties1.getProperty(LOCATION_TOKEN)).thenReturn("34278");
+
+        instance.load(resourcePropertiesFilesPath, requestLocationsPath);
     }
 }

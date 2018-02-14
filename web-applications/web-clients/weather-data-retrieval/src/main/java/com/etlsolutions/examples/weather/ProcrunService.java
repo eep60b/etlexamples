@@ -12,13 +12,17 @@ public final class ProcrunService {
 
     private static final MetThreadService MET_DAEMON = new MetThreadService();
 
+    private ProcrunService() {
+        throw new UnsupportedOperationException("This private constructor should not be initialized.");        
+    }
+
     public static void start(String[] args) {
         try {
 
             MET_DAEMON.init(args);
             MET_DAEMON.start();
         } catch (Throwable th) {
-            Logger.getLogger(ProcrunService.class).error("Failed to start ProcrunService", th);
+            Logger.getLogger(ProcrunService.class).error("Failed to start ProcrunService.", th);
             System.exit(-1);
         }
     }
@@ -28,7 +32,7 @@ public final class ProcrunService {
             MET_DAEMON.stop();
             MET_DAEMON.destroy();
         } catch (Throwable th) {
-            Logger.getLogger(MetThreadService.class).error("Failed to stop ProcrunService", th);
+            Logger.getLogger(ProcrunService.class).error("Failed to stop ProcrunService.", th);
             System.exit(-1);
         }
     }

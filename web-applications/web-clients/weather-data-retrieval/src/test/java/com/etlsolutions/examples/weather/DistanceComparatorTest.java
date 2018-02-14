@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import com.etlsolutions.examples.weather.data.RequestLocation;
+import java.util.Comparator;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -10,8 +11,7 @@ import static org.junit.Assert.*;
  */
 public final class DistanceComparatorTest {
 
-    private final DistanceComparator instance = new DistanceComparator(30.0, 40.0);
-
+    private final Comparator<RequestLocation> instance = new DistanceComparator(30.0, 40.0);
     /**
      * Test of compare method.
      */

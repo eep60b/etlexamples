@@ -113,6 +113,10 @@ public final class DateTimeTest {
     public void testCompareTo() {
 
         assertEquals(dateTime.compareTo(new Date(1514462400000L)), instance.compareTo(DateTime.getInstance("   2017-12-28Z   ", "720")));
+        
+        Comparable<DateTime> comparable = DateTime.getInstance(dateTime);
+        
+        assertEquals(dateTime.compareTo(new Date(1514462400000L)), comparable.compareTo(DateTime.getInstance("   2017-12-28Z   ", "720")));        
     }
 
     /**

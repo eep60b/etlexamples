@@ -27,7 +27,6 @@ public final class DataFileReaderTest {
     private final File file = Mockito.mock(File.class);
     private final ApplicationParameters parameters = PowerMockito.mock(ApplicationParameters.class);
     private final ResponseData responseData1 = PowerMockito.mock(ResponseData.class);
-    private final ResponseData responseData2 = PowerMockito.mock(ResponseData.class);
     private final ResponseData responseData3 = PowerMockito.mock(ResponseData.class);
     private final String line1 = "agaiidal";
     private final String line2 = "8af3oaeoa";

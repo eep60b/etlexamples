@@ -14,13 +14,27 @@ This application is service program which retrieve forecast and observation data
 
 Errors and solutions:
 
-1. Error information: Windows could not start the service on Local Computer...... error code 4.
+10. Check the system log, the following error occurs when Java version is updated.
+        [2018-02-14 04:15:31] [info]  [ 4032] Commons Daemon procrun (1.1.0.0 64-bit) started
+        [2018-02-14 08:55:03] [info]  [ 9456] Commons Daemon procrun (1.1.0.0 64-bit) started
+        [2018-02-14 08:55:04] [info]  [ 9456] Running 'MetOfficeWeatherService' Service...
+        [2018-02-14 08:55:04] [info]  [ 6932] Starting service...
+        [2018-02-14 08:55:04] [error] [ 6932] Failed creating Java C:\Program Files\Java\jre1.8.0_151\bin\server\jvm.dll
+        [2018-02-14 08:55:04] [error] [ 6932] The system cannot find the path specified.
+        [2018-02-14 08:55:04] [error] [ 6932] ServiceStart returned 1
+        [2018-02-14 08:55:04] [error] [ 6932] The system cannot find the path specified.
+        [2018-02-14 08:55:04] [info]  [ 9456] Run service finished.
+        [2018-02-14 08:55:04] [info]  [ 9456] Commons Daemon procrun finished
+
+    Solution: un-install the service, check the Jaa version against the install.bat file and re-install it.
+
+20. Error information: Windows could not start the service on Local Computer...... error code 4.
    Error: 1) The jar is missing. 
 
-2. Error information: The service on Local Computer started then stopped. Some services stop automatically if they are not in use by other services or programs.
+30. Error information: The service on Local Computer started then stopped. Some services stop automatically if they are not in use by other services or programs.
    Error: All java threads are terminated.
 
-3. Windows could not start the service on Local Computer. Error 1067: The process terminated unexpectedly.
+40. Windows could not start the service on Local Computer. Error 1067: The process terminated unexpectedly.
    Error: This is usually a bug inside Java code.
    Solution:
     1) Change the start method to run:
