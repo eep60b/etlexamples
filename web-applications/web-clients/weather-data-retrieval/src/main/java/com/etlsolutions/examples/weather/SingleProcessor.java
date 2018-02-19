@@ -11,12 +11,14 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import static java.net.HttpURLConnection.*;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
@@ -35,10 +37,12 @@ public final class SingleProcessor {
      *
      * @param parameters - The specified parameters.
      * @return true if data is retrieved correctly, otherwise return false.
-     * @throws Exception if an error occurs.
+     * @throws ParserConfigurationException if the DocumentBuilder cannot be generated.
+     * @throws ParseException if the XML content cannot be parsed.
+     * @throws IOException if an IO error occurs.
      */
     @SuppressWarnings("SleepWhileInLoop")
-    public boolean process(ApplicationParameters parameters) throws Exception {
+    public boolean process(ApplicationParameters parameters) throws ParserConfigurationException, ParseException, IOException {
 
         Logger logger = Logger.getLogger(SingleProcessor.class);
 
@@ -128,10 +132,7 @@ public final class SingleProcessor {
             } catch (SAXException | IOException ex) {
 
                 logger.warn("\nFailed to parse the xml file: \n" + xmlContent, ex);
-
-                if (http != null) {
-                    logger.warn(http.getResponseMessage());
-                }
+                logger.warn(http.getResponseMessage());                
                 return false;
             }
 

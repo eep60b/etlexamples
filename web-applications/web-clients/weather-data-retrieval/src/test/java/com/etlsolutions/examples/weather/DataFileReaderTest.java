@@ -4,6 +4,8 @@ import com.etlsolutions.examples.weather.data.ResponseData;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,6 +70,75 @@ public final class DataFileReaderTest {
         Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
         assertEquals(Arrays.asList(responseData1, responseData3), instance.readData(dataBuilder, file, parameters));
         Mockito.verify(br).close();
+    }
+
+    /**
+     * Test of readData method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test(expected = ParseException.class)
+    public void testReadData_ParseException() throws Exception {
+
+        ParseException pex = Mockito.mock(ParseException.class);
+        Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
+
+        Mockito.when(dataBuilder.build(line1, parameters)).thenThrow(pex);
+
+        instance.readData(dataBuilder, file, parameters);
+        Mockito.verify(br).close();
+    }
+
+    /**
+     * Test of readData method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testReadData_NullPointerException() throws Exception {
+
+        Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
+
+        PowerMockito.whenNew(BufferedReader.class).withArguments(fileReader).thenReturn(null);
+
+        instance.readData(dataBuilder, file, parameters);
+    }
+
+    /**
+     * Test of readData method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testReadData_ReadLine_IOException() throws Exception {
+
+        IOException ioe = Mockito.mock(IOException.class);
+        Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
+
+        Mockito.when(br.readLine()).thenThrow(ioe);
+
+        try {
+            instance.readData(dataBuilder, file, parameters);
+        } catch (IOException ex) {
+            assertSame(ioe, ex);
+            Mockito.verify(br).close();
+        }
+    }
+
+    /**
+     * Test of readData method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test(expected = IOException.class)
+    public void testReadData_IOException() throws Exception {
+
+        IOException ioe = Mockito.mock(IOException.class);
+        Mockito.when(file.isFile()).thenReturn(Boolean.TRUE);
+
+        PowerMockito.whenNew(BufferedReader.class).withArguments(fileReader).thenThrow(ioe);
+
+        instance.readData(dataBuilder, file, parameters);
     }
 
     /**

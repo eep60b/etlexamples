@@ -267,6 +267,9 @@ public final class RequestConfigLoaderTest {
 
         PowerMockito.mockStatic(FileUtils.class);
         FileUtils.copyInputStreamToFile(inputStream1, resourcePropertiesFile1);
+
+        Mockito.verify(inputStreamReader).close();
+        Mockito.verify(bufferedReader).close();
     }
 
     /**
