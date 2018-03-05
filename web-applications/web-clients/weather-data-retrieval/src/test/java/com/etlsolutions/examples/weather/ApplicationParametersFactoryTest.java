@@ -101,7 +101,7 @@ public final class ApplicationParametersFactoryTest {
         Whitebox.setInternalState(instance, "properties", properties);
         Mockito.when(configFile.isFile()).thenReturn(Boolean.TRUE);
 
-        String[] args = {"-configFilePath", "configFilePath", "-dataDirectoryPath", "dataDirectoryPath", "-addtionalDataPath", "addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3",
+        String[] args = {"-configFilePath", "configFilePath", "-dataDirectoryPath", "dataDirectoryPath", "-additionalDataPath", "addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3",
             "-baseDataPath", "aaa", "-dataEncoding", "ASKII", "-dataFileEtension", ".fxt", "-intervalMinutes", "11", "-requestLocationFilePath", "requestLocationFilePath",
             "-resourcePropertiesFilePath", "resourcePropertiesFilePath", "-datetimeFormat", "mmYYYYHH/ss/dd", "-delimiter", "/"};
 
@@ -136,7 +136,7 @@ public final class ApplicationParametersFactoryTest {
         Mockito.when(defaultConfigFile.isFile()).thenReturn(Boolean.TRUE);
         
         Mockito.when(defaultProperties.getProperty("dataDirectoryPath")).thenReturn("defdataDirectoryPath");
-        Mockito.when(defaultProperties.getProperty("addtionalDataPath")).thenReturn("defaddtionalDataPath1\ndefaddtionalDataPath2,defaddtionalDataPath3");
+        Mockito.when(defaultProperties.getProperty("additionalDataPath")).thenReturn("defaddtionalDataPath1\ndefaddtionalDataPath2,defaddtionalDataPath3");
         Mockito.when(defaultProperties.getProperty("baseDataPath")).thenReturn("defaaa");
         Mockito.when(defaultProperties.getProperty("dataEncoding")).thenReturn("ASKKK");
         Mockito.when(defaultProperties.getProperty("dataFileEtension")).thenReturn(".dat");

@@ -25,18 +25,19 @@ public class ProcrunServiceIntegrationTest {
     private final Calendar calendar = Calendar.getInstance();
     private final int year = calendar.get(Calendar.YEAR);
     private final File sourceDirectory = new File("src/test/resources/metdata/" + year);
-    private final String oneDrivePath = System.getProperty("user.home") + "/OneDrive/metdata";
+    private final String oneDrivePath = System.getProperty("user.home") + "/OneDrive/metdata/metdata-windows";
     private final File resultDirectory = new File("/tmp/metdata");
+    private final String[] additionalDirectories = {"/tmp/metdata/additionalData1", "/tmp/metdata/additionalData2"};
     private final SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
     @Before
     public void setUp() throws IOException, ParseException {
-        
+
         if (resultDirectory.exists()) {
             FileUtils.deleteDirectory(resultDirectory);
             logger.info(resultDirectory + " has been cleaned.");
         } else {
-             logger.info(resultDirectory + " is clean.");           
+            logger.info(resultDirectory + " is clean.");
         }
 
         logger.info("Copy the sample files from OneDrive to " + sourceDirectory.getAbsolutePath());
@@ -77,7 +78,7 @@ public class ProcrunServiceIntegrationTest {
         FileUtils.deleteDirectory(resultDirectory);
         logger.info(resultDirectory + " has been cleaned.");
     }
-    
+
     /**
      * Test of all methods.
      *
@@ -166,7 +167,12 @@ public class ProcrunServiceIntegrationTest {
             } else {
 
                 fail("No target line mathces the source lines: " + sourceLines + "in file " + file.getName());
+            }
 
+            for (String additionalDirectory : additionalDirectories) {
+                if (!new File(additionalDirectory + File.separator + file.getName()).isFile()) {
+                    fail(file.getName() + " has NOT been written to the dditional directory: " + additionalDirectory);
+                }
             }
         }
     }

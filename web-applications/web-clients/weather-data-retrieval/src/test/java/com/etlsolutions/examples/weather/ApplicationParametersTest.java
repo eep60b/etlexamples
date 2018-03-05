@@ -28,7 +28,7 @@ public final class ApplicationParametersTest {
     private final String configFilePath = "onaofdoa";
     private final String dataDirectoryPath = "lnad99aa233";
     private final List<RequestConfig> requestConfigs = Arrays.asList(PowerMockito.mock(RequestConfig.class), PowerMockito.mock(RequestConfig.class));
-    private final String[] additionalDataDirectoryPaths = {"inlafdqla", "     ", "afafa.txt", null};
+    private final String[] additionalDataDirectoryPaths = {"inlafdqla", "     ", "  afafa.txt", null};
     private final String baseDataDirectoryPath = "bbsasdatalnad99aa233";
     private final String dataEncoding = "ASCII";
     private final String dataFileExtension = ".dat";

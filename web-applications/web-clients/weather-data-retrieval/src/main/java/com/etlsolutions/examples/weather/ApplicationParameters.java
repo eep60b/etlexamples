@@ -38,7 +38,7 @@ public final class ApplicationParameters {
 
         for (String path : additionalDataDirectoryPaths) {
             if (path != null && !path.trim().isEmpty()) {
-                this.additionalDataDirectoryPaths.add(new File(path).getAbsolutePath());
+                this.additionalDataDirectoryPaths.add(new File(path.trim()).getAbsolutePath());
             }
         }
 
@@ -52,6 +52,7 @@ public final class ApplicationParameters {
 
     /**
      * Get the absolute path to find the configuration file.
+     *
      * @return the path string.
      */
     public String getConfigFilePath() {
@@ -60,6 +61,7 @@ public final class ApplicationParameters {
 
     /**
      * Get the absolute path of data directory.
+     *
      * @return the path string.
      */
     public String getDataDirectoryPath() {
@@ -68,6 +70,7 @@ public final class ApplicationParameters {
 
     /**
      * Get the list of request configurations.
+     *
      * @return the configuration list.
      */
     public List<RequestConfig> getRequestConfigs() {
@@ -75,51 +78,60 @@ public final class ApplicationParameters {
     }
 
     /**
-     * 
-     * @return 
+     * Get the additional paths for data directories.
+     *
+     * @return the path list. This list will not be null.
      */
     public List<String> getAdditionalDataDirectoryPaths() {
         return Collections.unmodifiableList(additionalDataDirectoryPaths);
     }
 
     /**
-     * 
-     * @return 
+     * Get the path for base data directory. The base data is the previous data
+     * which can be used to add new data.
+     *
+     * @return the path for base data.
      */
     public String getBaseDataDirectoryPath() {
         return baseDataDirectoryPath;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getDataEncoding() {
         return dataEncoding;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getDataFileExtension() {
         return dataFileExtension;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getIntervalInMinutes() {
         return intervalInMinutes;
     }
 
+    /**
+     * Get the date format used for the data.
+     *
+     * @return
+     */
     public DateFormat getDatetimeFormat() {
         return datetimeFormat;
     }
 
     /**
      * Get the delimiter which separates the fields in the data row.
+     *
      * @return the delimiter string.
      */
     public String getDelimiter() {

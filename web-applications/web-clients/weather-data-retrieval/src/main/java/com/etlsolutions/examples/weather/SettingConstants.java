@@ -28,7 +28,7 @@ public final class SettingConstants {
     /**
      * The key to find the additional data directories.
      */
-    public static final String ADDITIONAL_DATA_PATH_KEY = "addtionalDataPath";
+    public static final String ADDITIONAL_DATA_PATH_KEY = "additionalDataPath";
     
     /**
      * The key to find the base data.
