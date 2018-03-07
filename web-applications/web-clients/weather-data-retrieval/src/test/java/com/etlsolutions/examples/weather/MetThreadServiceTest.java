@@ -5,6 +5,7 @@ import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.Date;
 import org.apache.log4j.Logger;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +72,7 @@ public final class MetThreadServiceTest {
     @Test
     public void testInit() throws Exception {
 
-        instance.init(args);
+        assertEquals(parameters, instance.init(args));
         inOrder.verify(logger).info("\n\nStart to load the configurations...");
         inOrder.verify(logger).info("12/12/2017 12:00:32");
         inOrder.verify(logger).info("\nConfigurations:");

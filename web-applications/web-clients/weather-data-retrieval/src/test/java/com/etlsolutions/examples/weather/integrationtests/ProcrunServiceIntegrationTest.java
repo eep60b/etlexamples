@@ -19,7 +19,7 @@ import org.junit.experimental.categories.Category;
  * @author zc
  */
 @Category(IntegrationTestMarker.class)
-public class ProcrunServiceIntegrationTest {
+public final class ProcrunServiceIntegrationTest {
 
     private final Logger logger = Logger.getLogger(ProcrunServiceIntegrationTest.class);
     private final Calendar calendar = Calendar.getInstance();
@@ -29,6 +29,7 @@ public class ProcrunServiceIntegrationTest {
     private final File resultDirectory = new File("/tmp/metdata");
     private final String[] additionalDirectories = {"/tmp/metdata/additionalData1", "/tmp/metdata/additionalData2"};
     private final SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private final String ftpsLocalTargetDirectory = "/tmp/metdata/ftps";
 
     @Before
     public void setUp() throws IOException, ParseException {
@@ -90,7 +91,8 @@ public class ProcrunServiceIntegrationTest {
         String[] args = new String[]{
             "-intervalMinutes", "1",
             "-configFilePath", "src/test/resources/props/config.properties",
-            "-baseDataPath", oneDrivePath};
+            "-baseDataPath", oneDrivePath,
+            "-ftpsLocalTargetDirectory", ftpsLocalTargetDirectory};
 
         ProcrunService.start(args);
         Thread.sleep(120000);
@@ -174,6 +176,10 @@ public class ProcrunServiceIntegrationTest {
                     fail(file.getName() + " has NOT been written to the dditional directory: " + additionalDirectory);
                 }
             }
+            
+                if (!new File(ftpsLocalTargetDirectory + File.separator + file.getName()).isFile()) {
+                    fail(file.getName() + " has NOT been copied from linux server to the dditional directory: " + ftpsLocalTargetDirectory);
+                }
         }
     }
 }

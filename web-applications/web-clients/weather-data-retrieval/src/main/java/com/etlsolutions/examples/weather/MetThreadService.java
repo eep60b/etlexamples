@@ -23,7 +23,7 @@ public final class MetThreadService {
     private int count = 1;
     private final long delayTime = 1000;
 
-    public void init(String[] args) throws Exception {
+    public ApplicationParameters init(String[] args) throws Exception {
 
         logger.info("\n\nStart to load the configurations...");
         logger.info(new Date().toString());
@@ -84,6 +84,8 @@ public final class MetThreadService {
                 }
             }
         };
+        
+        return parameters;
     }
 
     public void start() {

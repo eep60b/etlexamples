@@ -28,9 +28,15 @@ public final class ApplicationParameters {
     private final int intervalInMinutes;
     private final SimpleDateFormat datetimeFormat;
     private final String delimiter;
+    private final String ftpsServerName;
+    private final String ftpsServerUsername;
+    private final String ftpsServerPassword;
+    private final String ftpsRemoteSourceDirectory;
+    private final String ftpsLocalTargetDirecotry;
 
-    public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths, String baseDataDirectoryPath,
-            String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter) {
+    public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths,
+            String baseDataDirectoryPath, String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter,
+            String ftpsServerName, String ftpsServerUsername, String ftpsServerPassword, String ftpsRemoteSourceDirectory, String ftpsLocaTargetDirecotry) {
 
         this.configFilePath = new File(configFilePath).getAbsolutePath();
         this.dataDirectoryPath = new File(dataDirectoryPath).getAbsolutePath();
@@ -44,10 +50,15 @@ public final class ApplicationParameters {
 
         this.baseDataDirectoryPath = (baseDataDirectoryPath == null || baseDataDirectoryPath.trim().isEmpty()) ? "" : new File(baseDataDirectoryPath).getAbsolutePath();
         this.dataEncoding = dataEncoding;
-        this.dataFileExtension = dataFileExtension;
+        this.dataFileExtension = dataFileExtension.trim().toLowerCase();
         this.intervalInMinutes = RecoverableIntParser.getInstance().parseNumber(intervalInMinutes, DEFAULT_INTERVAL_MINUTES, "interval in minutes");
         this.datetimeFormat = new SimpleDateFormat(datetimeFormat);
         this.delimiter = delimiter;
+        this.ftpsServerName = ftpsServerName;
+        this.ftpsServerUsername = ftpsServerUsername;
+        this.ftpsServerPassword = ftpsServerPassword;
+        this.ftpsRemoteSourceDirectory = ftpsRemoteSourceDirectory;
+        this.ftpsLocalTargetDirecotry = new File(ftpsLocaTargetDirecotry.trim()).getAbsolutePath();
     }
 
     /**
@@ -138,6 +149,26 @@ public final class ApplicationParameters {
         return delimiter;
     }
 
+    public String getFtpsServerName() {
+        return ftpsServerName;
+    }
+
+    public String getFtpsServerUsername() {
+        return ftpsServerUsername;
+    }
+
+    public String getFtpsServerPassword() {
+        return ftpsServerPassword;
+    }
+
+    public String getFtpsRemoteSourceDirectory() {
+        return ftpsRemoteSourceDirectory;
+    }
+
+    public String getFtpsLocalTargetDirecotry() {
+        return ftpsLocalTargetDirecotry;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -198,15 +229,19 @@ public final class ApplicationParameters {
 
     @Override
     public String toString() {
-        return "Configuration file =       " + configFilePath + "\n"
-                + "Request configs =          " + requestConfigs + "\n"
-                + "Data file directory =      " + dataDirectoryPath + "\n"
-                + "Addtional data directory = " + additionalDataDirectoryPaths + "\n"
-                + "Base data directory =      " + baseDataDirectoryPath + "\n"
-                + "Data encoding  =           " + dataEncoding + "\n"
-                + "Data file extension  =     " + dataFileExtension + "\n"
-                + "Interval in minutes  =     " + intervalInMinutes + "\n"
-                + "Date time format =         " + datetimeFormat.toLocalizedPattern() + "\n"
-                + "Delimiter =                [" + delimiter + "]";
+        return "Configuration file =           " + configFilePath + "\n"
+                + "Request configs =              " + requestConfigs + "\n"
+                + "Data file directory =          " + dataDirectoryPath + "\n"
+                + "Addtional data directory =     " + additionalDataDirectoryPaths + "\n"
+                + "Base data directory =          " + baseDataDirectoryPath + "\n"
+                + "Data encoding  =               " + dataEncoding + "\n"
+                + "Data file extension  =         " + dataFileExtension + "\n"
+                + "Interval in minutes  =         " + intervalInMinutes + "\n"
+                + "Date time format =             " + datetimeFormat.toLocalizedPattern() + "\n"
+                + "Delimiter =                    [" + delimiter + "]" + "\n"
+                + "FTPS Server name =             " + ftpsServerName + "\n"
+                + "FTPS User name   =             " + ftpsServerUsername + "\n"
+                + "FTPS Remote Source Directory = " + ftpsRemoteSourceDirectory + "\n"
+                + "FTPS Local Target Direcotry =  " + ftpsLocalTargetDirecotry;
     }
 }

@@ -8,11 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 /**
  * The ApplicationParametersFactory class is a factory class which create the
@@ -41,13 +44,20 @@ public final class ApplicationParametersFactory {
     }
 
     /**
-     * Load the
+     * Load the parameters from disk.
      *
-     * @param args
-     * @return
-     * @throws Exception
+     * @param args - The command line arguments passed in from the main class.
+     * @return a newly created ApplicationParameters object which contains all
+     * the parameters.
+     * @throws org.apache.commons.cli.ParseException if the command line
+     * arguments cannot be parsed.
+     * @throws java.io.IOException if an IO error occur.
+     * @throws javax.xml.parsers.ParserConfigurationException if the property
+     * XML file cannot be parsed.
+     * @throws org.xml.sax.SAXException if the property XML file is not well
+     * formatted.
      */
-    public synchronized ApplicationParameters loadApplicationParameters(String[] args) throws Exception {
+    public synchronized ApplicationParameters loadApplicationParameters(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException {
 
         Options options = new Options();
         options.addOption(CONFIG_FILE_PATH_KEY, true, "The config file path");
@@ -61,6 +71,11 @@ public final class ApplicationParametersFactory {
         options.addOption(RESOURCE_PROPERTIES_FILE_PATH_KEY, true, "The path where the resource properties files to be loaded.");
         options.addOption(DATETIME_FORMAT_KEY, true, "The date time format.");
         options.addOption(DELIMITER_KEY, true, "The delimiter to separate the data fields.");
+        options.addOption(FTPS_SERVER_NAME_KEY, true, "The FTPS server name.");
+        options.addOption(FTPS_USERNAME_KEY, true, "The FTPS username.");
+        options.addOption(FTPS_PASSWORD_KEY, true, "The FTPS password.");
+        options.addOption(FTPS_REMOTE_SOURCE_DIRECTORY_KEY, true, "The FTPS local directory.");
+        options.addOption(FTPS_LOCAL_TARGET_DIRECTORY_KEY, true, "The FTPS local directory.");
 
         CommandLineParser parser = new PosixParser();
         CommandLine commandLine = parser.parse(options, args);
@@ -76,6 +91,11 @@ public final class ApplicationParametersFactory {
         String requestPropertiesFilePath = commandLine.getOptionValue(RESOURCE_PROPERTIES_FILE_PATH_KEY);
         String datetimeFormat = commandLine.getOptionValue(DATETIME_FORMAT_KEY);
         String delimiter = commandLine.getOptionValue(DELIMITER_KEY);
+        String ftpsServerName = commandLine.getOptionValue(FTPS_SERVER_NAME_KEY);
+        String ftpsUsername = commandLine.getOptionValue(FTPS_USERNAME_KEY);
+        String ftpsPassword = commandLine.getOptionValue(FTPS_PASSWORD_KEY);
+        String ftpsRemoteSourceDirecotry = commandLine.getOptionValue(FTPS_REMOTE_SOURCE_DIRECTORY_KEY);
+        String ftpsLocalTargetDirectory = commandLine.getOptionValue(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
 
         configFilePath = configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath;
         configFile = new File(configFilePath);
@@ -99,6 +119,11 @@ public final class ApplicationParametersFactory {
         String savedRequestPropertiesFilePath = properties.getProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY);
         String savedDatetimeFormat = properties.getProperty(DATETIME_FORMAT_KEY);
         String savedDelimiter = properties.getProperty(DELIMITER_KEY);
+        String savedFtpsServerName = properties.getProperty(FTPS_SERVER_NAME_KEY);
+        String savedFtpsUsername = properties.getProperty(FTPS_USERNAME_KEY);
+        String savedFtpsPassword = properties.getProperty(FTPS_PASSWORD_KEY);
+        String savedFtpsRemoteSourceDirectory = properties.getProperty(FTPS_REMOTE_SOURCE_DIRECTORY_KEY);
+        String savedFtpsLocalTargetDirectory = properties.getProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
 
         dataDirecotryPath = dataDirecotryPath == null ? (savedDataPath == null ? DEFAULT_DATA_DIRECTORY_PATH : savedDataPath) : dataDirecotryPath;
 
@@ -115,6 +140,12 @@ public final class ApplicationParametersFactory {
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
 
+        ftpsServerName = ftpsServerName == null ? (savedFtpsServerName == null ? DEFAULT_FTPS_SERVER_NAME : savedFtpsServerName) : ftpsServerName;
+        ftpsUsername = ftpsUsername == null ? (savedFtpsUsername == null ? DEFAULT_FTPS_USERNAME : savedFtpsUsername) : ftpsUsername;
+        ftpsPassword = ftpsPassword == null ? (savedFtpsPassword == null ? DEFAULT_FTPS_PASSWORD : savedFtpsPassword) : ftpsPassword;
+        ftpsRemoteSourceDirecotry = ftpsRemoteSourceDirecotry == null ? (savedFtpsRemoteSourceDirectory == null ? DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY : savedFtpsRemoteSourceDirectory) : ftpsRemoteSourceDirecotry;
+        ftpsLocalTargetDirectory = ftpsLocalTargetDirectory == null ? (savedFtpsLocalTargetDirectory == null ? DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY : savedFtpsLocalTargetDirectory) : ftpsLocalTargetDirectory;
+
         properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
         properties.setProperty(ADDITIONAL_DATA_PATH_KEY, additionalDataPathString);
@@ -127,8 +158,14 @@ public final class ApplicationParametersFactory {
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
 
-        ApplicationParameters a = new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
-        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter);
+        properties.setProperty(FTPS_SERVER_NAME_KEY, ftpsServerName);
+        properties.setProperty(FTPS_USERNAME_KEY, ftpsUsername);
+        properties.setProperty(FTPS_PASSWORD_KEY, ftpsPassword);
+        properties.setProperty(FTPS_REMOTE_SOURCE_DIRECTORY_KEY, ftpsRemoteSourceDirecotry);
+        properties.setProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY, ftpsLocalTargetDirectory);
+
+        return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter,
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectory);
     }
 
     public synchronized void saveParameters() throws IOException {
