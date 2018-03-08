@@ -54,7 +54,7 @@ public final class RequestLocationsLoader {
         } else {
 
             logger.warn("\nThe file, " + path + ", does NOT exist.");
-            logger.info("Try to load request locations from " +defaultPath + ".");
+            logger.info("Try to load request locations from " + defaultPath + ".");
             File defaultFile = new File(defaultPath);
 
             if (defaultFile.isFile()) {

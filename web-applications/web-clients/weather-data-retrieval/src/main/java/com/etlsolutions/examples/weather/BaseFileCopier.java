@@ -5,6 +5,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
+ * The BaseFileCopier class provides a method to make a copy of the base data
+ * files from saved location if the data files are out-of-date.
  *
  * @author zc
  */
@@ -21,30 +23,30 @@ public final class BaseFileCopier {
 
     /**
      *
+     * @param savedBaseFile
      * @param baseFile
-     * @param file
      */
-    public void copy(File baseFile, File file) {
+    public void copy(File savedBaseFile, File baseFile) {
 
         Logger logger = Logger.getLogger(BaseFileCopier.class);
         try {
-            if (baseFile.isFile()) {
+            if (savedBaseFile.isFile()) {
 
-                if (!file.isFile() || baseFile.lastModified() > file.lastModified()) {
-                    
-                    FileUtils.copyFile(baseFile, file);
-                    logger.info("The base file: " + baseFile.getAbsolutePath() + " has been copied.");
-                    
+                if (!baseFile.isFile() || savedBaseFile.lastModified() > baseFile.lastModified()) {
+
+                    FileUtils.copyFile(savedBaseFile, baseFile);
+                    logger.info("The base file: " + savedBaseFile.getAbsolutePath() + " has been copied.");
+
                 } else {
-                    logger.trace("The base file: " + baseFile.getAbsolutePath() + " has NOT been copied.");
+                    logger.trace("The base file: " + savedBaseFile.getAbsolutePath() + " has NOT been copied.");
                 }
             } else {
-                logger.trace("The base file: " + baseFile.getAbsolutePath() + " is not a valid file and is not going to be used.");
+                logger.trace("The base file: " + savedBaseFile.getAbsolutePath() + " is not a valid file and is not going to be used.");
             }
 
         } catch (Throwable th) {
-            
-            Logger.getLogger(BaseFileCopier.class).warn("\nFailed to copy the base file: " + baseFile.getAbsolutePath() + " to: " + file.getAbsolutePath() + "\nThe base file is NOT used.", th);
+
+            Logger.getLogger(BaseFileCopier.class).warn("\nFailed to copy the base file: " + savedBaseFile.getAbsolutePath() + " to: " + baseFile.getAbsolutePath() + "\nThe base file is NOT used.", th);
         }
     }
 

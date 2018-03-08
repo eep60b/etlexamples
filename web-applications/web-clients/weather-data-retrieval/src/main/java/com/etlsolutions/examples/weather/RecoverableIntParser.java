@@ -9,6 +9,9 @@ public final class RecoverableIntParser extends RecoverableNumberParser<Integer>
 
     private static final RecoverableIntParser INSTANCE = new RecoverableIntParser();
 
+    private RecoverableIntParser() {
+    }
+
     public static final RecoverableIntParser getInstance() {
         return INSTANCE;
     }

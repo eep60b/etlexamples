@@ -1,14 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.MILI_SECONDS_PER_MINUTE;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
-import java.io.File;
-import java.io.InputStream;
 import java.util.Date;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -19,7 +12,7 @@ public final class FtpsService {
 
     private final Logger logger = Logger.getLogger(FtpsService.class);
     private final long delayTime = 1000;
-    private final JSch jsch = new JSch();
+    private final FtpsFileRetriever retriever = new FtpsFileRetriever();
 
     private Thread myThread;
     private boolean stopped;
@@ -50,27 +43,7 @@ public final class FtpsService {
 
                         if (minutes >= parameters.getIntervalInMinutes()) {
 
-                            Session session = jsch.getSession(parameters.getFtpsServerUsername(), parameters.getFtpsServerName(), 22);
-                            session.setConfig("StrictHostKeyChecking", "no");
-                            session.setPassword(parameters.getFtpsServerPassword());
-                            session.connect();
-                            ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
-                            sftpChannel.connect();
-
-                            File[] files = new File(parameters.getDataDirectoryPath()).listFiles();
-                            try {
-                                for (File file : files) {
-                                    String filename = file.getName();
-                                    if (file.isFile() && filename.toLowerCase().endsWith(parameters.getDataFileExtension())) {
-
-                                        InputStream inputStream = sftpChannel.get(parameters.getFtpsRemoteSourceDirectory() + "/" + filename);
-                                        FileUtils.copyInputStreamToFile(inputStream, new File(parameters.getFtpsLocalTargetDirecotry() + File.separator + filename));
-                                    }
-                                }
-                            } finally {
-                                sftpChannel.exit();
-                                session.disconnect();
-                            }
+                            retriever.copyFiles(parameters);
                             logger.info("Data files successfully copied from the linux server.");
                             logger.info("Copied file location:            " + parameters.getFtpsLocalTargetDirecotry());
                             minutes = 0;

@@ -11,6 +11,9 @@ public final class RecoverableDoubleParser extends RecoverableNumberParser<Doubl
 
     private static final RecoverableDoubleParser INSTANCE = new RecoverableDoubleParser();
 
+    private RecoverableDoubleParser() {
+    }
+
     public static final RecoverableDoubleParser getInstance() {
         return INSTANCE;
     }

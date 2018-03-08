@@ -86,7 +86,7 @@ public final class SettingConstants {
     /**
      * 
      */
-    public static final String FTPS_REMOTE_SOURCE_DIRECTORY_KEY = "ftpsRemoteSourceDirecotry";
+    public static final String FTPS_REMOTE_SOURCE_DIRECTORY_KEY = "ftpsRemoteSourceDirectory";
     
     /**
      * 

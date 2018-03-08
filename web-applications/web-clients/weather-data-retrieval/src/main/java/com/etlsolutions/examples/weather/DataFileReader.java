@@ -21,13 +21,13 @@ public final class DataFileReader {
 
     private DataFileReader() {
     }
-    
+
     public static final DataFileReader getInstance() {
         return INSTANCE;
     }
-    
+
     @SuppressWarnings("NestedAssignment")
-    public final List<ResponseData> readData(ResponseDataBuilder dataBuilder, File file,  ApplicationParameters parameters) throws IOException, ParseException {
+    public final List<ResponseData> readData(ResponseDataBuilder dataBuilder, File file, ApplicationParameters parameters) throws IOException, ParseException {
 
         List<ResponseData> list = new ArrayList<>();
 
