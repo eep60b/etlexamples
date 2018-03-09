@@ -86,12 +86,13 @@ public final class ProcrunServiceIntegrationTest {
      * @throws Exception if an error occurs.
      */
     @Test
-    public void test() throws Exception {
+    public void testWithFtpsService() throws Exception {
 
         String[] args = new String[]{
             "-intervalMinutes", "1",
             "-configFilePath", "src/test/resources/props/config.properties",
             "-baseDataPath", oneDrivePath,
+            "-useFtpsService", "true",
             "-ftpsLocalTargetDirectory", ftpsLocalTargetDirectory};
 
         ProcrunService.start(args);
@@ -177,9 +178,115 @@ public final class ProcrunServiceIntegrationTest {
                 }
             }
             
-                if (!new File(ftpsLocalTargetDirectory + File.separator + file.getName()).isFile()) {
+                File copiedFile = new File(ftpsLocalTargetDirectory + File.separator + file.getName());
+                if (!copiedFile.isFile()) {
                     fail(file.getName() + " has NOT been copied from linux server to the dditional directory: " + ftpsLocalTargetDirectory);
+                    copiedFile.delete();
                 }
         }
     }
+    
+    /**
+     * Test of all methods.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testWithnotFtpsService() throws Exception {
+
+        String[] args = new String[]{
+            "-intervalMinutes", "1",
+            "-configFilePath", "src/test/resources/props/config.properties",
+            "-baseDataPath", oneDrivePath,
+            "-useFtpsService", "false",
+            "-ftpsLocalTargetDirectory", ftpsLocalTargetDirectory};
+
+        ProcrunService.start(args);
+        Thread.sleep(120000);
+        ProcrunService.stop(args);
+
+        File[] sourceFiles = sourceDirectory.listFiles();
+
+        for (File file : sourceFiles) {
+
+            logger.info("\nVerify the file: " + file.getName());
+            List<String> sourceLines = FileUtils.readLines(file, "ASCII");
+            List<String> targetLines = FileUtils.readLines(new File(resultDirectory + File.separator + file.getName()), "ASCII");
+
+            for (int i = 1; i < targetLines.size(); i++) {
+
+                String targetLine = targetLines.get(i);
+
+                if (targetLine.trim().isEmpty()) {
+                    continue;
+                }
+
+                String[] cells = targetLine.split(",");
+
+                try {
+
+                    if (cells.length != 11) {
+                        throw new IllegalStateException("Invalid data lline length: " + targetLine + "in file " + file.getName());
+                    }
+
+                    if (file.getName().startsWith("fcs2h")) {
+                        format.parse(cells[0]);
+                        Double.parseDouble(cells[1]);
+                        Double.parseDouble(cells[2]);
+                        Double.parseDouble(cells[3]);
+                        Double.parseDouble(cells[4]);
+                        Double.parseDouble(cells[5]);
+                        Integer.parseInt(cells[6]);
+                        Integer.parseInt(cells[7]);
+                        Integer.parseInt(cells[8]);
+                        Double.parseDouble(cells[9]);
+                        Double.parseDouble(cells[10]);
+                    }
+
+                    if (file.getName().startsWith("obs1h")) {
+                        format.parse(cells[0]);
+                        Double.parseDouble(cells[1]);
+                        Integer.parseInt(cells[2]);
+                        Double.parseDouble(cells[3]);
+                        Double.parseDouble(cells[4]);
+                        Double.parseDouble(cells[5]);
+                        Double.parseDouble(cells[6]);
+                        Integer.parseInt(cells[7]);
+                        Integer.parseInt(cells[8]);
+                        Double.parseDouble(cells[9]);
+                        Double.parseDouble(cells[10]);
+                    }
+
+                } catch (IllegalStateException | ParseException | NumberFormatException ex) {
+                    logger.error(ex);
+                    fail("Invalid line found: " + targetLine + " in file " + file.getName());
+                }
+            }
+
+            for (int i = sourceLines.size() - 1; i >= 0; i--) {
+
+                String sourceLine = sourceLines.get(i);
+                if (targetLines.remove(sourceLine)) {
+                    sourceLines.remove(sourceLine);
+                }
+            }
+
+            if (sourceLines.isEmpty()) {
+                logger.info(file.getName() + " is OK.");
+            } else {
+
+                fail("No target line mathces the source lines: " + sourceLines + "in file " + file.getName());
+            }
+
+            for (String additionalDirectory : additionalDirectories) {
+                if (!new File(additionalDirectory + File.separator + file.getName()).isFile()) {
+                    fail(file.getName() + " has NOT been written to the dditional directory: " + additionalDirectory);
+                }
+            }
+            
+                if (new File(ftpsLocalTargetDirectory + File.separator + file.getName()).isFile()) {
+                    fail(file.getName() + " should NOT has been copied from linux server to the dditional directory: " + ftpsLocalTargetDirectory);
+                }
+        }
+    }    
 }

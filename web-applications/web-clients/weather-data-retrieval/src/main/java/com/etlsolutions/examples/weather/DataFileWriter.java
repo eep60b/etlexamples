@@ -19,12 +19,16 @@ public final class DataFileWriter {
 
     private static final DataFileWriter INSTANCE = new DataFileWriter();
 
+    private final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    
     private DataFileWriter() {
     }
 
-    private final DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
-    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-
+    /**
+     * 
+     * @return 
+     */
     public static final DataFileWriter getInstance() {
         return INSTANCE;
     }
@@ -32,7 +36,7 @@ public final class DataFileWriter {
     /**
      * Write the list of data to the files using the given character encoding.
      *
-     * @param xmlContent
+     * @param xmlContent - The XML content which downloaded from met office web site.
      * @param list - The data list.
      * @param file - The main file.
      * @param additionalFiles - The additional files.
@@ -61,9 +65,6 @@ public final class DataFileWriter {
 
         Date currentTime = new Date();
 
-        File dataLogFile = new File(parameters.getDataDirectoryPath() + File.separator + "log" + File.separator + "datalog" + File.separator + dateFormat.format(currentTime) + ".log");
-        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + xmlContent, dataEncoding, true);
-
         for (File additionFile : additionalFiles) {
             try {
                 FileUtils.writeStringToFile(additionFile, content, dataEncoding, false);
@@ -72,5 +73,7 @@ public final class DataFileWriter {
             }
         }
 
+        File dataLogFile = new File(parameters.getDataDirectoryPath() + File.separator + "log" + File.separator + "datalog" + File.separator + dateFormat.format(currentTime) + ".log");
+        FileUtils.writeStringToFile(dataLogFile, "\n\nData recorded at " + timeFormat.format(currentTime) + "\n" + xmlContent, dataEncoding, true);
     }
 }

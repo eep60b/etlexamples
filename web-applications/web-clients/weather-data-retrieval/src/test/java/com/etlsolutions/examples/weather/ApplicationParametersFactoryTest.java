@@ -66,7 +66,7 @@ public final class ApplicationParametersFactoryTest {
 
         PowerMockito.whenNew(ApplicationParameters.class).withArguments("configFilePath", "dataDirectoryPath", requestConfigs,
                 new String[]{"addtionalDataPath1", "addtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", ".fxt", "11", "mmYYYYHH/ss/dd", "/",
-                "aftps/serverA", "isiiusser", "lppassppsa", "/tmp/ttmpp", "lafa\\fafad\\ff.s").thenReturn(applicationParameters);
+                true, "aftps/serverA", "isiiusser", "lppassppsa", "/tmp/ttmpp", "lafa\\fafad\\ff.s").thenReturn(applicationParameters);
 
         PowerMockito.whenNew(File.class).withArguments(DEFAULT_CONFIG_FILE_PATH).thenReturn(defaultConfigFile);
         PowerMockito.whenNew(FileInputStream.class).withArguments(defaultConfigFile).thenReturn(defaultFileInputStream);
@@ -74,12 +74,12 @@ public final class ApplicationParametersFactoryTest {
 
         PowerMockito.whenNew(ApplicationParameters.class).withArguments(DEFAULT_CONFIG_FILE_PATH, "defdataDirectoryPath", defRequestConfigs,
                 new String[]{"defaddtionalDataPath1", "defaddtionalDataPath2", "defaddtionalDataPath3"}, "defaaa", "ASKKK", ".dat", "30",
-                "mm-YYYY-HH ss/dd", "#", "mmyydefaulSev", "lkafdDdduser", "ka;fapppapap", "lflasd//dasfa", "alfkdaal//fafdasl\\df").thenReturn(defaultApplicationParameters);
+                "mm-YYYY-HH ss/dd", "#", false, "mmyydefaulSev", "lkafdDdduser", "ka;fapppapap", "lflasd//dasfa", "alfkdaal//fafdasl\\df").thenReturn(defaultApplicationParameters);
 
         Mockito.when(requestConfigLoader.load(DEFAULT_RESORUCE_PROPERTIES_FILE_PATH, DEFAULT_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(embeddedRequestConfigs);
         PowerMockito.whenNew(ApplicationParameters.class).withArguments(DEFAULT_CONFIG_FILE_PATH, DEFAULT_DATA_DIRECTORY_PATH, embeddedRequestConfigs,
                 new String[]{""}, DEFAULT_BASE_DATA_PATH, DEFAULT_DATA_ENCODING, DEFAULT_DATA_FILE_EXTENSION, DEFAULT_INTERVAL_MINUTES, DEFAULT_DATETIME_FORMAT, DEFAULT_DELIMITER,
-                DEFAULT_FTPS_SERVER_NAME, DEFAULT_FTPS_USERNAME, DEFAULT_FTPS_PASSWORD, DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY, DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY).thenReturn(embeddedApplicationParameters);
+                false, DEFAULT_FTPS_SERVER_NAME, DEFAULT_FTPS_USERNAME, DEFAULT_FTPS_PASSWORD, DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY, DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY).thenReturn(embeddedApplicationParameters);
     }
 
     /**
@@ -105,7 +105,7 @@ public final class ApplicationParametersFactoryTest {
 
         String[] args = {"-configFilePath", "configFilePath", "-dataDirectoryPath", "dataDirectoryPath", "-additionalDataPath", "addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3",
             "-baseDataPath", "aaa", "-dataEncoding", "ASKII", "-dataFileEtension", ".fxt", "-intervalMinutes", "11", "-requestLocationFilePath", "requestLocationFilePath",
-            "-resourcePropertiesFilePath", "resourcePropertiesFilePath", "-datetimeFormat", "mmYYYYHH/ss/dd", "-delimiter", "/", "-ftpsServerName", "aftps/serverA",
+            "-resourcePropertiesFilePath", "resourcePropertiesFilePath", "-datetimeFormat", "mmYYYYHH/ss/dd", "-delimiter", "/", "-useFtpsService", "  trUe  ","-ftpsServerName", "aftps/serverA",
             "-ftpsUsername", "isiiusser", "-ftpsPassword", "lppassppsa", "-ftpsRemoteSourceDirectory", "/tmp/ttmpp", "-ftpsLocalTargetDirectory", "lafa\\fafad\\ff.s"};
 
         assertEquals(applicationParameters, instance.loadApplicationParameters(args));
@@ -124,6 +124,7 @@ public final class ApplicationParametersFactoryTest {
         inOrder.verify(properties).setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, "resourcePropertiesFilePath");
         inOrder.verify(properties).setProperty(DATETIME_FORMAT_KEY, "mmYYYYHH/ss/dd");
         inOrder.verify(properties).setProperty(DELIMITER_KEY, "/");
+        inOrder.verify(properties).setProperty(USE_FTPS_SERVICE_KEY, "true");
         inOrder.verify(properties).setProperty(FTPS_SERVER_NAME_KEY, "aftps/serverA");
         inOrder.verify(properties).setProperty(FTPS_USERNAME_KEY, "isiiusser");
         inOrder.verify(properties).setProperty(FTPS_PASSWORD_KEY, "lppassppsa");
@@ -153,6 +154,7 @@ public final class ApplicationParametersFactoryTest {
         Mockito.when(defaultProperties.getProperty("resourcePropertiesFilePath")).thenReturn("defresourcePropertiesFilePath");
         Mockito.when(defaultProperties.getProperty("datetimeFormat")).thenReturn("mm-YYYY-HH ss/dd");
         Mockito.when(defaultProperties.getProperty("delimiter")).thenReturn("#");
+        Mockito.when(defaultProperties.getProperty("useFtpsService")).thenReturn("nnnn");
         Mockito.when(defaultProperties.getProperty("ftpsServerName")).thenReturn("mmyydefaulSev");
         Mockito.when(defaultProperties.getProperty("ftpsUsername")).thenReturn("lkafdDdduser");
         Mockito.when(defaultProperties.getProperty("ftpsPassword")).thenReturn("ka;fapppapap");
@@ -175,6 +177,7 @@ public final class ApplicationParametersFactoryTest {
         inOrder.verify(defaultProperties).setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, "defresourcePropertiesFilePath");
         inOrder.verify(defaultProperties).setProperty(DATETIME_FORMAT_KEY, "mm-YYYY-HH ss/dd");
         inOrder.verify(defaultProperties).setProperty(DELIMITER_KEY, "#");
+        inOrder.verify(defaultProperties).setProperty(USE_FTPS_SERVICE_KEY, "false");        
         inOrder.verify(defaultProperties).setProperty(FTPS_SERVER_NAME_KEY, "mmyydefaulSev");
         inOrder.verify(defaultProperties).setProperty(FTPS_USERNAME_KEY, "lkafdDdduser");
         inOrder.verify(defaultProperties).setProperty(FTPS_PASSWORD_KEY, "ka;fapppapap");
@@ -207,6 +210,7 @@ public final class ApplicationParametersFactoryTest {
         inOrder.verify(properties).setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, DEFAULT_RESORUCE_PROPERTIES_FILE_PATH);
         inOrder.verify(properties).setProperty(DATETIME_FORMAT_KEY, DEFAULT_DATETIME_FORMAT);
         inOrder.verify(properties).setProperty(DELIMITER_KEY, DEFAULT_DELIMITER);
+        inOrder.verify(properties).setProperty(USE_FTPS_SERVICE_KEY, "false");        
         inOrder.verify(properties).setProperty(FTPS_SERVER_NAME_KEY, DEFAULT_FTPS_SERVER_NAME);
         inOrder.verify(properties).setProperty(FTPS_USERNAME_KEY, DEFAULT_FTPS_USERNAME);
         inOrder.verify(properties).setProperty(FTPS_PASSWORD_KEY, DEFAULT_FTPS_PASSWORD);

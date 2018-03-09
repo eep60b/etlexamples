@@ -52,10 +52,13 @@ public final class SettingConstants {
     public static final String INTERVAL_MINUTES_KEY = "intervalMinutes";
 
     /**
-     *
+     * The key to find the request file location.
      */
     public static final String REQUEST_LOCATIONS_FILE_PATH_KEY = "requestLocationFilePath";
 
+    /**
+     * The key to find the resource properties file location.
+     */
     public static final String RESOURCE_PROPERTIES_FILE_PATH_KEY = "resourcePropertiesFilePath";
 
     /**
@@ -69,7 +72,12 @@ public final class SettingConstants {
     public static final String DELIMITER_KEY = "delimiter";
 
     /**
-     * 
+     * The key to find if the FTPS should be switched on.
+     */
+    public static final String USE_FTPS_SERVICE_KEY = "useFtpsService";
+    
+    /**
+     * The key to find the FTPS server name. 
      */
     public static final String FTPS_SERVER_NAME_KEY = "ftpsServerName";
     
@@ -161,12 +169,24 @@ public final class SettingConstants {
      */
     public static final String DEFAULT_REQUEST_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "request-locations.xml";
 
+    /**
+     * 
+     */
     public static final String DEFAULT_STATION_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "station-locations.xml";
 
+    /**
+     * 
+     */
     public static final String DEFAULT_RESORUCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
 
+    /**
+     * 
+     */
     public static final double DEFAULT_LATITUDE = 53.214571;
-
+    
+    /**
+     * 
+     */
     public static final double DEFAULT_LONGITUDE = -4.151543;
 
     /**

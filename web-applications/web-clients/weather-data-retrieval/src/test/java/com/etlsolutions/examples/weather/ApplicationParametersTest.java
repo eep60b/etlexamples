@@ -37,6 +37,7 @@ public final class ApplicationParametersTest {
     private final String intervalInMinutes = "   30  ";
     private final String datetimeFormat = "yyyy-MM/dd HH:mm:ss";
     private final String delimiter = "_";
+    private final boolean useFtpsService = true;
     private final String ftpsServerName = "  myFtisSer  ";
     private final String ftpsUsername = "  yyneyy  ";
     private final String ftpsPassword = "    papidaopp ";
@@ -92,7 +93,7 @@ public final class ApplicationParametersTest {
         Mockito.when(requestConfig2.toString()).thenReturn("fadurr3i12");
         
         instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath,
-                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory);
     }
 
@@ -185,10 +186,11 @@ public final class ApplicationParametersTest {
 
         assertEquals("onedrive/aaa/lnad99aa233", instance.getBaseDataDirectoryPath());
         assertEquals("", new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, "       ",
-                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).getBaseDataDirectoryPath());
-        assertEquals("", new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, null, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).getBaseDataDirectoryPath());
+        assertEquals("", new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, null, 
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, 
+                ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).getBaseDataDirectoryPath());
     }
 
     /**
@@ -198,6 +200,28 @@ public final class ApplicationParametersTest {
     public void testGetIntervalInMinutes() {
 
         assertEquals(30, instance.getIntervalInMinutes());
+    }
+    
+    /**
+     * Test of isUseFtpsService method.
+     */
+    @Test
+    public void testIsUseFtpsService() {
+
+        assertTrue(instance.isUseFtpsService());
+    }
+    
+    /**
+     * Test of isUseFtpsService method.
+     */
+    @Test
+    public void testIsUseFtpsService_False() {
+
+        instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, 
+                false, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory);
+        
+        assertFalse(instance.isUseFtpsService());
     }
 
     /**
@@ -210,19 +234,19 @@ public final class ApplicationParametersTest {
     }
 
     /**
-     * Test of getFtpsServerUsername method.
+     * Test of getFtpsUsername method.
      */
     @Test
-    public void testGetFtpsServerUsername() {
+    public void testGetFtpsUsername() {
 
         assertEquals("yyneyy", instance.getFtpsUsername());
     }
 
     /**
-     * Test of getFtpsServerPassword method.
+     * Test of getFtpsPassword method.
      */
     @Test
-    public void testGetFtpsServerPassword() {
+    public void testGetFtpsPassword() {
 
         assertEquals("papidaopp", instance.getFtpsPassword());
     }
@@ -251,28 +275,49 @@ public final class ApplicationParametersTest {
     @Test
     public void testHashCode() {
 
-        assertEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
+        assertEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, 
+                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
 
-        assertNotEquals(new ApplicationParameters("nowcFilePath", dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+        assertNotEquals(new ApplicationParameters("nowcFilePath", dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
+
+        assertNotEquals(new ApplicationParameters(configFilePath, "newdataDirePath", requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
+
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, Arrays.asList(PowerMockito.mock(RequestConfig.class)), 
+                additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter,
+                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), 
+                instance.hashCode());
+
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, new String[]{"21121", ",diiald"}, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, "newAbDataDirectoryh",
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, 
+                ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, 
+                "UTF-16", dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, "newdataDirePath", requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, 
+                dataEncoding, "abc", intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, Arrays.asList(PowerMockito.mock(RequestConfig.class)), additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath,
+                dataEncoding, dataFileExtension, "8", datetimeFormat, delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, new String[]{"21121", ",diiald"}, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, 
+                dataEncoding, dataFileExtension, intervalInMinutes, "HH:MM yyyy.mm.DD", delimiter, useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, "newAbDataDirectoryh", dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, "UTF-16", dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, "abc", intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, "8", datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, "HH:MM yyyy.mm.DD", delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
-        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, "/", ftpsServerName, ftpsUsername, ftpsPassword,
+        
+        assertNotEquals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, 
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, "/", useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword,
                 ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory).hashCode(), instance.hashCode());
     }
 
@@ -286,38 +331,48 @@ public final class ApplicationParametersTest {
         assertTrue(instance.equals(instance));
 
         assertTrue(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths,
-                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername,
-                ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters("nowcFilePath", dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters("nowcFilePath", dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, "newdataDirePath", requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, "newdataDirePath", requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, Arrays.asList(PowerMockito.mock(RequestConfig.class)), additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, Arrays.asList(PowerMockito.mock(RequestConfig.class)), 
+                additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, 
+                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, new String[]{"21121", ",diiald"}, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, new String[]{"21121", ",diiald"}, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService,
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, "newAbDataDirectoryh", dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths,
+                "newAbDataDirectoryh", dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, "UTF-16", dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, "UTF-16", dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, useFtpsService,
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, "abc", intervalInMinutes, datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, "abc", intervalInMinutes, datetimeFormat, delimiter, useFtpsService, ftpsServerName, 
+                ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, "8", datetimeFormat, delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, "8", datetimeFormat, delimiter, useFtpsService, ftpsServerName, 
+                ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, "HH:MM yyyy.mm.DD", delimiter, ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, "HH:MM yyyy.mm.DD", delimiter, useFtpsService, 
+                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
-        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, "/", ftpsServerName, ftpsUsername, ftpsPassword,
-                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
+        assertFalse(instance.equals(new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, 
+                baseDataDirectoryPath, dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, "/", useFtpsService, ftpsServerName,
+                ftpsUsername, ftpsPassword, ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory)));
 
         assertFalse(instance.equals(new Object()));
 
@@ -330,6 +385,10 @@ public final class ApplicationParametersTest {
     @Test
     public void testToString() {
 
+        instance = new ApplicationParameters(configFilePath, dataDirectoryPath, requestConfigs, additionalDataDirectoryPaths, baseDataDirectoryPath,
+                dataEncoding, dataFileExtension, intervalInMinutes, datetimeFormat, delimiter, false, ftpsServerName, ftpsUsername, ftpsPassword,
+                ftpsRemoteSourceDiretory, ftpsLocalTargetDirectory);
+        
         assertEquals(
                   "Configuration file =           /home/onaofdoa\n"
                 + "Request configs =              [reqlooakdkae1, fadurr3i12]\n"
@@ -341,9 +400,30 @@ public final class ApplicationParametersTest {
                 + "Interval in minutes  =         30\n"
                 + "Date time format =             yyyy-MM/dd HH:mm:ss\n"
                 + "Delimiter =                    [_]\n"
+                + "Use FTPS service =             false", instance.toString());
+    }
+    
+    /**
+     * Test of toString method.
+     */
+    @Test
+    public void testToString_User_FTPS_service() {
+                
+        assertEquals(
+                  "Configuration file =           /home/onaofdoa\n"
+                + "Request configs =              [reqlooakdkae1, fadurr3i12]\n"
+                + "Data file directory =          data/datadir/aaa\n"
+                + "Addtional data directory =     [/temp/aaax/inlafdql.dat, home/afafa.txt]\n"
+                + "Base data directory =          onedrive/aaa/lnad99aa233\n"
+                + "Data encoding  =               ASCII\n"
+                + "Data file extension  =         .dat\n"
+                + "Interval in minutes  =         30\n"
+                + "Date time format =             yyyy-MM/dd HH:mm:ss\n"
+                + "Delimiter =                    [_]\n"
+                + "Use FTPS service =             true\n"
                 + "FTPS Server name =             myFtisSer\n"
                 + "FTPS Username =                yyneyy\n"
                 + "FTPS Remote Source Directory = /ttppsp/tt\n"
                 + "FTPS Local Target Direcotry =  pfiaoon/fflff/ff", instance.toString());
-    }
+    }    
 }

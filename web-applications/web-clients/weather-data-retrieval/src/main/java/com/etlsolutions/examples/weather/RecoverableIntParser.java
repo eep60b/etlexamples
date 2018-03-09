@@ -12,6 +12,10 @@ public final class RecoverableIntParser extends RecoverableNumberParser<Integer>
     private RecoverableIntParser() {
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static final RecoverableIntParser getInstance() {
         return INSTANCE;
     }

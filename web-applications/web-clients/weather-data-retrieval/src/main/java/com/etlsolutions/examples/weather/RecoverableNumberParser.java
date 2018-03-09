@@ -20,6 +20,13 @@ public abstract class RecoverableNumberParser<T extends Number> {
      */
     protected abstract T parseNumber(String value);
 
+    /**
+     * 
+     * @param value
+     * @param defaultValue
+     * @param valueName
+     * @return 
+     */
     public T parseNumber(String value, String defaultValue, String valueName) {
 
         try {

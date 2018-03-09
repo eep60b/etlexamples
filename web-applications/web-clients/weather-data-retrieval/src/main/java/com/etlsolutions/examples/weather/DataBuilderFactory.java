@@ -16,7 +16,7 @@ public final class DataBuilderFactory {
     }
 
     /**
-     * Get an instance of DataBuilderFactory.
+     * Get an instance of DataBuilderFactory. This method return a singleton object.
      *
      * @return the DataBuilderFactory object.
      */

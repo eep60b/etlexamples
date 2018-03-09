@@ -14,6 +14,10 @@ public final class RecoverableLongParser extends RecoverableNumberParser<Long> {
     private RecoverableLongParser() {
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static final RecoverableLongParser getInstance() {
         return INSTANCE;
     }

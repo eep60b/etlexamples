@@ -20,7 +20,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
- *
+ * The WxobsHourlyDataBuilder class
  * @author zc
  */
 public final class WxobsHourlyDataBuilder extends ResponseDataBuilder {

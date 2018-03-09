@@ -23,6 +23,12 @@ public final class MetThreadService {
     private int count = 1;
     private final long delayTime = 1000;
 
+    /**
+     * 
+     * @param args
+     * @return
+     * @throws Exception 
+     */
     public ApplicationParameters init(String[] args) throws Exception {
 
         logger.info("\n\nStart to load the configurations...");
@@ -88,6 +94,9 @@ public final class MetThreadService {
         return parameters;
     }
 
+    /**
+     * 
+     */
     public void start() {
 
         stopped = false;
@@ -100,6 +109,9 @@ public final class MetThreadService {
         printStream.println(startSuccessMessage);
     }
 
+    /**
+     * 
+     */
     public void stop() {
 
         stopped = true;
@@ -118,6 +130,9 @@ public final class MetThreadService {
         }
     }
 
+    /**
+     * 
+     */
     public void destroy() {
         myThread = null;
         String destroyMessage = "The metd service thread has been destroyed.";

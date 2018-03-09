@@ -37,6 +37,16 @@ public final class RequestLocationsLoader {
         return INSTANCE;
     }
 
+    /**
+     * 
+     * @param path
+     * @param defaultPath
+     * @param embeddedPath
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException 
+     */
     public List<RequestLocation> load(String path, String defaultPath, String embeddedPath) throws ParserConfigurationException, SAXException, IOException {
 
         List<RequestLocation> locaitions;

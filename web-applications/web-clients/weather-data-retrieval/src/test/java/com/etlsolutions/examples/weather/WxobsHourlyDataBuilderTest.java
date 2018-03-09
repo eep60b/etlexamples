@@ -33,7 +33,7 @@ public final class WxobsHourlyDataBuilderTest {
 
     private final String line = "12/06/2017 04:00:00,1026.0,-2,10.7,11000.0,83.8,8.1,7,2250,21.0,30.0";
     @SuppressWarnings("Convert2Diamond")
-    private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "a", "", "", "1", "MM/dd/yyyy HH:mm:ss", ",", "dev", "usera", "ppa", "/ddas", "fff");
+    private final ApplicationParameters parameters = new ApplicationParameters("", "", new ArrayList<RequestConfig>(), new String[0], "a", "", "", "1", "MM/dd/yyyy HH:mm:ss", ",", true, "dev", "usera", "ppa", "/ddas", "fff");
     private final DateTime dateTime = DateTime.getInstance("2017-12-06z", "240");
     private final AbsolutePressure absolutePressure = AbsolutePressure.getInstance("1026.0");
     private final PressureTendency pressureTendency = PressureTendency.F;

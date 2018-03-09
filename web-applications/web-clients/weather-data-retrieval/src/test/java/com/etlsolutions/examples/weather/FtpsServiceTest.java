@@ -1,10 +1,7 @@
 package com.etlsolutions.examples.weather;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.Session;
-import java.io.File;
-import java.io.InputStream;
 import org.apache.log4j.Logger;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +10,7 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 /**
  * Test of class FtpsService.
@@ -54,24 +52,11 @@ public final class FtpsServiceTest {
     @Test
     public void testInit() throws Exception {
 
-        //An operation with initialization will NOT cause an NullPointerException.        
+        assertNull(Whitebox.getInternalState(instance, "myThread"));
+               
         instance.init(parameters);
-        instance.stop();
-        Mockito.verify(logger, Mockito.never()).warn(Mockito.eq("Failed to stop the FTPS service"), Mockito.any(NullPointerException.class));
-
-    }
-
-    /**
-     * Test of init method.
-     *
-     * @throws java.lang.Exception if an error occurs.
-     */
-    @Test
-    public void testInit_Not_Initialized() throws Exception {
-
-        //An operation without initialization will cause an NullPointerException.
-        instance.stop();
-        Mockito.verify(logger).warn(Mockito.eq("Failed to stop the FTPS service"), Mockito.any(NullPointerException.class));
+        
+        assertNotNull(Whitebox.getInternalState(instance, "myThread"));
     }
     
     /**

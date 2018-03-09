@@ -9,18 +9,28 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 
 /**
+ * The FtpsFileRetriever class provides a method to retrieve data files via
+ * FTPS.
  *
  * @author zc
  */
 public final class FtpsFileRetriever {
 
     private final JSch jsch = new JSch();
-    
+
+    /**
+     * Retrieve the data files via FTPS adn copy them to the location defined in
+     * the parameters object.
+     *
+     * @param parameters
+     * @throws SftpException
+     * @throws IOException
+     * @throws JSchException
+     */
     public void copyFiles(ApplicationParameters parameters) throws SftpException, IOException, JSchException {
-        
+
         Session session = jsch.getSession(parameters.getFtpsUsername(), parameters.getFtpsServerName(), 22);
         session.setConfig("StrictHostKeyChecking", "no");
         session.setPassword(parameters.getFtpsPassword());

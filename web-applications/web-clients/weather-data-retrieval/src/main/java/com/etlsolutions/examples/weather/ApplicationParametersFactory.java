@@ -71,6 +71,7 @@ public final class ApplicationParametersFactory {
         options.addOption(RESOURCE_PROPERTIES_FILE_PATH_KEY, true, "The path where the resource properties files to be loaded.");
         options.addOption(DATETIME_FORMAT_KEY, true, "The date time format.");
         options.addOption(DELIMITER_KEY, true, "The delimiter to separate the data fields.");
+        options.addOption(USE_FTPS_SERVICE_KEY, true, "The flag to indicate if we use the FTPS service.");
         options.addOption(FTPS_SERVER_NAME_KEY, true, "The FTPS server name.");
         options.addOption(FTPS_USERNAME_KEY, true, "The FTPS username.");
         options.addOption(FTPS_PASSWORD_KEY, true, "The FTPS password.");
@@ -91,6 +92,7 @@ public final class ApplicationParametersFactory {
         String requestPropertiesFilePath = commandLine.getOptionValue(RESOURCE_PROPERTIES_FILE_PATH_KEY);
         String datetimeFormat = commandLine.getOptionValue(DATETIME_FORMAT_KEY);
         String delimiter = commandLine.getOptionValue(DELIMITER_KEY);
+        String useFtpsServiceString = commandLine.getOptionValue(USE_FTPS_SERVICE_KEY);
         String ftpsServerName = commandLine.getOptionValue(FTPS_SERVER_NAME_KEY);
         String ftpsUsername = commandLine.getOptionValue(FTPS_USERNAME_KEY);
         String ftpsPassword = commandLine.getOptionValue(FTPS_PASSWORD_KEY);
@@ -119,6 +121,7 @@ public final class ApplicationParametersFactory {
         String savedRequestPropertiesFilePath = properties.getProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY);
         String savedDatetimeFormat = properties.getProperty(DATETIME_FORMAT_KEY);
         String savedDelimiter = properties.getProperty(DELIMITER_KEY);
+        String savedUseFtpsServiceString = properties.getProperty(USE_FTPS_SERVICE_KEY);
         String savedFtpsServerName = properties.getProperty(FTPS_SERVER_NAME_KEY);
         String savedFtpsUsername = properties.getProperty(FTPS_USERNAME_KEY);
         String savedFtpsPassword = properties.getProperty(FTPS_PASSWORD_KEY);
@@ -140,6 +143,7 @@ public final class ApplicationParametersFactory {
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
 
+        boolean useFtpsService = Boolean.parseBoolean(useFtpsServiceString == null ? savedUseFtpsServiceString : useFtpsServiceString.trim().toLowerCase());        
         ftpsServerName = ftpsServerName == null ? (savedFtpsServerName == null ? DEFAULT_FTPS_SERVER_NAME : savedFtpsServerName) : ftpsServerName;
         ftpsUsername = ftpsUsername == null ? (savedFtpsUsername == null ? DEFAULT_FTPS_USERNAME : savedFtpsUsername) : ftpsUsername;
         ftpsPassword = ftpsPassword == null ? (savedFtpsPassword == null ? DEFAULT_FTPS_PASSWORD : savedFtpsPassword) : ftpsPassword;
@@ -157,7 +161,8 @@ public final class ApplicationParametersFactory {
         properties.setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, requestPropertiesFilePath);
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
-
+        
+        properties.setProperty(USE_FTPS_SERVICE_KEY, String.valueOf(useFtpsService));        
         properties.setProperty(FTPS_SERVER_NAME_KEY, ftpsServerName);
         properties.setProperty(FTPS_USERNAME_KEY, ftpsUsername);
         properties.setProperty(FTPS_PASSWORD_KEY, ftpsPassword);
@@ -165,7 +170,7 @@ public final class ApplicationParametersFactory {
         properties.setProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY, ftpsLocalTargetDirectory);
 
         return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter,
-                ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectory);
+                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectory);
     }
 
     public synchronized void saveParameters() throws IOException {

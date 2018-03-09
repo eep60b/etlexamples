@@ -14,22 +14,36 @@ public final class ProcrunService {
     private static final FtpsService FTPS_SERVICE = new FtpsService();
 
     private ProcrunService() {
-        throw new UnsupportedOperationException("This private constructor should not be initialized.");        
+        throw new UnsupportedOperationException("This private constructor should not be initialized.");
     }
 
+    /**
+     * Start the service.
+     *
+     * @param args - The arguments passed from the main method.
+     */
     public static void start(String[] args) {
         try {
 
             ApplicationParameters parameters = MET_DAEMON.init(args);
             MET_DAEMON.start();
-            FTPS_SERVICE.init(parameters);
-            FTPS_SERVICE.start();
+            
+            if (parameters.isUseFtpsService()) {
+                
+                FTPS_SERVICE.init(parameters);
+                FTPS_SERVICE.start();
+            }
         } catch (Throwable th) {
             Logger.getLogger(ProcrunService.class).error("Failed to start ProcrunService.", th);
             System.exit(-1);
         }
     }
 
+    /**
+     * Strop the the service.
+     *
+     * @param args - The arguments passed from the main method.
+     */
     public static void stop(String[] args) {
         try {
             MET_DAEMON.stop();

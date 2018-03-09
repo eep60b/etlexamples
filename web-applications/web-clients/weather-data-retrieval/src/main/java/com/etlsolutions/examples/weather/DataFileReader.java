@@ -22,6 +22,10 @@ public final class DataFileReader {
     private DataFileReader() {
     }
 
+    /**
+     * 
+     * @return 
+     */
     public static final DataFileReader getInstance() {
         return INSTANCE;
     }

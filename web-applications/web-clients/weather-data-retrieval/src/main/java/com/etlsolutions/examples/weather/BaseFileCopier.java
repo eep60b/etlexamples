@@ -17,13 +17,20 @@ public final class BaseFileCopier {
     private BaseFileCopier() {
     }
 
+    /**
+     * Get an instance of this class. This method should return a singleton
+     * instance, i.e. it always return the same object.
+     *
+     * @return
+     */
     public static BaseFileCopier getInstance() {
         return INSTANCE;
     }
 
     /**
+     * Copy the saved data file as a new base file to where can be used.
      *
-     * @param savedBaseFile
+     * @param savedBaseFile - The saved base file.
      * @param baseFile
      */
     public void copy(File savedBaseFile, File baseFile) {
@@ -46,7 +53,7 @@ public final class BaseFileCopier {
 
         } catch (Throwable th) {
 
-            Logger.getLogger(BaseFileCopier.class).warn("\nFailed to copy the base file: " + savedBaseFile.getAbsolutePath() + " to: " + baseFile.getAbsolutePath() + "\nThe base file is NOT used.", th);
+            logger.warn("\nFailed to copy the base file: " + savedBaseFile.getAbsolutePath() + " to: " + baseFile.getAbsolutePath() + "\nThe base file is NOT used.", th);
         }
     }
 

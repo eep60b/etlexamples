@@ -28,6 +28,7 @@ public final class ApplicationParameters {
     private final int intervalInMinutes;
     private final SimpleDateFormat datetimeFormat;
     private final String delimiter;
+    private final boolean useFtpsService;
     private final String ftpsServerName;
     private final String ftpsUsername;
     private final String ftpsPassword;
@@ -36,7 +37,7 @@ public final class ApplicationParameters {
 
     public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths,
             String baseDataDirectoryPath, String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter,
-            String ftpsServerName, String ftpsUsername, String ftpsPassword, String ftpsRemoteSourceDirectory, String ftpsLocaTargetDirecotry) {
+            boolean useFtpsService, String ftpsServerName, String ftpsUsername, String ftpsPassword, String ftpsRemoteSourceDirectory, String ftpsLocaTargetDirecotry) {
 
         this.configFilePath = new File(configFilePath.trim()).getAbsolutePath();
         this.dataDirectoryPath = new File(dataDirectoryPath.trim()).getAbsolutePath();
@@ -54,6 +55,7 @@ public final class ApplicationParameters {
         this.intervalInMinutes = RecoverableIntParser.getInstance().parseNumber(intervalInMinutes, DEFAULT_INTERVAL_MINUTES, "interval in minutes");
         this.datetimeFormat = new SimpleDateFormat(datetimeFormat.trim());
         this.delimiter = delimiter;
+        this.useFtpsService = useFtpsService;
         this.ftpsServerName = ftpsServerName.trim();
         this.ftpsUsername = ftpsUsername.trim();
         this.ftpsPassword = ftpsPassword.trim();
@@ -152,35 +154,56 @@ public final class ApplicationParameters {
     }
 
     /**
-     * 
-     * @return 
+     * The name of the server where the data files can be downloaded via FTPS.
+     *
+     * @return the server name.
      */
     public String getFtpsServerName() {
         return ftpsServerName;
     }
 
     /**
-     * 
-     * @return 
+     * The username which can be used to retrieve via FTPS.
+     *
+     * @return the user name.
      */
     public String getFtpsUsername() {
         return ftpsUsername;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getFtpsPassword() {
         return ftpsPassword;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFtpsRemoteSourceDirectory() {
         return ftpsRemoteSourceDirectory;
     }
 
+    /**
+     * Get the location where the data files should be downloaded from the
+     * server via FTPS.
+     *
+     * @return
+     */
     public String getFtpsLocalTargetDirecotry() {
         return ftpsLocalTargetDirecotry;
+    }
+
+    /**
+     * Check if the FTPS service should be run.
+     *
+     * @return
+     */
+    public boolean isUseFtpsService() {
+        return useFtpsService;
     }
 
     @Override
@@ -243,7 +266,8 @@ public final class ApplicationParameters {
 
     @Override
     public String toString() {
-        return "Configuration file =           " + configFilePath + "\n"
+
+        String mainString = "Configuration file =           " + configFilePath + "\n"
                 + "Request configs =              " + requestConfigs + "\n"
                 + "Data file directory =          " + dataDirectoryPath + "\n"
                 + "Addtional data directory =     " + additionalDataDirectoryPaths + "\n"
@@ -253,9 +277,14 @@ public final class ApplicationParameters {
                 + "Interval in minutes  =         " + intervalInMinutes + "\n"
                 + "Date time format =             " + datetimeFormat.toLocalizedPattern() + "\n"
                 + "Delimiter =                    [" + delimiter + "]" + "\n"
+                + "Use FTPS service =             " + useFtpsService;
+
+        String useFptsString = mainString + "\n"
                 + "FTPS Server name =             " + ftpsServerName + "\n"
                 + "FTPS Username =                " + ftpsUsername + "\n"
                 + "FTPS Remote Source Directory = " + ftpsRemoteSourceDirectory + "\n"
                 + "FTPS Local Target Direcotry =  " + ftpsLocalTargetDirecotry;
+        
+        return useFtpsService ? useFptsString : mainString;
     }
 }

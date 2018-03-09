@@ -34,7 +34,7 @@ public final class FtpsService {
             @SuppressWarnings({"SleepWhileInLoop", "UseSpecificCatch"})
             public void run() {
 
-                logger.info("\nStart to copy data...");
+                logger.info("\nStart to copy data from Linux server: " + parameters.getFtpsServerName());
                 int minutes = parameters.getIntervalInMinutes();
 
                 while (!stopped) {
@@ -71,6 +71,11 @@ public final class FtpsService {
 
         stopped = true;
         try {
+            
+            if (myThread == null) {
+                return;
+            }
+
             myThread.join(delayTime);
             myThread = null;
 

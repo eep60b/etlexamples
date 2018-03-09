@@ -19,6 +19,10 @@ public final class MetServiceExceptionHandler {
         this.logger = logger;
     }
 
+    /**
+     * 
+     * @param ex 
+     */
     public void handleWarning(Exception ex) {
 
         String message = "Process error occured at " + new Date().toString() + ".\nThis error is treated as recoverable error.\nThe application is not shutdown.";
@@ -28,6 +32,11 @@ public final class MetServiceExceptionHandler {
         printStream.println(ex.getMessage());
     }
 
+    /**
+     * 
+     * @param ex
+     * @param message 
+     */
     public void handleError(Exception ex, String message) {
         
         String timedMessage = message + " at " + new Date().toString() + ".";
