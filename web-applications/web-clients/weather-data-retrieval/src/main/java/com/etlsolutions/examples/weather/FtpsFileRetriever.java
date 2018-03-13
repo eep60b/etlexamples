@@ -21,13 +21,13 @@ public final class FtpsFileRetriever {
     private final JSch jsch = new JSch();
 
     /**
-     * Retrieve the data files via FTPS adn copy them to the location defined in
+     * Retrieve the data files via FTPS and copy them to the location defined in
      * the parameters object.
      *
-     * @param parameters
-     * @throws SftpException
-     * @throws IOException
-     * @throws JSchException
+     * @param parameters - The parameters used to copy files.
+     * @throws SftpException if the data cannot be get through the SSH chanel.
+     * @throws IOException if an IO error occurs.
+     * @throws JSchException if the SSH chanel cannot be established.
      */
     public void copyFiles(ApplicationParameters parameters) throws SftpException, IOException, JSchException {
 

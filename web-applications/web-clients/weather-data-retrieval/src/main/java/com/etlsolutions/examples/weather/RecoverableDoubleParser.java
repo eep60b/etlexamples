@@ -15,8 +15,9 @@ public final class RecoverableDoubleParser extends RecoverableNumberParser<Doubl
     }
 
     /**
-     * 
-     * @return 
+     * Get an instance of this class.
+     *
+     * @return the instance.
      */
     public static final RecoverableDoubleParser getInstance() {
         return INSTANCE;

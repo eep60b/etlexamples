@@ -41,7 +41,7 @@ public final class SingleProcessor {
      * @throws ParseException if the XML content cannot be parsed.
      * @throws IOException if an IO error occurs.
      */
-    @SuppressWarnings("SleepWhileInLoop")
+    @SuppressWarnings({"SleepWhileInLoop", "null"})
     public boolean process(ApplicationParameters parameters) throws ParserConfigurationException, ParseException, IOException {
 
         Logger logger = Logger.getLogger(SingleProcessor.class);

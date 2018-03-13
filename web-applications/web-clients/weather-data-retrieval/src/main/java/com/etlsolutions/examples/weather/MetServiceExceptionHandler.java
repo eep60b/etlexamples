@@ -5,7 +5,8 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 /**
- * The MetServiceExceptionHandler class
+ * The MetServiceExceptionHandler class handle the exception generated in the
+ * MetService class.
  *
  * @author zc
  */
@@ -20,8 +21,9 @@ public final class MetServiceExceptionHandler {
     }
 
     /**
-     * 
-     * @param ex 
+     * Log or display the exception which is regarded as a warning.
+     *
+     * @param ex - The exception to be handled.
      */
     public void handleWarning(Exception ex) {
 
@@ -33,12 +35,13 @@ public final class MetServiceExceptionHandler {
     }
 
     /**
-     * 
-     * @param ex
-     * @param message 
+     * Log or display the exception which is regarded as an error.
+     *
+     * @param ex - The exception to be handled.
+     * @param message - The extra message to be logged or displayed.
      */
-    public void handleError(Exception ex, String message) {
-        
+    public void handleError(Throwable ex, String message) {
+
         String timedMessage = message + " at " + new Date().toString() + ".";
         logger.error(timedMessage, ex);
         printStream.println(timedMessage);

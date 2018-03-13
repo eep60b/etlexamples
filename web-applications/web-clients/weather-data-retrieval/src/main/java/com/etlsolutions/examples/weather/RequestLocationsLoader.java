@@ -38,14 +38,16 @@ public final class RequestLocationsLoader {
     }
 
     /**
-     * 
-     * @param path
+     * Load location configuration. If the path is invalid, use the default
+     * path. If the default path is invalid, use the embedded path.
+     *
+     * @param path - The path of an XML file which contains the information of request location.
      * @param defaultPath
      * @param embeddedPath
      * @return
      * @throws ParserConfigurationException
      * @throws SAXException
-     * @throws IOException 
+     * @throws IOException
      */
     public List<RequestLocation> load(String path, String defaultPath, String embeddedPath) throws ParserConfigurationException, SAXException, IOException {
 

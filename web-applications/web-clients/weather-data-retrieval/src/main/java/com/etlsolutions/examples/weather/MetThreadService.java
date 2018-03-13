@@ -1,10 +1,14 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ConnectException;
 import java.util.Date;
+import javax.xml.parsers.ParserConfigurationException;
+import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 /**
  * The MetThreadService class is a JVSC daemon which can be run as a linux
@@ -21,15 +25,22 @@ public final class MetThreadService {
     private boolean stopped;
     private final SingleProcessor singleProcessor = new SingleProcessor();
     private int count = 1;
-    private final long delayTime = 1000;
 
     /**
-     * 
-     * @param args
-     * @return
-     * @throws Exception 
+     * Initialise this service so it can be used.
+     *
+     * @param args - The command line arguments passed in from the main class.
+     * @return a newly created ApplicationParameters object which contains all
+     * the parameters.
+     * @throws org.apache.commons.cli.ParseException if the command line
+     * arguments cannot be parsed.
+     * @throws java.io.IOException if an IO error occur.
+     * @throws javax.xml.parsers.ParserConfigurationException if the property
+     * XML file cannot be parsed.
+     * @throws org.xml.sax.SAXException if the property XML file is not well
+     * formatted.
      */
-    public ApplicationParameters init(String[] args) throws Exception {
+    public ApplicationParameters init(String[] args) throws ParseException, IOException, ParserConfigurationException, SAXException  {
 
         logger.info("\n\nStart to load the configurations...");
         logger.info(new Date().toString());
@@ -47,7 +58,7 @@ public final class MetThreadService {
             }
 
             @Override
-            @SuppressWarnings("SleepWhileInLoop")
+            @SuppressWarnings({"SleepWhileInLoop"})
             public void run() {
 
                 logger.info("\nStart to retrieve data...");
@@ -76,26 +87,26 @@ public final class MetThreadService {
 
                         } else {
                             minutes++;
-                            Thread.sleep(MILI_SECONDS_PER_MINUTE);
+                            Thread.sleep(THREAD_SLEEP_TIME);
                         }
 
                     } catch (ConnectException ex) {
 
                         exceptionHandler.handleWarning(ex);
 
-                    } catch (Exception ex) {
+                    } catch (ParserConfigurationException | java.text.ParseException | IOException | InterruptedException | RuntimeException | Error ex) {
                         exceptionHandler.handleError(ex, "Process error occured");
                         return;
                     }
                 }
             }
         };
-        
+
         return parameters;
     }
 
     /**
-     * 
+     * Start this service.
      */
     public void start() {
 
@@ -110,7 +121,7 @@ public final class MetThreadService {
     }
 
     /**
-     * 
+     * Stop this service.
      */
     public void stop() {
 
@@ -119,19 +130,19 @@ public final class MetThreadService {
             String stopServiceMessage = "\n\n" + new Date().toString() + ":  Stop the metd service.";
             logger.info(stopServiceMessage);
             printStream.println(stopServiceMessage);
-            myThread.join(delayTime);
+            myThread.join(THREAD_JOIN_DELAY_TIME);
             String stopSuccessMessage = new Date().toString() + ":  The metd service has been successfully stopped.";
             logger.info(stopSuccessMessage);
             printStream.println(stopSuccessMessage);
 
         } catch (Exception ex) {
-            
+
             exceptionHandler.handleError(ex, "Failed to stop the metd service");
         }
     }
 
     /**
-     * 
+     * Destroy this resources used by this service.
      */
     public void destroy() {
         myThread = null;

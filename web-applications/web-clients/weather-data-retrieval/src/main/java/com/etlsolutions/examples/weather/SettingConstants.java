@@ -75,34 +75,32 @@ public final class SettingConstants {
      * The key to find if the FTPS should be switched on.
      */
     public static final String USE_FTPS_SERVICE_KEY = "useFtpsService";
-    
+
     /**
-     * The key to find the FTPS server name. 
+     * The key to find the FTPS server name.
      */
     public static final String FTPS_SERVER_NAME_KEY = "ftpsServerName";
-    
+
     /**
-     * 
+     *
      */
     public static final String FTPS_USERNAME_KEY = "ftpsUsername";
-    
+
     /**
-     * 
+     *
      */
     public static final String FTPS_PASSWORD_KEY = "ftpsPassword";
-    
+
     /**
-     * 
+     *
      */
     public static final String FTPS_REMOTE_SOURCE_DIRECTORY_KEY = "ftpsRemoteSourceDirectory";
-    
+
     /**
-     * 
+     *
      */
     public static final String FTPS_LOCAL_TARGET_DIRECTORY_KEY = "ftpsLocalTargetDirectory";
 
-    
-    
     public static final String REQUEST_METHOD_TOKEN = "requestMethodToken";
 
     public static final String LOCATION_TOKEN = "locationID";
@@ -154,6 +152,9 @@ public final class SettingConstants {
      */
     public static final String DEFAULT_DELIMITER = ",";
 
+    /**
+     * The default data encoding is ASCII.
+     */
     public static final String DEFAULT_DATA_ENCODING = "ASCII";
 
     public static final String DEFAULT_DATA_FILE_EXTENSION = ".dat";
@@ -170,50 +171,51 @@ public final class SettingConstants {
     public static final String DEFAULT_REQUEST_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "request-locations.xml";
 
     /**
-     * 
+     * The default path to the XML file which stores weather observation station
+     * locations.
      */
     public static final String DEFAULT_STATION_LOCATIONS_FILE_PATH = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "locations" + File.separator + "station-locations.xml";
 
     /**
-     * 
+     *
      */
     public static final String DEFAULT_RESORUCE_PROPERTIES_FILE_PATH = APPLICATION_HOME + File.separator + "props/resources";
 
     /**
-     * 
+     * The default latitude is the latitude of our home.
      */
     public static final double DEFAULT_LATITUDE = 53.214571;
-    
+
     /**
-     * 
+     * The default latitude is the longitude of our home.
      */
     public static final double DEFAULT_LONGITUDE = -4.151543;
 
     /**
-     * 
+     *
      */
     public static final String DEFAULT_FTPS_SERVER_NAME = "dev.etlsolutions.com";
-    
+
     /**
-     * 
+     *
      */
     public static final String DEFAULT_FTPS_USERNAME = "zc";
-    
+
     /**
-     * 
+     *
      */
     public static final String DEFAULT_FTPS_PASSWORD = "huan0418";
-    
+
     /**
-     * 
+     *
      */
     public static final String DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY = "/tmp/metdata";
-    
+
     /**
-     * 
+     *
      */
-    public static final String DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "metdata-linux";    
-    
+    public static final String DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY = DEFAULT_DATA_DIRECTORY_PATH + File.separator + "metdata-linux";
+
     /**
      * The URL base which used to retrieve data after the tokens substitute by
      * the valid values.
@@ -225,12 +227,24 @@ public final class SettingConstants {
      */
     public static final String URL_BASE = "http://datapoint.metoffice.gov.uk/public/data/val/requestMethodToken/all/xml/locationID?res=requestIntervalToken&key=requestToken";
 
+    /**
+     *
+     */
     public static final String RESOURCES_PROPERTIES_FILE_EXTENSION = ".properties";
 
+    /**
+     *
+     */
     public static final String EMBEDDED_REQUEST_LOCATIONS_FILE_PATH = "/metdata/locations/request-locations.xml";
 
+    /**
+     *
+     */
     public static final String EMBEDDED_STATION_LOCATIONS_FILE_PATH = "/metdata/locations/station-locations.xml";
 
+    /**
+     *
+     */
     public static final String EMBEDDED_REQUEST_CONFIG_DIRECTORY_PATH = "/props/resources";
 
     /**
@@ -240,9 +254,15 @@ public final class SettingConstants {
     public static final int MAXIMUM_LOCATION_ID_LENGTH = 6;
 
     /**
-     * This constant is used to convert between miliseconds and minutes.
+     * The time which a thread to be put into sleep.
      */
-    public static final long MILI_SECONDS_PER_MINUTE = 60 * 1000;
+    public static final long THREAD_SLEEP_TIME = 60000L;
+    
+    
+    /**
+     * The dealy time which FTPS service used to start.
+     */
+    public static final long FTPS_START_DELAY_TIME = 10000L;
 
     /**
      * The encoding of the web site.
@@ -254,14 +274,36 @@ public final class SettingConstants {
      */
     public static final String DATA_FILENAME_SEPARATOR = "-";
 
+    /**
+     *
+     */
     public static final String DATA_XMLFILE_NODENAME_SITE_REP = "SiteRep";
 
+    /**
+     *
+     */
     public static final String DATA_XMLFILE_NODENAME_DV = "DV";
 
+    /**
+     *
+     */
     public static final String DATA_XMLFILE_NODENAME_LOCATION = "Location";
 
+    /**
+     *
+     */
     public static final String DATA_XMLFILE_NODENAME_VALUE = "value";
 
+    /**
+     * The delay time which a thread to be join the main thread.
+     */
+    public static final long THREAD_JOIN_DELAY_TIME = 1000L;
+
+    /**
+     * The private constructor shouldn't be called at any time.
+     *
+     * @throws UnsupportedOperationException if this is called.
+     */
     private SettingConstants() {
         throw new UnsupportedOperationException("This private constructor should not be initialized.");
     }

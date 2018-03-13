@@ -1,26 +1,30 @@
 package com.etlsolutions.examples.weather;
 
-import static com.etlsolutions.examples.weather.SettingConstants.MILI_SECONDS_PER_MINUTE;
-import java.util.Date;
+import static com.etlsolutions.examples.weather.SettingConstants.*;
 import org.apache.log4j.Logger;
 
 /**
+ * The FtpsService class provides methods to fulfil a service to download data
+ * files from a FTPS server.
  *
  * @author zc
  */
 public final class FtpsService {
 
     private final Logger logger = Logger.getLogger(FtpsService.class);
-    private final long delayTime = 1000;
     private final FtpsFileRetriever retriever = new FtpsFileRetriever();
 
     private Thread myThread;
     private boolean stopped;
 
+    /**
+     *
+     * @param parameters
+     * @throws Exception
+     */
     public void init(ApplicationParameters parameters) throws Exception {
 
         logger.info("\n\nStart to use FTPS to copy data from the linux server " + parameters.getFtpsServerName());
-        logger.info(new Date().toString());
 
         myThread = new Thread() {
 
@@ -50,7 +54,7 @@ public final class FtpsService {
 
                         } else {
                             minutes++;
-                            Thread.sleep(MILI_SECONDS_PER_MINUTE);
+                            Thread.sleep(THREAD_SLEEP_TIME);
                         }
 
                     } catch (Exception ex) {
@@ -61,27 +65,37 @@ public final class FtpsService {
         };
     }
 
+    /**
+     * Start this service.
+     */
     public void start() {
-
-        stopped = false;
-        myThread.start();
+        try {
+            Thread.sleep(FTPS_START_DELAY_TIME);
+            stopped = false;
+            myThread.start();
+        } catch (InterruptedException ex) {
+            logger.warn("Failed to set the delay start time for the FTPS service", ex);
+        } catch (Throwable th) {
+            logger.warn("Failed to start the FTPS service.", th);
+        }
     }
 
     public void stop() {
 
         stopped = true;
         try {
-            
+
             if (myThread == null) {
                 return;
             }
 
-            myThread.join(delayTime);
-            myThread = null;
+            myThread.join(THREAD_JOIN_DELAY_TIME);
 
         } catch (Exception ex) {
 
             logger.warn("Failed to stop the FTPS service", ex);
+        } finally {
+            myThread = null;
         }
     }
 }

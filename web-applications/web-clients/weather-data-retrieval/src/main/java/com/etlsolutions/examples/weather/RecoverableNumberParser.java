@@ -21,11 +21,16 @@ public abstract class RecoverableNumberParser<T extends Number> {
     protected abstract T parseNumber(String value);
 
     /**
-     * 
-     * @param value
-     * @param defaultValue
-     * @param valueName
-     * @return 
+     * Parse the string into a number. If the string cannot be parsed into a
+     * number, use the default value string.
+     *
+     * @param value - The string to be parsed.
+     * @param defaultValue - The string for the default value. This string must
+     * be valid, otherwise a NumberFormatException will be thrown.
+     * @param valueName - The parameter name.
+     * @return the parsed value.
+     * @throws NumberFormatException exception ONLY when both the given value
+     * and the default value cannot be parsed.
      */
     public T parseNumber(String value, String defaultValue, String valueName) {
 

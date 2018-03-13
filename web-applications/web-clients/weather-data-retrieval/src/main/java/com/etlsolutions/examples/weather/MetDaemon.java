@@ -9,7 +9,7 @@ import org.apache.commons.daemon.DaemonContext;
  *
  * @author zc
  */
-public class MetDaemon implements Daemon {
+public final class MetDaemon implements Daemon {
 
     static {
         System.setProperty(APPLICATION_USERHOME_KEY, DEFAULT_APPLICATION_LOGHOME);
