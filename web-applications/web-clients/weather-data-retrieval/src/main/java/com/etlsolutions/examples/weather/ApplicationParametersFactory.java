@@ -143,7 +143,7 @@ public final class ApplicationParametersFactory {
         datetimeFormat = datetimeFormat == null ? (savedDatetimeFormat == null ? DEFAULT_DATETIME_FORMAT : savedDatetimeFormat) : datetimeFormat;
         delimiter = delimiter == null ? (savedDelimiter == null ? DEFAULT_DELIMITER : savedDelimiter) : delimiter;
 
-        boolean useFtpsService = Boolean.parseBoolean(useFtpsServiceString == null ? savedUseFtpsServiceString : useFtpsServiceString.trim().toLowerCase());        
+        boolean useFtpsService = Boolean.parseBoolean(useFtpsServiceString == null ? savedUseFtpsServiceString : useFtpsServiceString.trim().toLowerCase());
         ftpsServerName = ftpsServerName == null ? (savedFtpsServerName == null ? DEFAULT_FTPS_SERVER_NAME : savedFtpsServerName) : ftpsServerName;
         ftpsUsername = ftpsUsername == null ? (savedFtpsUsername == null ? DEFAULT_FTPS_USERNAME : savedFtpsUsername) : ftpsUsername;
         ftpsPassword = ftpsPassword == null ? (savedFtpsPassword == null ? DEFAULT_FTPS_PASSWORD : savedFtpsPassword) : ftpsPassword;
@@ -161,8 +161,8 @@ public final class ApplicationParametersFactory {
         properties.setProperty(RESOURCE_PROPERTIES_FILE_PATH_KEY, requestPropertiesFilePath);
         properties.setProperty(DATETIME_FORMAT_KEY, datetimeFormat);
         properties.setProperty(DELIMITER_KEY, delimiter);
-        
-        properties.setProperty(USE_FTPS_SERVICE_KEY, String.valueOf(useFtpsService));        
+
+        properties.setProperty(USE_FTPS_SERVICE_KEY, String.valueOf(useFtpsService));
         properties.setProperty(FTPS_SERVER_NAME_KEY, ftpsServerName);
         properties.setProperty(FTPS_USERNAME_KEY, ftpsUsername);
         properties.setProperty(FTPS_PASSWORD_KEY, ftpsPassword);
@@ -173,6 +173,11 @@ public final class ApplicationParametersFactory {
                 useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectory);
     }
 
+    /**
+     * Save the parameters to the local disk.
+     *
+     * @throws IOException if an IO error occurs.
+     */
     public synchronized void saveParameters() throws IOException {
 
         if (configFile == null) {

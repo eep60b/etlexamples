@@ -1,7 +1,7 @@
 package com.etlsolutions.examples.weather.data;
 
 /**
- *
+ * The PredictedVisibility enum represents the predicted visibility.
  * @author zc
  */
 public enum PredictedVisibility implements Valuable {

@@ -23,13 +23,24 @@ public final class DataFileReader {
     }
 
     /**
-     * 
-     * @return 
+     * Get an instance of this class.
+     *
+     * @return the DataFileReader object.
      */
     public static final DataFileReader getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Read data from a base file.
+     *
+     * @param dataBuilder
+     * @param file
+     * @param parameters
+     * @return
+     * @throws IOException
+     * @throws ParseException
+     */
     @SuppressWarnings("NestedAssignment")
     public final List<ResponseData> readData(ResponseDataBuilder dataBuilder, File file, ApplicationParameters parameters) throws IOException, ParseException {
 

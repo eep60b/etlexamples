@@ -21,7 +21,7 @@ public final class BaseFileCopier {
      * Get an instance of this class. This method should return a singleton
      * instance, i.e. it always return the same object.
      *
-     * @return
+     * @return the BaseFileCopier instance.
      */
     public static BaseFileCopier getInstance() {
         return INSTANCE;
@@ -31,7 +31,7 @@ public final class BaseFileCopier {
      * Copy the saved data file as a new base file to where can be used.
      *
      * @param savedBaseFile - The saved base file.
-     * @param baseFile
+     * @param baseFile - The base file which will be used.
      */
     public void copy(File savedBaseFile, File baseFile) {
 

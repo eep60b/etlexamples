@@ -35,6 +35,26 @@ public final class ApplicationParameters {
     private final String ftpsRemoteSourceDirectory;
     private final String ftpsLocalTargetDirecotry;
 
+    /**
+     * Construct an object.
+     *
+     * @param configFilePath - The path to find the configuration file.
+     * @param dataDirectoryPath = The path to the data directory.
+     * @param requestConfigs - The request configurations.
+     * @param additionalDataDirectoryPaths -
+     * @param baseDataDirectoryPath
+     * @param dataEncoding
+     * @param dataFileExtension
+     * @param intervalInMinutes
+     * @param datetimeFormat
+     * @param delimiter
+     * @param useFtpsService
+     * @param ftpsServerName
+     * @param ftpsUsername
+     * @param ftpsPassword
+     * @param ftpsRemoteSourceDirectory
+     * @param ftpsLocaTargetDirecotry
+     */
     public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths,
             String baseDataDirectoryPath, String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter,
             boolean useFtpsService, String ftpsServerName, String ftpsUsername, String ftpsPassword, String ftpsRemoteSourceDirectory, String ftpsLocaTargetDirecotry) {
@@ -128,8 +148,9 @@ public final class ApplicationParameters {
     }
 
     /**
+     * Get the interval time to retrieve the data (in minutes).
      *
-     * @return
+     * @return the interval time
      */
     public int getIntervalInMinutes() {
         return intervalInMinutes;
@@ -138,7 +159,7 @@ public final class ApplicationParameters {
     /**
      * Get the date format used for the data.
      *
-     * @return
+     * @return the date format.
      */
     public DateFormat getDatetimeFormat() {
         return datetimeFormat;
@@ -172,7 +193,7 @@ public final class ApplicationParameters {
     }
 
     /**
-     *
+     * Get the password for the user in the FTP server.
      * @return
      */
     public String getFtpsPassword() {
@@ -284,7 +305,7 @@ public final class ApplicationParameters {
                 + "FTPS Username =                " + ftpsUsername + "\n"
                 + "FTPS Remote Source Directory = " + ftpsRemoteSourceDirectory + "\n"
                 + "FTPS Local Target Direcotry =  " + ftpsLocalTargetDirecotry;
-        
+
         return useFtpsService ? useFptsString : mainString;
     }
 }

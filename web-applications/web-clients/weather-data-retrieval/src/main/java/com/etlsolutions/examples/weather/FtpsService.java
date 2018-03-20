@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -58,6 +59,16 @@ public final class FtpsService {
                         }
 
                     } catch (Exception ex) {
+
+                        //If an error occurs, try again after a while unless the thread cannot be put into sleep.
+                        try {
+
+                            Thread.sleep(THREAD_SLEEP_TIME);
+
+                        } catch (InterruptedException iex) {
+                            stopped = true;
+                            logger.warn("Failed to put the thread into sleap.", iex);
+                        }
                         logger.warn("Failed to copy data from the server " + parameters.getFtpsServerName(), ex);
                     }
                 }

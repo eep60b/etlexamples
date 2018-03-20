@@ -36,8 +36,14 @@ public final class DateTime implements Comparable<DateTime> {
         calendar.set(Calendar.MILLISECOND, 0);
     }
 
+    /**
+     * Get an instance of this class.
+     *
+     * @param dateTime
+     * @return
+     */
     public static DateTime getInstance(Date dateTime) {
-        
+
         try {
             return new DateTime(dateTime);
         } catch (Exception ex) {
@@ -46,6 +52,13 @@ public final class DateTime implements Comparable<DateTime> {
         }
     }
 
+    /**
+     * Get an instance of this class.
+     *
+     * @param date
+     * @param time
+     * @return
+     */
     public static DateTime getInstance(String date, String time) {
 
         try {
@@ -57,14 +70,26 @@ public final class DateTime implements Comparable<DateTime> {
         }
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Date getDateTime() {
         return calendar.getTime();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getYear() {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getShortName() {
         return "DTime";
     }
