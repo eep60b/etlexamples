@@ -2,6 +2,7 @@ package com.etlsolutions.examples.weather;
 
 import java.io.PrintStream;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Date;
 import org.apache.log4j.Logger;
@@ -115,9 +116,32 @@ public final class MetThreadServiceTest {
      * @throws Exception if an error occurs.
      */
     @Test
-    public void testStart_connection_exception() throws Exception {
+    public void testStart_ConnectionException() throws Exception {
 
         ConnectException ex = Mockito.mock(ConnectException.class);
+        Mockito.when(singleProcessor.process(parameters)).thenThrow(ex);
+
+        instance.init(args);
+        instance.start();
+        Thread.sleep(1000);
+        
+        inOrder.verify(logger).info("\n\nStart to load the configurations...");
+        inOrder.verify(logger).info("12/12/2017 12:00:32");
+        inOrder.verify(logger).info("\nConfigurations:");
+        inOrder.verify(logger).info("myparas.\n");
+        inOrder.verify(logger).info("12/12/2017 12:00:32:  Start the metd service.");
+        inOrder.verify(handler).handleWarning(ex);
+    }
+    
+    /**
+     * Test of start method.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testStart_UnknownHostException() throws Exception {
+
+        UnknownHostException ex = Mockito.mock(UnknownHostException.class);
         Mockito.when(singleProcessor.process(parameters)).thenThrow(ex);
 
         instance.init(args);

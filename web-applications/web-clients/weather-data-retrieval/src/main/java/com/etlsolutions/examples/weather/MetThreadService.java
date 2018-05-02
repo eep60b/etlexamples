@@ -4,6 +4,7 @@ import static com.etlsolutions.examples.weather.SettingConstants.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Date;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.cli.ParseException;
@@ -90,7 +91,7 @@ public final class MetThreadService {
                             Thread.sleep(THREAD_SLEEP_TIME);
                         }
 
-                    } catch (ConnectException ex) {
+                    } catch (ConnectException | UnknownHostException ex) {
 
                         exceptionHandler.handleWarning(ex);
 

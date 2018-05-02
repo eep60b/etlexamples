@@ -23,7 +23,7 @@ public final class FtpsService {
      * @param parameters
      * @throws Exception
      */
-    public void init(ApplicationParameters parameters) throws Exception {
+    public void init(final ApplicationParameters parameters) throws Exception {
 
         logger.info("\n\nStart to use FTPS to copy data from the linux server " + parameters.getFtpsServerName());
 

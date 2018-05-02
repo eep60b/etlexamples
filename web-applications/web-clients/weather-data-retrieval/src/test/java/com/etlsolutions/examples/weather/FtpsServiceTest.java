@@ -96,7 +96,7 @@ public final class FtpsServiceTest {
 
         Mockito.verify(thread).join(THREAD_JOIN_DELAY_TIME);
         assertNull(Whitebox.getInternalState(instance, "myThread"));
-        assertTrue(Whitebox.getInternalState(instance, "stopped"));
+        assertTrue((Boolean)Whitebox.getInternalState(instance, "stopped"));
     }
 
     /**
@@ -109,7 +109,7 @@ public final class FtpsServiceTest {
 
         instance.stop();
 
-        assertTrue(Whitebox.getInternalState(instance, "stopped"));
+        assertTrue((Boolean)Whitebox.getInternalState(instance, "stopped"));
     }
 
     /**
@@ -128,7 +128,7 @@ public final class FtpsServiceTest {
         instance.stop();
 
         assertNull(Whitebox.getInternalState(instance, "myThread"));
-        assertTrue(Whitebox.getInternalState(instance, "stopped"));
+        assertTrue((Boolean)Whitebox.getInternalState(instance, "stopped"));
         Mockito.verify(logger).warn("Failed to stop the FTPS service", ex);
     }  
 }
