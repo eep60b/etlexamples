@@ -6,7 +6,7 @@
         <artifactId>data-preparation</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <name>ETL examples - database management - Used for setting up test databases</name> 
+    <name>ETL examples - database management - Used for setting up test databases via Hibernate</name> 
     <artifactId>database-management</artifactId>
     <packaging>jar</packaging>   
     <profiles>
