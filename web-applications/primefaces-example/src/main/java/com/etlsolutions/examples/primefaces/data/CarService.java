@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.etlsolutions.examples.primefaces.datatable.filter;
+package com.etlsolutions.examples.primefaces.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;

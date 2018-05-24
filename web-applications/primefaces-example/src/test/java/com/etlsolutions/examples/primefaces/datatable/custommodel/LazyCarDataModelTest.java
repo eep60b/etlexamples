@@ -16,7 +16,7 @@
  */
 package com.etlsolutions.examples.primefaces.datatable.custommodel;
 
-import com.etlsolutions.examples.primefaces.datatable.filter.Car;
+import com.etlsolutions.examples.primefaces.data.Car;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

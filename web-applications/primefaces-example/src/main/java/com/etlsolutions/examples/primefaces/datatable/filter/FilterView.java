@@ -16,6 +16,8 @@
  */
 package com.etlsolutions.examples.primefaces.datatable.filter;
 
+import com.etlsolutions.examples.primefaces.data.CarService;
+import com.etlsolutions.examples.primefaces.data.Car;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
