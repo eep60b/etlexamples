@@ -3,12 +3,16 @@ package com.etlsolutions.examples.weather;
 import java.io.File;
 
 /**
+ * The SettingConstants class contains all constants used in this application.
  *
  * @author zc
  */
 public final class SettingConstants {
 
-    //The configuration keys:
+    /**
+     * The field with _KEY extensions are configuration keys defined in this
+     * application.
+     */
     /**
      * The key to find the application user home.
      *
@@ -101,24 +105,47 @@ public final class SettingConstants {
      */
     public static final String FTPS_LOCAL_TARGET_DIRECTORY_KEY = "ftpsLocalTargetDirectory";
 
+    /**
+     *
+     */
     public static final String REQUEST_METHOD_TOKEN = "requestMethodToken";
 
+    /**
+     *
+     */
     public static final String LOCATION_TOKEN = "locationID";
 
+    /**
+     *
+     */
     public static final String REQUEST_INTERVAL_TOKEN = "requestIntervalToken";
 
+    /**
+     *
+     */
     public static final String REQUEST_TOEKN = "requestToken";
 
+    /**
+     *
+     */
     public static final String DEFAULT_APPLICATION_LOGHOME = "/tmp/metdata/log";
-
-    public static final String DEFAULT_PROCRUN_LOGHOME = "C:\\ProgramData\\metdata\\log";
 
     //Use the target directory if it exists. The direcory exists only when it is in the develop mode.
     private static final String TARGET_DIRECTORY_NAME = "target";
+
+    /**
+     * The location of application home.
+     */
     public static final String APPLICATION_HOME = new File(TARGET_DIRECTORY_NAME).isDirectory() ? TARGET_DIRECTORY_NAME : ".";
 
+    /**
+     * The default configuration file path.
+     */
     public static final String DEFAULT_CONFIG_FILE_PATH = APPLICATION_HOME + File.separator + "props" + File.separator + "config.properties";
 
+    /**
+     * The default location for data.
+     */
     public static final String DEFAULT_DATA_DIRECTORY_PATH = APPLICATION_HOME + File.separator + "metdata";
 
     /**
@@ -157,7 +184,15 @@ public final class SettingConstants {
      */
     public static final String DEFAULT_DATA_ENCODING = "ASCII";
 
+    /**
+     * The default data file extension which is ".dat".
+     */
     public static final String DEFAULT_DATA_FILE_EXTENSION = ".dat";
+
+    /**
+     * The text file extension.
+     */
+    public static final String TEXT_FILE_EXTENSION = ".txt";
 
     /**
      * The default interval to retrieve data.
@@ -257,8 +292,7 @@ public final class SettingConstants {
      * The time which a thread to be put into sleep.
      */
     public static final long THREAD_SLEEP_TIME = 60000L;
-    
-    
+
     /**
      * The dealy time which FTPS service used to start.
      */

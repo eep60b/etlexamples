@@ -1,5 +1,6 @@
 package com.etlsolutions.examples.weather;
 
+import static com.etlsolutions.examples.weather.SettingConstants.*;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
@@ -44,8 +45,13 @@ public final class FtpsFileRetriever {
                 String filename = file.getName();
                 if (file.isFile() && filename.toLowerCase().endsWith(parameters.getDataFileExtension())) {
 
-                    InputStream inputStream = sftpChannel.get(parameters.getFtpsRemoteSourceDirectory() + "/" + filename);
+                    String inputFilePath = parameters.getFtpsRemoteSourceDirectory() + "/" + filename;
+                    InputStream inputStream = sftpChannel.get(inputFilePath);
                     FileUtils.copyInputStreamToFile(inputStream, new File(parameters.getFtpsLocalTargetDirecotry() + File.separator + filename));
+                    
+                    //Make an extra copy which can be picked up by the text editor in mobile devices.
+                    inputStream = sftpChannel.get(inputFilePath);
+                    FileUtils.copyInputStreamToFile(inputStream, new File(parameters.getFtpsLocalTargetDirecotry() + File.separator + filename + TEXT_FILE_EXTENSION));
                 }
             }
         } finally {
