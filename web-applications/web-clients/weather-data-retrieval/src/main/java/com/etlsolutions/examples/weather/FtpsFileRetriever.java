@@ -46,12 +46,12 @@ public final class FtpsFileRetriever {
                 if (file.isFile() && filename.toLowerCase().endsWith(parameters.getDataFileExtension())) {
 
                     String inputFilePath = parameters.getFtpsRemoteSourceDirectory() + "/" + filename;
-                    InputStream inputStream = sftpChannel.get(inputFilePath);
-                    FileUtils.copyInputStreamToFile(inputStream, new File(parameters.getFtpsLocalTargetDirecotry() + File.separator + filename));
-                    
+
                     //Make an extra copy which can be picked up by the text editor in mobile devices.
-                    inputStream = sftpChannel.get(inputFilePath);
-                    FileUtils.copyInputStreamToFile(inputStream, new File(parameters.getFtpsLocalTargetDirecotry() + File.separator + filename + TEXT_FILE_EXTENSION));
+                    for (String directoryPath : parameters.getFtpsLocalTargetDirecotries()) {
+                        InputStream inputStream = sftpChannel.get(inputFilePath);
+                        FileUtils.copyInputStreamToFile(inputStream, new File(directoryPath + File.separator + filename + TEXT_FILE_EXTENSION));
+                    }
                 }
             }
         } finally {
