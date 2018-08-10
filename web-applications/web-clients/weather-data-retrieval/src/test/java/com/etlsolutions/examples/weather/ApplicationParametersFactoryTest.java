@@ -66,7 +66,7 @@ public final class ApplicationParametersFactoryTest {
 
         PowerMockito.whenNew(ApplicationParameters.class).withArguments("configFilePath", "dataDirectoryPath", requestConfigs,
                 new String[]{"addtionalDataPath1", "addtionalDataPath2", "addtionalDataPath3"}, "aaa", "ASKII", ".fxt", "11", "mmYYYYHH/ss/dd", "/",
-                true, "aftps/serverA", "isiiusser", "lppassppsa", "/tmp/ttmpp", "lafa\\fafad\\ff.s").thenReturn(applicationParameters);
+                true, "aftps/serverA", "isiiusser", "lppassppsa", "/tmp/ttmpp", new String[]{"lafa\\fafad\\ff.s"}).thenReturn(applicationParameters);
 
         PowerMockito.whenNew(File.class).withArguments(DEFAULT_CONFIG_FILE_PATH).thenReturn(defaultConfigFile);
         PowerMockito.whenNew(FileInputStream.class).withArguments(defaultConfigFile).thenReturn(defaultFileInputStream);
@@ -74,12 +74,12 @@ public final class ApplicationParametersFactoryTest {
 
         PowerMockito.whenNew(ApplicationParameters.class).withArguments(DEFAULT_CONFIG_FILE_PATH, "defdataDirectoryPath", defRequestConfigs,
                 new String[]{"defaddtionalDataPath1", "defaddtionalDataPath2", "defaddtionalDataPath3"}, "defaaa", "ASKKK", ".dat", "30",
-                "mm-YYYY-HH ss/dd", "#", false, "mmyydefaulSev", "lkafdDdduser", "ka;fapppapap", "lflasd//dasfa", "alfkdaal//fafdasl\\df").thenReturn(defaultApplicationParameters);
+                "mm-YYYY-HH ss/dd", "#", false, "mmyydefaulSev", "lkafdDdduser", "ka;fapppapap", "lflasd//dasfa", new String[]{"alfkdaal//fafdasl\\df"}).thenReturn(defaultApplicationParameters);
 
         Mockito.when(requestConfigLoader.load(DEFAULT_RESORUCE_PROPERTIES_FILE_PATH, DEFAULT_REQUEST_LOCATIONS_FILE_PATH)).thenReturn(embeddedRequestConfigs);
         PowerMockito.whenNew(ApplicationParameters.class).withArguments(DEFAULT_CONFIG_FILE_PATH, DEFAULT_DATA_DIRECTORY_PATH, embeddedRequestConfigs,
                 new String[]{""}, DEFAULT_BASE_DATA_PATH, DEFAULT_DATA_ENCODING, DEFAULT_DATA_FILE_EXTENSION, DEFAULT_INTERVAL_MINUTES, DEFAULT_DATETIME_FORMAT, DEFAULT_DELIMITER,
-                false, DEFAULT_FTPS_SERVER_NAME, DEFAULT_FTPS_USERNAME, DEFAULT_FTPS_PASSWORD, DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY, DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY).thenReturn(embeddedApplicationParameters);
+                false, DEFAULT_FTPS_SERVER_NAME, DEFAULT_FTPS_USERNAME, DEFAULT_FTPS_PASSWORD, DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY, new String[]{DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY}).thenReturn(embeddedApplicationParameters);
     }
 
     /**
@@ -106,7 +106,7 @@ public final class ApplicationParametersFactoryTest {
         String[] args = {"-configFilePath", "configFilePath", "-dataDirectoryPath", "dataDirectoryPath", "-additionalDataPath", "addtionalDataPath1\naddtionalDataPath2,addtionalDataPath3",
             "-baseDataPath", "aaa", "-dataEncoding", "ASKII", "-dataFileEtension", ".fxt", "-intervalMinutes", "11", "-requestLocationFilePath", "requestLocationFilePath",
             "-resourcePropertiesFilePath", "resourcePropertiesFilePath", "-datetimeFormat", "mmYYYYHH/ss/dd", "-delimiter", "/", "-useFtpsService", "  trUe  ","-ftpsServerName", "aftps/serverA",
-            "-ftpsUsername", "isiiusser", "-ftpsPassword", "lppassppsa", "-ftpsRemoteSourceDirectory", "/tmp/ttmpp", "-ftpsLocalTargetDirectory", "lafa\\fafad\\ff.s"};
+            "-ftpsUsername", "isiiusser", "-ftpsPassword", "lppassppsa", "-ftpsRemoteSourceDirectory", "/tmp/ttmpp", "-ftpsLocalTargetDirectories", "lafa\\fafad\\ff.s"};
 
         assertEquals(applicationParameters, instance.loadApplicationParameters(args));
 
@@ -159,7 +159,7 @@ public final class ApplicationParametersFactoryTest {
         Mockito.when(defaultProperties.getProperty("ftpsUsername")).thenReturn("lkafdDdduser");
         Mockito.when(defaultProperties.getProperty("ftpsPassword")).thenReturn("ka;fapppapap");
         Mockito.when(defaultProperties.getProperty("ftpsRemoteSourceDirectory")).thenReturn("lflasd//dasfa");
-        Mockito.when(defaultProperties.getProperty("ftpsLocalTargetDirectory")).thenReturn("alfkdaal//fafdasl\\df");
+        Mockito.when(defaultProperties.getProperty("ftpsLocalTargetDirectories")).thenReturn("alfkdaal//fafdasl\\df");
         
         assertEquals(defaultApplicationParameters, instance.loadApplicationParameters(null));
 

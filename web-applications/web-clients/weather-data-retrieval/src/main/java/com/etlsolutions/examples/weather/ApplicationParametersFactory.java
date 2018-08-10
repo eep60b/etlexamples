@@ -97,7 +97,7 @@ public final class ApplicationParametersFactory {
         String ftpsUsername = commandLine.getOptionValue(FTPS_USERNAME_KEY);
         String ftpsPassword = commandLine.getOptionValue(FTPS_PASSWORD_KEY);
         String ftpsRemoteSourceDirecotry = commandLine.getOptionValue(FTPS_REMOTE_SOURCE_DIRECTORY_KEY);
-        String ftpsLocalTargetDirectory = commandLine.getOptionValue(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
+        String ftpsLocalTargetDirectories = commandLine.getOptionValue(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
 
         configFilePath = configFilePath == null ? DEFAULT_CONFIG_FILE_PATH : configFilePath;
         configFile = new File(configFilePath);
@@ -126,7 +126,7 @@ public final class ApplicationParametersFactory {
         String savedFtpsUsername = properties.getProperty(FTPS_USERNAME_KEY);
         String savedFtpsPassword = properties.getProperty(FTPS_PASSWORD_KEY);
         String savedFtpsRemoteSourceDirectory = properties.getProperty(FTPS_REMOTE_SOURCE_DIRECTORY_KEY);
-        String savedFtpsLocalTargetDirectory = properties.getProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
+        String savedFtpsLocalTargetDirectories = properties.getProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY);
 
         dataDirecotryPath = dataDirecotryPath == null ? (savedDataPath == null ? DEFAULT_DATA_DIRECTORY_PATH : savedDataPath) : dataDirecotryPath;
 
@@ -148,7 +148,7 @@ public final class ApplicationParametersFactory {
         ftpsUsername = ftpsUsername == null ? (savedFtpsUsername == null ? DEFAULT_FTPS_USERNAME : savedFtpsUsername) : ftpsUsername;
         ftpsPassword = ftpsPassword == null ? (savedFtpsPassword == null ? DEFAULT_FTPS_PASSWORD : savedFtpsPassword) : ftpsPassword;
         ftpsRemoteSourceDirecotry = ftpsRemoteSourceDirecotry == null ? (savedFtpsRemoteSourceDirectory == null ? DEFAULT_FTPS_REMOTE_SOURCE_DIRECTORY : savedFtpsRemoteSourceDirectory) : ftpsRemoteSourceDirecotry;
-        ftpsLocalTargetDirectory = ftpsLocalTargetDirectory == null ? (savedFtpsLocalTargetDirectory == null ? DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY : savedFtpsLocalTargetDirectory) : ftpsLocalTargetDirectory;
+        ftpsLocalTargetDirectories = ftpsLocalTargetDirectories == null ? (savedFtpsLocalTargetDirectories == null ? DEFAULT_FTPS_LOCAL_TARGET_DIRECTORY : savedFtpsLocalTargetDirectories) : ftpsLocalTargetDirectories;
 
         properties.clear();
         properties.setProperty(DATA_DIRECTORY_PATH_KEY, dataDirecotryPath);
@@ -167,10 +167,10 @@ public final class ApplicationParametersFactory {
         properties.setProperty(FTPS_USERNAME_KEY, ftpsUsername);
         properties.setProperty(FTPS_PASSWORD_KEY, ftpsPassword);
         properties.setProperty(FTPS_REMOTE_SOURCE_DIRECTORY_KEY, ftpsRemoteSourceDirecotry);
-        properties.setProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY, ftpsLocalTargetDirectory);
+        properties.setProperty(FTPS_LOCAL_TARGET_DIRECTORY_KEY, ftpsLocalTargetDirectories);
 
         return new ApplicationParameters(configFilePath, dataDirecotryPath, requestConfigs, additionalDataPathString.replace(",", "\n").split("\n"), baseDataPathString, dataEncoding, dataFileExtension, intervalMinutes, datetimeFormat, delimiter,
-                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectory);
+                useFtpsService, ftpsServerName, ftpsUsername, ftpsPassword, ftpsRemoteSourceDirecotry, ftpsLocalTargetDirectories.replace(",", "\n").split("\n"));
     }
 
     /**

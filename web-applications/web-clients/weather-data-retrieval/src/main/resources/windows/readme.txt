@@ -29,7 +29,7 @@ Errors and solutions:
     Solution: un-install the service, check the Jaa version against the install.bat file and re-install it.
 
 20. Error information: Windows could not start the service on Local Computer...... error code 4.
-   Error: 1) The jar is missing. 
+    Error: 1) The jar is missing. 
 
 30. Error information: The service on Local Computer started then stopped. Some services stop automatically if they are not in use by other services or programs.
    Error: All java threads are terminated.
@@ -44,3 +44,9 @@ Errors and solutions:
             }
     2) Change the the stop method to run:
         stop = true;
+
+50. Error information: [2018-07-11 17:44:44] [error] [ 5428] Could not create instance of java/io/FileOutputStream
+    Error: permission denied in the FTP server.
+    Solution: change the ownership of /tmp/metdata.
+        chown zc:staff /tmp/metdata -R
+        chmod -R 777 /tmp/metdata

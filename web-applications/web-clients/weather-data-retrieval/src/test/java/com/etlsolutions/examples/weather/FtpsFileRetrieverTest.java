@@ -1,11 +1,17 @@
 package com.etlsolutions.examples.weather;
 
+import com.etlsolutions.examples.weather.data.RequestConfig;
+import com.etlsolutions.examples.weather.data.RequestLocation;
+import com.etlsolutions.examples.weather.data.RequestMethod;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import static org.junit.Assert.*;
@@ -24,25 +30,29 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author zc
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({FtpsFileRetriever.class,  ApplicationParameters.class, Logger.class, FileUtils.class})
+@PrepareForTest({FtpsFileRetriever.class,  ApplicationParameters.class, Logger.class, FileUtils.class, RequestConfig.class, RequestLocation.class, RequestMethod.class, Calendar.class})
 public final class FtpsFileRetrieverTest {
 
     private final Logger logger = Mockito.mock(Logger.class);
     private final JSch jsch = Mockito.mock(JSch.class);
     private final ApplicationParameters parameters = PowerMockito.mock(ApplicationParameters.class);
+    private final RequestConfig requestConfig1 = PowerMockito.mock(RequestConfig.class);
+    private final RequestConfig requestConfig2 = PowerMockito.mock(RequestConfig.class);
+    private final List<RequestConfig> requestConfigs = Arrays.asList(requestConfig1, requestConfig2);
+    private final RequestLocation requestLocation1 = PowerMockito.mock(RequestLocation.class);
+    private final RequestLocation requestLocation2 = PowerMockito.mock(RequestLocation.class);    
+    private final RequestMethod requestMethod1 = PowerMockito.mock(RequestMethod.class);
+    private final RequestMethod requestMethod2 = PowerMockito.mock(RequestMethod.class);  
+    private final Calendar calendar = Mockito.mock(Calendar.class);
     private final Session session = Mockito.mock(Session.class);
     private final ChannelSftp sftpChannel = Mockito.mock(ChannelSftp.class);
-    private final File dataDirecotry = Mockito.mock(File.class);
-    private final File file1 = Mockito.mock(File.class);
-    private final File file2 = Mockito.mock(File.class);
-    private final File file3 = Mockito.mock(File.class);
-    private final File subDirectory = Mockito.mock(File.class);
-    private final File[] files = {file1, file2, file3, subDirectory};
+
     private final InputStream inputStream1 = Mockito.mock(InputStream.class);
     private final InputStream inputStream2 = Mockito.mock(InputStream.class);
     private final InputStream inputStream4 = Mockito.mock(InputStream.class);
     private final File localFile1 = Mockito.mock(File.class);
     private final File localFile2 = Mockito.mock(File.class);
+    private final File localFile3 = Mockito.mock(File.class);
     private final File localFile4 = Mockito.mock(File.class);
     
     private final InOrder inOrder = Mockito.inOrder(logger, session, sftpChannel);
@@ -62,30 +72,31 @@ public final class FtpsFileRetrieverTest {
         Mockito.when(parameters.getFtpsUsername()).thenReturn("usuusler");
         Mockito.when(parameters.getFtpsPassword()).thenReturn("papappapa");
         Mockito.when(parameters.getFtpsRemoteSourceDirectory()).thenReturn("reppmoote");
-        Mockito.when(parameters.getFtpsLocalTargetDirecotry()).thenReturn("lloooou local");
+        Mockito.when(parameters.getFtpsLocalTargetDirecotries()).thenReturn(Arrays.asList("lloooou local", "ssss"));
         Mockito.when(parameters.getDataDirectoryPath()).thenReturn("daidata tata");
         Mockito.when(parameters.getDataFileExtension()).thenReturn(".dat");
+        Mockito.when(parameters.getRequestConfigs()).thenReturn(requestConfigs);
 
         Mockito.when(jsch.getSession("usuusler", "ftySeveName", 22)).thenReturn(session);
         Mockito.when(session.openChannel("sftp")).thenReturn(sftpChannel);
-
-        PowerMockito.whenNew(File.class).withArguments("daidata tata").thenReturn(dataDirecotry);
-        Mockito.when(dataDirecotry.listFiles()).thenReturn(files);
-
-        Mockito.when(file1.getName()).thenReturn("ffalafd.dat");
-        Mockito.when(file2.getName()).thenReturn("fkjallsd.txt");
-        Mockito.when(file3.getName()).thenReturn("cuiafffuxc.dAt");
-
-        Mockito.when(file1.isFile()).thenReturn(Boolean.TRUE);
-        Mockito.when(file2.isFile()).thenReturn(Boolean.TRUE);
-        Mockito.when(file3.isFile()).thenReturn(Boolean.TRUE);
-
-        Mockito.when(sftpChannel.get("reppmoote/ffalafd.dat")).thenReturn(inputStream1).thenReturn(inputStream4);
-        Mockito.when(sftpChannel.get("reppmoote/cuiafffuxc.dAt")).thenReturn(inputStream2);
+        Mockito.when(sftpChannel.get("reppmoote/fcs3h-ffalafd-2020.dat")).thenReturn(inputStream1);
+        Mockito.when(sftpChannel.get("reppmoote/obs1h-cuiafffuxc-2020.dat")).thenReturn(inputStream2);
         
-        PowerMockito.whenNew(File.class).withArguments("lloooou local" + File.separator + "ffalafd.dat").thenReturn(localFile1);
-        PowerMockito.whenNew(File.class).withArguments("lloooou local" + File.separator + "cuiafffuxc.dAt").thenReturn(localFile2);
-        PowerMockito.whenNew(File.class).withArguments("lloooou local" + File.separator + "ffalafd.dat.txt").thenReturn(localFile4);
+        PowerMockito.mockStatic(Calendar.class);
+        Mockito.when(Calendar.getInstance()).thenReturn(calendar);
+        Mockito.when(calendar.get(Calendar.YEAR)).thenReturn(2020);
+        Mockito.when(requestConfig1.getRequestLocation()).thenReturn(requestLocation1);
+        Mockito.when(requestConfig1.getRequestMethod()).thenReturn(requestMethod1);
+        Mockito.when(requestConfig2.getRequestLocation()).thenReturn(requestLocation2);
+        Mockito.when(requestConfig2.getRequestMethod()).thenReturn(requestMethod2);
+        Mockito.when(requestMethod1.getAbbreviation()).thenReturn("fcs3h");
+        Mockito.when(requestMethod2.getAbbreviation()).thenReturn("obs1h");        
+        Mockito.when(requestLocation1.getName()).thenReturn("ffalafd");
+        Mockito.when(requestLocation2.getName()).thenReturn("cuiafffuxc");
+        PowerMockito.whenNew(File.class).withArguments("lloooou local" + File.separator + "fcs3h-ffalafd-2020.dat.txt").thenReturn(localFile1);
+        PowerMockito.whenNew(File.class).withArguments("lloooou local" + File.separator + "obs1h-cuiafffuxc-2020.dat.txt").thenReturn(localFile2);
+        PowerMockito.whenNew(File.class).withArguments("ssss" + File.separator + "fcs3h-ffalafd-2020.dat.txt").thenReturn(localFile3);
+        PowerMockito.whenNew(File.class).withArguments("ssss" + File.separator + "obs1h-cuiafffuxc-2020.dat.txt").thenReturn(localFile4);
         
         PowerMockito.mockStatic(FileUtils.class);
 
@@ -113,10 +124,13 @@ public final class FtpsFileRetrieverTest {
         FileUtils.copyInputStreamToFile(inputStream1, localFile1);
 
         PowerMockito.verifyStatic();
-        FileUtils.copyInputStreamToFile(inputStream2, localFile2);
+        FileUtils.copyInputStreamToFile(inputStream1, localFile3);
+
+        PowerMockito.verifyStatic();
+        FileUtils.copyInputStreamToFile(inputStream2, localFile2);    
         
         PowerMockito.verifyStatic();
-        FileUtils.copyInputStreamToFile(inputStream4, localFile4);        
+        FileUtils.copyInputStreamToFile(inputStream2, localFile4);        
     }
 
     /**

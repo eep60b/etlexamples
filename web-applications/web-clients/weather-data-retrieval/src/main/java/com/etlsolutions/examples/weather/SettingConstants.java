@@ -101,10 +101,10 @@ public final class SettingConstants {
     public static final String FTPS_REMOTE_SOURCE_DIRECTORY_KEY = "ftpsRemoteSourceDirectory";
 
     /**
-     *
+     * The key to find the target directories to save the retrieved FTPS files. 
      */
-    public static final String FTPS_LOCAL_TARGET_DIRECTORY_KEY = "ftpsLocalTargetDirectory";
-
+    public static final String FTPS_LOCAL_TARGET_DIRECTORY_KEY = "ftpsLocalTargetDirectories";
+    
     /**
      *
      */

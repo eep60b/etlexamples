@@ -33,7 +33,7 @@ public final class ApplicationParameters {
     private final String ftpsUsername;
     private final String ftpsPassword;
     private final String ftpsRemoteSourceDirectory;
-    private final String ftpsLocalTargetDirecotry;
+    private final List<String> ftpsLocalTargetDirecotries = new ArrayList<>();
 
     /**
      * Construct an object.
@@ -53,11 +53,11 @@ public final class ApplicationParameters {
      * @param ftpsUsername
      * @param ftpsPassword
      * @param ftpsRemoteSourceDirectory
-     * @param ftpsLocaTargetDirecotry
+     * @param ftpsLocaTargetDirecotries
      */
     public ApplicationParameters(String configFilePath, String dataDirectoryPath, List<RequestConfig> requestConfigs, String[] additionalDataDirectoryPaths,
             String baseDataDirectoryPath, String dataEncoding, String dataFileExtension, String intervalInMinutes, String datetimeFormat, String delimiter,
-            boolean useFtpsService, String ftpsServerName, String ftpsUsername, String ftpsPassword, String ftpsRemoteSourceDirectory, String ftpsLocaTargetDirecotry) {
+            boolean useFtpsService, String ftpsServerName, String ftpsUsername, String ftpsPassword, String ftpsRemoteSourceDirectory, String[] ftpsLocaTargetDirecotries) {
 
         this.configFilePath = new File(configFilePath.trim()).getAbsolutePath();
         this.dataDirectoryPath = new File(dataDirectoryPath.trim()).getAbsolutePath();
@@ -80,7 +80,11 @@ public final class ApplicationParameters {
         this.ftpsUsername = ftpsUsername.trim();
         this.ftpsPassword = ftpsPassword.trim();
         this.ftpsRemoteSourceDirectory = ftpsRemoteSourceDirectory.trim();
-        this.ftpsLocalTargetDirecotry = new File(ftpsLocaTargetDirecotry.trim()).getAbsolutePath();
+        for(String path : ftpsLocaTargetDirecotries) {
+            if (path != null && !path.trim().isEmpty()) {
+                this.ftpsLocalTargetDirecotries.add(new File(path.trim()).getAbsolutePath());
+            }
+        }
     }
 
     /**
@@ -214,8 +218,8 @@ public final class ApplicationParameters {
      *
      * @return
      */
-    public String getFtpsLocalTargetDirecotry() {
-        return ftpsLocalTargetDirecotry;
+    public List<String> getFtpsLocalTargetDirecotries() {
+        return Collections.unmodifiableList(ftpsLocalTargetDirecotries);
     }
 
     /**
@@ -304,7 +308,7 @@ public final class ApplicationParameters {
                 + "FTPS Server name =             " + ftpsServerName + "\n"
                 + "FTPS Username =                " + ftpsUsername + "\n"
                 + "FTPS Remote Source Directory = " + ftpsRemoteSourceDirectory + "\n"
-                + "FTPS Local Target Direcotry =  " + ftpsLocalTargetDirecotry;
+                + "FTPS Local Target Direcotry =  " + ftpsLocalTargetDirecotries;
 
         return useFtpsService ? useFptsString : mainString;
     }

@@ -1,6 +1,7 @@
 package com.etlsolutions.examples.weather;
 
 import static com.etlsolutions.examples.weather.SettingConstants.*;
+import java.util.Arrays;
 import org.apache.log4j.Logger;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -42,7 +43,7 @@ public final class FtpsServiceTest {
 
         Mockito.when(parameters.getIntervalInMinutes()).thenReturn(3);
         Mockito.when(parameters.getFtpsServerName()).thenReturn("ftySeveName");
-        Mockito.when(parameters.getFtpsLocalTargetDirecotry()).thenReturn("lloooou local");
+        Mockito.when(parameters.getFtpsLocalTargetDirecotries()).thenReturn(Arrays.asList("lloooou local"));
         
         instance = new FtpsService();
     }

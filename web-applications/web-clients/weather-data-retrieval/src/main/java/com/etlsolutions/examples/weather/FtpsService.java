@@ -50,7 +50,7 @@ public final class FtpsService {
 
                             retriever.copyFiles(parameters);
                             logger.info("Data files successfully copied from the linux server.");
-                            logger.info("Copied file location:            " + parameters.getFtpsLocalTargetDirecotry());
+                            logger.info("Copied file location:            " + parameters.getFtpsLocalTargetDirecotries());
                             minutes = 0;
 
                         } else {

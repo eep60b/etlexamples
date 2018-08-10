@@ -15,3 +15,8 @@ To create a service on Debian Linux 8.8:
         [Failed to start metd.service: Unit metd.service failed to load: No such file or directory.]
     Run this command: systemctl daemon-reload
     Rerun service metd start.
+
+
+120.Change the ownership of /tmp/metdata for windows to retrieve the data:
+            chown zc:staff metdata -R
+             chmod -R 777 metdata
