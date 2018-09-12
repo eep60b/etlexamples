@@ -6,7 +6,7 @@
         <artifactId>data-preparation</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <name>ETL examples - hibernate demostration with annotation</name>
+    <name>ETL examples - hibernate demonstration with annotation</name>
     <artifactId>hibernate-annotation</artifactId>
     <packaging>jar</packaging>
     <dependencies>

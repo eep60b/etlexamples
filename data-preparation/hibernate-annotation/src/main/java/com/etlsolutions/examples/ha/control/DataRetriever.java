@@ -16,6 +16,7 @@
  */
 package com.etlsolutions.examples.ha.control;
 
+import java.math.BigInteger;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -48,5 +49,25 @@ public class DataRetriever {
             }
             throw e;
         }
-    }      
+    }
+    
+    //This code should work but not tested.
+    public int getCounts(){
+
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+
+            Query query = session.getNamedQuery("select count(DISTINCT city) from address");
+            BigInteger result = (BigInteger) query.uniqueResult();
+            transaction.commit();
+            
+            return result.intValue();
+      
+        } catch (RuntimeException e) {
+            HibernateUtil.getSessionFactory().close();
+            throw e;
+        }
+    }
 }

@@ -15,5 +15,6 @@
         <module>data-api</module>
         <module>server-setup</module>
         <module>ldap-connection</module>
+        <module>concurrency-access</module>
     </modules>
 </project>

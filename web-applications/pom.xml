@@ -24,5 +24,6 @@
     <module>webservice-client</module>
     <module>oauth-service</module>
     <module>web-clients</module>
+    <module>dropbox-client</module>
   </modules>
 </project>

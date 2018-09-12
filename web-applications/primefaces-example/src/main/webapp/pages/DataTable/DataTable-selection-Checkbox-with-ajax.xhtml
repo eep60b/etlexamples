@@ -8,7 +8,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />    
-        <title>Basic SelectCheckboxMenu with ajax</title>
+        <title>DataTable checkbox with ajax</title>
     </h:head>
     <h:body>
         <h:form id="themeForm">
@@ -16,8 +16,11 @@
                 <f:facet name="header">
                     Checkbox
                 </f:facet>
-                <p:ajax process="@form" event="rowSelect" update=":themeForm:themeId"/> 
-                <p:ajax process="@form" event="rowUnselect" update=":themeForm:themeId"/>                     
+                <p:ajax process="@form" event="rowSelect" update=":themeForm:themeId" async="true"/> 
+                <p:ajax process="@form" event="rowUnselect" update=":themeForm:themeId" async="true"/>
+                <p:ajax process="@form" event="rowSelectCheckbox" update=":themeForm:themeId" async="true"/> 
+                <p:ajax process="@form" event="rowUnselectCheckbox" update=":themeForm:themeId" async="true"/>
+                <p:ajax process="@form" event="toggleSelect" update=":themeForm:themeId" async="true"/>                   
 
                 <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                 <p:column headerText="Id">

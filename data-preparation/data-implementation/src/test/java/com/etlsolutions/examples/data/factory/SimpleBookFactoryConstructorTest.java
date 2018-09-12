@@ -24,7 +24,7 @@ import org.junit.Test;
 public final class SimpleBookFactoryConstructorTest {
 
     /**
-     * Test of constructor of class SimpleBookFactory.
+     * Test of constructor.
      *
      * @throws Exception if an error occurs.
      */
