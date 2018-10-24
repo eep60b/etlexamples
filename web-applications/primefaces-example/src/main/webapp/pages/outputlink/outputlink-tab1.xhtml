@@ -17,20 +17,20 @@
     </h:head>
     <h:body>
         <h:form id="formId">
-        <p:tabView id="tabPanel" dynamic="true" cache="false" widgetVar="tabPanelWidget">
+            <p:tabView id="tabPanel" dynamic="true" cache="false" widgetVar="tabPanelWidget">
                 <p:tab title="tab1" id="tab1">
-                Content of tab1             
-            </p:tab>
-            <p:tab title="tab2" id="tab2">
-                Content of tab2
-            </p:tab>
+                    Content of tab1             
+                </p:tab>
+                <p:tab title="tab2" id="tab2">
+                    Content of tab2
+                </p:tab>
                 <p:tab title="tab2" id="tab3">
                     Content of tab3:
                     <h:outputLink value="#" onclick="changeTabDynamic('tab1');" >
                         <p:chart id="summary-throughputs-vehicleManufacturer-barChart" type="line" model="#{lineChartSizeView.newBookLineChartModel}"  style="width:400px;height:300px" />
                     </h:outputLink>
-            </p:tab>
-        </p:tabView>
+                </p:tab>
+            </p:tabView>
         </h:form>
     </h:body>
 </html>

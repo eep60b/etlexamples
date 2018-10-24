@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Input event value change with month picker</title>
+        <h:outputScript name="js/jquery.mtz.monthpicker.js" />   
+        <h:outputScript name="js/input-monthpicker.js" />   
+    </h:head>
+    <h:body>
+        <f:view>        
+            <h:form id="filters-invoice-dates-start-form">
+                <p:inputText id="filters-invoice-start-date-calendar" value="#{inputEventValueChangeView.startDateString}" class="monthpicker">
+                    <p:ajax immediate="true" event="valueChange" update="main-page-tabForm" />
+                </p:inputText>
+            </h:form>
+        
+                <h:form id="main-page-tabForm">
+                    This is output:  
+                    <p:outputLabel  value="#{inputEventValueChangeView.startDateString}"/>
+                </h:form>
+            
+        </f:view>
+    </h:body>
+</html>
