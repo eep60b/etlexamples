@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<!--The month picker is static and stops working after the button is clicked. It cannot be updated by AJAX-->    
+    <h:head>
+        <title>Input event with month picker updated by button</title>
+        <h:outputScript name="js/jquery.mtz.monthpicker.js" />   
+        <h:outputScript name="js/input-monthpicker.js" />   
+    </h:head>
+    <h:body>
+        <f:view>   
+            <p:panelGrid columns="1" styleClass="filterPanel">
+                <h:form id="filters-invoice-dates-start-form">
+                    <p:inputText id="filters-invoice-start-date-calendar" value="#{inputEventValueChangeView.startDateString}" class="monthpicker">
+                        <p:ajax immediate="true" event="valueChange" update="main-page-tabForm" />
+                    </p:inputText>
+                </h:form>
+            </p:panelGrid>
+            <h:form id="main-page-tabForm">
+                <p:commandButton  value="update">
+                    <p:ajax update="filters-invoice-dates-start-form"/>
+                </p:commandButton > 
+                <p:outputLabel  value="#{inputEventValueChangeView.startDateString}"/>
+            </h:form>
+
+        </f:view>
+    </h:body>
+</html>

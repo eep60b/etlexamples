@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Input event value change with month picker</title>
+        <h:outputScript name="js/AnchorPosition.js" />   
+        <h:outputScript name="js/CalendarPopup.js" />   
+        <h:outputScript name="js/PopupWindow.js" />   
+        <h:outputScript name="js/date.js" />   
+        <SCRIPT LANGUAGE="JavaScript" ID="js1">
+            var cal1 = new CalendarPopup();
+        </SCRIPT>
+    </h:head>
+    <h:body>
+        <f:view>        
+            <h:form id="filters-invoice-dates-start-form">
+                <h:inputText a:type="date1" id="filters-invoice-start-date-calendar" value="#{inputEventValueChangeView.startDateString}" class="monthpicker">
+                    <p:ajax immediate="true" event="valueChange" update="main-page-tabForm" />
+                </h:inputText>
+                <A HREF="#" onClick="cal1.select(document.forms[0].date1, 'anchor1', 'MM/dd/yyyy');
+                        return false;" TITLE="cal1.select(document.forms[0].date1,'anchor1','MM/dd/yyyy'); return false;" NAME="anchor1" ID="anchor1">select</A>
+            </h:form>    
+
+            <h:form id="main-page-tabForm">
+                This is output:  
+                <p:outputLabel  value="#{inputEventValueChangeView.startDateString}"/>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>
