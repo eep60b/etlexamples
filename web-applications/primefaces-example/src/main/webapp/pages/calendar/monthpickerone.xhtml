@@ -14,14 +14,8 @@
     <h:body>
         <f:view>        
             <h:form id="filters-invoice-dates-start-form">
-                <style type="text/css">
-                    .ui-datepicker-calendar {
-                        display: none;
-                    
-                    }
-                </style> 
                 <p:inputText id="filters-invoice-start-date-calendar" value="#{inputEventValueChangeView.startDateString}" class="date-picker">
-                    <p:ajax update="main-page-tabForm" />
+                    <p:ajax immediate="true" event="valueChange" update="main-page-tabForm" />
                 </p:inputText>
             </h:form>
 
@@ -33,4 +27,3 @@
         </f:view>
     </h:body>
 </html>
-
