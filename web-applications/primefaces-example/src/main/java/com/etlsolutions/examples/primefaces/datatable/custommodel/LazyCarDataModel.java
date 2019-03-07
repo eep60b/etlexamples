@@ -38,6 +38,8 @@ import org.primefaces.model.SortOrder;
  */
 public class LazyCarDataModel extends LazyDataModel<Car> {
 
+    private static final long serialVersionUID = 886732626550437281L;
+
     private final List<Car> datasource;
 
     public LazyCarDataModel(List<Car> datasource) {
@@ -104,6 +106,7 @@ public class LazyCarDataModel extends LazyDataModel<Car> {
         return paginate(dataSize, pageSize, data, first);
     }
 
+    //PrimeFaces won't handle the RuntimeExceptions very well. Those exceptions should be logged before thrown out again. 
     private List<Car> filter(Map<String, Object> filters) {
         List<Car> data = new ArrayList<>();
         for (Car car : datasource) {
